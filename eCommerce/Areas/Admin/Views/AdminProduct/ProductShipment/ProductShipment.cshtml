@@ -1,0 +1,88 @@
+﻿@model Entities.ViewModels.Admin.ProductModel
+
+
+<form id="ProductShipmentInfoAddOrUpdate">
+
+    <div style="display:flex;flex-wrap:wrap;">
+        <input type="hidden" name="ProductShipmentInfo.Id" id="ProductShipmentInfo.Id" />
+        <input type="hidden" name="ProductShipmentInfo.ProductId" id="ProductShipmentInfo.ProductId"  value="@Model.Id"/>
+
+        <div class="form-group col-md-12">
+            @Html.LabelFor(x => x.ProductShipmentInfo.Height, "Yükseklik", new { @class = "control-label col-md-2" })
+
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.ProductShipmentInfo.Height, new { @class = "form-control  col-md-8" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            @Html.LabelFor(x => x.ProductShipmentInfo.Width, "Genişlik", new { @class = "control-label col-md-2" })
+
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.ProductShipmentInfo.Width, new { @class = "form-control  col-md-8" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            @Html.LabelFor(x => x.ProductShipmentInfo.Length, "Uzunluk", new { @class = "control-label col-md-2" })
+
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.ProductShipmentInfo.Length, new { @class = "form-control  col-md-8" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            @Html.LabelFor(x => x.ProductShipmentInfo.Weight, "Ağırlık", new { @class = "control-label col-md-2" })
+
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.ProductShipmentInfo.Weight, new { @class = "form-control  col-md-8" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            <input type="submit" value="Kaydet" class="btn btn-outline-default" />
+        </div>
+
+
+    </div>
+
+</form>
+
+<script>
+    
+    GetProductShipmentInfo();
+
+    function GetProductShipmentInfo() {
+        let ProductId =@Model.Id;
+        $.ajax({
+            url: "/Admin/AdminProduct/GetProductShipmentInfo?ProductId=" + ProductId,
+            method: "GET",
+            success: function (response) {
+                ResponseToForm(response, "ProductShipmentInfo.");
+            }
+        });
+    }
+
+    $("#ProductShipmentInfoAddOrUpdate").submit(function (e) {
+        e.preventDefault();
+        let form = document.getElementById("ProductShipmentInfoAddOrUpdate");
+        let formData = new FormData(form);
+
+        $.ajax({
+            url: "/Admin/AdminProduct/ProductShipmentInfoAddOrUpdate",
+            method: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                $("#ProductShipmentInfo.Id").val(response.Id);
+                swal("Başarılı", "işlem Başarılı", "success");
+            },
+            error: function (response) {
+                swal("Başarısız", "işlem Başarısız", "error");
+            }
+        });
+
+    });
+</script>
+

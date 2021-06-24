@@ -1,0 +1,45 @@
+﻿@model Entities.ViewModels.Admin.DiscountModel
+
+@{
+    ViewData["Title"] = "DiscountList";
+    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="col-md-4" style="float:left;">
+                        <h2 class="card-title">İndirim Listesi</h2>
+                    </div>
+                    <div class="col-md-8" style="float:right;">
+                            <div class="col-md-3" style="float:right;"><a href="~/Admin/Discount/DiscountCreate"><button type="submit" class="btn btn-outline-default pd10-50" style="text-align:center;">Ekle</button></a></div>
+                      </div>
+                </div>
+                <div class="card-body">
+
+
+
+                    @*<form method="post" id="CommentForm" action="/Admin/Comment/CommentList">
+                        <br />
+
+                        @Html.DropDownListFor(model => model.IsApproved, (List<SelectListItem>)ViewBag.Approve, new { @class = " form-control  col-md-4", onchange = "this.form.submit()" })
+
+                    </form>*@
+
+
+
+                    @Html.Partial("DiscountDatatable", Model)
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

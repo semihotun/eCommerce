@@ -1,0 +1,91 @@
+﻿@using X.PagedList;
+@model Entities.Concrete.Brand
+
+@{
+    ViewBag.Title = "BrandCreate";
+    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card ">
+                <div class="card-header">
+                    <div class="col-md-4" style="float:left;">
+                        <h1 class="card-title" style="margin-top: 8px;">
+
+                            BrandBilgisi
+
+                        </h1>
+                    </div>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    @using (Html.BeginForm("BrandEdit", "Brand", FormMethod.Post))
+                    {
+                        <div style="display:flex">
+
+
+                            <div class="col-md-10">
+
+                                @if (ViewBag.Message != null)
+                                {
+                                    <script>
+                                pushalert("@ViewBag.Message","@ViewBag.AlertType");
+
+                                    </script>
+                                }
+
+
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-horizontal">
+                                    <hr />
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    @Html.HiddenFor(model => model.Id, new { htmlAttributes = new { @class = "form-control col-md-6" } })
+                                    <div class="form-group">
+                                        <div class="col-md-2"> Sıra</div>
+
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.BrandName, new { htmlAttributes = new { @class = "form-control col-md-6" } })
+                                            @Html.ValidationMessageFor(model => model.BrandName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Kaydet" class="btn btn-default" id="kaydet" name="kaydet" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br /> <br />
+                                <div>
+
+                                    @Html.ActionLink("Geri Dön", "BrandList")
+                                </div>
+
+                            </div>
+
+
+
+
+
+                        </div>
+                    }
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

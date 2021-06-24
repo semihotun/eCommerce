@@ -1,0 +1,72 @@
+﻿
+
+
+
+<br />
+<div class="table-responsive ps ps--active-x">
+    <table id="CommentList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Başlık</th>
+                <th>İçerik</th>
+                <th> </th>
+            </tr>
+        </thead>
+    </table>
+
+</div>
+
+
+
+
+
+<script>
+    var CommenTable;
+    var BindComment = function (response) {
+        if ($.fn.DataTable.isDataTable("#CommentList")) {
+            CommenTable.draw();
+    
+        }
+        else {
+
+            CommenTable = $("#CommentList").DataTable({
+                "sAjaxSource": "/Admin/Comment/CommentListJson?IsApproved=" + $("#IsApproved").val() ,
+                "bServerSide": true,
+                "bProcessing": true,
+                "bSearchable": true,
+                "bLengthChange": false,
+                "searching": false,
+                "columns": [
+                    { "data": "Id", "name": "Id", "autoWidth": true },
+                    { "data": "CommentText", "name": "CommentText", "autoWidth": true },
+                    { "data": "CommentTitle", "name": "CommentTitle", "autoWidth": true },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return "<a href='/Admin/Comment/CommentEdit?id=" + row.Id + "' ><i class='fa fa-edit datatableduzenle' style='font-size:20px;'></i></a>";
+                        }, "orderable": false
+                    }
+
+                ], "language": {
+                    "url": "/datatablelanguage.json"
+                }
+
+            });
+
+        }
+
+    }
+    var FilterRecord = function () {
+        BindComment();
+    }
+    $(document).ready(function () {
+        BindComment();
+
+    });
+
+</script>
+
+
+
+

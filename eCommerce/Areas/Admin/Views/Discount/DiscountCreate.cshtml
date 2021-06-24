@@ -1,0 +1,275 @@
+﻿@model Entities.ViewModels.Admin.DiscountModel
+@{
+    ViewData["Title"] = "DiscountCreate";
+    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="col-md-4" style="float:left;">
+                        <h2 class="card-title">İndirim Ekle</h2>
+                    </div>
+
+                </div>
+                <div class="card-body">
+
+                    @using (Html.BeginForm("DiscountCreate", "Discount", FormMethod.Post))
+                    {
+                    <div style="display:flex;flex-wrap:wrap;">
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(x => x.Name, "İsmi", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(x => x.Name, new { @class = "form-control  col-md-7" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(x => x.AdminComment, "Admin Açıklaması", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(x => x.AdminComment, new { @class = "form-control  col-md-7" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(x => x.DiscountTypeId, "Discount Tipi", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-10">
+                                @Html.DropDownList("DiscountTypeId", Model.DiscountTypeList, new { @class = "form-control col-md-7" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-md-12" id="subcategoryshowhide">
+                            @Html.LabelFor(x => x.AppliedToSubCategories, "Alt Kategorilere Uygula", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-10">
+                                @Html.CheckBoxFor(x => x.AppliedToSubCategories)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-md-12" id="MaximumDiscountedQuantityshowhide">
+                            @Html.LabelFor(x => x.MaximumDiscountedQuantity, "Maximum indirim adeti", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(x => x.MaximumDiscountedQuantity, new { @class = "form-control  col-md-7" })
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="form-group col-md-12" id="DiscountAmountshowhide">
+                            @Html.LabelFor(x => x.DiscountAmount, "İndirim Miktarı", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(x => x.DiscountAmount, new { @class = "form-control  col-md-7", @type = "number", @min = "0", @step = "0.01", @value = "0.00" })
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(x => x.UsePercentage, "Kullanım Yüzdesi", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-10">
+                                @Html.CheckBoxFor(x => x.UsePercentage)
+                            </div>
+                        </div>
+
+                        <div id="percentagetruefalse" class="col-md-12">
+
+                            <div class="form-group col-md-12">
+                                @Html.LabelFor(x => x.DiscountPercentage, "İndirim Yüzdesi", new { @class = "control-label col-md-2" })
+
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(x => x.DiscountPercentage, new { @class = "form-control  col-md-7", @type = "number", @min = "0", @step = "0.01", @value = "0.00" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                @Html.LabelFor(x => x.MaximumDiscountAmount, "Maximum İndirim miktarı", new { @class = "control-label col-md-2" })
+
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(x => x.MaximumDiscountAmount, new { @class = "form-control  col-md-7", @type = "number", @min = "0", @step = "0.01", @value = "0.00" })
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(x => x.StartDateUtc, "Başlangıç tarihi", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(x => x.StartDateUtc, new { @class = "form-control  col-md-7", @type = "date" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(x => x.EndDateUtc, "Bitiş tarihi", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(x => x.EndDateUtc, new { @class = "form-control  col-md-7", @type = "date" })
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(x => x.RequiresCouponCode, "Kupon Kodu kullanılsınmı", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-10">
+                                @Html.CheckBoxFor(x => x.RequiresCouponCode)
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12" id="Kuponkodushowhide">
+
+                            @Html.LabelFor(x => x.CouponCode, "Kupon Kodu ", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(x => x.CouponCode, new { @class = "form-control  col-md-7" })
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(x => x.DiscountLimitationId, "İndirim limit", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-10">
+                                @Html.DropDownList("DiscountLimitationId", Model.DiscountLimitationList, new { @class = "form-control col-md-7" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12" id="LimitationTimesshowhide">
+                            @Html.LabelFor(x => x.LimitationTimes, "LimitationTimes", new { @class = "control-label col-md-2" })
+
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(x => x.LimitationTimes, new { @class = "form-control  col-md-7" })
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+                        <div class="form-group col-md-12">
+
+
+                            <div class="col-md-10">
+                                <input type="submit" class="btn btn-default" />
+                            </div>
+                        </div>
+
+
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        if ($("#UsePercentage").is(":checked") == false) 
+            $("#percentagetruefalse").hide();
+        if ($("#UsePercentage").is(":checked") == true) 
+            $("#DiscountAmountshowhide").hide();
+        if ($("#RequiresCouponCode").is(":checked") == false)
+            $("#Kuponkodushowhide").hide();
+        if ($("#DiscountLimitationId").val() == 0)
+            $("#LimitationTimesshowhide").hide();
+        if ($("#DiscountTypeId").val() != 5)
+            $("#subcategoryshowhide").hide();
+        if ($("#DiscountTypeId").val() != 5 || ("#DiscountTypeId").val() !=6  || ("#DiscountTypeId").val() != 2)
+            $("#MaximumDiscountedQuantityshowhide").hide();
+        
+
+    })  
+
+    $("#UsePercentage").change(function () {
+        
+        if ($(this).is(":checked")) {
+
+            $("#percentagetruefalse").show();
+            $("#DiscountAmountshowhide").hide();
+        }
+        else {
+
+            $("#percentagetruefalse").hide();
+            $("#DiscountAmountshowhide").show();
+        }         
+    });
+
+    $("#RequiresCouponCode").change(function () {
+        if ($(this).is(":checked")) {
+           
+            $("#Kuponkodushowhide").show();
+        }
+        else {
+            $("#RequiresCouponCode").val("true");
+            $("#Kuponkodushowhide").hide();
+        }
+    });
+
+    $("#DiscountLimitationId").change(function () {
+        if ($(this).val() != 0) {
+            $("#LimitationTimesshowhide").show();
+        }
+        else {
+            $("#LimitationTimesshowhide").hide();
+        }
+    });
+
+
+    $("#DiscountTypeId").change(function () {
+        if ($(this).val() == 5) {
+          
+            $("#subcategoryshowhide").show();
+        }
+        else {
+          
+            $("#subcategoryshowhide").hide();
+        }
+
+
+        if ($("#DiscountTypeId").val() == 5 || ("#DiscountTypeId").val() == 6 || ("#DiscountTypeId").val() == 2) {
+            $("#MaximumDiscountedQuantityshowhide").show();
+        }
+        else {
+            $("#MaximumDiscountedQuantityshowhide").hide();
+        }
+
+
+
+
+    });
+
+
+    
+</script>

@@ -1,0 +1,89 @@
+﻿@model Entities.ViewModels.Admin.SliderModel
+
+@{
+    ViewBag.Title = "SliderIndex";
+    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+}
+
+
+
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="col-md-4" style="float:left;">
+                        <h2 class="card-title">Slider Listesi</h2>
+                    </div>
+                    <div class="col-md-8" style="float:right;">
+                        <div class="col-md-3" style="float:right;"><a href="~/Admin/AdminSlider/SliderCreate"><button type="submit" class="btn btn-outline-default pd10-50" style="text-align:center;">Ekle</button></a></div>
+                    </div>
+                </div>
+                <span class="card-body">
+                    <table class="table tablesorter table-hover">
+                        <thead class="">
+                            <tr>
+                                <th>İd</th>
+                                <th>Başlık</th>
+                                <th>Resim</th>
+                                <th>Link</th>
+                                <th>Yazı</th>
+                                <th> </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.SliderList)
+                            {
+
+                                <tr>
+
+                                    <td>@item.Id</td>
+                                    <td>@item.SliderHeading</td>
+                                    <td><img src="@item.SliderImage" width="40px" height="40px" /></td>
+                                    <td>@item.SliderLink</td>
+                                    <td>@item.SliderText</td>
+                                    <td></td>
+                                    <td>
+
+                                        <a href="SliderEdit?id=@item.Id"><i class='fa fa-edit datatableduzenle' style='font-size:20px;'></i></a>
+                                        <a href="#" onclick="DeleteFunction(@item.Id)" id="@item.Id"> <i class="fa fa-trash-o datatablesil" style="font-size:20px;"></i></a>
+
+
+
+                                    </td>
+                                </tr>
+
+
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+                            function DeleteFunction(id) {
+
+                                console.log(id);
+                                $.ajax({
+                                    type: "post",
+                                    url: "SliderDelete?id=" + id,
+                                    success: function (result) {
+                                        $("#" + id).parent().parent().remove();
+                                        pushalert("Kayıt Silindi","success");
+                                    },
+                                    error: function (result) {
+                                        pushalert("Kayıt Silinemedi","Danger");
+                                    }
+
+
+                                });
+                            }
+
+</script>

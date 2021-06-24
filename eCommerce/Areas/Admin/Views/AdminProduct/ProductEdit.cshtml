@@ -1,0 +1,329 @@
+﻿@model Entities.ViewModels.Admin.ProductModel
+@{
+    ViewBag.Title = "ProductEdit";
+    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+}
+
+
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card ">
+                <div class="d-flex">
+
+                    <div class="card-header col-md-10">
+                        <div class="col-md-4" style="float:left;">
+                            <h1 class="card-title" style="margin-top: 8px;">
+
+                                Ürün Bilgisi
+
+                            </h1>
+                        </div>
+                    </div>
+
+                </div><br /><br />
+
+                <div class="card-body">
+
+                    <div style="display:flex">
+
+                        <div class="col-md-2" style="float:right;">
+                            <br />
+                            <ul class="nav" style="display:block;" id="mainProductTap">
+                                <li class="tapli"><a data-toggle="tab" href="#tap1" class="tab tap1">Ürün Bilgisi</a></li>
+                                <li class="tapli"><a data-toggle="tab" href="#tap4" class="tab tap4">Seo</a></li>
+                                <li class="tapli"><a data-toggle="tab" href="#tap2" class="tab tap2">Ürün Varyasyon</a></li>
+                                <li class="tapli"><a data-toggle="tab" href="#tap3" class="tab tap3">Resim</a></li>
+                                <li class="tapli"><a data-toggle="tab" href="#tap5" class="tab tap5">Ürün Özellik</a></li>
+                                <li class="tapli"><a data-toggle="tab" href="#tap6" class="tab tap6">Ürün Stok</a></li>
+                                <li class="tapli"><a data-toggle="tab" href="#tap7" class="tab tap7">Ürün Kargo Bilgisi</a></li>
+
+                            </ul>
+                        </div>
+                        <div class="tab-content col-md-10" style="padding-left: 10px;">
+
+                            <div id="tap1" class="tab-pane active ">
+                                @using (Html.BeginForm("ProductEdit", "AdminProduct", FormMethod.Post, new { enctype = "multipart/form-data", @id = "ProductInfoCreateOrUpdate" }))
+                                {
+                                    @Html.AntiForgeryToken();
+                                    @Html.HiddenFor(x => x.Tap, new { @class = "tabsaklayici" })
+                                    @Html.HiddenFor(x => x.CreatedOnUtc)
+                                    @Html.HiddenFor(model => model.Id, new { @class = " form-control  " })
+
+                                    <div style="display: flex; flex-wrap: wrap;">
+
+
+                                        <div class="form-group col-md-12 row">
+                                            @Html.LabelFor(x => x.ProductShow, "Ürün Gösterilsinmi?", new { @class = "control-label col-md-2 " })
+
+                                            <div class="col-md-10">
+                                                @Html.CheckBoxFor(model => model.ProductShow, new { @class = "formelement" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-12 row">
+                                            @Html.LabelFor(x => x.ProductStockTypeId, "Ürün Stok Tipi", new { @class = "control-label col-md-2 " })
+
+                                            <div class="col-md-10">
+                                                @Html.DropDownListFor(model => model.ProductStockTypeId, Model.ProductStockTypeSelectList, new { @class = "form-control col-md-8" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-12 row">
+                                            @Html.LabelFor(x => x.ProductName, "Ürün İsmi", new { @class = "control-label col-md-2 " })
+
+                                            <div class="col-md-10 ">
+                                                @Html.TextBoxFor(model => model.ProductName, new { @class = " form-control  col-md-8 " })
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-12 row">
+                                            @Html.LabelFor(x => x.BrandId, "Ürün Markası", new { @class = "control-label col-md-2" })
+
+                                            <div class="col-md-10">
+                                                @Html.DropDownListFor(model => model.BrandId, Model.BrandSelectListItems, new { @class = " form-control col-md-8  " })
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-12 row">
+                                            @Html.LabelFor(x => x.CategoryId, "Ürün Kategorisi", new { @class = "control-label col-md-2" })
+
+                                            <div class="col-md-10">
+                                                @Html.DropDownListFor(model => model.CategoryId, Model.CategorySelectListItems, new { @class = " form-control col-md-8  " })
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-12 row">
+                                            @Html.LabelFor(x => x.Id, "Sku =", new { @class = "control-label col-md-2 " })
+
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.Sku, new { @class = "form-control  col-md-8" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-12 row">
+
+                                            @Html.LabelFor(x => x.Id, "Gtin =", new { @class = "control-label col-md-2 " })
+
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.Gtin, new { @class = "form-control  col-md-8" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-12 row">
+                                            @Html.LabelFor(x => x.CategoryId, "Ürün Açıklaması", new { @class = "control-label col-md-2" })
+
+                                            <div class="col-md-10">
+
+                                                <div class="col-md-8 p-0">
+                                                    <textarea id="ProductContent" name="ProductContent">@Html.Raw(@Model.ProductContent)</textarea>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <input type="submit" value="Kaydet" class="btn btn-outline-default" />
+                                        </div>
+
+                                    </div>
+                                    <div class="clearfix"></div><br />
+                                }
+                            </div>
+
+                            <div id="tap4" class="tab-pane">
+                                @Html.Partial("ProductSeo/_ProductSeo", Model)
+                            </div>
+
+                            <div id="tap2" class="tab-pane">
+                                <br />
+                                @Html.Partial("AttrMaping/AttrMapping", Model)
+
+                                @Html.Partial("AttrCombination/AttrCombination", Model)
+
+
+                            </div>
+
+                            <div id="tap3" class="tab-pane">
+                                <div class="col-md-12">
+                                    @Html.Partial("ProductPhoto/ProductPhoto", Model)
+                                </div>
+                            </div>
+
+                            <div id="tap5" class="tab-pane">
+                                <div class="col-md-12">
+                                    @Html.Partial("ProductSpefication/ProductSpefication", Model)
+                                </div>
+                            </div>
+
+                            <div id="tap6" class="tab-pane">
+                                <div class="col-md-12">
+                                    @Html.Partial("StockPrice/ProductStockPrice", Model)
+                                </div>
+
+                            </div>
+
+                            <div id="tap7" class="tab-pane">
+                                <div class="col-md-12">
+                                    @Html.Partial("ProductShipment/ProductShipment", Model)
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<style>
+    .tapDisabled {
+        color: currentColor;
+        cursor: not-allowed;
+        opacity: 0.5;
+        text-decoration: none;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+
+        if ($("#Id").val() == 0) {
+            $("#mainProductTap li:not(:first-child) a").each(function (index) {
+                $(this).prop('disabled', true);
+                $(this).addClass("tapDisabled");
+            });
+        }
+        function allTapliEnabled() {
+            $("#mainProductTap li:not(:first-child) a").each(function (index) {
+                $(this).prop('disabled', false);
+                $(this).removeClass("tapDisabled");
+            });
+        }
+
+        $("#ProductInfoCreateOrUpdate").submit(function (e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+            $.ajax({
+                url: "/Admin/AdminProduct/ProductInfoCreateOrUpdate?" + data,
+                method: "POST",
+                type: "json",
+                success: function (data) {
+                    $("#Id").val(data.Id);
+                    const url = new URL(window.location);
+                    url.searchParams.set('Id', data.Id);
+                    window.history.pushState({}, '', url);
+
+                    allTapliEnabled();
+                    swal("İşlem Başarılı", "", "success");
+                },
+                error: function (data) {
+                    swal("İşlem Başarısız", "", "success");
+                }
+            });
+        });
+        function tapDegistir(data) {
+            const url = new URL(window.location);
+            url.searchParams.set('Tap', data);
+            window.history.pushState({}, '', url);
+        }
+        //Tap Başlangıç ayarı
+        var tappost = $(".tabsaklayici").val();
+        if (tappost == null || tappost == "") {
+            tapDegistir("tap1");
+        }
+        else {
+            $(".tab-pane").removeClass("active");
+            $("#" + tappost).addClass("active");
+            var selectedhead = $("." + tappost).text();
+            $(".card-title").text(selectedhead);
+        }
+        //Tap Değiştikçe
+        $(".tab").click(function (e) {
+            if ($(this).prop("disabled")) {
+                e.preventDefault();
+            } else {
+                //Başlık değiştir
+                var tapid = $(this).attr("href");
+                tapid = tapid.replace("#", "");
+                var selectedhead = $("." + tapid).text();
+                $(".card-title").text(selectedhead);
+                //Url Değiştir
+                tapDegistir(tapid);
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+<script>
+    tinymce.init({
+        selector: 'textarea#ProductContent',
+        automatic_uploads: true,
+        images_upload_url: '/Admin/AdminProduct/FileUpload',
+        images_reuse_filename: true,
+        plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+        imagetools_cors_hosts: ['picsum.photos'],
+        menubar: 'file edit view insert format tools table help',
+        toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+        toolbar_sticky: true,
+        language: 'tr',
+        autosave_ask_before_unload: true,
+        autosave_interval: "30s",
+        autosave_prefix: "{path}{query}-{id}-",
+        autosave_restore_when_empty: false,
+        autosave_retention: "2m",
+        image_advtab: true,
+        content_css: '//www.tiny.cloud/css/codepen.min.css',
+        importcss_append: true,
+        height: 400,
+        file_picker_callback: function (callback, value, meta) {
+            /* Provide file and text for the link dialog */
+            if (meta.filetype === 'file') {
+                callback('https://www.google.com/logos/google.jpg', { text: 'My text' });
+            }
+
+            /* Provide image and alt text for the image dialog */
+            if (meta.filetype === 'image') {
+                callback('https://www.google.com/logos/google.jpg', { alt: 'My alt text' });
+            }
+
+            /* Provide alternative source and posted for the media dialog */
+            if (meta.filetype === 'media') {
+                callback('movie.mp4', { source2: 'alt.ogg', poster: 'https://www.google.com/logos/google.jpg' });
+            }
+        },
+        entity_encoding: "raw",
+        template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
+        template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
+        height: 600,
+        image_caption: true,
+        quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+        noneditable_noneditable_class: "mceNonEditable",
+        toolbar_mode: 'sliding',
+        contextmenu: "link image imagetools table",
+    });
+</script>

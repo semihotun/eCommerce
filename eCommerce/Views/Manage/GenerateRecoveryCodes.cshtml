@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Generate two-factor authentication (2FA) recovery codes";
+    ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication);
+}
+
+<h2>Kurtma Kodu üret</h2>
+
+<div class="alert alert-warning" role="alert">
+    <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        <strong>Bu eylem yeni kurtarma kodları oluşturur.</strong>
+    </p>
+    <p>
+        Cihazınızı kaybederseniz ve kurtarma kodlarına sahip değilseniz, hesabınıza erişiminizi kaybedersiniz.
+    </p>
+    <p>
+        Yeni kurtarma kodlarının oluşturulması, kimlik doğrulayıcı uygulamalarında kullanılan anahtarları 
+        değiştirmez. Bir kimlik doğrulayıcı uygulamasında kullanılan anahtarı değiştirmek isterseniz, 
+        <a asp-action="ResetAuthenticatorWarning">kimlik doğrulayıcı anahtarlarınızı sıfırlayın.</a>
+    </p>
+</div>
+
+<div>
+    <form asp-action="GenerateRecoveryCodes" method="post" class="form-group">
+        <button class="btn btn-danger" type="submit">Kurtarma Kodları Oluşturun</button>
+    </form>
+</div>

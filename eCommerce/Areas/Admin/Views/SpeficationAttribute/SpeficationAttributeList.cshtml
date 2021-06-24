@@ -1,0 +1,112 @@
+﻿@model Entities.ViewModels.Admin.SpecificationAttributeModel
+
+
+@{
+    ViewBag.Title = "ShowcaseCreate";
+    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+}
+
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="col-md-5" style="float:left;">
+                        <h2 class="card-title">Ürün Özellik Seçeneği Ekle</h2>
+                    </div>
+                    <div class="col-md-7" style="float:right;">
+                        <ul class="nav" style="float:right;">
+
+                            <a class="btn btn-outline-default pd10-50" href="/Admin/SpeficationAttribute/SpeficationAttributeCreate">Ekle</a>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body">
+
+
+                    <div class="table-responsive">
+
+                        <div class="table-responsive ps ps--active-x">
+
+
+                            <table id="SpeficationList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Sıra</th>
+                                        <th> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+
+                 
+                        <script>
+                            var ProductListTableo;
+                            var BindProductList = function (response) {
+                                if ($.fn.DataTable.isDataTable("#SpeficationList")) {
+                                    ProductListTableo.draw();
+
+                                }
+                                else {
+
+                                    ProductListTableo = $("#SpeficationList").DataTable({
+                                        "sAjaxSource": "/Admin/SpeficationAttribute/SpeficationAttributeListJson",
+                                        "bServerSide": true,
+                                        "bProcessing": true,
+                                        "bSearchable": true,
+                                        "bLengthChange": false,
+                                        "searching": false,
+
+                                        "columns": [
+                                            { "data": "Id", "name": "Id", "autoWidth": true },
+                                            { "data": "Name", "name": "Name", "autoWidth": true },
+                                            { "data": "DisplayOrder", "name": "DisplayOrder", "autoWidth": true },
+                                            {
+                                                data: null,
+                                                render: function (data, type, row) {
+                                                    return "<a href='/Admin/SpeficationAttribute/SpeficationAttributeDelete?Id=" + row.Id + "'><i class='fa fa-trash-o datatablesil ' style='font-size:20px;' ></i></a>" +
+                                                        " <a href='/Admin/SpeficationAttribute/SpeficationAttributeEdit?Id=" + row.Id + "' ><i class='fa fa-edit datatableduzenle' style='font-size:20px;'></i></a>";
+                                                }, "orderable": false
+                                            },
+
+
+                                        ],
+                                        oLanguage: {
+                                            oPaginate: {
+                                                sPrevious: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                                                sNext: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+
+                                            }
+                                        }
+
+                                    });
+
+                                }
+
+                            }
+
+
+                            var FilterRecord = function () {
+                                BindProductList();
+                            }
+                            $(document).ready(function () {
+                                BindProductList();
+
+                            });
+                        </script>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

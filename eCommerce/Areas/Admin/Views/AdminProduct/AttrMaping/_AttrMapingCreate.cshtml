@@ -1,0 +1,51 @@
+﻿@model Entities.ViewModels.Admin.ProductModel
+
+
+<table class="table tablesorter" id="AttrMapingCreateTable">
+    <thead>
+        <tr>
+            <td>Özellik</td>
+            <td>Metin</td>
+            <td>Sırası</td>
+            <td> </td>
+        </tr>
+    </thead>
+    <tbody>
+        @*@Html.HiddenFor(x=>x.ProductAttributeMappingModel.ProductId)*@
+
+        <tr>
+            <td>
+                @Html.DropDownList("ProductAttributeId", Model.ProductAttributeSelectlist, new { @class = "form-control" })
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.ProductAttributeMappingModel.TextPrompt, new { @class = "form-control" })
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.ProductAttributeMappingModel.DisplayOrder, new { @class = "form-control", Value = "0", type = "number" })
+            </td>
+            <td>
+                <input type="button" class="btn btn-default" id="mappingAdd" value="Kaydet" />
+            </td>
+        </tr>
+
+    </tbody>
+
+</table>
+<style>
+    .vertical-absolute-left-center {
+        top: 50%;
+        left: 0%;
+        position: absolute;
+        transform: translateY(-50%);
+    }
+
+    .vertical-absolute-right-center {
+        top: 50%;
+        right: 0%;
+        position: absolute;
+        transform: translateY(-50%);
+    }
+</style>
+
+
+

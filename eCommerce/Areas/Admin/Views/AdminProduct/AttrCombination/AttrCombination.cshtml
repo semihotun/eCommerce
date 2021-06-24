@@ -1,0 +1,68 @@
+﻿@model Entities.ViewModels.Admin.ProductModel
+@{
+    ViewData["Title"] = "AttrCombination";
+}
+
+@Html.Partial("AttrCombination/_AttrCombinationInsert", Model)
+
+@{Html.RenderPartial("AttrCombination/_AttrCombinationList", Model);}
+
+
+<script>
+    var ProductCombinationTableo;
+    var BindProductCombination = function (response) {
+       if ($.fn.DataTable.isDataTable("#productCombination")) {
+           ProductCombinationTableo.draw();
+           }
+           else {
+           ProductCombinationTableo = $("#productCombination").DataTable({
+               "sAjaxSource": "/Admin/AdminProduct/AttrCombination?ProductId=" +@Model.Id,
+                "bServerSide": true,
+                "bProcessing": true,
+                "bSearchable": true,
+                "bLengthChange": false,
+                "searching":false,
+
+           "columns": [
+                { "data": "Id", "name": "Id", "autoWidth": true ,"visible" :false},
+               { "data": "AttributesXml", "name": "AttributesXml", "autoWidth": true },
+               {
+                   data: null,
+                   render: function (data, type, row) {
+                       return "<a href='#' class='ProductCombinationDelete'  Id='" + row.Id + "' ><i class='fa fa-trash-o datatablesil ' style='font-size:20px;' ></i></a>" +
+                           "<a href='/Admin/AdminProduct/AttrCombinationDetail?CombinationId=" + row.Id + "' ><i class='fa fa-edit datatableduzenle' style='font-size:20px;'></i></a>";
+                   }, "orderable": false
+               }
+               ], "language": {
+                   "url": "/datatablelanguage.json"
+               }
+           });
+       }
+    }
+    var FilterRecord = function () {
+        BindProductCombination();
+    }
+    $(document).ready(function () {
+        BindProductCombination();
+        var productid = $("#Id").val();
+
+        $('#productCombination tbody').on('click', '.ProductCombinationDelete', function () {
+            var combinationid = $(this).attr('Id');
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                data: 'ProductId=' + productid,
+                url: '/Admin/AdminProduct/AttrCombinationDelete?Id=' + combinationid +'&ProductId='+productid,
+                success: function (datas) {
+                    $("#productCombination tbody tr td "+"#"+combinationid).parent().parent().remove();
+                    toastr.success("Basariyla Silindi");
+                },
+                error: function () {
+                    toastr.warning("Veri Bazi Resim gorsellerinde kullanildigi icin silinemedi");
+                },
+            });
+
+
+        });
+    });
+</script>

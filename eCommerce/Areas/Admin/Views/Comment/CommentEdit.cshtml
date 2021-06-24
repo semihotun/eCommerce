@@ -1,0 +1,52 @@
+﻿@model Entities.ViewModels.Admin.CommentModel
+@{
+    ViewData["Title"] = "CommentList";
+    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+}
+
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="col-md-4" style="float:left;">
+                        <h2 class="card-title">Yorum Bilgisi</h2>
+                    </div>
+                    <div class="col-md-8" style="float:right;">
+                        <div class="col-md-4" style="float:right;"><a href="~/Admin/Comment/CommentDelete?Id=@Model.Id"><button type="submit" class="btn btn-outline-danger pd10-50" style="text-align:center;">Yorumu Sil</button></a></div>
+                        <div class="col-md-4" style="float:right;"><a href="~/Admin/Comment/CommentApprove?Id=@Model.Id"><button type="submit" class="btn btn-outline-success pd10-50" style="text-align:center;">Yorumu Onayla</button></a></div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <span class="col-md-3">Yorum Başlığı</span>
+                        <span>@Model.CommentTitle</span>
+
+                    </div>
+                    <div class="form-group">
+                        <span class="col-md-3">Yorum İçeriğ</span>
+                        <span>@Model.CommentText</span>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-md-3">Tarih</span>
+                        <span>@Model.CreatedOnUtc</span>
+                    </div>
+
+                    <div class="form-group">
+                        <span class="col-md-3">Yıldız Puanı</span>
+                        <span>@Model.Rating</span>
+                    </div>
+
+
+           
+           
+              
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

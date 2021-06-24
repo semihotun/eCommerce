@@ -1,0 +1,221 @@
+﻿@model Entities.ViewModels.Admin.CategoryModel
+@{
+    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="col-md-4" style="float:left;">
+                        <h2 class="card-title">Kategori Listesi</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="col-md-12">
+                        <div class="modal fade in" id="modalAddNode" role="dialog" aria-hidden="true">
+                            @Html.Partial("_AddNode")
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="panel panel-primary">
+
+
+                                <div class="panel-body">
+                                    <div id="tree"></div>
+
+                                    <div class="clearfix">
+                                    </div>
+
+                                    <br />
+                                    <div>
+                                        <button id="btnDeleteNode" data-toggle="modal" class='btn btn-danger'> Satır Sil <span class="glyphicon glyphicon-trash"></span> </button>
+                                        <button id="btnpopoverAddNode" data-toggle="modal" class='btn btn-warning'> Satır Ekle <span class="glyphicon glyphicon-plus"></span>  </button>
+                                        <button id="btnEditNode" data-toggle="modal" class='btn btn-danger'> Düzenle <span class="glyphicon glyphicon-trash"></span> </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<style type="text/css">
+    li.gj-tree-item [data-role="display"]{
+    padding:9px 7px !important;
+    font-size:15px;
+    }
+    input[type="radio"], input[type="checkbox"] {
+        width:15px;
+        height:15px;
+        margin-top:6px;
+    }
+</style>
+
+<link href="~/Content/gijgo.css" rel="stylesheet" />
+<script src="~/Content/gijgo.min.js"></script>
+
+<script type="text/javascript">
+    //'Hierarchy/GetHierarchy'
+    $(document).ready(function () {
+        $('.petenddiv').attr("class", "petenddiv d-none");
+        $("#NodeTypeRbtn").prop("checked", true);
+        var Usertree = "";
+        var tree = "";
+        $.ajax({
+            type: 'get',
+            dataType: 'json',
+            cache: false,
+            url: '/Admin/CategoryTree/GetHierarchy',
+            success: function (records, textStatus, jqXHR) {
+                tree = $('#tree').tree({
+                    primaryKey: 'Id',
+                    dataSource: records,
+                    dragAndDrop: true,
+                    checkboxes: true,
+                    iconsLibrary: '>',
+                    
+                });
+                Usertree = $('#Usertree').tree({
+                    primaryKey: 'Id',
+                    dataSource: records,
+                    dragAndDrop: false,
+                    checkboxes: true,
+                    iconsLibrary: '>',
+                });
+         
+                tree.on('nodeDrop', function (e, Id, PerentId) {
+                    currentNode = Id ? tree.getDataById(Id) : {};
+                    console.log("current Node = " + currentNode);
+                    parentNode = PerentId ? tree.getDataById(PerentId) : {};
+                    console.log("parent Node = " + parentNode);
+             
+                    var params = { id: Id, parentId: PerentId };
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/CategoryTree/ChangeNodePosition",
+                        data: params,
+                        dataType: "json",
+                        success: function (data) {
+                            $.ajax({
+                                type: "Get",
+                                url: "/Admin/CategoryTree/GetHierarchy",
+                                dataType: "json",
+                                success: function (records) {
+                                    Usertree.destroy();
+                                    Usertree = $('#Usertree').tree({
+                                        primaryKey: 'Id',
+                                        dataSource: records,
+                                        dragAndDrop: false,
+                                        checkboxes: true,
+                                        iconsLibrary: 'glyphicons',
+                                    });
+                                }
+                            });
+                            toastr.success("Yer değiştirme işlemi başarılı");
+
+                        }
+                    });
+
+                });
+
+                $('#btnDeleteNode').click(function (e) {
+                    e.preventDefault();
+                    var result = tree.getCheckedNodes();
+                    if (result != "") {
+                        $.ajax({
+                            type: "POST",
+                            url: "/Admin/CategoryTree/DeleteNode",
+                            data: { values: result.toString() },
+                            dataType: "json",
+                            success: function (data) {
+                                toastr.success("Başrıyla Silindi");
+                                window.location.reload();
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                toastr.warning("Silerken Bir hatayla karşılaşıldı");
+                            },
+                        });
+                    }
+                    else {
+                        toastr.warning("Lütfen Silinecek Kategorileri Seçiniz");
+                    }
+                });
+
+                $('#btnEditNode').click(function (e) {
+                    e.preventDefault();
+                    var result = tree.getCheckedNodes();
+                    //Buraya Edit Location Gelicek
+                    window.location.assign('/Admin/CategoryTree/CategoryEdit?id=' + result.toString());
+
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('Error - ' + errorThrown);
+            }
+        });
+
+        $('#btnpopoverAddNode').click(function (e) {
+            e.preventDefault();
+            $("#modalAddNode").modal("show");
+        });
+
+        $(document).on("click", "#savenode", function (event) {
+            event.preventDefault();
+
+            $('#formaddNode').validate();
+            if ($('#formaddNode').valid()) {
+                var formdata = $('#formaddNode').serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/CategoryTree/AddNewNode",
+                    dataType: "json",
+                    data: formdata,
+                    success: function (response) {
+                        window.location.reload();
+                        toastr.success("Başrıyla Eklendi");
+                    },
+                    error: function (response) {
+                        toastr.success("Eklerken bir hatayla karşılaşıldı");
+                        window.location.reload();
+                    },
+                    complete: function () {
+                    }
+                });
+            }
+
+        });
+
+        $(document).on("click", "#closePopup", function (e) {
+            e.preventDefault();
+            $("#modalAddNode").modal("hide");
+        });
+
+        $('.rbtnnodetype').click(function (e) {
+            if ($(this).val() == "Pn") {
+                $('.petenddiv').attr("class", "petenddiv d-none");
+                $("#ParentName").val("");
+            }
+            else {
+                $('.petenddiv').attr("class", "petenddiv");
+            }
+        });
+
+    });
+
+</script>
+
+
+
+
+
+
+

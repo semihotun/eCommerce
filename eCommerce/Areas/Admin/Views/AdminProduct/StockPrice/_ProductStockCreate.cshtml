@@ -1,0 +1,68 @@
+﻿@using Entities.Enum
+@model Entities.ViewModels.Admin.ProductModel
+
+@{
+    Layout = null;
+}
+
+
+@using (Html.BeginForm("ProductStockAdd", "AdminProduct", FormMethod.Post, new { id = "ProductStockCreateForm" }))
+{
+    <div class="d-flex flex-wrap">
+
+        @Html.HiddenFor(x => x.ProductStock.Id, new { value = Model.Id })
+        
+        @Html.HiddenFor(x=>x.ProductStock.ProductName)
+        @Html.HiddenFor(model => model.ProductStock.ProductId, new { @class = "form-control" ,value=Model.Id})
+
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(x => x.ProductStock.ProductStockPiece, "Ürün Stok Adedi", new { @class = "control-label col-md-2 " })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ProductStock.ProductStockPiece, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(x => x.ProductStock.ProductPrice, "Ürün Fiyatı", new { @class = "control-label col-md-2 " })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ProductStock.ProductPrice, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(x => x.ProductStock.ProductDiscount, "İndirim Yüzde Miktarı", new { @class = "control-label col-md-2 " })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ProductStock.ProductDiscount, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(x => x.ProductStock.AllowOutOfStockOrders, "Stok Dışı Siparişe İzin ver", new { @class = "control-label col-md-2 " })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.ProductStock.AllowOutOfStockOrders, new { @class = "form-element" })
+            </div>
+        </div>
+
+
+            <div class="form-group col-md-6">
+                @Html.LabelFor(x => x.ProductStock.CombinationId, "Kombinasyon", new { @class = "control-label col-md-2 " })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(x => x.ProductStock.CombinationId, Model.CombinationSelectList, new { @class = "form-control" })
+                </div>
+            </div>
+   
+        <div class="form-group col-md-6">
+            @Html.LabelFor(x => x.ProductStock.NotifyAdminForQuantityBelow, "Stok bu Rakama Düşünce Haber Ver", new { @class = "control-label col-md-2 " })
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.ProductStock.NotifyAdminForQuantityBelow, new { @class = "form-control" })
+            </div>
+        </div>
+        
+        <div class="form-group col-md-6">
+           
+            <div class="col-md-10">
+                <input type="submit" class="btn btn-outline-default"  value="Kaydet"/>
+            </div>
+        </div>
+    </div>
+}
+

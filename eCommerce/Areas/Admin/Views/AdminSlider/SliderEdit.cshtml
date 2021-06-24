@@ -1,0 +1,97 @@
+﻿@model Entities.ViewModels.Admin.SliderModel
+@{
+    ViewBag.Title = "SliderEdit";
+    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+}
+
+
+
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card ">
+                    <div class="card-header">
+                        <div class="col-md-4" style="float:left;">
+                            <h2 class="card-title">Slider Bilgisi</h2>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        @using (Html.BeginForm("SliderEdit", "AdminSlider", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.Id)
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SliderImage, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div class="col-md-5"> <input type="file" name="Uploadfile" id="Uploadfile" class="form-control " value="@Model.SliderImage" /> </div>
+                                            <div class="col-md-7" style="float:left;"> <img src="@Model.SliderImage" width="40px" height="40px" id="resim" /> </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.SliderImage, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SliderHeading, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.SliderHeading, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.SliderHeading, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SliderText, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.SliderText, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.SliderText, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SliderLink, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.SliderLink, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.SliderLink, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Save" class="btn btn-default" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>
+
+<script type="text/javascript">
+
+            $("#Uploadfile").change(function(){//eğer file değişirse
+                    var resim = document.getElementById("Uploadfile");//resime eriş
+					if (resim.files && resim.files[0]){//eğer dosya var ise
+						var veri=new FileReader();//veri okuma apisi başlatıyoruz.
+						veri.onload=function() {//altta readAsDataURL verileri okuyoruz.O okuma tamamladığın da
+                            var adres = veri.result;//veriyi al
+                            $("#resim").attr("src", adres);                    
+							$('.onizleme').html('<img src="'+adres+'"/>');//resim olarak çizdir.
+						}
+						veri.readAsDataURL(resim.files[0]);//veri okuma
+					}
+				});
+</script>

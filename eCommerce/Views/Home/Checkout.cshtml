@@ -1,0 +1,98 @@
+﻿@model Entities.DTO.Product.Checkout
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BREADCRUMB -->
+<div id="breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">Checkout</li>
+        </ul>
+    </div>
+</div>
+<!-- /BREADCRUMB -->
+<!-- section -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <form id="checkout-form" class="clearfix">
+
+
+
+
+                <div class="col-md-12">
+                    <div class="order-summary clearfix">
+                        <div class="section-title">
+                            <h3 class="title">Siparişler</h3>
+                        </div>
+                        <table class="shopping-cart-table table">
+                            <tbody>
+
+                                @if (Model.CheckoutProductList.Count != 0)
+                                {
+                                    foreach (var item in Model.CheckoutProductList)
+                                    {
+                                        <tr>
+                                            <td><strong>@item.ProductModel.ProductName</strong></td>
+
+                                            @*<td class="thumb"><img src="@item.ProductPhotoList?.First()?.ProductPhotoName" alt=""></td>*@
+                                            <td class="details">
+                                            </td>
+                                            <td class=" text-center">
+                                                Stokda
+                                                @item.ProductStock.ProductStockPiece
+                                                <br /> adet kaldı
+                                            </td>
+
+
+
+                                            <td class="text-center">Adet Fiyatı @item.ProductStock.ProductPrice TL</td>
+
+
+                                            <td class="qty text-center">
+                                                <input class="input" type="number" value="@item.ProductPiece" max="@item.ProductStock.ProductStockPiece" min="0">
+
+                                            </td>
+
+                                            <td>Toplam Fiyat <span class="price">@item.ProductPieceTotalPrice</span> TL</td>
+
+                                        </tr>
+
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="7" style="text-align:center;background-color:#F6F7F8;">Sepetiniz boş</td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                        <table class="shopping-cart-table table">
+                            <tfoot style="float:right">
+                                <tr>                            
+                                    <th>Toplam Tutar</th>
+                                    <th colspan="2" class="total">@Model.AllProductTotalPrice TL</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div class="pull-right">
+                            <button class="primary-btn">Devam Et</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /section -->

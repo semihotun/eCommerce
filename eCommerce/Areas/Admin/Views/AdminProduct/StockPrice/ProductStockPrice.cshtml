@@ -1,0 +1,91 @@
+﻿@model Entities.ViewModels.Admin.ProductModel
+
+
+
+@Html.Partial("StockPrice/_ProductStockCreate", Model)
+
+@Html.Partial("StockPrice/_ProductStockPriceDataTable", Model)
+
+
+
+<script>
+    var ProductStockPriceTable;
+    var BindProductList = function (response) {
+        if ($.fn.DataTable.isDataTable("#ProductStockPriceList")) {
+            ProductStockPriceTable.draw();
+        }
+        else {
+            ProductStockPriceTable = $("#ProductStockPriceList").DataTable({
+                "sAjaxSource": "/Admin/AdminProduct/ProductStockListJson?ProductId=" + $("#Id").val(),
+                "bServerSide": true,
+                "bProcessing": true,
+                "bSearchable": true,
+                "bLengthChange": false,
+                "searching": false,
+                "columns": [
+                    { "data": "Id", "name": "ProductStock.Id", "autoWidth": true },
+                    { "data": "ProductName", "name": "ProductName", "autoWidth": true },
+                    { "data": "ProductStockPiece", "name": "ProductStock.ProductStockPiece", "autoWidth": true },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return "<a id='" + row.Id + "' onClick='DeleteProductStock(this)'><i class='fa fa-trash-o datatablesil ' style='font-size:20px;' ></i></a>";
+                        }, "orderable": false
+                    },
+                ],
+                "language": {
+                    "url": "/datatablelanguage.json"
+                }
+            });
+        }
+    }
+  
+    $(document).ready(function () {
+        var FilterRecord = function () {
+            BindProductList();
+        }
+        FilterRecord();
+    });
+    $("#ProductListForm").submit(function (event) {
+        event.preventDefault();
+        $('#ProductStockPriceList').DataTable().destroy();
+        BindProductList();
+    });
+
+    $("#ProductStockCreateForm").submit(function (e) {
+        e.preventDefault();
+        $('input[name="ProductStock.ProductId"]').val($("#Id").val());
+        var ProductName = $('input[name="ProductName"]').text() + $('input[name="ProductStock.CombinationId"]').text();
+        $('input[name="ProductStock.ProductName"]').val(ProductName);
+        var data = $("#ProductStockCreateForm").serialize();
+        $.ajax({
+            url: "/Admin/AdminProduct/ProductStockAdd?" + data,
+            method: "Post",
+            type: "json",
+            success: function (data) {
+                swal("İşlem Başarılı", "", "success");
+                console.log(data);
+                $('#ProductStockPriceList').DataTable().row.add( data ).draw();
+            },
+            error: function (data) {
+                swal("İşlem Başarısız", "", "error");
+            }
+        });
+    });
+    function DeleteProductStock(thisData) {
+        var deleteDataId = $(thisData).attr("id");
+        $.ajax({
+            url: "/Admin/AdminProduct/ProductStockDelete?Id=" + deleteDataId,
+            method: "Post",
+            type: "json",
+            success: function (data) {
+                swal("İşlem Başarılı", "", "success");
+                $(thisData).parent().parent().remove();
+            },
+            error: function (data) {
+                swal("İşlem Başarısız", "", "error");
+            }
+        });
+
+    }
+</script>

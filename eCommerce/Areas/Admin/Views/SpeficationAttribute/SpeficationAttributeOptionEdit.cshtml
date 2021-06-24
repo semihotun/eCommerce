@@ -1,0 +1,70 @@
+﻿@model Entities.ViewModels.Admin.SpecificationAttributeOptionModel
+@{
+    ViewData["Title"] = "SpeficationAttributeOptionEdit";
+    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+}
+
+
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card ">
+                    <div class="card-header">
+                        <div class="col-md-4" style="float:left;">
+                            <h2 class="card-title">Filitre Düzenle</h2>
+                        </div>
+                        <div class="col-md-8" style="float:right;">
+                            <ul class="nav" style="float:right;">
+                                @*<li class="active"><a data-toggle="tab" href="#home" class="btn btn-outline-info headtext">Bilgi</a></li>*@
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @using (Html.BeginForm("SpeficationAttributeOptionEdit", "SpeficationAttribute", FormMethod.Post))
+                        {
+
+                        <div style="display:flex;flex-wrap:wrap;">
+                            @Html.HiddenFor(x => x.Id)
+                            @Html.HiddenFor(x => x.SpecificationAttributeId)
+                            <div class="form-group col-md-12">
+                                @Html.LabelFor(x => x.Name, "İsmi", new { @class = "control-label col-md-2" })
+
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control col-md-8" })
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                @Html.LabelFor(x => x.ColorSquaresRgb, "Renk", new { @class = "control-label col-md-2" })
+
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(x => x.ColorSquaresRgb, new { @class = "form-control  col-md-8" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-12">
+                                @Html.LabelFor(x => x.DisplayOrder, "Sıra", new { @class = "control-label col-md-2" })
+
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(x => x.DisplayOrder, new { @class = "form-control col-md-8 " })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-2">
+
+
+                                <div class="col-md-10">
+                                    <input type="submit" class="btn btn-default" />
+                                </div>
+                            </div>
+
+
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

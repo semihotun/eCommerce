@@ -1,0 +1,84 @@
+﻿using System.Linq;
+using AutoMapper;
+using Business.Abstract.Brands;
+using DataAccess.Abstract;
+using Entities.ViewModels.Admin;
+using Entities.Concrete;
+using Entities.DTO.Brand;
+using Entities.Others;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using Core.Utilities.DataTable;
+
+namespace eCommerce.Areas.Admin.Controllers
+{
+    [Route("[area]/[controller]/[action]")]
+
+    [Area("Admin")]
+    public class BrandController : AdminBaseController
+    {
+        #region Field
+        private readonly IBrandService _brandService;
+        private readonly IMapper _mapper;
+        private readonly IBrandDAL _brandDal;
+
+        #endregion
+
+        #region Constructer
+        public BrandController(IBrandService brandService,
+           IMapper mapper,
+           IBrandDAL brandDal)
+        {
+            this._brandService = brandService;
+            this._mapper = mapper;
+            this._brandDal = brandDal;
+        }
+        #endregion
+
+        #region Method
+        public async Task<IActionResult> BrandListJson(BrandDataTableFilter model,DTParameters param,string json)
+       {
+            var query = await _brandDal.GetBrandDataTable(model, param);
+
+            return ToDataTableJson<Brand>(query, param);
+        }
+
+        public IActionResult BrandList() => View();
+
+        public async Task<IActionResult> BrandEdit(int id)
+        {
+            var data = await _brandService.GetBrand(id);
+
+            return View(data.Data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> BrandEdit(Brand model)
+        {
+            await _brandService.UpdateBrand(model);
+
+            return View(model);
+        }
+
+        public IActionResult BrandCreate() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> BrandCreate(Brand model)
+        {
+            await _brandService.BrandAdd(model);
+            Alert("Eklendi", NotificationType.success);
+            return RedirectToAction("BrandList", "Brand");
+        }
+        public async Task<IActionResult> BrandDelete(int id)
+        {
+            var deletedData = await _brandService.GetBrand(id);
+            await _brandService.DeleteBrand(deletedData.Data);
+
+            return RedirectToAction("BrandList", "Brand");
+        }
+
+        #endregion
+
+    }
+}
+

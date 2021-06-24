@@ -1,0 +1,87 @@
+﻿@model Entities.ViewModels.Admin.CategorySpeficationModel
+
+@{
+    ViewData["Title"] = "CategoryEdit";
+    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+}
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <h2 class="card-title">Kategori Düzenle</h2>
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            @using (Html.BeginForm("CategoryEdit", "CategoryTree"))
+                            {
+                                @Html.HiddenFor(x => x.CategorySpeficationDTO.Category.Id)
+                                @Html.HiddenFor(x => x.CategorySpeficationDTO.Category.ParentCategoryId)
+                                <div>
+                                    @Html.TextBoxFor(x => x.CategorySpeficationDTO.Category.CategoryName, new { @class = "form-control col-md-5" })
+                                </div>
+                                <div class="pt-4">
+                                    <input type="submit" value="Kaydet" class="btn btn-outline-default" />
+                                </div>
+                            }
+                            </div>
+                        <div class="col-md-12">
+                            <br /><br /><br />
+                            <h3 class="card-title" style="font-weight:100;">Filitre Ekle</h3><br />
+                            @using (Html.BeginForm("CategoryFilterCreate", "CategoryTree"))
+                            {
+                                @Html.HiddenFor(x => x.Id)
+                                <div class="d-flex">
+                                    <input type="hidden" value="@Model.CategorySpeficationDTO.Category.Id" name="CategorySpefication.CategoryId" />
+                                    @Html.DropDownListFor(model => model.CategorySpefication.SpeficationAttributeId, Model.SpeficationAttributeSelectList, new { @class = " form-control col-md-5  " })
+
+                                    <input type="submit" class="btn btn-outline-default ml-2" value="Ekle" />
+                                </div>
+                            }
+                            <br /><br /><br />
+                            <h3 class="card-title" style="font-weight:100;">Kategori Filitreleri</h3><br />
+
+                            @if (Model.CategorySpeficationDTO.CategorySpeficationList.Count != 0)
+                            {
+                                <table class="table table-responsive" stlye="width:100%">
+                                    <thead>
+                                        <tr>Özellik</tr>
+                                        <tr> </tr>
+                                    </thead>
+
+                                    @foreach (var item in Model.CategorySpeficationDTO.CategorySpeficationList)
+                                    {
+
+
+                                        <tr>
+                                            <td class="col-md-3">@item.Name</td>
+                                            <td><a href="/Admin/CategoryTree/CategoryFilterDelete?speficationId=@item.Id&categoryId=@Model.CategorySpeficationDTO.Category.Id" class="btn btn-outline-danger">Sil</a></td>
+                                        </tr>
+
+                                    }
+
+                                </table>
+                            }
+                            else
+                            {
+
+                                <span class="text-center"><div><hr /> Categoriye Ait Filitre Yok<hr /></div></span>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

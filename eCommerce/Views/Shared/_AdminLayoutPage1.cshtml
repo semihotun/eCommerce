@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    @*Fontla İlgili*@
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    @*Jquery ile ilgili*@
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+
+    @*Admin ile ilgili*@
+    <link href="~/Content/Admin/css/black-dashboard.css" rel="stylesheet" />
+    <script src="~/Content/Admin/js/core/popper.min.js"></script>
+    <script src="~/Content/Admin/js/core/bootstrap.min.js"></script>
+    <script src="~/Content/Admin/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <link href="~/Content/Admin/css/Custom.css" rel="stylesheet" />
+
+    @*Kendim Kullancağım Backand ile ilgili*@
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <script src="~/Scripts/myalert.js"></script>
+    <link href="~/Content/Admin/bootstrap-tagsinput.css" rel="stylesheet" />
+    <script src="~/Content/Admin/bootstrap-tagsinput.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    @*Toaster İle ilgili*@
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <script src="~/Scripts/toastr.min.js"></script>
+    <script src="~/Scripts/toasterconfig.js"></script>
+
+    @*Datatable ve Editör*@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/af-2.3.6/b-1.7.0/b-colvis-1.7.0/b-html5-1.7.0/b-print-1.7.0/cr-1.5.3/date-1.0.3/fc-3.3.2/fh-3.1.8/kt-2.6.1/r-2.2.7/rg-1.1.2/rr-1.2.7/sc-2.0.3/sb-1.0.1/sp-1.2.2/sl-1.3.3/datatables.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/af-2.3.6/b-1.7.0/b-colvis-1.7.0/b-html5-1.7.0/b-print-1.7.0/cr-1.5.3/date-1.0.3/fc-3.3.2/fh-3.1.8/kt-2.6.1/r-2.2.7/rg-1.1.2/rr-1.2.7/sc-2.0.3/sb-1.0.1/sp-1.2.2/sl-1.3.3/datatables.min.js"></script>
+    <script src="~/datatable/DataTableFilter.js"></script>
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    @* Ajax Fluent Api auto Validation *@
+    <script src="~/Scripts/AjaxValidation/leftlobed-message.js"></script>
+    <script src="~/Scripts/AjaxValidation/leftlobed-validation.js"></script>
+
+    @*Utilities*@
+    <script src="~/Scripts/Utilities/ResponseToForm.js"></script>
+    <script src="~/Scripts/Utilities/TryConvert.js"></script>
+</head>
+<body>
+
+    @if (TempData["notification"] != null)
+    {
+        <script>
+
+            @Html.Raw(TempData["notification"])
+        </script>
+    }
+    <div class="wrapper">
+        <div class="sidebar">
+            <!--
+                Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+            -->
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    <a href="javascript:void(0)" class="simple-text logo-mini">
+                        SO
+                    </a>
+                    <a href="javascript:void(0)" class="simple-text logo-normal">
+                        Semih Otun
+                    </a>
+                </div>
+                <ul class="nav">
+
+                    <li>
+                        <a href="~/Admin/AdminProduct/Productlist">
+
+                            <span class="nav-link"><i class="fa fa-table"></i>Ürünler</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/Admin/ShowCase/ShowcaseList">
+
+                            <span class="nav-link">  <i class="fa fa-table"></i>Showcaseler</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/Admin/CategoryTree/Index">
+
+                            <span class="nav-link">   <i class="fa fa-table"></i>Kategoriler</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/Admin/AdminSlider/SliderIndex">
+
+                            <span class="nav-link">     <i class="fa fa-table"></i>Slider</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/Admin/AdminProductAttr/ProductAttributeList">
+
+                            <span class="nav-link"><i class="fa fa-table"></i>Özellik</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/Admin/SpeficationAttribute/SpeficationAttributeList">
+
+                            <span class="nav-link"> <i class="fa-table fa"></i>ÖzellikSpec</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="~/Admin/Comment/CommentList">
+
+                            <span class="nav-link"> <i class="fa-table fa"></i>Yorumlar</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="~/Admin/Discount/DiscountList">
+
+                            <span class="nav-link"> <i class="fa-table fa"></i>İndirimler</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/Admin/Brand/BrandList">
+
+                            <span class="nav-link"> <i class="fa-table fa"></i>Marka</span>
+                        </a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <div class="navbar-toggle d-inline">
+                            <button type="button" class="navbar-toggler">
+                                <span class="navbar-toggler-bar bar1"></span>
+                                <span class="navbar-toggler-bar bar2"></span>
+                                <span class="navbar-toggler-bar bar3"></span>
+                            </button>
+                        </div>
+                        @*<a class="navbar-brand" href="javascript:void(0)">Dashboard</a>*@
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navigation">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="search-bar input-group">
+                                <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal">
+                                    <i class="tim-icons icon-zoom-split"></i>
+                                    <span class="d-lg-none d-md-block">Search</span>
+                                </button>
+                            </li>
+                            <li class="dropdown nav-item">
+                                <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                    <div class="notification d-none d-lg-block d-xl-block"></div>
+                                    <i class="tim-icons icon-sound-wave"></i>
+                                    <p class="d-lg-none">
+                                        Notifications
+                                    </p>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
+                                    <li class="nav-link">
+                                        <a href="#" class="nav-item dropdown-item">Mike John responded to your email</a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a href="javascript:void(0)" class="nav-item dropdown-item">You have 5 more tasks</a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a href="javascript:void(0)" class="nav-item dropdown-item">Your friend Michael is in town</a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a href="javascript:void(0)" class="nav-item dropdown-item">Another notification</a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a href="javascript:void(0)" class="nav-item dropdown-item">Another one</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown nav-item">
+                                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                    <div class="photo">
+                                        @*<img src="../assets/img/anime3.png" alt="Profile Photo">*@
+                                    </div>
+                                    <b class="caret d-none d-lg-block d-xl-block"></b>
+                                    <p class="d-lg-none">
+                                        Log out
+                                    </p>
+                                </a>
+                                <ul class="dropdown-menu dropdown-navbar">
+                                    <li class="nav-link">
+                                        <a href="javascript:void(0)" class="nav-item dropdown-item">Profile</a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a href="javascript:void(0)" class="nav-item dropdown-item">Settings</a>
+                                    </li>
+                                    <li class="dropdown-divider"></li>
+                                    <li class="nav-link">
+                                        <a href="javascript:void(0)" class="nav-item dropdown-item">Log out</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="separator d-lg-none"></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="tim-icons icon-simple-remove"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Navbar -->
+            @RenderBody()
+            <footer class="footer">
+                <div class="container-fluid">
+
+                    <div class="copyright">
+                     Bu site  &copy; Semih Ötün tarafından yapılmıştır
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+
+    <!-- Chart JS -->
+    <script src="~/Content/Admin/js/plugins/chartjs.min.js"></script>
+    <!--  Notifications Plugin    -->
+    <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="~/Content/Admin/js/black-dashboard.min.js"></script>
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('body').addClass('white-content');
+
+        });</script>
+
+
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+
+
+
+</html>
+

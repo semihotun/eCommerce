@@ -1,0 +1,136 @@
+﻿@model Entities.ViewModels.Admin.ShowCaseModel
+
+<div class="table-responsive">
+
+
+
+
+
+
+    @using (Html.BeginForm("ShowcaseEdit", "ShowCase",FormMethod.Get,new { Tap = "tap3"}))
+    {
+
+        <input type="hidden" name="Tap" value="tab3" class="tabsaklayici"/>
+        <div style="display:flex;flex-wrap:wrap;">
+            <div class="form-group col-md-6 row">
+                @Html.LabelFor(x => x.ProductModel.Id, "Id", new { @class = "control-label col-md-2 " })
+
+                <div class="col-md-10 ">
+                    @Html.TextBoxFor(model => model.ProductModel.Id, new { @class = " form-control  " })
+
+                </div>
+            </div>
+            <br />
+            <div class="form-group col-md-6 row">
+                @Html.LabelFor(x => x.ProductModel.ProductName, "Ürün İsmi", new { @class = "control-label col-md-2 " })
+
+                <div class="col-md-10 ">
+                    @Html.TextBoxFor(model => model.ProductModel.ProductName, new { @class = " form-control " })
+
+                </div>
+            </div>
+            <br />
+            <div class="form-group col-md-6 row">
+                @Html.LabelFor(x => x.ProductModel.BrandId, "Marka", new { @class = "control-label col-md-2 " })
+
+                <div class="col-md-10 ">
+                    @Html.DropDownListFor(model => model.ProductModel.BrandId,Model.BrandSelectListItems, new { @class = " form-control  " })
+
+                </div>
+            </div>
+            <br />
+            <div class="form-group col-md-6 row">
+                @Html.LabelFor(x => x.ProductModel.CategoryId, "Kategori", new { @class = "control-label col-md-2 " })
+
+                <div class="col-md-10 ">
+                    @Html.DropDownListFor(model => model.ProductModel.CategoryId, Model.CategorySelectListItems, new { @class = " form-control  " })
+
+                </div>
+            </div>
+            <br />    <br />    <br />
+            <div class="form-group col-md-12 row">
+
+                <button type="submit" class="btn  btnsearch btn-default " onclick="BindProductList();">Ara</button>&nbsp;&nbsp;
+                <button type="reset" class="btn btn-dark">Sıfırla</button>
+            </div>
+        </div>
+    }
+
+
+
+    <div class="table-responsive ps ps--active-x">
+
+
+        <table id="ProductList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>İsim</th>
+                    <th>Marka</th>
+                    <th>Kategori</th>
+                    <th>Btn</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+
+    <script>
+        var ProductListTableo;
+        var BindProductList = function (response) {
+            if ($.fn.DataTable.isDataTable("#ProductList")) {
+                ProductListTableo.draw();
+
+            }
+            else {
+
+                ProductListTableo = $("#ProductList").DataTable({
+                    "sAjaxSource": "/Admin/AdminProduct/ProductListJson?id="
+                        + $("#ProductModel_Id").val()
+                        + "&ProductName=" + $("#ProductModel_ProductName").val()
+                        + "&CategoryId=" + $("#ProductModel_CategoryId").val()
+                        + "&BrandModel.Id=" + $("#ProductModel_BrandId").val(),
+                    "bServerSide": true,
+                    "bProcessing": true,
+                    "bSearchable": true,
+                    "bLengthChange": false,
+                    "searching": false,
+                    "columns": [
+                        { "data": "Id", "name": "Id", "autoWidth": true },
+                        { "data": "ProductName", "name": "ProductName", "autoWidth": true },
+                        { "data": "BrandName", "name": "BrandId", "autoWidth": true },
+                        { "data": "CategoryName", "name": "CategoryId", "autoWidth": true },
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                return "<a href='/Admin/Showcase/ShowcaseAdded?productid=" + row.Id +
+                                    "&showcaseid=" +@Model.ShowCaseDto.Id+
+                                    "&combinationId=" + (row.ProductAttributeCombination != null ? row.ProductAttributeCombination.Id : 0) +
+                                    "' class='btn btn btn-outline-default'  >Ekle</a>";
+                            }, "orderable": false
+                        }
+                    ], "language": {
+                        "url": "/datatablelanguage.json"
+                    }
+
+                });
+
+            }
+
+        }
+
+
+        var FilterRecord = function () {
+            BindProductList();
+        }
+        $(document).ready(function () {
+            BindProductList();
+
+        });
+    </script>
+
+
+
+</div>
