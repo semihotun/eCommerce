@@ -7,6 +7,7 @@ namespace Entities.ViewModels.Web
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using Entities.Concrete;
+    using Core.Library;
 
     //using Entities.ViewModels.Web.ÝdentityModel;
 

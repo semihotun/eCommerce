@@ -41,6 +41,15 @@
 </head>
 
 <body ng-app="myApp">
+
+
+    @if (TempData["notification"] != null)
+    {
+        <script>
+
+            @Html.Raw(TempData["notification"])
+        </script>
+    }
     <!-- HEADER -->
     <header>
         <!-- top Header -->
@@ -107,14 +116,14 @@
                 </div>
                 <!-- /Search -->
                 <div class="headermobil-search">
-                        <form id="tfnewsearch">
+                    <form id="tfnewsearch">
 
-                            <input type="text" id="txtSearch" class="tftextinput2 input search-input" name="q" size="21" maxlength="120" value="Detaylı ara?">
-                            <button class="search-btn" id="srcButton"><i class="fa fa-search"></i></button>
-                            <div class="divResult" id="searchDiv"></div>
+                        <input type="text" id="txtSearch" class="tftextinput2 input search-input" name="q" size="21" maxlength="120" value="Detaylı ara?">
+                        <button class="search-btn" id="srcButton"><i class="fa fa-search"></i></button>
+                        <div class="divResult" id="searchDiv"></div>
 
-                        </form>
-                    </div>
+                    </form>
+                </div>
                 <div class="pull-right">
                     <ul class="header-btns">
                         <!-- Account -->

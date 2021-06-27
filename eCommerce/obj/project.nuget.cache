@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "1493tDExlI7WoaF7ou+f8+pyAbDa7E6K3JOSYTGAIhk2ZtmU0+352QPlZ/rAnFLOI4Jadp4xCJOUAMWizVSv3A==",
+  "dgSpecHash": "PriQBs1BwA3vervf72oDw17SM0iyvi1M2E7KTf9CbzbCT3LgHogi9CYe+voqi5VC/22SHEqf1gEw8y/H7/Uu4g==",
   "success": true,
   "projectFilePath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\eCommerce\\eCommerce.csproj",
   "expectedPackageFiles": [
@@ -20,6 +20,7 @@
     "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.authentication.cookies\\2.2.0\\microsoft.aspnetcore.authentication.cookies.2.2.0.nupkg.sha512",
     "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.authentication.core\\2.2.0\\microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",
+    "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.3\\microsoft.aspnetcore.authentication.jwtbearer.3.1.3.nupkg.sha512",
     "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.authorization\\2.2.0\\microsoft.aspnetcore.authorization.2.2.0.nupkg.sha512",
     "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.authorization.policy\\2.2.0\\microsoft.aspnetcore.authorization.policy.2.2.0.nupkg.sha512",
     "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",

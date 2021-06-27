@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using AutoMapper;
+using Core.Library;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Entities.Helpers.AutoMapper;
@@ -22,10 +23,11 @@ namespace eCommerce.StartUpSettings
     {
         public static void IdentitySettings(IServiceCollection services, IConfiguration Configuration)
         {
-            services.AddDbContext<eCommerceContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), opt => opt.UseRowNumberForPaging()));
+       
             services.AddIdentity<MyUser, MyRole>()
              .AddEntityFrameworkStores<eCommerceContext>()
              .AddDefaultTokenProviders();
+            services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromHours(3));
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;

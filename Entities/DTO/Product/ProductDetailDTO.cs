@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Core.Library;
 using Entities.Concrete;
 using Entities.DTO.ProductMapping;
 using Entities.DTO.ShowCase;

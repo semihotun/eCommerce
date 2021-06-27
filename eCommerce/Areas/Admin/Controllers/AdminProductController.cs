@@ -29,13 +29,14 @@ using Entities.Helpers.AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Utilities.Constants;
 using X.PagedList;
+using eCommerce.Models;
 #endregion
 
 
 namespace eCommerce.Areas.Admin.Controllers
 {
+    [Kontrol("")]
     [Route("[area]/[controller]/[action]")]
-
     [Area("Admin")]
     public class AdminProductController : AdminBaseController
     {

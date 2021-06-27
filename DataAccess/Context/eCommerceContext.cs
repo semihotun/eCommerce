@@ -8,16 +8,29 @@ using System.Reflection;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Linq;
+using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
+using Core.Library;
 
 namespace DataAccess.Concrete.EntityFramework
 {
 
-    public class eCommerceContext : IdentityDbContext<MyUser, MyRole, int, MyClaim, MyUserRole, MyLogin, MyRoleClaim, MyUserToken>
+    public class eCommerceContext : CoreContext
     {
-
-        public eCommerceContext(DbContextOptions<eCommerceContext> options): base()
+        protected static DbContextOptions<T> ChangeOptionsType<T>(DbContextOptions options) where T : DbContext
         {
-           
+            var sqlExt = options.Extensions.FirstOrDefault(e => e is SqlServerOptionsExtension);
+
+            if (sqlExt == null)
+                throw (new Exception("Failed to retrieve SQL connection string for base Context"));
+
+            return new DbContextOptionsBuilder<T>()
+                        .UseSqlServer(((SqlServerOptionsExtension)sqlExt).ConnectionString)
+                        .Options;
+        }
+        public eCommerceContext(DbContextOptions<eCommerceContext> options) : base(ChangeOptionsType<CoreContext>(options))
+        {
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -54,7 +67,6 @@ namespace DataAccess.Concrete.EntityFramework
         public virtual DbSet<ProductStock> ProductStock { get; set; }
         public virtual DbSet<ProductStockType> ProductStockType { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -80,42 +92,8 @@ namespace DataAccess.Concrete.EntityFramework
 
             modelBuilder.Entity<MyClaim>().Property(r => r.Id).ValueGeneratedOnAdd();
 
-            //modelBuilder.ApplyConfiguration(new BrandMap());
-            //modelBuilder.ApplyConfiguration(new CategoryMap());
-            //modelBuilder.ApplyConfiguration(new PredefinedProductAttributeValueMap());
-            //modelBuilder.ApplyConfiguration(new ProductMap());
-            //modelBuilder.ApplyConfiguration(new ProductAttributeMap());
-            //modelBuilder.ApplyConfiguration(new ProductAttributeMap());
-            //modelBuilder.ApplyConfiguration(new ProductAttributeCombinationMap());
-            //modelBuilder.ApplyConfiguration(new ProductAttributeValueMap());
-            //modelBuilder.ApplyConfiguration(new ProductPhotoMap());
-            //modelBuilder.ApplyConfiguration(new ProductSeoMap());
-            //modelBuilder.ApplyConfiguration(new ShoppingCartMap());
-            //modelBuilder.ApplyConfiguration(new ShowCaseMap());
-            //modelBuilder.ApplyConfiguration(new SliderMap());
-            //modelBuilder.ApplyConfiguration(new ShowCaseProductMap());
-            //modelBuilder.ApplyConfiguration(new CombinationPhotoMap());
-            //modelBuilder.ApplyConfiguration(new CategorySpeficationMap());
-            //modelBuilder.ApplyConfiguration(new SpecificationAttributeMap());
-            //modelBuilder.ApplyConfiguration(new SpecificationAttributeOptionMap());
-            //modelBuilder.ApplyConfiguration(new ProductSpecificationAttributeMap());
-            //modelBuilder.ApplyConfiguration(new DiscountMap());
-            //modelBuilder.ApplyConfiguration(new DiscountProductMap());
-            //modelBuilder.ApplyConfiguration(new DiscountBrandMap());
-            //modelBuilder.ApplyConfiguration(new DiscountCategoryMap());
-            //modelBuilder.ApplyConfiguration(new DiscountUsageHistoryMap());
-            //modelBuilder.ApplyConfiguration(new MyUserMap());
-            //modelBuilder.ApplyConfiguration(new MyUserRoleMap());
-            //modelBuilder.ApplyConfiguration(new MyRoleMap());
-            //modelBuilder.ApplyConfiguration(new MyClaimMap());
-            //modelBuilder.ApplyConfiguration(new MyLoginMap());
-            //modelBuilder.ApplyConfiguration(new MyRoleClaimMap());
-            //modelBuilder.ApplyConfiguration(new MyUserTokenMap());
-
-            //base.OnModelCreating(modelBuilder);
-            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
         }
+
     }
 }
 

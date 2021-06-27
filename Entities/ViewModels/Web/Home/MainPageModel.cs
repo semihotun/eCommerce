@@ -21,10 +21,6 @@ namespace Entities.ViewModels.Web
         public string SeachValue { get; set; }
 
 
-        public string deneme {
-            get { return "aa"; }
-            set { deneme = value; }
-        }
 
     }
 }

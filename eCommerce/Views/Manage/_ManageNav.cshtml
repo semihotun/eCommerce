@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using Entities.Concrete;
+@using Core.Library;
 @inject SignInManager<MyUser> SignInManager
 @{ var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any(); }
 
@@ -10,6 +10,5 @@
 <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a href="/Manage/ChangePassword">Şifre Düzenle</a></li>
 @if (hasExternalLogins)
 {
-    <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a href="/Manage/ExternalLogins">Harici Giriş</a></li>
-}
+<li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a href="/Manage/ExternalLogins">Harici Giriş</a></li>}
 <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a href="/Manage/TwoFactorAuthentication">İki faktörlü Doğrulama</a></li>

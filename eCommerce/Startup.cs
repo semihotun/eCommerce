@@ -10,7 +10,7 @@ using Entities.Helpers.AutoMapper;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +25,11 @@ using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Library;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Core.Utilities.Security.Jwt;
+using Core.Utilities.Security.Encyption;
 
 namespace eCommerce
 {
@@ -41,6 +46,27 @@ namespace eCommerce
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<eCommerceContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), opt => opt.UseRowNumberForPaging()));
+            services.AddDbContext<CoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), opt => opt.UseRowNumberForPaging()));
+
+            var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidIssuer = tokenOptions.Issuer,
+                        ValidAudience = tokenOptions.Audience,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+                    };
+                });
+
+
             var pluginAssemblies =Settings.GetPluginAssemblies();
             Settings.RegisterMvc(services, pluginAssemblies);
             Settings.SetupEmbeddedViewsForPlugins(services, pluginAssemblies);
@@ -53,7 +79,7 @@ namespace eCommerce
             Settings.IdentitySettings(services, Configuration);
             Settings.AutoMapperSettings(services);
 
-            services.Configure<DataProtectionTokenProviderOptions>(o =>o.TokenLifespan = TimeSpan.FromHours(3));
+  
             services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddTransient<Extensions.IEmailSender, EmailSender>();
             services.AddTransient<FileLogger>();

@@ -19,7 +19,12 @@ using Business.Concrete.Showcases;
 using Business.Concrete.Sliders;
 using Business.Concrete.Spefications;
 using Castle.DynamicProxy;
+using Core.Library.Business.Abstract;
+using Core.Library.Business.Concrete;
+using Core.Library.DAL.EntityFramework.Abstract;
+using Core.Library.DAL.EntityFramework.Concrete;
 using Core.Utilities.Interceptors;
+using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntitiyFramework;
 using DataAccess.Concrete.EntityFramework;
@@ -95,6 +100,9 @@ namespace Business.DependencyResolvers
             builder.RegisterType<ProductStockService>().As<IProductStockService>();
             builder.RegisterType<ProductStockTypeDAL>().As<IProductStockTypeDAL>();
             builder.RegisterType<ProductStockTypeService>().As<IProductStockTypeService>();
+
+
+
 
             //builder.RegisterType<ProductAttributeParser>().As<IProductAttributeParser>();
             //builder.RegisterType<ProductAttributeFormatter>().As<IProductAttributeFormatter>();
