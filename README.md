@@ -10,10 +10,10 @@ Katmanlı Mimari
 
 Projeyi Geliştirmek isteyenler için
 
-Ajax Validation Aspect(Jquery ile post işlemleri yaptığınızda kullanabilirsiniz)
+Ajax Validation Aspect
 https://github.com/semihotun/eCommerce/blob/main/eCommerce/Attribute/ValidationAspect.cs
 
-MapTo Extension(Sürekli IMapper atmakdansa mapto daha kullanışlı)
+MapTo Extension
 https://github.com/semihotun/eCommerce/blob/main/Entities/Helpers/AutoMapper/AutoMapperExtension.cs
 
 AutoGridFilter ve AutoFilter (Projede datatable ve datatable legacy bulunmakta AutoGridFilter DataTable için geliştirilmiştir kullanımı için brandList'i inceleyebilirsiniz)
