@@ -11,20 +11,20 @@ Katmanlı Mimari
 
 --Projede Olanlar--
 
-Product operation ,
-Brand operation ,
-Variation operation,
-ShowCase operation,
-Slider operation,
-Spefication operation,
-Discount operation,
-Category Tree operation,
-Product Mapping operation,
-Catalog operation,
-Search operation,
-Product Detail operation,
-Product Comment operation,
-CheckOut operation,
+Product operation 
+Brand operation 
+Variation operation
+ShowCase operation
+Slider operation
+Spefication operation
+Discount operation
+Category Tree operation
+Product Mapping operation
+Catalog operation
+Search operation
+Product Detail operation
+Product Comment operation
+CheckOut operation
 
 
 --Projeyi Geliştirmek isteyenler için--
