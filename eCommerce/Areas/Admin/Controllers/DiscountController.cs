@@ -12,10 +12,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Entities.Helpers.AutoMapper;
 using Microsoft.VisualBasic;
+using eCommerce.Models;
 
 namespace eCommerce.Areas.Admin.Controllers
 {
-
+    [Kontrol("")]
     [Route("[area]/[controller]/[action]")]
     [Area("Admin")]
     public class DiscountController : AdminBaseController
