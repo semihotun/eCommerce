@@ -545,3 +545,6 @@ C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerc
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Views\AdminLogin\Login.cshtml.g.cs
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Views\AdminLogin\Register.cshtml.g.cs
 C:\Users\Semih\source\repos\eCommerce\eCommerce\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\AdminProductAttr\AttrCreate.cshtml.g.cs
+C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\AdminProductAttr\AttrEdit.cshtml.g.cs
+C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\AdminProductAttr\ProductAttributeList.cshtml.g.cs

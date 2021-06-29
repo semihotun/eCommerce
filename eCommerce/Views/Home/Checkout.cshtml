@@ -33,7 +33,7 @@
                         <table class="shopping-cart-table table">
                             <tbody>
 
-                                @if (Model.CheckoutProductList.Count != 0)
+                                @if (Model.CheckoutProductList != null)
                                 {
                                     foreach (var item in Model.CheckoutProductList)
                                     {

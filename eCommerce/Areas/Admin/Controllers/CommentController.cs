@@ -13,11 +13,12 @@ using Entities.DTO.Comment;
 using Entities.Others;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using eCommerce.Models;
 
 namespace eCommerce.Areas.Admin.Controllers
 {
     [Route("[area]/[controller]/[action]")]
-
+    [Kontrol("")]
     [Area("Admin")]
     public class CommentController : AdminBaseController
     {
