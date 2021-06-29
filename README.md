@@ -1,15 +1,12 @@
 # eCommerce
---Kullanılan Nugetler--
-	Identity,Fluent Api,Fluent Validation,Autofac,Ioc,AutoMapper
+--Kullanılan Nugetler --> Identity,Fluent Api,Fluent Validation,Autofac,Ioc,AutoMapper
 
---Kullanılan Diller--
-	c#,Jquery,Angular Js
+--Kullanılan Diller-->c#,Jquery,Angular Js
 
---Kullanılan Mimari--
-	Katmanlı Mimari
+--Kullanılan Mimari-->Katmanlı Mimari
 
 
---Projede Olanlar--
+--Projede Olanlar-->
 	Product operation 
 	Brand operation 
 	Variation operation
