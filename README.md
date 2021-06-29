@@ -34,7 +34,7 @@
 	MapTo Extension
 	https://github.com/semihotun/eCommerce/blob/main/Entities/Helpers/AutoMapper/AutoMapperExtension.cs
 
-	AutoGridFilter ve AutoFilter (Projede datatable ve datatable legacy bulunmakta AutoGridFilter DataTable için geliştirilmiştir kullanımı için brandList'i inceleyebilirsiniz)
+	AutoGridFilter ve AutoFilter (Projede datatable ve datatable legacy bulunmakta AutoGridFilter DataTable için geliştirilmiştir kullanımı için brandList'i   		         inceleyebilirsiniz)
 	https://github.com/semihotun/eCommerce/blob/main/Core/Utilities/Infrastructure/Filter/FilterHelper.cs
 
 	Log ve Caching Aspectler
