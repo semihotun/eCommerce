@@ -18,11 +18,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using X.PagedList;
-using eCommerce.Models;
 
 namespace eCommerce.Areas.Admin.Controllers
 {
-    [Kontrol("")]
     [Route("[area]/[controller]/[action]")]
 
     [Area("Admin")]

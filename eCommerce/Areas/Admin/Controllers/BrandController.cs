@@ -9,12 +9,11 @@ using Entities.Others;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Core.Utilities.DataTable;
-using eCommerce.Models;
 
 namespace eCommerce.Areas.Admin.Controllers
 {
     [Route("[area]/[controller]/[action]")]
-    [Kontrol("")]
+
     [Area("Admin")]
     public class BrandController : AdminBaseController
     {

@@ -12,12 +12,11 @@ using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using DataAccess.Abstract;
-using eCommerce.Models;
 
 namespace eCommerce.Areas.Admin.Controllers
 {
     [Route("[area]/[controller]/[action]")]
-    [Kontrol("")]
+
     [Area("Admin")]
     public class CategoryTreeController : AdminBaseController
     {

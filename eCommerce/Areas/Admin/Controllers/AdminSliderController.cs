@@ -15,12 +15,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Utilities.Constants;
-using eCommerce.Models;
 
 namespace eCommerce.Areas.Admin.Controllers
 {
     [Route("[area]/[controller]/[action]")]
-    [Kontrol("")]
+
     [Area("Admin")]
     public class AdminSliderController : AdminBaseController
     {

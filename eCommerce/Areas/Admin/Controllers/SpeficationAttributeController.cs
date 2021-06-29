@@ -9,12 +9,11 @@ using Entities.ViewModels.Admin;
 using Entities.Concrete;
 using Entities.Others;
 using Newtonsoft.Json;
-using eCommerce.Models;
 
 namespace eCommerce.Areas.Admin.Controllers
 {
     [Route("[area]/[controller]/[action]")]
-    [Kontrol("")]
+
     [Area("Admin")]
     public class SpeficationAttributeController : AdminBaseController
     {

@@ -41,7 +41,7 @@ namespace eCommerce.Controllers
             }
             if (result.Success)
             {
-                return Redirect("/Admin/AdminProduct/ProductList");
+                return Redirect("/Admin/AdminProduct/Index");
             }
 
             return View();
@@ -63,7 +63,7 @@ namespace eCommerce.Controllers
         [HttpPost]
         public async Task<ActionResult> Register(UserForRegisterDto adminUser)
         {
-            if ((await _adminService.GetAdminCount()).Data == 0)
+            if ((await _adminService.GetAdminCount()).Data > 0)
             {
                 var registerUser = (await _adminAuthService.Register(adminUser)).Data;
                 var result = await _adminAuthService.CreateAccessToken(registerUser);
@@ -73,7 +73,7 @@ namespace eCommerce.Controllers
                     CookieOptions cookieOptions = new CookieOptions();
                     cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddDays(1));
                     Response.Cookies.Append("UserToken", result.Data.Token, cookieOptions);
-                    return Redirect("/Admin/AdminProduct/ProductList");
+                    return Redirect("/Admin/AdminProduct/Index");
                 }
             }
             else
@@ -83,14 +83,6 @@ namespace eCommerce.Controllers
 
 
             return View();
-        }
-
-
-        public async Task<ActionResult> LogOut()
-        {
-            Response.Cookies.Delete("UserToken");
-
-            return RedirectToAction("Index","Home");
         }
 
 
