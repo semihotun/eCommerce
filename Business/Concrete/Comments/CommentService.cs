@@ -1,4 +1,5 @@
 ﻿using Business.Abstract.Comments;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Performace;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -19,7 +20,7 @@ namespace Business.Concrete.Comments
         {
             this._commentService = commentService;
         }
-
+        [CacheRemoveAspect("ICommentService.Get")]
         public async Task<IResult> CommentAdd(Comment model)
         {
             if (model == null)
@@ -32,6 +33,7 @@ namespace Business.Concrete.Comments
 
         }
 
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<Comment>>> GetCommentList(
             Expression<Func<Comment,bool>> commentExpression,int pageIndex = 1, int pageSize = int.MaxValue, string orderByText = null)
         {
@@ -42,7 +44,7 @@ namespace Business.Concrete.Comments
             return new SuccessDataResult<IPagedList<Comment>>(data);
         }
 
-
+        [CacheAspect]
         public async Task<IDataResult<Comment>> GetComment(int commentId)
         {
 
@@ -51,7 +53,7 @@ namespace Business.Concrete.Comments
             return new SuccessDataResult<Comment>(data);          
         }
 
-
+        [CacheRemoveAspect("ICommentService.Get")]
         public async Task<IResult> DeleteComment(Comment comment)
         {
             if (comment == null)
@@ -62,7 +64,7 @@ namespace Business.Concrete.Comments
 
             return new SuccessResult();
         }
-
+        [CacheRemoveAspect("ICommentService.Get")]
         public async Task<IResult> UpdateComment(Comment comment)
         {
             if (comment == null)
@@ -73,7 +75,7 @@ namespace Business.Concrete.Comments
 
             return new SuccessResult();
         }
-
+        [CacheAspect]
         public async Task<IDataResult<int>> GetCommentCount()
         {
             var data = await _commentService.GetCountAsync();

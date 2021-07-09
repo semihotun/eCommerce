@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete.Attribute.Products
 {
@@ -28,17 +29,17 @@ namespace Business.Concrete.Attribute.Products
         #endregion
 
         #region Method
-
+        [CacheRemoveAspect("IProductShipmentInfoService.Get")]
         public async Task<IResult> DeleteProductSpecificationAttribute(int id)
         {
-            var data =(await GetProductSpecificationAttributeById(id)).Data;
+            var data = (await GetProductSpecificationAttributeById(id)).Data;
             _productSpecificationAttributeRepository.Delete(data);
             await _productSpecificationAttributeRepository.SaveChangesAsync();
 
             return new SuccessResult();
 
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<ProductSpecificationAttribute>>> GetProductSpecificationAttributes(int productId = 0,
             string specificationAttributeName = null,
             int specificationAttributeOptionId = 0, bool? allowFiltering = null, bool? showOnProductPage = null,
@@ -58,23 +59,22 @@ namespace Business.Concrete.Attribute.Products
             if (showOnProductPage.HasValue)
                 query = query.Where(psa => psa.ShowOnProductPage == showOnProductPage.Value);
 
-            //if (specificationAttributeName != null)
-            //    query = query.Where(x=>x.SpecificationAttributeOption.SpecificationAttribute.Name == specificationAttributeName);
 
             query = query.OrderBy(psa => psa.DisplayOrder).ThenBy(psa => psa.Id);
 
-            var data =await query.ToPagedListAsync(pageIndex,pageSize);
+            var data = await query.ToPagedListAsync(pageIndex, pageSize);
 
             return new SuccessDataResult<IPagedList<ProductSpecificationAttribute>>(data);
         }
 
+        [CacheAspect]
         public async Task<IDataResult<ProductSpecificationAttribute>> GetProductSpecificationAttributeById(int productSpecificationAttributeId)
         {
             var data =await _productSpecificationAttributeRepository.GetAsync(x=>x.Id== productSpecificationAttributeId);
 
             return new SuccessDataResult<ProductSpecificationAttribute>(data);
         }
-
+        [CacheRemoveAspect("IProductShipmentInfoService.Get")]
         public async Task<IResult> InsertProductSpecificationAttribute(ProductSpecificationAttribute productSpecificationAttribute)
         {
             if (productSpecificationAttribute == null)
@@ -84,7 +84,7 @@ namespace Business.Concrete.Attribute.Products
             await _productSpecificationAttributeRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
+        [CacheRemoveAspect("IProductShipmentInfoService.Get")]
         public async Task<IResult> UpdateProductSpecificationAttribute(ProductSpecificationAttribute productSpecificationAttribute)
         {
             if (productSpecificationAttribute == null)
@@ -94,7 +94,7 @@ namespace Business.Concrete.Attribute.Products
             await _productSpecificationAttributeRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
+        [CacheAspect]
         public async Task<IDataResult<int>> GetProductSpecificationAttributeCount(int productId = 0, int specificationAttributeOptionId = 0)
         {
             var query = _productSpecificationAttributeRepository.Query();

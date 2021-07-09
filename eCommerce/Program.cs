@@ -28,6 +28,9 @@ namespace eCommerce
                 //})
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    //Removing Server Header
+                    webBuilder.ConfigureKestrel(options => options.AddServerHeader = false);
+
                     webBuilder.UseStartup<Startup>();
                 });
     }

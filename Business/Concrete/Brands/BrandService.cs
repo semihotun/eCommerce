@@ -39,7 +39,6 @@ namespace Business.Concrete.Brands
         #region Method
 
         [CacheRemoveAspect("IBrandService.Get")]
-        //[ValidationAspect(typeof(BrandValidator))]
         public async Task<IResult> BrandAdd(Brand model)
         {          
             _brandRepository.Add(model);
@@ -68,6 +67,8 @@ namespace Business.Concrete.Brands
 
             return new SuccessDataResult<Brand>(data);
         }
+
+        [CacheRemoveAspect("IBrandService.Get")]
         [LogAspect(typeof(FileLogger))]
         public async Task<IResult> DeleteBrand(Brand brand)
         {

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete.Photos
 {
@@ -27,6 +28,7 @@ namespace Business.Concrete.Photos
         }
         #endregion
 
+        [CacheAspect]
         public async Task<IDataResult<List<CombinationPhoto>>> GetAllCombinationPhotos(int productId, int photoId)
         {
             var query = _combinationPhotoRepository.Query();
@@ -35,7 +37,7 @@ namespace Business.Concrete.Photos
 
             return new SuccessDataResult<List<CombinationPhoto>>(data);
         }
-
+        [CacheRemoveAspect("ICombinationPhotoService.Get")]
         public async Task<IResult> InsertCombinationPhotos(int photoId, string combinations = "", string notCombinations = "")
         {
 

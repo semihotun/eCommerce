@@ -11,6 +11,7 @@ using Business.Abstract.Products;
 using Entities.Others;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete.Products
 {
@@ -31,6 +32,7 @@ namespace Business.Concrete.Products
 
         #region Method
 
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<ProductAttributeMapping>>> GetAllProductAttributeMapping(int productId, DataTablesParam param)
         {
             var query = from pam in _productAttributeMappingRepository.Query()
@@ -43,7 +45,7 @@ namespace Business.Concrete.Products
             return new SuccessDataResult<IPagedList<ProductAttributeMapping>>(data);
         }
 
-
+        [CacheRemoveAspect("IProductAttributeMappingService.Get")]
         public async Task<IResult> DeleteProductAttributeMapping(int id)
         {
             if (id == 0)
@@ -69,7 +71,7 @@ namespace Business.Concrete.Products
 
             return new SuccessResult();
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IList<ProductAttributeMapping>>> GetProductAttributeMappingsByProductId(int productId)
         {
             var query = from pam in _productAttributeMappingRepository.Query()
@@ -81,13 +83,14 @@ namespace Business.Concrete.Products
 
             return new SuccessDataResult<List<ProductAttributeMapping>>(data);
         }
+        [CacheRemoveAspect("IProductAttributeMappingService.Get")]
         public async Task<IDataResult<ProductAttributeMapping>> GetProductAttributeMappingById(int productAttributeMappingId)
         {
             var data =await _productAttributeMappingRepository.GetAsync(x=>x.Id==productAttributeMappingId);
 
             return new SuccessDataResult<ProductAttributeMapping>(data);
         }
-
+        [CacheRemoveAspect("IProductAttributeMappingService.Get")]
         public async Task<IResult> InsertProductAttributeMapping(ProductAttributeMapping productAttributeMapping)
         {
 
@@ -98,7 +101,7 @@ namespace Business.Concrete.Products
                 await _productAttributeMappingRepository.SaveChangesAsync();
                 return new SuccessResult();
         }
-
+        [CacheRemoveAspect("IProductAttributeMappingService.Get")]
         public async Task<IResult> UpdateProductAttributeMapping(ProductAttributeMapping productAttributeMapping)
         {
             if (productAttributeMapping == null)

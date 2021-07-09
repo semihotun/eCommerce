@@ -30,16 +30,23 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Core.Utilities.Security.Jwt;
 using Core.Utilities.Security.Encyption;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace eCommerce
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        [Obsolete]
+        public Startup(IConfiguration configuration, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
             Configuration = configuration;
-
+            CurrentEnvironment = env;
         }
+
+        [Obsolete]
+        private Microsoft.AspNetCore.Hosting.IHostingEnvironment CurrentEnvironment { get; set; }
+
         public IConfiguration Configuration { get; }
 
         public IEnumerable<Assembly> PluginAssembly { get; set; }
@@ -49,8 +56,8 @@ namespace eCommerce
             services.AddDbContext<eCommerceContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), opt => opt.UseRowNumberForPaging()));
             services.AddDbContext<CoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), opt => opt.UseRowNumberForPaging()));
 
+            //Settin admin baþ
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -65,6 +72,7 @@ namespace eCommerce
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                     };
                 });
+            //Setting admin son
 
 
             var pluginAssemblies =Settings.GetPluginAssemblies();
@@ -91,6 +99,16 @@ namespace eCommerce
 
             
             PluginAssembly = pluginAssemblies;
+
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.Strict;
+                options.Secure = CurrentEnvironment.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
+                options.HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always;
+            });
+
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -101,8 +119,12 @@ namespace eCommerce
 
         }
 
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<SecurityHeadersMiddleware>();
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

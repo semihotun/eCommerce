@@ -1,4 +1,5 @@
 ﻿using Business.Abstract.Discounts;
+using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -20,6 +21,7 @@ namespace Business.Concrete.Discounts
         }
         #endregion
         #region Method
+        [CacheRemoveAspect("IDiscountCategoryService.Get")]
         public async Task<IResult> DeleteDiscountCategory(DiscountCategory discountCategory)
         {
             if (discountCategory == null)
@@ -29,6 +31,7 @@ namespace Business.Concrete.Discounts
             await _discountCategoryRepository.SaveChangesAsync();
             return new SuccessResult();
         }
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<DiscountCategory>>> GetAllDiscountCategory(int discountId = 0,
           int pageindex = 1,int pageSize = int.MaxValue)
         {
@@ -41,6 +44,7 @@ namespace Business.Concrete.Discounts
 
             return new SuccessDataResult<IPagedList<DiscountCategory>>(data);
         }
+        [CacheRemoveAspect("IDiscountCategoryService.Get")]
         public async Task<IResult> AddDiscountCategory(DiscountCategory discountCategory)
         {
             if (discountCategory == null)

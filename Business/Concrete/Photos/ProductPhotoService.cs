@@ -18,6 +18,7 @@ namespace Business.Concrete.Photos
         }
         #endregion
         #region Method
+
         public async Task<IDataResult<ProductPhoto>> GetById(int photoId)
         {
             var data =await _productPhotoRepository.GetAsync(x=>x.Id==photoId);

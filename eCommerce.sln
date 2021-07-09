@@ -17,9 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{3E09EAB6-BB5E-4732-8670-E4C17E1ED2C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Base", "Plugin.Base\Plugin.Base.csproj", "{B759771D-755C-4DF0-A9BA-BD3A29BDFF23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Base", "Plugin.Base\Plugin.Base.csproj", "{B759771D-755C-4DF0-A9BA-BD3A29BDFF23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Iyzico", "Plugin.Iyzico\Plugin.Iyzico.csproj", "{AE881C37-D8A7-48BA-BA9A-8886E9E7A92F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Iyzico", "Plugin.Iyzico\Plugin.Iyzico.csproj", "{AE881C37-D8A7-48BA-BA9A-8886E9E7A92F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{EDFD7647-B7D2-441A-B248-1A2578AC8993}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{AE881C37-D8A7-48BA-BA9A-8886E9E7A92F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE881C37-D8A7-48BA-BA9A-8886E9E7A92F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE881C37-D8A7-48BA-BA9A-8886E9E7A92F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDFD7647-B7D2-441A-B248-1A2578AC8993}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDFD7647-B7D2-441A-B248-1A2578AC8993}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDFD7647-B7D2-441A-B248-1A2578AC8993}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDFD7647-B7D2-441A-B248-1A2578AC8993}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

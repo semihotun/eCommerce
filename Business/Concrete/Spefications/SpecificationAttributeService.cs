@@ -15,6 +15,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete.Spefications
 {
@@ -47,7 +48,7 @@ namespace Business.Concrete.Spefications
 
         #region Methods
 
-
+        [CacheAspect]
         public async Task<IDataResult<SpecificationAttribute>> GetSpecificationAttributeById(int specificationAttributeId)
         {
 
@@ -55,7 +56,7 @@ namespace Business.Concrete.Spefications
 
             return new SuccessDataResult<SpecificationAttribute>(data);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IList<SpecificationAttribute>>> GetSpecificationAttributeByIds(int[] specificationAttributeIds)
         {
             if (specificationAttributeIds == null || specificationAttributeIds.Length == 0)
@@ -69,7 +70,7 @@ namespace Business.Concrete.Spefications
 
             return new SuccessDataResult<List<SpecificationAttribute>>(data);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<SpecificationAttribute>>> GetSpecificationAttributes(int pageIndex = 1, int pageSize = int.MaxValue)
         {
             var query = from sa in _specificationAttributeRepository.Query()
@@ -80,7 +81,7 @@ namespace Business.Concrete.Spefications
 
             return new SuccessDataResult<IPagedList<SpecificationAttribute>>(data);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IList<SpecificationAttribute>>> GetSpecificationAttributesWithOptions()
         {
             var query = from sa in _specificationAttributeRepository.Query()
@@ -90,6 +91,7 @@ namespace Business.Concrete.Spefications
             return new SuccessDataResult<IList<SpecificationAttribute>>(await query.ToListAsync());
         }
 
+        [CacheRemoveAspect("ISpecificationAttributeService.Get")]
         public async Task<IResult> DeleteSpecificationAttribute(SpecificationAttribute specificationAttribute)
         {
             if (specificationAttribute == null)
@@ -101,7 +103,7 @@ namespace Business.Concrete.Spefications
             return new SuccessResult();
         }
 
-
+        [CacheRemoveAspect("ISpecificationAttributeService.Get")]
         public async Task<IResult> InsertSpecificationAttribute(SpecificationAttribute specificationAttribute)
         {
             if (specificationAttribute == null)
@@ -113,7 +115,7 @@ namespace Business.Concrete.Spefications
             return new SuccessResult();
 
         }
-
+        [CacheRemoveAspect("ISpecificationAttributeService.Get")]
         public async Task<IResult> UpdateSpecificationAttribute(SpecificationAttribute specificationAttribute)
         {
             if (specificationAttribute == null)
@@ -127,6 +129,7 @@ namespace Business.Concrete.Spefications
             return new SuccessResult();
 
         }
+        [CacheAspect]
         public async Task<IDataResult<List<SpecificationAttribute>>> GetCatalogSpefication(int categoryId = 0)
         {
             var query = await _categorySpeficationService.GetAllCategorySpefication(categoryId);
@@ -156,7 +159,7 @@ namespace Business.Concrete.Spefications
 
         }
 
-
+        [CacheAspect]
         public async Task<IDataResult<IEnumerable<SelectListItem>>> GetProductSpeficationAttributeDropdwon(int selectedId = 0)
         {
             var query = from s in _specificationAttributeRepository.Query()

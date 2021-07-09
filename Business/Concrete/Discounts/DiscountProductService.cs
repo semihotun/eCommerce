@@ -1,4 +1,5 @@
 ﻿using Business.Abstract.Discounts;
+using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Results;
 using DataAccess.Concrete.EntitiyFramework;
 using Entities.Concrete;
@@ -22,6 +23,7 @@ namespace Business.Concrete.Discounts
         #endregion
 
         #region Method
+        [CacheRemoveAspect("IDiscountProductService.Get")]
         public async Task<IResult> DeleteDiscountProduct(DiscountProduct discountProduct)
         {
             if (discountProduct == null)
@@ -32,7 +34,7 @@ namespace Business.Concrete.Discounts
 
             return new SuccessResult();
         }
-
+        [CacheRemoveAspect("IDiscountProductService.Get")]
         public async Task<IResult> AddDiscountProduct(DiscountProduct discountProduct)
         {
             if (discountProduct == null)
@@ -43,6 +45,7 @@ namespace Business.Concrete.Discounts
 
             return new SuccessResult();
         }
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<DiscountProduct>>> GetAllDiscountProduct(int DiscountId = 0,
         int pageindex = 1, int pagesize = int.MaxValue)
         {

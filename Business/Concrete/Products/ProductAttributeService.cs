@@ -12,6 +12,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete.Products
 {
@@ -32,7 +33,7 @@ namespace Business.Concrete.Products
         }
 
         #region Methods
-
+        [CacheRemoveAspect("IProductAttributeService.Get")]
         public async Task<IResult> DeleteProductAttribute(ProductAttribute productAttribute)
         {
             if (productAttribute == null)
@@ -43,7 +44,7 @@ namespace Business.Concrete.Products
             return new SuccessResult();
         }
 
-
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<ProductAttribute>>> GetAllProductAttributes(int pageIndex = 0, int pageSize = int.MaxValue, 
             string name = null)
         {
@@ -59,7 +60,7 @@ namespace Business.Concrete.Products
             return new SuccessDataResult<IPagedList<ProductAttribute>>(data);
 
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IList<ProductAttribute>>> GetAllProductAttribute()
         {
             var query =await _productAttributeRepository.Query().ToListAsync();
@@ -67,7 +68,7 @@ namespace Business.Concrete.Products
             return new SuccessDataResult<List<ProductAttribute>>(query);
         }
 
-
+        [CacheAspect]
         public async Task<IDataResult<ProductAttribute>> GetProductAttributeById(int productAttributeId)
         {
             var data =await _productAttributeRepository.GetAsync(x=>x.Id == productAttributeId);
@@ -75,7 +76,7 @@ namespace Business.Concrete.Products
             return new SuccessDataResult<ProductAttribute>(data);
         }
 
-
+        [CacheRemoveAspect("IProductAttributeService.Get")]
         public async Task<IResult> InsertProductAttribute(ProductAttribute productAttribute)
         {
             if (productAttribute == null)
@@ -85,7 +86,7 @@ namespace Business.Concrete.Products
             await _productAttributeRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
+        [CacheRemoveAspect("IProductAttributeService.Get")]
         public async Task<IResult> UpdateProductAttribute(ProductAttribute productAttribute)
         {
             if (productAttribute == null)
@@ -98,7 +99,7 @@ namespace Business.Concrete.Products
             return new SuccessResult();
         }
 
-
+        [CacheAspect]
         public async Task<IDataResult<int[]>> GetNotExistingAttributes(int[] attributeId)
         {
             var query = _productAttributeRepository.Query();
@@ -108,7 +109,7 @@ namespace Business.Concrete.Products
 
             return new SuccessDataResult<int[]>(data);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IEnumerable<SelectListItem>>> GetProductAttributeDropdown(int? selectedId = 0)
         {
             var query = from s in _productAttributeRepository.Query()

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete.Products
 {
@@ -24,7 +25,7 @@ namespace Business.Concrete.Products
         #endregion
 
         #region Method
-
+        [CacheRemoveAspect("IPredefinedProductAttributeValueService.Get")]
         public virtual async Task<IResult> DeletePredefinedProductAttributeValue(PredefinedProductAttributeValue ppav)
         {
             if (ppav == null)
@@ -34,7 +35,7 @@ namespace Business.Concrete.Products
             await _predefinedProductAttributeValueRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
+        [CacheAspect]
         public virtual async Task<IDataResult<IList<PredefinedProductAttributeValue>>> GetPredefinedProductAttributeValues(int productAttributeId)
         {
             var query = from ppav in _predefinedProductAttributeValueRepository.Query()
@@ -46,14 +47,14 @@ namespace Business.Concrete.Products
 
             return new SuccessDataResult<List<PredefinedProductAttributeValue>>(data);
         }
-
+        [CacheAspect]
         public virtual async Task<IDataResult<PredefinedProductAttributeValue>> GetPredefinedProductAttributeValueById(int id)
         {
             var data =await _predefinedProductAttributeValueRepository.GetAsync(x => x.Id == id);
 
             return new SuccessDataResult<PredefinedProductAttributeValue>(data);
         }
-
+        [CacheRemoveAspect("IPredefinedProductAttributeValueService.Get")]
         public virtual async Task<IResult> InsertPredefinedProductAttributeValue(PredefinedProductAttributeValue ppav)
         {
             if (ppav == null)
@@ -64,6 +65,7 @@ namespace Business.Concrete.Products
 
             return new SuccessResult();
         }
+        [CacheRemoveAspect("IPredefinedProductAttributeValueService.Get")]
         public virtual async Task<IResult> UpdatePredefinedProductAttributeValue(PredefinedProductAttributeValue ppav)
         {
             if (ppav == null)

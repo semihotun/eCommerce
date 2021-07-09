@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Abstract.Discounts;
+using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -23,6 +24,7 @@ namespace Business.Concrete.Discounts
             this._discountRepository = discountRepository;
             this._mapper = mapper;
         }
+        [CacheAspect]
         public async Task<IDataResult<Discount>> GetDiscount(int id)
         {
             if (id == 0)
@@ -32,6 +34,7 @@ namespace Business.Concrete.Discounts
 
             return new SuccessDataResult<Discount>(data);
         }
+        [CacheRemoveAspect("IDiscountService.Get")]
         public async Task<IResult> AddDiscount(Discount discount)
         {
             if (discount == null)
@@ -41,6 +44,7 @@ namespace Business.Concrete.Discounts
             await _discountRepository.SaveChangesAsync();
             return new SuccessResult();
         }
+        [CacheRemoveAspect("IDiscountService.Get")]
         public async Task<IResult> DeleteDiscount(Discount discount)
         {
             if (discount == null)
@@ -50,6 +54,7 @@ namespace Business.Concrete.Discounts
             await _discountRepository.SaveChangesAsync();
             return new SuccessResult();
         }
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<Discount>>> GetAllList(int pageIndex = 1, int pageSize = int.MaxValue)
         {
             var query = _discountRepository.Query();
@@ -58,6 +63,7 @@ namespace Business.Concrete.Discounts
 
             return new SuccessDataResult<IPagedList<Discount>>(data);
         }
+        [CacheRemoveAspect("IDiscountService.Get")]
         public async Task<IResult> UpdateDiscount(Discount discount)
         {
             if (discount == null)

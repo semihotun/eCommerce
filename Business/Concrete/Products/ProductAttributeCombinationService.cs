@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Business.Abstract.Products;
 using Entities.Helpers.AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete.Products
 {
@@ -46,6 +47,7 @@ namespace Business.Concrete.Products
         //               </ProductAttributeValue >
         //            </ProductAttribute >
         //</ Attributes >
+        [CacheRemoveAspect("IProductAttributeCombinationService.Get")]
         public async Task<IResult> InsertPermutationCombination(List<List<int>> data, int productId)
         {
             if (productId == 0)
@@ -75,6 +77,7 @@ namespace Business.Concrete.Products
             await _productAttributeCombinationRepository.SaveChangesAsync();
             return new SuccessResult();
         }
+        [CacheRemoveAspect("IProductAttributeCombinationService.Get")]
         public async Task<IResult> DeleteProductAttributeCombination(int Id)
         {
             if (Id == 0)
@@ -87,7 +90,7 @@ namespace Business.Concrete.Products
             return new SuccessResult();
         }
 
-
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<ProductAttributeCombination>>> GetAllProductAttributeCombinations(int productId,
             int pageIndex = 1, int pageSize = int.MaxValue, string orderbytext = null)
         {
@@ -102,7 +105,7 @@ namespace Business.Concrete.Products
 
             return new SuccessDataResult<IPagedList<ProductAttributeCombination>>(data);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<List<string>>> GetProductCombinationXml(int productId)
         {
             var query = from c in _productAttributeCombinationRepository.Query()
@@ -114,7 +117,7 @@ namespace Business.Concrete.Products
 
             return new SuccessDataResult<List<string>>();
         }
-
+        [CacheAspect]
         public async Task<IDataResult<ProductAttributeCombination>> GetProductAttributeCombinationById(int productAttributeCombinationId)
         {
             var data =await _productAttributeCombinationRepository
@@ -122,7 +125,7 @@ namespace Business.Concrete.Products
 
             return new SuccessDataResult<ProductAttributeCombination>(data);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<ProductAttributeCombination>> GetProductAttributeCombinationBySku(string sku)
         {
             sku = sku.Trim();
@@ -136,7 +139,7 @@ namespace Business.Concrete.Products
 
             return new SuccessDataResult<ProductAttributeCombination>(data.FirstOrDefault()); 
         }
-
+        [CacheRemoveAspect("IProductAttributeCombinationService.Get")]
         public async Task<IResult> InsertProductAttributeCombination(ProductAttributeCombination combination)
         {
             if (combination == null)
@@ -146,7 +149,7 @@ namespace Business.Concrete.Products
             await _productAttributeCombinationRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
+        [CacheRemoveAspect("IProductAttributeCombinationService.Get")]
         public async Task<IResult> UpdateProductAttributeCombination(ProductAttributeCombination combination)
         {
             if (combination == null)

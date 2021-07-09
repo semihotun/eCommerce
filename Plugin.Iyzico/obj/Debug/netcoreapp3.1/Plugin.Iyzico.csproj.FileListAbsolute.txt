@@ -283,6 +283,7 @@ C:\Users\Semih\source\repos\eCommerce\Plugin.Iyzico\bin\Debug\netcoreapp3.1\refs
 C:\Users\Semih\source\repos\eCommerce\Plugin.Iyzico\bin\Debug\netcoreapp3.1\refs\WindowsBase.dll
 C:\Users\Semih\source\repos\eCommerce\Plugin.Iyzico\bin\Debug\netcoreapp3.1\Plugin.Iyzico.Views.dll
 C:\Users\Semih\source\repos\eCommerce\Plugin.Iyzico\bin\Debug\netcoreapp3.1\Plugin.Iyzico.Views.pdb
+C:\Users\Semih\source\repos\eCommerce\Plugin.Iyzico\obj\Debug\netcoreapp3.1\Plugin.Iyzico.csprojAssemblyReference.cache
 C:\Users\Semih\source\repos\eCommerce\Plugin.Iyzico\obj\Debug\netcoreapp3.1\Plugin.Iyzico.AssemblyInfoInputs.cache
 C:\Users\Semih\source\repos\eCommerce\Plugin.Iyzico\obj\Debug\netcoreapp3.1\Plugin.Iyzico.AssemblyInfo.cs
 C:\Users\Semih\source\repos\eCommerce\Plugin.Iyzico\obj\Debug\netcoreapp3.1\Plugin.Iyzico.csproj.CoreCompileInputs.cache
@@ -302,4 +303,3 @@ C:\Users\Semih\source\repos\eCommerce\Plugin.Iyzico\obj\Debug\netcoreapp3.1\Plug
 C:\Users\Semih\source\repos\eCommerce\Plugin.Iyzico\obj\Debug\netcoreapp3.1\Plugin.Iyzico.dll
 C:\Users\Semih\source\repos\eCommerce\Plugin.Iyzico\obj\Debug\netcoreapp3.1\Plugin.Iyzico.pdb
 C:\Users\Semih\source\repos\eCommerce\Plugin.Iyzico\obj\Debug\netcoreapp3.1\Plugin.Iyzico.csproj.CopyComplete
-C:\Users\Semih\source\repos\eCommerce\Plugin.Iyzico\obj\Debug\netcoreapp3.1\Plugin.Iyzico.csprojAssemblyReference.cache

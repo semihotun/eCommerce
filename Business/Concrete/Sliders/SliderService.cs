@@ -13,6 +13,7 @@ using Business.Validation.FluentValidation;
 //using Core.Aspects.Autofac.Validation;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete.Sliders
 {
@@ -26,7 +27,7 @@ namespace Business.Concrete.Sliders
             this._mapper = mapper;
         }
 
-
+        [CacheRemoveAspect("ISliderService.Get")]
         public async Task<IResult> DeleteSlider(int id)
         {
             if (id == 0)
@@ -36,21 +37,21 @@ namespace Business.Concrete.Sliders
             await _sliderRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IList<Slider>>> GetAllSlider()
         {
             var query = _sliderRepository.Query();
             var data = await query.ToListAsync();
             return new SuccessDataResult<List<Slider>>(data);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<Slider>> GetSlider(int id)
         {
             var data=await _sliderRepository.GetAsync(x=>x.Id==id);
 
             return new SuccessDataResult<Slider>(data);
         }
-
+        [CacheRemoveAspect("ISliderService.Get")]
         public async Task<IResult> InsertSlider(Slider slider)
         {
             if (slider == null)
@@ -60,6 +61,7 @@ namespace Business.Concrete.Sliders
             await _sliderRepository.SaveChangesAsync();
             return new SuccessResult();
         }
+        [CacheRemoveAspect("ISliderService.Get")]
         public async Task<IResult> UpdateSlider(Slider slider)
         {
             if (slider == null)

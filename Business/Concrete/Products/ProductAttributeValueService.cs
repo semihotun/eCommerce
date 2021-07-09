@@ -13,6 +13,7 @@ using Business.Validation.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete.Products
 {
@@ -32,7 +33,7 @@ namespace Business.Concrete.Products
 
         #region Method
 
-
+        [CacheRemoveAspect("IProductAttributeValueService.Get")]
         public virtual async Task<IResult> DeleteProductAttributeValue(int id)
         {
             if (id == 0)
@@ -44,7 +45,7 @@ namespace Business.Concrete.Products
 
             return new SuccessResult();
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IList<ProductAttributeValue>>> GetProductAttributeValues(int productAttributeMappingId)
         {
             var query = from pav in _productAttributeValueRepository.Query()
@@ -56,7 +57,7 @@ namespace Business.Concrete.Products
             return new SuccessDataResult<List<ProductAttributeValue>>(data);
 
         }
-
+        [CacheAspect]
         public async Task<IDataResult<ProductAttributeValue>> GetProductAttributeValueById(int productAttributeValueId)
         {
             var data =await _productAttributeValueRepository.GetAsync(x=>x.Id == productAttributeValueId);
@@ -64,7 +65,7 @@ namespace Business.Concrete.Products
             return new SuccessDataResult<ProductAttributeValue>(data);
         }
 
-
+        [CacheRemoveAspect("IProductAttributeValueService.Get")]
         public async Task<IResult> InsertProductAttributeValue(ProductAttributeValue productAttributeValue)
         {
             if (productAttributeValue == null)
@@ -74,7 +75,7 @@ namespace Business.Concrete.Products
             await _productAttributeValueRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
+        [CacheRemoveAspect("IProductAttributeValueService.Get")]
         public async Task<IResult> InsertOrUpdateProductAttributeValue(ProductAttributeValue productAttributeValue)
         {
             if (productAttributeValue == null)
@@ -90,6 +91,7 @@ namespace Business.Concrete.Products
             return new SuccessResult();
 
         }
+        [CacheRemoveAspect("IProductAttributeValueService.Get")]
         public async Task<IResult> UpdateProductAttributeValue(ProductAttributeValue productAttributeValue)
         {
             if (productAttributeValue == null)

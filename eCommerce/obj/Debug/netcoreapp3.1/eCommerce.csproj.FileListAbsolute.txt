@@ -279,6 +279,8 @@ C:\Users\Semih\source\repos\eCommerce\eCommerce\bin\Debug\netcoreapp3.1\Castle.C
 C:\Users\Semih\source\repos\eCommerce\eCommerce\bin\Debug\netcoreapp3.1\FluentValidation.dll
 C:\Users\Semih\source\repos\eCommerce\eCommerce\bin\Debug\netcoreapp3.1\FluentValidation.AspNetCore.dll
 C:\Users\Semih\source\repos\eCommerce\eCommerce\bin\Debug\netcoreapp3.1\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\Semih\source\repos\eCommerce\eCommerce\bin\Debug\netcoreapp3.1\Iyzipay.dll
+C:\Users\Semih\source\repos\eCommerce\eCommerce\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Semih\source\repos\eCommerce\eCommerce\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\Semih\source\repos\eCommerce\eCommerce\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\Semih\source\repos\eCommerce\eCommerce\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
@@ -432,6 +434,7 @@ C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerc
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerce.AssemblyInfoInputs.cache
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerce.AssemblyInfo.cs
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerce.csproj.CoreCompileInputs.cache
+C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerce.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerce.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerce.RazorAssemblyInfo.cache
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerce.RazorAssemblyInfo.cs
@@ -441,6 +444,9 @@ C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\scopedcs
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerce.TagHelpers.input.cache
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerce.TagHelpers.output.cache
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerce.RazorCoreGenerate.cache
+C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\AdminProductAttr\AttrCreate.cshtml.g.cs
+C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\AdminProductAttr\AttrEdit.cshtml.g.cs
+C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\AdminProductAttr\ProductAttributeList.cshtml.g.cs
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\AdminProduct\AttrCombinationDetail.cshtml.g.cs
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\AdminProduct\AttrCombination\AttrCombination.cshtml.g.cs
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\AdminProduct\AttrCombination\_AttrCombinationInsert.cshtml.g.cs
@@ -501,6 +507,8 @@ C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Vi
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Views\Account\ResetPassword.cshtml.g.cs
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Views\Account\ResetPasswordConfirmation.cshtml.g.cs
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Views\Account\SignedOut.cshtml.g.cs
+C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Views\AdminLogin\Login.cshtml.g.cs
+C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Views\AdminLogin\Register.cshtml.g.cs
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Views\Data\Data.cshtml.g.cs
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Views\Data\Index.cshtml.g.cs
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Views\Home\AllCommentProduct.cshtml.g.cs
@@ -540,11 +548,3 @@ C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerc
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerce.dll
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerce.pdb
 C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerce.genruntimeconfig.cache
-C:\Users\Semih\source\repos\eCommerce\eCommerce\bin\Debug\netcoreapp3.1\Iyzipay.dll
-C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\eCommerce.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Views\AdminLogin\Login.cshtml.g.cs
-C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Views\AdminLogin\Register.cshtml.g.cs
-C:\Users\Semih\source\repos\eCommerce\eCommerce\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\AdminProductAttr\AttrCreate.cshtml.g.cs
-C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\AdminProductAttr\AttrEdit.cshtml.g.cs
-C:\Users\Semih\source\repos\eCommerce\eCommerce\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\AdminProductAttr\ProductAttributeList.cshtml.g.cs

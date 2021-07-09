@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete.Showcases
 {
@@ -29,7 +30,7 @@ namespace Business.Concrete.Showcases
         #endregion
         #region Method
 
-
+        [CacheRemoveAspect("IShowCaseProductService.Get")]
         public async Task<IResult> DeleteShowCaseProduct(int id)
         {
             if (id == 0)
@@ -42,6 +43,7 @@ namespace Business.Concrete.Showcases
             return new SuccessResult();
 
         }
+        [CacheRemoveAspect("IShowCaseProductService.Get")]
         public async Task<IResult> InsertProductShowcase(ShowCaseProduct showCaseProduct)
         {
             if (showCaseProduct == null)

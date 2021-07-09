@@ -178,8 +178,6 @@ namespace eCommerce.Controllers
         #endregion
         public async Task<IActionResult> Index()
         {
-         
- 
             MainPageModel model = new MainPageModel();
             model.SliderList = (await _sliderService.GetAllSlider()).Data;
             model.ShowCaseList = (await _showcaseDal.GetAllShowCaseDto()).Data;
@@ -270,7 +268,6 @@ namespace eCommerce.Controllers
 
             return View(model);
         }
-
 
 
         public IActionResult BasketAdded(Basket basket)

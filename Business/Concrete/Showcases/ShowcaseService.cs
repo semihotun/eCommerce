@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
+using Core.Aspects.Autofac.Caching;
+
 namespace Business.Concrete.Showcases
 {
     public class ShowcaseService : IShowcaseService
@@ -24,7 +26,7 @@ namespace Business.Concrete.Showcases
             _mapper = mapper;
         }
 
-
+        [CacheAspect]
         public async Task<IDataResult<IList<ShowCase>>> GetAllShowcase()
         { 
             var result = _showcaseRepository.Query();
@@ -32,7 +34,7 @@ namespace Business.Concrete.Showcases
 
             return new SuccessDataResult<IList<ShowCase>>(data);
         }
-
+        [CacheRemoveAspect("IShowCaseProductService.Get")]
         public async Task<IResult> InsertShowcase(ShowCase showCase)
         {
             if (showCase == null)
@@ -43,6 +45,7 @@ namespace Business.Concrete.Showcases
 
             return new SuccessResult();
         }
+        [CacheRemoveAspect("IShowCaseProductService.Get")]
         public async Task<IResult> DeleteShowCase(int id)
         {
             if (id == 0)
@@ -53,13 +56,14 @@ namespace Business.Concrete.Showcases
             await _showcaseRepository.SaveChangesAsync();
             return new SuccessResult();
         }
+        [CacheAspect]
         public async Task<IDataResult<ShowCase>> GetShowcase(int id)
         {
             var result =await _showcaseRepository.GetAsync(x=>x.Id==id);
 
             return new SuccessDataResult<ShowCase>(result);
         }
-
+        [CacheRemoveAspect("IShowCaseProductService.Get")]
         public async Task<IResult> UpdateShowcase(ShowCase showCase)
         {
             if (showCase == null)

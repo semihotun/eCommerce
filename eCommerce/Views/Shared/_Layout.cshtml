@@ -38,6 +38,7 @@
 
 
 
+
 </head>
 
 <body ng-app="myApp">
@@ -367,16 +368,22 @@
                 if ($.trim($(searchboxID).val()).length >= 2) {
 
                     delay(function () {
-                        var options = {};
-                        options.url = '/Home/Search?searchKey=' + $(searchboxID).val(),
-                        options.type = "POST";
-                        options.contentType = "application/json; charset=utf-8",
-                            options.success = function (result) {
+
+                        $.ajax({
+                            url : '/Home/Search?searchKey=' + $(searchboxID).val(),
+                            type: "POST",
+                            dataType: "jsonp",
+                            beforeSend:function (request) {
+                                request.setRequestHeader("Authority", "asdasdsa");
+                            },
+                            success:function (result) {
                                 $("#searchDiv").html(result);
                                 $("#searchDiv").show();
                                 $("#searchDiv").css('z-index', '1');
-                            };
-                        $.ajax(options);
+                            }
+                        });
+
+
                     }, 1);
                 } else {
                     $("#searchDiv").hide();

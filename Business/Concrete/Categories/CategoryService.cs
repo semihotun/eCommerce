@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
 using Entities.Helpers.AutoMapper;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete.Categories
 {
@@ -28,6 +29,8 @@ namespace Business.Concrete.Categories
             this._categoryRepository = categoryRepository;
         }
         #endregion
+
+        [CacheRemoveAspect("ICategoryService.Get")]
         public async Task<IResult> DeleteCategory(int id)
         {
             if (id == 0)
@@ -40,6 +43,7 @@ namespace Business.Concrete.Categories
             return new SuccessResult();
 
         }
+        [CacheRemoveAspect("ICategoryService.Get")]
         public async Task<IResult> RemoveRangeCategory(int id)
         {
 
@@ -50,14 +54,14 @@ namespace Business.Concrete.Categories
             return new SuccessResult();
 
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IList<Category>>> GetAllCategories()
         {
             var data =await _categoryRepository.Query().ToListAsync();
 
             return new SuccessDataResult<List<Category>>(data);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IList<Category>>> GetAllCategoriesByParentCategoryId(int parentCategoryId)
         {
 
@@ -65,7 +69,7 @@ namespace Business.Concrete.Categories
 
             return new SuccessDataResult<List<Category>>(result);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<Category>> GetCategoryById(int categoryId)
         {
 
@@ -73,7 +77,7 @@ namespace Business.Concrete.Categories
 
             return new SuccessDataResult<Category>(result);
         }
-
+        [CacheRemoveAspect("ICategoryService.Get")]
         public async Task<IResult> InsertCategory(Category category)
         {
             if (category == null)
@@ -84,7 +88,7 @@ namespace Business.Concrete.Categories
             return new SuccessResult();
 
         }
-
+        [CacheRemoveAspect("ICategoryService.Get")]
         public async Task<IResult> UpdateCategory(Category category)
         {
             var data =await _categoryRepository.GetAsync(x => x.Id == category.Id);
@@ -93,7 +97,7 @@ namespace Business.Concrete.Categories
             await _categoryRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IEnumerable<SelectListItem>>> GetCategoryDropdown(int? selectedId = 0)
         {
             var query = from s in _categoryRepository.Query()

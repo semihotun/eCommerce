@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Abstract.Discounts;
+using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -24,6 +25,7 @@ namespace Business.Concrete.Discounts
         }
         #endregion
         #region Method
+        [CacheRemoveAspect("IDiscountBrandService.Get")]
         public async Task<IResult> DeleteDiscountBrand(DiscountBrand discountBrand)
         {
 
@@ -31,6 +33,7 @@ namespace Business.Concrete.Discounts
             await _discountBrandRepository.SaveChangesAsync();
             return new SuccessResult();
         }
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<DiscountBrand>>> GetAllDiscountBrand(int discountId = 0,
         int pageindex = 1, int pageSize = int.MaxValue)
         {
@@ -43,7 +46,7 @@ namespace Business.Concrete.Discounts
 
             return new SuccessDataResult<IPagedList<DiscountBrand>>(data);
         }
-
+        [CacheRemoveAspect("IDiscountBrandService.Get")]
         public async Task<IResult> AddDiscountBrand(DiscountBrand discountBrand)
         {
             if (discountBrand == null)

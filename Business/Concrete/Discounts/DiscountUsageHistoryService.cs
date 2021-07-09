@@ -1,4 +1,5 @@
 ﻿using Business.Abstract.Discounts;
+using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -20,6 +21,7 @@ namespace Business.Concrete.Discounts
         }
         #endregion
         #region Method
+        [CacheRemoveAspect("IDiscountUsageHistoryService.Get")]
         public async Task<IResult> AddDiscountUsageHistory(DiscountUsageHistory discountUsageHistory)
         {
             if (discountUsageHistory == null)
@@ -30,6 +32,7 @@ namespace Business.Concrete.Discounts
 
             return new SuccessResult();
         }
+        [CacheRemoveAspect("IDiscountUsageHistoryService.Get")]
         public async Task<IResult> DeleteDiscountUsageHistory(DiscountUsageHistory discountUsageHistory)
         {
             if (discountUsageHistory == null)
@@ -39,6 +42,7 @@ namespace Business.Concrete.Discounts
             await _discountUsageHistoryRepository.SaveChangesAsync();
             return new SuccessResult();
         }
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<DiscountUsageHistory>>> GetAllDiscountUsageHistory(int discountId = 0,
              int pageindex = 1, int pagesize = int.MaxValue)
         {
@@ -51,6 +55,7 @@ namespace Business.Concrete.Discounts
 
             return new SuccessDataResult<IPagedList<DiscountUsageHistory>>(data);
         }
+        [CacheRemoveAspect("IDiscountUsageHistoryService.Get")]
         public async Task<IResult> UpdateDiscountUsageHistory(DiscountUsageHistory discountUsageHistory)
         {
             if (discountUsageHistory == null)

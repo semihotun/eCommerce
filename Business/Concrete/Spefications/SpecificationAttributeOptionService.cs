@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete.Spefications
 {
@@ -32,6 +33,7 @@ namespace Business.Concrete.Spefications
         #endregion
 
         #region method
+        [CacheAspect]
         public async Task<IDataResult<SpecificationAttributeOption>> GetSpecificationAttributeOptionById(int specificationAttributeOptionId)
         {
 
@@ -41,7 +43,7 @@ namespace Business.Concrete.Spefications
             return new SuccessDataResult<SpecificationAttributeOption>(data);
 
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IList<SpecificationAttributeOption>>> GetSpecificationAttributeOptionsByIds(int[] specificationAttributeOptionIds)
         {
             var query = from sao in _specificationAttributeOptionRepository.Query()
@@ -60,7 +62,7 @@ namespace Business.Concrete.Spefications
 
             return new SuccessDataResult<List<SpecificationAttributeOption>>(sortedSpecificationAttributeOptions);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<SpecificationAttributeOption>>> GetSpecificationAttributeOptionsBySpecificationAttribute(
             int specificationAttributeId = 0,
             int pageIndex = 1, int pageSize = int.MaxValue)
@@ -76,7 +78,7 @@ namespace Business.Concrete.Spefications
             return new SuccessDataResult<IPagedList<SpecificationAttributeOption>>(result);
         }
 
-
+        [CacheRemoveAspect("ISpecificationAttributeOptionService.Get")]
         public async Task<IResult> DeleteSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption)
         {
             if (specificationAttributeOption == null)
@@ -87,7 +89,7 @@ namespace Business.Concrete.Spefications
             return new SuccessResult();
         }
 
-
+        [CacheRemoveAspect("ISpecificationAttributeOptionService.Get")]
         public async Task<IResult> InsertSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption)
         {
             if (specificationAttributeOption == null)
@@ -97,7 +99,7 @@ namespace Business.Concrete.Spefications
             await _specificationAttributeOptionRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
+        [CacheRemoveAspect("ISpecificationAttributeOptionService.Get")]
         public async Task<IResult> UpdateSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption)
         {
             if (specificationAttributeOption == null)
@@ -110,7 +112,7 @@ namespace Business.Concrete.Spefications
             return new SuccessResult();
         }
 
-
+        [CacheAspect]
         public async Task<IDataResult<int[]>> GetNotExistingSpecificationAttributeOptions(int[] attributeOptionIds)
         {
             var query = _specificationAttributeOptionRepository.Query();

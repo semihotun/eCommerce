@@ -1,4 +1,5 @@
 ﻿using Business.Abstract.Products;
+using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,14 +23,14 @@ namespace Business.Concrete.Products
             this._productShipmentInfoDAL = productShipmentInfoDAL;
         }
         #endregion
-
+        [CacheAspect]
         public async Task<IDataResult<ProductShipmentInfo>> GetProductShipmentInfo(int ProductId)
         {
             var query =await _productShipmentInfoDAL.GetAsync(x=>x.ProductId == ProductId);
 
             return new SuccessDataResult<ProductShipmentInfo>(query);
         }
-
+        [CacheRemoveAspect("IProductShipmentInfoService.Get")]
         public async Task<IResult> AddProductShipmentInfo(ProductShipmentInfo productShipmentInfo)
         {
 
@@ -38,7 +39,7 @@ namespace Business.Concrete.Products
 
             return new SuccessResult();
         }
-
+        [CacheRemoveAspect("IProductShipmentInfoService.Get")]
         public async Task<IResult> UpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo)
         {
             var query = await _productShipmentInfoDAL.GetAsync(x => x.Id == productShipmentInfo.Id);
@@ -48,7 +49,7 @@ namespace Business.Concrete.Products
 
             return new SuccessResult();
         }
-
+        [CacheRemoveAspect("IProductShipmentInfoService.Get")]
         public async Task<IResult> AddOrUpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo)
         {
             if (productShipmentInfo.Id == 0)
