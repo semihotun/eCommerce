@@ -13,16 +13,16 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
-    <link href="~/AdminLogin/parallaxstyle.css" rel="stylesheet" />
+    <link href="~/Content/Themes/css/parallaxstyle.css" rel="stylesheet" />
 
     <style type="text/css">
-        #parallax{
+        #parallax {
             padding: 0px;
             margin: 0px;
             width: 100%;
             height: 100%;
             background-color: #f6f2f2;
-            background-image: url('../AdminLogin/bg.png');
+            background-image: url('../Content/Themes/img/bg.png');
             background-position: 50%;
             background-repeat: no-repeat;
             background-size: cover;
@@ -62,12 +62,12 @@
 <body>
     <div id="parallax">
         <div class="layer" data-depth="0.6">
-            
+
         </div>
         <div class="layer" data-depth="0.4">
             <div id="particles-js"></div>
         </div>
-   
+
     </div>
 
 
@@ -77,7 +77,7 @@
         {
             <div style="width:100%">
                 <div id="aa">
-                    <img src="~/AdminLogin/adminuser.jpg" width="100%" />
+                    <img src="~/Content/Themes/img/adminuser.jpg" width="100%" />
                 </div>
             </div>
             <div class="ml-auto mr-auto justify-content-center w-50">
@@ -87,7 +87,7 @@
                 </div>
                 <div class="form-group row ">
                     <span>Password</span>
-                    @Html.TextBoxFor(x => x.Password, new { @class = "form-control " })
+                    @Html.PasswordFor(x => x.Password, new { @class = "form-control " })
                 </div>
                 <div class="form-group row">
                     <input type="submit" value="Giriş Yap" class="btn btn-primary" />
@@ -100,7 +100,8 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'></script>
     <script src='https://matthew.wagerfield.com/parallax/deploy/jquery.parallax.js'></script>
-    <script src="~/AdminLogin/parallax.js"></script>
+
+    <script src="~/Content/Themes/js/parallax.js"></script>
 </body>
 </html>
 

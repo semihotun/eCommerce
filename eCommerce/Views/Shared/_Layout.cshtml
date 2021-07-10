@@ -16,10 +16,12 @@
     <script src="~/Content/Themes/js/slick.min.js"></script>
     <script src="~/Content/Themes/js/nouislider.min.js"></script>
     <!-- Angular -->
-    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Content/Themes/js/angular.js"></script>
+
     <script src="https://vitalets.github.io/checklist-model/checklist-model.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.17/angular-filter.js"></script>
-    <script src="~/Angular/AngularWeb.js"></script>
+
+    <script src="~/Content/Admin/js/Angular/AngularWeb.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <!-- Bootstrap -->
     <link href="~/Content/Themes/css/bootstrap.min.css" rel="stylesheet" />
@@ -33,9 +35,8 @@
     <link href="~/Content/Themes/css/font-awesome.min.css" rel="stylesheet" />
     <!-- Custom stlylesheet -->
     <link href="~/Content/Themes/css/style.css" rel="stylesheet" />
-    <link href="~/Content/Mycss.css" rel="stylesheet" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <link href="~/Content/Themes/css/Mycss.css" rel="stylesheet" />
 
 
 
@@ -372,7 +373,6 @@
                         $.ajax({
                             url : '/Home/Search?searchKey=' + $(searchboxID).val(),
                             type: "POST",
-                            dataType: "jsonp",
                             beforeSend:function (request) {
                                 request.setRequestHeader("Authority", "asdasdsa");
                             },
