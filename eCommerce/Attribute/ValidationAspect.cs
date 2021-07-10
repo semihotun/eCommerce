@@ -108,11 +108,6 @@ namespace eCommerce.Attribute
         }
         public override async void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            //var mainWhereDescriptors = filterContext.ActionDescriptor.Parameters.Where(x => x.ParameterType == entityType);
-            //var parametersWhereDescriptors = filterContext.ActionDescriptor.Parameters
-            //    .Where(x => x.ParameterType.GetProperties()
-            //    .Any(x => x.PropertyType == entityType));
-
 
             var ignore = new HashSet<string>();
             if (!string.IsNullOrWhiteSpace(_ignore))
