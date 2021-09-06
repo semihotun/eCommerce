@@ -149,7 +149,8 @@
                                                       ng-if="product.ProductDiscount > 0">-{{(((product.ProductPrice-product.ProductDiscount)-product.ProductPrice)/product.ProductPrice)*-100  | number:0}}%</span>
                                             </div>
                                             <button class="main-btn quick-view">
-                                                <i class="fa fa-search-plus"></i><a href="~/Home/ProductDetail/{{product.Id}}">Quick view</a>
+                                                
+                                                <i class="fa fa-search-plus"></i><a href="~/Home/ProductDetail?productid={{product.Id}}&combinationId={{product.ProductAttributeCombination.Id}}">Ürünü İncele</a>
                                             </button>
                                             <img src="{{product.ProductPhotoModel.ProductPhotoName}}" width="253"
                                             height="350">

@@ -109,33 +109,15 @@ namespace eCommerce.Controllers
         #region Search
         public async Task<PartialViewResult> Search(string searchKey)
         {
-            SearchModel viewModel = new SearchModel();
-            var tasks = new Task[1];
-            int i = 0;
-            viewModel = new SearchModel();
+            var viewModel = new SearchModel();
             viewModel.SearchKey = searchKey;
-            List<Task> TaskList = GetSeachResult(searchKey, viewModel);
-            foreach (Task tsk in TaskList)
-            {
-                tasks[i] = tsk;
-                i++;
-            }
-            await Task.WhenAll(tasks);
+            var productList = _productService.MainSearchProduct(searchProductName: searchKey, pageSize: 6);
+            await Task.WhenAll(productList);
+            viewModel.ProductList = productList.Result.Data;
 
             return PartialView("ResultView", viewModel);
         }
 
-        private List<Task> GetSeachResult(string search, SearchModel model)
-        {
-            List<Task> Tasks = new List<Task>();
-            var taskCustomer = Task.Factory.StartNew(async () =>
-            {
-                var dataTask = await _productService.MainSearchProduct(searchProductName: search, pageSize: 6);
-                model.ProductList = dataTask.Data.ToList();
-            });
-            Tasks.Add(taskCustomer);
-            return Tasks;
-        }
 
         #endregion
 
@@ -222,7 +204,7 @@ namespace eCommerce.Controllers
                 }
                 else if (combinationList.Select(x => x.AttributesXmlList).First().Count() == 1)  //Kombinasyonu 1 olan ürün
                 {
-                    foreach (var item in combinationList.Where(x =>x.ProductStockModel != null && x.ProductStockModel.ProductStockPiece > 0).Select(x => x.AttributesXmlList.Select(y => y.AttributeId)))
+                    foreach (var item in combinationList.Where(x => x.ProductStockModel != null && x.ProductStockModel.ProductStockPiece > 0).Select(x => x.AttributesXmlList.Select(y => y.AttributeId)))
                     {
                         enabledList.AddRange(item);
                     }
@@ -235,8 +217,8 @@ namespace eCommerce.Controllers
 
         public async Task<IActionResult> GetAnotherProduct()
         {
-            var data =(await _productDAL.GetAnotherProductList()).Data;
-            return Json(data,new JsonSerializerSettings());
+            var data = (await _productDAL.GetAnotherProductList()).Data;
+            return Json(data, new JsonSerializerSettings());
         }
 
         [HttpPost]

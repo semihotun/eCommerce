@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 using Core.CrossCuttingConcerns.Validation;
-using Core.Utilities.Attribute;
 using Entities.Concrete;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;

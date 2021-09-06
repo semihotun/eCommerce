@@ -367,23 +367,17 @@
         $(searchboxID).keyup(function (event) {
             if (event.keyCode != 13 && event.keyCode != 37 && event.keyCode != 39) {
                 if ($.trim($(searchboxID).val()).length >= 2) {
-
                     delay(function () {
-
                         $.ajax({
                             url : '/Home/Search?searchKey=' + $(searchboxID).val(),
                             type: "POST",
-                            beforeSend:function (request) {
-                                request.setRequestHeader("Authority", "asdasdsa");
-                            },
-                            success:function (result) {
+                            success: function (result) {
+                                $("#searchDiv").hide();
                                 $("#searchDiv").html(result);
                                 $("#searchDiv").show();
                                 $("#searchDiv").css('z-index', '1');
                             }
                         });
-
-
                     }, 1);
                 } else {
                     $("#searchDiv").hide();

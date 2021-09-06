@@ -122,7 +122,7 @@ namespace eCommerce
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseMiddleware<SecurityHeadersMiddleware>();
+            //app.UseMiddleware<SecurityHeadersMiddleware>();
 
 
             if (env.IsDevelopment())
