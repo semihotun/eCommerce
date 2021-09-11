@@ -83,8 +83,9 @@ namespace DataAccess.Concrete.EntitiyFramework
                         let pacg = (
                             from pac in Context.ProductAttributeCombination
                             where pac.ProductId == p.Id
-
-                            let pacpsg=(from pacps in Context.ProductStock  where pac.Id==pacps.CombinationId 
+                            let pacpsg=(from pacps in Context.ProductStock orderby pacps.CreateTime
+                                        where pac.Id == pacps.CombinationId
+                                        &&  (pacps.AllowOutOfStockOrders == true || pacps.ProductStockPiece > 0)
                                         select pacps)
                             select new ProductDetailDTO.ProductAttributeCombination
                             {
@@ -129,13 +130,16 @@ namespace DataAccess.Concrete.EntitiyFramework
                                     where (combinationId != 0 ? ppcpljg.CombinationId == combinationId : true == true)
                                     select ppl)
 
-                        let productStockGroup = from ps in Context.ProductStock
+                        let productStockGroup = (from ps in Context.ProductStock.DefaultIfEmpty()
                                                 orderby ps.CreateTime
-                                                where ps.ProductId == p.Id && ps.CombinationId == combinationId &&
-                                                      (ps.AllowOutOfStockOrders == false
-                                                          ? ps.ProductStockPiece > 0
-                                                          : ps.ProductStockPiece != null)
-                                                select ps
+                                                where ps.ProductId == p.Id && (ps.AllowOutOfStockOrders == true || ps.ProductStockPiece > 0) &&
+
+                                                (p.ProductStockTypeId ==(int)ProductStockTypeEnum.VaryasyonUrun
+                                                ?(pacg.Count() > 0 && combinationId == 0 ? ps.CombinationId==pacg.First().Id : ps.CombinationId == combinationId)
+                                                : ps.CombinationId == 0) 
+
+                                               
+                                                select ps)
 
                         select new ProductDetailDTO()
                         {
@@ -161,7 +165,7 @@ namespace DataAccess.Concrete.EntitiyFramework
             return new SuccessDataResult<ProductDetailDTO>(result);
         }
 
-
+   
         public async Task<IDataResult<List<ShowCaseProductDTO.Product>>> GetAnotherProductList()
         {
             var anotherProductGroup = (from ap in Context.Product.OrderBy(x => Guid.NewGuid()).Take(4)
@@ -235,7 +239,8 @@ namespace DataAccess.Concrete.EntitiyFramework
                                 },
                                 ProductPhotoList = pplg.ToList(),
                                 ProductStock = productStockGroup.First(),
-                                ProductAttributeCombination = pacljf
+                                ProductAttributeCombination = pacljf,
+                                ProductCombinationText = _productAttributeFormatter.XmlCatalogProductString(pacljf.AttributesXml).Result
                             };
 
                 var product = await query.FirstOrDefaultAsync();

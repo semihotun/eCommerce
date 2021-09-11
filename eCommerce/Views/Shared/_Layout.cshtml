@@ -386,6 +386,12 @@
         });
     });
 
+
+    $("body:not(#searchDiv):not(input#txtSearch)").click(function (event) {
+            $("#searchDiv").hide();
+    });
+
+
     var delay = (function () {
         var timer = 0;
         return function (callback, ms) {

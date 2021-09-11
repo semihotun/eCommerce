@@ -44,5 +44,7 @@ namespace Entities.DTO.Product
         #endregion
 
         public ProductStock ProductStock { get; set; }
+
+        public string ProductCombinationText { get; set; }
     }
 }

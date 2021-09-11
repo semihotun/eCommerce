@@ -38,7 +38,7 @@
                                     foreach (var item in Model.CheckoutProductList)
                                     {
                                         <tr>
-                                            <td><strong>@item.ProductModel.ProductName</strong></td>
+                                            <td><strong>@item.ProductModel.ProductName  @item.ProductCombinationText</strong></td>
 
                                             @*<td class="thumb"><img src="@item.ProductPhotoList?.First()?.ProductPhotoName" alt=""></td>*@
                                             <td class="details">
