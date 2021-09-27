@@ -49,5 +49,20 @@ namespace eCommerce.Areas.Admin.Controllers
             info
         };
 
+        protected void ResponseAlert(IResult result)
+        {
+            if(result.Success)
+            {
+                Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : "İşlem Başarılı", NotificationType.success);
+            }
+            else
+            {
+                Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : "İşlem Başarısız", NotificationType.error);
+            }
+        }
+
+
+
+
     }
 }

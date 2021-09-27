@@ -75,7 +75,7 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<IActionResult> CommentDelete(int id)
         {
             var deleteData = await _commentService.GetComment(id);
-            await _commentService.DeleteComment(deleteData.Data);
+            ResponseAlert(await _commentService.DeleteComment(deleteData.Data));
 
             return RedirectToAction("CommentList", "Comment");
         }
@@ -84,7 +84,7 @@ namespace eCommerce.Areas.Admin.Controllers
         {
             var data = await _commentService.GetComment(id);
             data.Data.IsApproved = true;
-            await _commentService.UpdateComment(data.Data);
+            ResponseAlert(await _commentService.UpdateComment(data.Data));
 
             return RedirectToAction("CommentList", "Comment");
         }

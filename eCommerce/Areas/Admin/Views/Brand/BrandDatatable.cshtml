@@ -19,8 +19,8 @@
 
 
 <script>
-    var Brandable;
-    var BindBrand = function (response) {
+    let Brandable;
+    let BindBrand = function (response) {
         if ($.fn.DataTable.isDataTable("#BrandList")) {
             Brandable.draw();
         }
@@ -62,12 +62,15 @@
 
 
 
-    var FilterRecord = function () {
+    let FilterRecord = function () {
         BindBrand();
     }
     $(document).ready(function () {
+ 
         BindBrand();
+
         AddDataTableFilter(Brandable);
+        $(".dataTables_filter").hide();
     });
 
     $("#BrandFilterForm").submit(function (event) {

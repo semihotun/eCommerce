@@ -24,14 +24,12 @@ namespace eCommerce.Models
                 var handler = new JwtSecurityTokenHandler();
                 var token = handler.ReadJwtToken(GirisYaptimi);
 
-
-
                 base.OnActionExecuting(filterContext);
 
             }
             else
             {
-                filterContext.HttpContext.Response.Redirect("/Home/Index");
+                filterContext.HttpContext.Response.Redirect("/AdminLogin/Login");
             }
 
         }

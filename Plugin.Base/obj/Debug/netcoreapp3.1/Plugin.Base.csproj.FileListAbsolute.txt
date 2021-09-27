@@ -1,7 +1,6 @@
 C:\Users\Semih\source\repos\eCommerce\Plugin.Base\bin\Debug\netcoreapp3.1\Plugin.Base.deps.json
 C:\Users\Semih\source\repos\eCommerce\Plugin.Base\bin\Debug\netcoreapp3.1\Plugin.Base.dll
 C:\Users\Semih\source\repos\eCommerce\Plugin.Base\bin\Debug\netcoreapp3.1\Plugin.Base.pdb
-C:\Users\Semih\source\repos\eCommerce\Plugin.Base\obj\Debug\netcoreapp3.1\Plugin.Base.csprojAssemblyReference.cache
 C:\Users\Semih\source\repos\eCommerce\Plugin.Base\obj\Debug\netcoreapp3.1\Plugin.Base.AssemblyInfoInputs.cache
 C:\Users\Semih\source\repos\eCommerce\Plugin.Base\obj\Debug\netcoreapp3.1\Plugin.Base.AssemblyInfo.cs
 C:\Users\Semih\source\repos\eCommerce\Plugin.Base\obj\Debug\netcoreapp3.1\Plugin.Base.csproj.CoreCompileInputs.cache

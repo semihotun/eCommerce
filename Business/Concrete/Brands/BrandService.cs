@@ -86,6 +86,8 @@ namespace Business.Concrete.Brands
             await _brandRepository.SaveChangesAsync();
             return new SuccessResult();
         }
+
+
         [CacheAspect]
         public async Task<IDataResult<IEnumerable<SelectListItem>>> GetBrandDropdown(int? selectedId = 0)
         {

@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using X.PagedList;
 using eCommerce.Models;
+using Entities.ViewModels.Admin.ShowCases;
 
 namespace eCommerce.Areas.Admin.Controllers
 {
@@ -74,7 +75,6 @@ namespace eCommerce.Areas.Admin.Controllers
             {
                 var showcase = _mapper.Map<ShowCaseModel, ShowCase>(model);
                 await _showcaseService.InsertShowcase(showcase);
-
                 Alert("Kayıt Eklendi", NotificationType.success);
                 return RedirectToAction("ShowcaseEdit", new { id = showcase.Id });
             }
@@ -86,10 +86,9 @@ namespace eCommerce.Areas.Admin.Controllers
             }
 
         }
-        public IActionResult ShowCaseDelete(int id)
+        public async Task<IActionResult> ShowCaseDelete(int id)
         {
-            _showcaseService.DeleteShowCase(id);
-            Alert("Kayıt Silindi", NotificationType.error);
+            ResponseAlert(await _showcaseService.DeleteShowCase(id));
             return Json(true, new JsonSerializerSettings());
         }
 
@@ -112,7 +111,7 @@ namespace eCommerce.Areas.Admin.Controllers
         {
             //Update
             var showCaseMap = _mapper.Map<ShowCaseDTO, ShowCase>(model.ShowCaseDto);
-            await _showcaseService.UpdateShowcase(showCaseMap);
+            ResponseAlert(await _showcaseService.UpdateShowcase(showCaseMap));
             //Get
             var showCaseProduct = await _showcaseDal.GetShowCaseDto(model.ShowCaseDto.Id);
             model.ShowCaseDto = showCaseProduct.Data;
@@ -125,7 +124,7 @@ namespace eCommerce.Areas.Admin.Controllers
         }
         public async Task<IActionResult> ShowcaseAdded(ShowCaseProduct showCaseProduct)
         {
-            await _showCaseProductService.InsertProductShowcase(showCaseProduct);
+            ResponseAlert(await _showCaseProductService.InsertProductShowcase(showCaseProduct));
 
             return RedirectToAction("ShowcaseEdit", "ShowCase", new
             {
@@ -136,7 +135,7 @@ namespace eCommerce.Areas.Admin.Controllers
 
         public async Task<IActionResult> ShowcaseDeletedproduct(int id, int showCaseId)
         {
-            await _showCaseProductService.DeleteShowCaseProduct(id: id);
+            ResponseAlert(await _showCaseProductService.DeleteShowCaseProduct(id: id));
 
             return RedirectToAction("ShowcaseEdit", "ShowCase", new
             {
@@ -145,14 +144,7 @@ namespace eCommerce.Areas.Admin.Controllers
             });
 
         }
-
-        public enum ShowcaseTapList
-        {
-            ShowCaseInfo = 1,
-            ShowCaseText = 2,
-            ShowCaseProductList = 3,
-            ShowCaseAddedProductList = 4
-        }
+   
         public static Dictionary<int, string> ShowCaseDictionary = new Dictionary<int, string>
         {
             { 1, "tap1" },
@@ -160,11 +152,6 @@ namespace eCommerce.Areas.Admin.Controllers
             { 3, "tap3" },
             { 4, "tap4" },
         };
-
-
-
-
-
 
 
         #endregion

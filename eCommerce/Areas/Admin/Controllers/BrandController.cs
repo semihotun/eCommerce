@@ -56,7 +56,7 @@ namespace eCommerce.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> BrandEdit(Brand model)
         {
-            await _brandService.UpdateBrand(model);
+            ResponseAlert(await _brandService.UpdateBrand(model));
 
             return View(model);
         }
@@ -66,14 +66,14 @@ namespace eCommerce.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> BrandCreate(Brand model)
         {
-            await _brandService.BrandAdd(model);
-            Alert("Eklendi", NotificationType.success);
+            ResponseAlert(await _brandService.BrandAdd(model));
+           
             return RedirectToAction("BrandList", "Brand");
         }
         public async Task<IActionResult> BrandDelete(int id)
         {
             var deletedData = await _brandService.GetBrand(id);
-            await _brandService.DeleteBrand(deletedData.Data);
+            ResponseAlert(await _brandService.DeleteBrand(deletedData.Data));
 
             return RedirectToAction("BrandList", "Brand");
         }

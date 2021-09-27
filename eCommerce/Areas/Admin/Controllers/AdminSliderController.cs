@@ -79,7 +79,7 @@ namespace eCommerce.Areas.Admin.Controllers
                 model.SliderImage = slider.Data.SliderImage;
             }
             var replaceModel = _mapper.Map<SliderModel, Slider>(model, slider.Data);
-            await _sliderService.UpdateSlider(replaceModel);
+            ResponseAlert(await _sliderService.UpdateSlider(replaceModel));
 
             return View(model);
         }
@@ -93,19 +93,19 @@ namespace eCommerce.Areas.Admin.Controllers
         {
             var imageAdd = new PhotoHelper(_hostingEnvironment).Add(PhotoUrl.Slider, model.Uploadfile);
             model.SliderImage = imageAdd.Data.Path;
-            await _sliderService.InsertSlider(model.MapTo<Slider>());
+            ResponseAlert(await _sliderService.InsertSlider(model.MapTo<Slider>()));
+
             return RedirectToAction("SliderIndex");
         }
         public async Task<IActionResult> SliderDelete(int id)
         {
             var sliderTask = await _sliderService.GetSlider(id);
             var slider = sliderTask.Data;
-            await _sliderService.DeleteSlider(id);
+            ResponseAlert(await _sliderService.DeleteSlider(id));
             
             if (slider.SliderImage != null)
                  new PhotoHelper(_hostingEnvironment).Delete(Path.Combine(_hostingEnvironment.WebRootPath , PhotoUrl.Slider , slider.SliderImage));
 
-            Alert("Kayıt Silindi", NotificationType.success);
             return Json(true, new JsonSerializerSettings());
         }
 

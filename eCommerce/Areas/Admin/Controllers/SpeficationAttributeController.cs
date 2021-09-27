@@ -69,7 +69,7 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<IActionResult> SpeficationAttributeCreate(SpecificationAttributeModel model)
         {
             var data = _mapper.Map<SpecificationAttributeModel, SpecificationAttribute>(model);
-            await _specificationAttributeService.InsertSpecificationAttribute(data);
+            ResponseAlert(await _specificationAttributeService.InsertSpecificationAttribute(data));
 
             return RedirectToAction("SpeficationAttributeEdit", "SpeficationAttribute", new { Id = data.Id });
         }
@@ -87,7 +87,7 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<IActionResult> SpeficationAttributeEdit(SpecificationAttributeModel model)
         {
             var data = _mapper.Map<SpecificationAttributeModel, SpecificationAttribute>(model);
-            await _specificationAttributeService.UpdateSpecificationAttribute(data);
+            ResponseAlert(await _specificationAttributeService.UpdateSpecificationAttribute(data));
 
             return RedirectToAction(nameof(SpeficationAttributeEdit),new{id= model.Id});
         }
@@ -95,7 +95,7 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<IActionResult> SpeficationAttributeDelete(int id)
         {
             var spefication = await _specificationAttributeService.GetSpecificationAttributeById(id);
-            await _specificationAttributeService.DeleteSpecificationAttribute(spefication.Data);
+            ResponseAlert(await _specificationAttributeService.DeleteSpecificationAttribute(spefication.Data));
 
             return RedirectToAction("SpeficationAttributeList");
         }
@@ -114,14 +114,7 @@ namespace eCommerce.Areas.Admin.Controllers
                 specificationAttributeIdint: model.SpecificationAttributeId
                 );
 
-            return Json(new
-            {
-                aaData = query.Data,
-                sEcho = param.sEcho,
-                iTotalDisplayRecords = query.Data.TotalItemCount,
-                iTotalRecords = query.Data.TotalItemCount
-
-            }, new JsonSerializerSettings());
+            return ToDataTableJson(query,param);
         }
 
 
@@ -132,7 +125,7 @@ namespace eCommerce.Areas.Admin.Controllers
         {
             var data = _mapper.Map<SpecificationAttributeOptionModel, SpecificationAttributeOption>(model.SpecificationAttributeOptionModel);
             data.SpecificationAttributeId = model.Id;
-            await _specificationAttributeOptionService.InsertSpecificationAttributeOption(data);
+            ResponseAlert(await _specificationAttributeOptionService.InsertSpecificationAttributeOption(data));
 
             return RedirectToAction("SpeficationAttributeEdit", "SpeficationAttribute", new { Id = model.Id });
         }
@@ -150,8 +143,7 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<IActionResult> SpeficationAttributeOptionEdit(SpecificationAttributeOptionModel model)
         {
             var data = _mapper.Map<SpecificationAttributeOptionModel, SpecificationAttributeOption>(model);
-
-            await _specificationAttributeOptionService.UpdateSpecificationAttributeOption(data);
+            ResponseAlert(await _specificationAttributeOptionService.UpdateSpecificationAttributeOption(data));
 
             return RedirectToAction("SpeficationAttributeEdit", "SpeficationAttribute", new { Id = data.SpecificationAttributeId });
         }
@@ -159,7 +151,7 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<IActionResult> SpeficationAttributeOptionDelete(int id)
         {
             var data = await _specificationAttributeOptionService.GetSpecificationAttributeOptionById(id);
-            await _specificationAttributeOptionService.DeleteSpecificationAttributeOption(data.Data);
+            ResponseAlert(await _specificationAttributeOptionService.DeleteSpecificationAttributeOption(data.Data));
 
             return RedirectToAction("SpeficationAttributeEdit", "SpeficationAttribute", new { Id = data.Data.SpecificationAttributeId });
         }

@@ -175,7 +175,9 @@ app.controller("Basket", function ($scope, $http, $window) {
                     ProductPiece: productPiece
                 }
             }).then(function (response) {
-                swal("Başarılı", "Ürününüz Sepete Eklendi" , "success"); 
+                swal("Başarılı", "Ürününüz Sepete Eklendi", "success");
+                $scope.BasketSize = $scope.BasketSize + 1;
+
             }, function () {
                     swal("Hata", "Ürün Eklerken bir hata" + productStockPiece, "error");
                 }

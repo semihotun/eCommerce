@@ -120,8 +120,6 @@
                                     });
                                 }
                             });
-                            toastr.success("Yer değiştirme işlemi başarılı");
-
                         }
                     });
 
@@ -137,11 +135,9 @@
                             data: { values: result.toString() },
                             dataType: "json",
                             success: function (data) {
-                                toastr.success("Başrıyla Silindi");
                                 window.location.reload();
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
-                                toastr.warning("Silerken Bir hatayla karşılaşıldı");
                             },
                         });
                     }
@@ -152,8 +148,7 @@
 
                 $('#btnEditNode').click(function (e) {
                     e.preventDefault();
-                    var result = tree.getCheckedNodes();
-                    //Buraya Edit Location Gelicek
+                    var result = tree.getCheckedNodes()[0];
                     window.location.assign('/Admin/CategoryTree/CategoryEdit?id=' + result.toString());
 
                 });
@@ -181,10 +176,10 @@
                     data: formdata,
                     success: function (response) {
                         window.location.reload();
-                        toastr.success("Başrıyla Eklendi");
+            
                     },
                     error: function (response) {
-                        toastr.success("Eklerken bir hatayla karşılaşıldı");
+                     
                         window.location.reload();
                     },
                     complete: function () {

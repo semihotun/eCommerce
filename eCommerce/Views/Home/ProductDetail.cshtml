@@ -14,9 +14,7 @@
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="#">Anasayfa</a></li>
-            @*<li><a href="/Account/RegisterLogin?returnUrl=/Home/ProductDetail/@Model.ProductModel.Id">Alışveril için giriş yap</a></li>*@
-
-            <li><a href="/Home/Catalog/@Model.ProductInfo.CategoryModel.CategoryInfo">@Model.ProductInfo.CategoryModel.CategoryInfo.CategoryName</a></li>
+            <li><a href="/Home/Catalog?id=@Model.ProductInfo.CategoryModel.CategoryInfo.Id">@Model.ProductInfo.CategoryModel.CategoryInfo.CategoryName</a></li>
 
             <li class="active">@Model.ProductInfo.ProductModel.ProductName</li>
         </ul>

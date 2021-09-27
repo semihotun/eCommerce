@@ -18,7 +18,9 @@ namespace Business.Abstract.Categories
         Task<IDataResult<Category>> GetCategoryById(int categoryId);
         Task<IResult> InsertCategory(Category category);
         Task<IResult> UpdateCategory(Category category);
-
         Task<IDataResult<IEnumerable<SelectListItem>>> GetCategoryDropdown(int? selectedId = 0);
+        Task<IResult> ChangeNodePosition(int id, int? parentId);
+        Task<IResult> DeleteNodes(string values);
+        
     }
 }

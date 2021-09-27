@@ -92,7 +92,6 @@ namespace Entities.DTO.Product
         public List<ProductSpecificationAttributeDTO> ProductSpecificationAttributeList { get; set; }
         public List<ShowCaseProductDTO.Product> AnotherProductList { get; set; }
         public ProductStock ProductStock { get; set; }
-        public List<ProductStock> ProductStockList { get; set; }
         public List<ProductAttributeCombinationModel> AttrCombinationList { get; set; }
     }
 }

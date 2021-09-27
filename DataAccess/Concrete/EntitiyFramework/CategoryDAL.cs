@@ -5,6 +5,7 @@ using eCommerce.Core.DataAccess;
 using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete;
 using Entities.DTO.Category;
+using Entities.ViewModels.Admin;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -86,6 +87,40 @@ namespace DataAccess.Concrete.EntitiyFramework
             var data = await query.FirstOrDefaultAsync();
             return new SuccessDataResult<CategorySpeficationOptionDTO>(data);
         }
+
+
+
+        public async Task<IDataResult<IList<HierarchyViewModel>>> GetHierarchy()
+        {
+            var hdList =await Context.Category.ToListAsync();
+
+            var records = hdList.Where(l => l.ParentCategoryId == null)
+                .Select(l => new HierarchyViewModel
+                {
+                    Id = l.Id,
+                    text = l.CategoryName,
+                    perentId = l.ParentCategoryId,
+                    children = GetChildren(hdList, l.Id)
+                }).ToList();
+
+            return new SuccessDataResult<List<HierarchyViewModel>> (records);
+        }
+
+        private List<HierarchyViewModel> GetChildren(IList<Category> hdList, int parentId)
+        {
+            return hdList.Where(l => l.ParentCategoryId == parentId)
+                .Select(l => new HierarchyViewModel
+                {
+                    Id = l.Id,
+                    text = l.CategoryName,
+                    perentId = l.ParentCategoryId,
+                    children = GetChildren(hdList, l.Id)
+                }).ToList();
+        }
+
+
+
+
 
 
     }

@@ -51,9 +51,7 @@ namespace eCommerce.Areas.Admin.Controllers
                 ));
 
             return ToDataTableJson(query,Param);
- 
         }
-
 
         public IActionResult ProductAttributeList(ProductAttributeModel Model) => View(Model);
 
@@ -65,7 +63,7 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<IActionResult> AttrCreate(ProductAttributeModel Model)
         {
             var data = _mapper.Map<ProductAttributeModel, ProductAttribute>(Model);
-            await _productattrService.InsertProductAttribute(data);
+            ResponseAlert(await _productattrService.InsertProductAttribute(data));
 
             return RedirectToAction("AttrEdit", "AdminProductAttr", new { Id = data.Id });
         }
@@ -80,10 +78,10 @@ namespace eCommerce.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult AttrEdit(ProductAttributeModel Model)
+        public async Task<ActionResult> AttrEdit(ProductAttributeModel Model)
         {
             var Data = _mapper.Map<ProductAttributeModel, ProductAttribute>(Model);
-            _productattrService.UpdateProductAttribute(Data);
+            ResponseAlert(await _productattrService.UpdateProductAttribute(Data));
 
             return View(Model);
         }
@@ -91,8 +89,7 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<ActionResult> AttrDelete(int Id)
         {
             var query = (await _productattrService.GetProductAttributeById(Id)).Data;
-
-            await _productattrService.DeleteProductAttribute(query);
+            ResponseAlert(await _productattrService.DeleteProductAttribute(query));
 
             return RedirectToAction("ProductAttributeList");
         }

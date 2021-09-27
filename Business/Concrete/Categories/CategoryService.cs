@@ -43,17 +43,35 @@ namespace Business.Concrete.Categories
             return new SuccessResult();
 
         }
+
+
+        public void RemoveGroup(int id)
+        {
+            var subDeletedData = _categoryRepository.Query().Where(x => x.ParentCategoryId == id);
+            if (subDeletedData.Count() > 0)
+            {
+                foreach (var item in subDeletedData)
+                {
+                    var deletedData = _categoryRepository.Query().Where(x => x.Id == item.Id).FirstOrDefault();
+                    _categoryRepository.Delete(deletedData);
+                }
+            }        
+        }
+
         [CacheRemoveAspect("ICategoryService.Get")]
         public async Task<IResult> RemoveRangeCategory(int id)
         {
+            RemoveGroup(id);
+            _categoryRepository.SaveChanges();
 
-            var deletedData = _categoryRepository.Query().Where(x => x.Id == id).ToList();
-            _categoryRepository.DeleteRange(deletedData);
-            await _categoryRepository.SaveChangesAsync();
+            var deletedData = _categoryRepository.Query().Where(x => x.Id == id).FirstOrDefault();
+            _categoryRepository.Delete(deletedData);
+            _categoryRepository.SaveChanges();
 
             return new SuccessResult();
 
         }
+
         [CacheAspect]
         public async Task<IDataResult<IList<Category>>> GetAllCategories()
         {
@@ -110,6 +128,33 @@ namespace Business.Concrete.Categories
             var data = await query.ToListAsync();
             return new SuccessDataResult<IEnumerable<SelectListItem>>(data);
         }
+
+
+
+        public async Task<IResult> ChangeNodePosition(int id, int? parentId)
+        {
+            if (parentId == 0)
+                parentId = null;
+
+            var hd = await _categoryRepository.Query().FirstOrDefaultAsync(x=>x.Id==id);
+            hd.ParentCategoryId = parentId;
+            var update = _categoryRepository.Update(hd);
+
+            return new SuccessResult();
+        }
+
+        public async Task<IResult> DeleteNodes(string values)
+        {
+            var ids = values.Split(',');
+            foreach (var item in ids)
+            {
+               await RemoveRangeCategory(int.Parse(item));
+            }
+
+            return new SuccessResult();
+        }
+
+
 
 
 

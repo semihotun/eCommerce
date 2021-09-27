@@ -140,28 +140,27 @@ namespace eCommerce.Areas.Admin.Controllers
         }
         public async Task<IActionResult> AttrMapingDelete(int id)
         {
-            await _productAttributeMappingService.DeleteProductAttributeMapping(id);
+            ResponseAlert(await _productAttributeMappingService.DeleteProductAttributeMapping(id));
 
             return Json(true, new JsonSerializerSettings());
         }
         public async Task<IActionResult> AddProductAttirubeMapping([FromBody] ProductAttributeMapping mappings)
         {
-            await _productAttributeMappingService.InsertProductAttributeMapping(mappings);
+            ResponseAlert(await _productAttributeMappingService.InsertProductAttributeMapping(mappings));
 
             return Json(mappings, new JsonSerializerSettings());
         }
         [ValidationaAspect(typeof(ProductAttributeValueValidator))]
         public async Task<IActionResult> UpdateProductMappingAttributeValue([FromBody] ProductModel productModel)
         {
-            await _productAttributeValueService.UpdateProductAttributeValue(productModel.ProductAttributeValue);
+            ResponseAlert(await _productAttributeValueService.UpdateProductAttributeValue(productModel.ProductAttributeValue));
 
             return Json(productModel.ProductAttributeValue, new JsonSerializerSettings());
         }
         [ValidationaAspect(typeof(ProductAttributeValueValidator))]
         public async Task<IActionResult> AddProductEditPageMappingAttributeValue([FromBody] ProductModel productModel)
         {
-
-            await _productAttributeValueService.InsertProductAttributeValue(productModel.ProductAttributeValue);
+            ResponseAlert(await _productAttributeValueService.InsertProductAttributeValue(productModel.ProductAttributeValue));
 
             return Json(productModel.ProductAttributeValue, new JsonSerializerSettings());
         }
@@ -173,7 +172,8 @@ namespace eCommerce.Areas.Admin.Controllers
         }
         public async Task<IActionResult> ProductAttributeValueDelete(int AttributeValueid)
         {
-            await _productAttributeValueService.DeleteProductAttributeValue(AttributeValueid);
+            ResponseAlert(await _productAttributeValueService.DeleteProductAttributeValue(AttributeValueid));
+
             return Json(AttributeValueid, new JsonSerializerSettings());
         }
 
@@ -184,9 +184,9 @@ namespace eCommerce.Areas.Admin.Controllers
         {
             var data = model.MapTo<Product>();
             if (model.Id == 0)
-                await _productService.AddProduct(data);
+                ResponseAlert(await _productService.AddProduct(data));
             else
-                await _productService.UpdateProduct(data);
+                ResponseAlert(await _productService.UpdateProduct(data));
 
             return Json(data, new JsonSerializerSettings());
         }
@@ -211,7 +211,7 @@ namespace eCommerce.Areas.Admin.Controllers
         }
         public async Task<IActionResult> ProductDelete(int Id)
         {
-            await _productService.DeleteProduct(Id);
+            ResponseAlert(await _productService.DeleteProduct(Id));
             return RedirectToAction("ProductList", "AdminProduct");
         }
         [HttpGet]
@@ -256,23 +256,20 @@ namespace eCommerce.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AttrCombinationDetail(ProductAttributeCombinationModel model)
         {
-
             var combinations = model.MapTo<ProductAttributeCombination>();
-            await _productAttributeCombinationService.UpdateProductAttributeCombination(combinations);
+            ResponseAlert(await _productAttributeCombinationService.UpdateProductAttributeCombination(combinations));
 
             var data = _mapper.Map<ProductAttributeCombination, ProductAttributeCombinationModel>(combinations);
             data.AttributesXml = (await _productAttributeFormatter.XmlString(data.AttributesXml));
 
             return View(data);
         }
-        public IActionResult AttrCombinationDelete(int Id, int Productid)
+        public async Task<IActionResult> AttrCombinationDelete(int Id, int Productid)
         {
-
             var Combination = _productAttributeCombinationService.GetProductAttributeCombinationById(Id);
-            _productAttributeCombinationService.DeleteProductAttributeCombination(Id);
+            ResponseAlert(await _productAttributeCombinationService.DeleteProductAttributeCombination(Id));
             return Json(true, new JsonSerializerSettings());
 
-            return Json(null);
         }
         public async Task<IActionResult> AttrCombinationinsert(int ProductId)
         {
@@ -293,7 +290,7 @@ namespace eCommerce.Areas.Admin.Controllers
                     Data.Add(smallData);
             }
             var permutation = new Attributehelper().Permutations(Data);
-            await _productAttributeCombinationService.InsertPermutationCombination(permutation, ProductId);
+            ResponseAlert(await _productAttributeCombinationService.InsertPermutationCombination(permutation, ProductId));
             return RedirectToAction("ProductEdit", "AdminProduct", new { id = ProductId, Tap = "tap2" });
         }
 
@@ -306,7 +303,7 @@ namespace eCommerce.Areas.Admin.Controllers
 
             return Json(data.Data, new JsonSerializerSettings());
         }
-        public IActionResult AddProductPhoto(ProductPhotoModel productPhoto)
+        public async Task<IActionResult> AddProductPhoto(ProductPhotoModel productPhoto)
         {
             var newProductPhotoList = new List<ProductPhoto>();
             foreach (var item in productPhoto.ResimDosya)
@@ -315,7 +312,7 @@ namespace eCommerce.Areas.Admin.Controllers
                 var resim = new ProductPhoto();
                 resim.ProductPhotoName = imageAdd.Data.Path;
                 resim.ProductId = productPhoto.ProductId;
-                _productService.productPhotoInsert(resim);
+                await _productService.productPhotoInsert(resim);
                 newProductPhotoList.Add(resim);
             }
             return Json(newProductPhotoList, new JsonSerializerSettings());
@@ -331,14 +328,14 @@ namespace eCommerce.Areas.Admin.Controllers
         }
         public async Task<IActionResult> ProductPhotoListDelete(int id, int productId)
         {
-            await _productService.productPhotoDelete(id);
+            ResponseAlert(await _productService.productPhotoDelete(id));
 
             return Json(true, new JsonSerializerSettings());
         }
         public async Task<IActionResult> PhotoCombinationAdded(CombinationPhotoModel combinationPhotoModel)
         {
 
-            await _combinationPhotoService.InsertCombinationPhotos(combinationPhotoModel.PhotoId, combinationPhotoModel.Combinations, combinationPhotoModel.NotCombinations);
+            ResponseAlert(await _combinationPhotoService.InsertCombinationPhotos(combinationPhotoModel.PhotoId, combinationPhotoModel.Combinations, combinationPhotoModel.NotCombinations));
 
             return Json(combinationPhotoModel, new JsonSerializerSettings());
         }
@@ -363,7 +360,7 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<IActionResult> ProductSpeficationCreate(ProductSpecificationAttributeModel productSpecificationAttribute)
         {
             var data = productSpecificationAttribute.MapTo<ProductSpecificationAttribute>();
-            await _productSpecificationAttributeService.InsertProductSpecificationAttribute(data);
+            ResponseAlert(await _productSpecificationAttributeService.InsertProductSpecificationAttribute(data));
             productSpecificationAttribute.Id = data.Id;
 
             return Json(productSpecificationAttribute, new JsonSerializerSettings());
@@ -373,19 +370,19 @@ namespace eCommerce.Areas.Admin.Controllers
         {
             var data = await _specificationAttributeOptionService.GetSpecificationAttributeOptionsBySpecificationAttribute(
                 specificationAttributeIdint: speficationAttrId);
-
             var result = data.Data.Select(x => new SpecificationAttributeOption
             {
                 Id = x.Id,
                 Name = x.Name
             });
+
             return Json(result, new JsonSerializerSettings());
         }
 
         public async Task<IActionResult> ProductSpeficationDelete(int id)
         {
+            ResponseAlert(await _productSpecificationAttributeService.DeleteProductSpecificationAttribute(id));
 
-            await _productSpecificationAttributeService.DeleteProductSpecificationAttribute(id);
             return Json(id, new JsonSerializerSettings());
         }
 
@@ -402,14 +399,14 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<IActionResult> ProductStockAdd(ProductStockCreateOrUpdate productStock)
         {
             var data = productStock.MapTo<ProductStock>();
-            await _productStockService.AddProductStock(data);
+            ResponseAlert(await _productStockService.AddProductStock(data));
             productStock.Id = data.Id;
 
             return Json(productStock, new JsonSerializerSettings());
         }
         public async Task<IActionResult> ProductStockDelete(int id)
         {
-            await _productStockService.DeleteProductStock(id);
+            ResponseAlert(await _productStockService.DeleteProductStock(id));
 
             return Json(true, new JsonSerializerSettings());
         }

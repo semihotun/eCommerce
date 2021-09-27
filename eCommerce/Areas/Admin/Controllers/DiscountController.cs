@@ -56,15 +56,14 @@ namespace eCommerce.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult DiscountCreate(DiscountModel model)
+        public async Task<IActionResult> DiscountCreate(DiscountModel model)
         {
             model.DiscountLimitationList = SelectListHelper.fillDiscountLimitationType(model.DiscountLimitationId);
             model.DiscountTypeList = SelectListHelper.fillDiscountType(model.DiscountTypeId);
             var mapData = _mapper.Map<DiscountModel, Discount>(model);
-            _discountService.AddDiscount(mapData);
+            ResponseAlert(await _discountService.AddDiscount(mapData));
 
             return View(model);
-            //return RedirectToAction("DiscountEdit", "Discount", new { id = mapData.Id });
         }
 
         public async Task<IActionResult> DiscountEdit(int id = 0)
@@ -88,7 +87,7 @@ namespace eCommerce.Areas.Admin.Controllers
             model.EndDateUtc = DateTime.Parse(model.EndDateUtcFormat);
 
             var mapData = model.MapTo<Discount>();
-            await _discountService.UpdateDiscount(mapData);
+            ResponseAlert(await _discountService.UpdateDiscount(mapData));
 
             return View(model);
         }
@@ -97,7 +96,7 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<IActionResult> DiscountDelete(int id)
         {
             var discountTask = await _discountService.GetDiscount(id);
-            await _discountService.DeleteDiscount(discountTask.Data);
+            ResponseAlert(await _discountService.DeleteDiscount(discountTask.Data));
 
             return View(nameof(DiscountList));
         }
