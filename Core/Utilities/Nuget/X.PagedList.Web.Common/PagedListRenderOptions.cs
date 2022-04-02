@@ -1,5 +1,6 @@
-﻿namespace X.PagedList.Web.Common
+﻿namespace Core.Utilities.Nuget.X.PagedList.Web.Common
 {
+    using global::X.PagedList.Web.Common;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -10,7 +11,7 @@
 
         public PagedListRenderOptions()
         {
-            HtmlEncoder = System.Text.Encodings.Web.HtmlEncoder.Default;
+            HtmlEncoder = HtmlEncoder.Default;
             DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded;
             DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded;
             DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded;

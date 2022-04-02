@@ -1,9 +1,10 @@
-﻿@using System.Collections.Generic
-@using System.Linq
-@using Microsoft.AspNetCore.Http
+﻿@using System.Collections.Generic;
+@using System.Linq;
+@using Microsoft.AspNetCore.Http;
 @using Core.Library;
-@model LoginViewModel
-@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity;
+@model Entities.ViewModels.WebViewModel.IdentityAccount.LoginViewModel
+   
 @inject SignInManager<MyUser> SignInManager
 
 @{
@@ -27,7 +28,7 @@
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                       Şifre :
+                        Şifre :
                         <input asp-for="Password" class="form-control" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
@@ -35,7 +36,7 @@
                         <div class="checkbox">
                             <label asp-for="RememberMe">
                                 <input asp-for="RememberMe" />
-                             Beni Hatırla
+                                Beni Hatırla
                             </label>
                         </div>
                     </div>
@@ -62,11 +63,11 @@
                     if (loginProviders.Count == 0)
                     {
                         @*<div>
-                            <p>
-                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                                for details on setting up this ASP.NET application to support logging in via external services.
-                            </p>
-                        </div>*@
+                                <p>
+                                    There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                    for details on setting up this ASP.NET application to support logging in via external services.
+                                </p>
+                            </div>*@
                     }
                     else
                     {
@@ -89,4 +90,4 @@
     @section Scripts {
         @await Html.PartialAsync("_ValidationScriptsPartial")
     }
-    </div>
+</div>

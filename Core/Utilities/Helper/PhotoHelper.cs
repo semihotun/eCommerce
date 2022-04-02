@@ -5,17 +5,16 @@ using System.Text;
 using Core.Utilities.Results;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Utilities.Constants;
 
 namespace Core.Utilities.Helper
 {
     public class PhotoHelper
     {
-        private IHostingEnvironment _hostingenvironment;
-        public PhotoHelper(IHostingEnvironment hostingEnvironment)
-        {
-            this._hostingenvironment = hostingEnvironment;
-        }
+
+    
+
         public class PhotoHelperModel
         {
             public string Path { get; set; }
@@ -24,9 +23,9 @@ namespace Core.Utilities.Helper
         {
             try
             {
-                var uniqueFileName = "";
-                var uploadsFolder = _hostingenvironment.WebRootPath + path;
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                var uploadsFolder = Directory.GetCurrentDirectory()+"\\wwwroot"+path;
+                var mimeType = System.IO.Path.GetExtension(file.FileName).ToLower();
+                var uniqueFileName = Guid.NewGuid().ToString()+ mimeType; 
                 var filepath = uploadsFolder + uniqueFileName;
                 using (var fileStream = new FileStream(filepath, FileMode.Create))
                 {
@@ -46,9 +45,9 @@ namespace Core.Utilities.Helper
         {
             try
             {
-                var uniqueFileName = "";
-                var uploadsFolder = _hostingenvironment.WebRootPath + path;
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                var uploadsFolder = Directory.GetCurrentDirectory() + "\\wwwroot" + path;
+                var mimeType = System.IO.Path.GetExtension(file.FileName).ToLower();
+                var uniqueFileName = Guid.NewGuid().ToString() + mimeType;
                 var filepath = uploadsFolder + uniqueFileName;
                 using (var fileStream = new FileStream(filepath, FileMode.Create))
                 {
@@ -72,7 +71,7 @@ namespace Core.Utilities.Helper
         {
             try
             {
-                System.IO.File.Delete(photoUrl);
+                System.IO.File.Delete(Directory.GetCurrentDirectory() + "\\wwwroot\\"+ photoUrl);
                 return new SuccessResult();
             }
             catch(Exception ex)

@@ -16,7 +16,7 @@
                     {
                         if (item.SubCategory.Count() == 0)
                         {
-                            <li><a href="/Home/Catalog?id=@item.Id">@item.CategoryName</a></li>
+                            <li><a href="/Catalog/Catalog?id=@item.Id">@item.CategoryName</a></li>
                         }
                         else
                         {
@@ -29,7 +29,7 @@
                                     <div class="custommenuflex">
 
                                         <div class="col-md-4">
-                                            <a href="/Home/Catalog?id=@item.Id" class="col-md-12">
+                                            <a href="/Catalog/Catalog?id=@item.Id" class="col-md-12">
                                                 <b class="list-links-title" style="font-size:18px;">@item.CategoryName</b>
                                             </a>
                                             <hr style="margin-top: 25px;margin-bottom: 15px;" />
@@ -37,7 +37,7 @@
                                         @foreach (var item3 in item.SubCategory)
                                         {
                                             <div class="col-md-4">
-                                                <a href="/Home/Catalog?id=@item3.Id" class="col-md-12">
+                                                <a href="/Catalog/Catalog?id=@item3.Id" class="col-md-12">
                                                     <b class="list-links-title" style="font-size:16px;">@item3.CategoryName</b>
                                                 </a>
                                                 <hr style="margin-top: 11px;margin-bottom: 15px;" />
@@ -45,7 +45,7 @@
                                             @foreach (var item4 in item3.SubCategory)
                                             {
                                                 <div class="col-md-4">
-                                                    <a href="/Home/Catalog?id=@item4.Id" class="col-md-12">
+                                                    <a href="/Catalog/Catalog?id=@item4.Id" class="col-md-12">
 
                                                         @item4.CategoryName
                                                     </a>

@@ -1,20 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Business.Abstract.Spefications;
-using Entities.ViewModels.Admin;
-using Entities.Concrete;
+﻿using AutoMapper;
+using Business.Services.SpeficationAggregate.SpecificationAttributeOptions;
+using Business.Services.SpeficationAggregate.SpecificationAttributeOptions.SpecificationAttributeOptionServiceModel;
+using Business.Services.SpeficationAggregate.SpecificationAttributes;
+using Business.Services.SpeficationAggregate.SpecificationAttributes.SpecificationAttributeServiceModel;
+using Entities.Concrete.SpeficationAggregate;
 using Entities.Others;
-using Newtonsoft.Json;
-using eCommerce.Models;
+using Entities.ViewModels.AdminViewModel.SpeficationAttribute;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace eCommerce.Areas.Admin.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("[area]/[controller]/[action]")]
-    [Kontrol("")]
     [Area("Admin")]
     public class SpeficationAttributeController : AdminBaseController
     {
@@ -45,48 +43,41 @@ namespace eCommerce.Areas.Admin.Controllers
         #region Method
 
         #region SpeficationAttribute
-
-        public async Task<IActionResult> SpeficationAttributeListJson(SpecificationAttributeModel model, DataTablesParam param)
+        public async Task<IActionResult> SpeficationAttributeListJson(SpecificationAttributeVM model, DataTablesParam param)
         {
             var query = await _specificationAttributeService.GetSpecificationAttributes(
-                pageIndex: param.PageIndex,
-                pageSize: param.PageSize
-                );
+                new GetSpecificationAttributes(param.PageIndex,param.PageSize));
 
             return ToDataTableJson(query, param);
         }
-
-
-        public async Task<IActionResult> SpeficationAttributeList()=> View(new SpecificationAttributeModel());
+        public async Task<IActionResult> SpeficationAttributeList()=> View(new SpecificationAttributeVM());
 
         [HttpPost]
-        public async Task<IActionResult> SpeficationAttributeList(SpecificationAttributeModel model)=>View(model);
+        public async Task<IActionResult> SpeficationAttributeList(SpecificationAttributeVM model)=>View(model);
 
         public async Task<IActionResult> SpeficationAttributeCreate()=> View();
 
-
         [HttpPost]
-        public async Task<IActionResult> SpeficationAttributeCreate(SpecificationAttributeModel model)
+        public async Task<IActionResult> SpeficationAttributeCreate(SpecificationAttributeVM model)
         {
-            var data = _mapper.Map<SpecificationAttributeModel, SpecificationAttribute>(model);
+            var data = _mapper.Map<SpecificationAttributeVM, SpecificationAttribute>(model);
             ResponseAlert(await _specificationAttributeService.InsertSpecificationAttribute(data));
 
             return RedirectToAction("SpeficationAttributeEdit", "SpeficationAttribute", new { Id = data.Id });
         }
 
-
         public async Task<IActionResult> SpeficationAttributeEdit(int id)
         {
-            var query = await _specificationAttributeService.GetSpecificationAttributeById(id);
-            var data = _mapper.Map<SpecificationAttribute, SpecificationAttributeModel>(query.Data);
+            var query = await _specificationAttributeService.GetSpecificationAttributeById(new GetSpecificationAttributeById(id));
+            var data = _mapper.Map<SpecificationAttribute, SpecificationAttributeVM>(query.Data);
 
             return View(data);
         }
 
         [HttpPost]
-        public async Task<IActionResult> SpeficationAttributeEdit(SpecificationAttributeModel model)
+        public async Task<IActionResult> SpeficationAttributeEdit(SpecificationAttributeVM model)
         {
-            var data = _mapper.Map<SpecificationAttributeModel, SpecificationAttribute>(model);
+            var data = _mapper.Map<SpecificationAttributeVM, SpecificationAttribute>(model);
             ResponseAlert(await _specificationAttributeService.UpdateSpecificationAttribute(data));
 
             return RedirectToAction(nameof(SpeficationAttributeEdit),new{id= model.Id});
@@ -94,7 +85,7 @@ namespace eCommerce.Areas.Admin.Controllers
 
         public async Task<IActionResult> SpeficationAttributeDelete(int id)
         {
-            var spefication = await _specificationAttributeService.GetSpecificationAttributeById(id);
+            var spefication = await _specificationAttributeService.GetSpecificationAttributeById(new GetSpecificationAttributeById(id));
             ResponseAlert(await _specificationAttributeService.DeleteSpecificationAttribute(spefication.Data));
 
             return RedirectToAction("SpeficationAttributeList");
@@ -103,29 +94,22 @@ namespace eCommerce.Areas.Admin.Controllers
         #endregion
 
         #region SpeficationAttributeOption
-
-
-
-        public async Task<IActionResult> SpeficationAttributeOptionListJson(SpecificationAttributeOptionModel model, DataTablesParam param)
+        public async Task<IActionResult> SpeficationAttributeOptionListJson(SpecificationAttributeOptionVM model, DataTablesParam param)
         {
             var query = await _specificationAttributeOptionService.GetSpecificationAttributeOptionsBySpecificationAttribute(
-                pageIndex: param.PageIndex,
-                pageSize: param.PageSize,
-                specificationAttributeIdint: model.SpecificationAttributeId
-                );
+                new GetSpecificationAttributeOptionsBySpecificationAttribute(param.PageIndex, param.PageSize, model.SpecificationAttributeId));
+    
 
             return ToDataTableJson(query,param);
         }
 
-
         public async Task<IActionResult> SpeficationAttributeOptionCreate() => View();
 
         [HttpPost]
-        public async Task<IActionResult> SpeficationAttributeOptionCreate(SpecificationAttributeModel model)
-        {
-            var data = _mapper.Map<SpecificationAttributeOptionModel, SpecificationAttributeOption>(model.SpecificationAttributeOptionModel);
-            data.SpecificationAttributeId = model.Id;
-            ResponseAlert(await _specificationAttributeOptionService.InsertSpecificationAttributeOption(data));
+        public async Task<IActionResult> SpeficationAttributeOptionCreate(SpecificationAttributeVM model)
+        {         
+            model.SpecificationAttributeOptionModel.SpecificationAttributeId = model.Id;
+            ResponseAlert(await _specificationAttributeOptionService.InsertSpecificationAttributeOption(model.SpecificationAttributeOptionModel));
 
             return RedirectToAction("SpeficationAttributeEdit", "SpeficationAttribute", new { Id = model.Id });
         }
@@ -133,24 +117,27 @@ namespace eCommerce.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> SpeficationAttributeOptionEdit(int id) {
 
-            var query = await _specificationAttributeOptionService.GetSpecificationAttributeOptionById(id);
-            var data = _mapper.Map<SpecificationAttributeOption, SpecificationAttributeOptionModel>(query.Data);
+            var query = await _specificationAttributeOptionService.GetSpecificationAttributeOptionById(
+                new GetSpecificationAttributeOptionById(id));
+
+            var data = _mapper.Map<SpecificationAttributeOption, SpecificationAttributeOptionVM>(query.Data);
 
             return View(data);
         }
 
         [HttpPost]
-        public async Task<IActionResult> SpeficationAttributeOptionEdit(SpecificationAttributeOptionModel model)
+        public async Task<IActionResult> SpeficationAttributeOptionEdit(SpecificationAttributeOptionVM model)
         {
-            var data = _mapper.Map<SpecificationAttributeOptionModel, SpecificationAttributeOption>(model);
+            var data = _mapper.Map<SpecificationAttributeOptionVM, SpecificationAttributeOption>(model);
             ResponseAlert(await _specificationAttributeOptionService.UpdateSpecificationAttributeOption(data));
 
             return RedirectToAction("SpeficationAttributeEdit", "SpeficationAttribute", new { Id = data.SpecificationAttributeId });
         }
-
         public async Task<IActionResult> SpeficationAttributeOptionDelete(int id)
         {
-            var data = await _specificationAttributeOptionService.GetSpecificationAttributeOptionById(id);
+            var data = await _specificationAttributeOptionService.GetSpecificationAttributeOptionById(
+                new GetSpecificationAttributeOptionById(id));
+
             ResponseAlert(await _specificationAttributeOptionService.DeleteSpecificationAttributeOption(data.Data));
 
             return RedirectToAction("SpeficationAttributeEdit", "SpeficationAttribute", new { Id = data.Data.SpecificationAttributeId });

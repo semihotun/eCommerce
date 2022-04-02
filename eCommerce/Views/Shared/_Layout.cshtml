@@ -47,9 +47,11 @@
 
     @if (TempData["notification"] != null)
     {
-        <script>
 
-            @Html.Raw(TempData["notification"])
+        <script>
+            if(TempData["notification"] != null);
+              String.Raw(TempData["notification"]);
+          
         </script>
     }
     <!-- HEADER -->
@@ -377,7 +379,7 @@
                                 $("#searchDiv").css('z-index', '1');
                             }
                         });
-                    }, 1);
+                    }, 1000);
                 } else {
                     $("#searchDiv").hide();
                 }

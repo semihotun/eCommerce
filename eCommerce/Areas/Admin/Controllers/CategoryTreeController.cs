@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Business.Abstract;
-using Business.Abstract.Categories;
-using Business.Abstract.Spefications;
-using Entities.ViewModels.Admin;
-using eCommerce.Helpers;
-using Entities.Concrete;
+﻿using AutoMapper;
+using Business.Services.CategoriesAggregate.Categories;
+using Business.Services.CategoriesAggregate.Categories.CategoryServiceModel;
+using Business.Services.CategoriesAggregate.CategorySpefications;
+using Business.Services.CategoriesAggregate.CategorySpefications.CategorySpeficationServiceModel;
+using Business.Services.SpeficationAggregate.SpecificationAttributes;
+using Business.Services.SpeficationAggregate.SpecificationAttributes.SpecificationAttributeServiceModel;
+using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories;
+using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories.CategoryDALModels;
+using eCommerce.Models;
+using Entities.Concrete.CategoriesAggregate;
+using Entities.ViewModels.AdminViewModel.CategoryTree;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using DataAccess.Abstract;
-using eCommerce.Models;
+using System.Threading.Tasks;
 
 namespace eCommerce.Areas.Admin.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("[area]/[controller]/[action]")]
     [Kontrol("")]
     [Area("Admin")]
@@ -45,17 +46,16 @@ namespace eCommerce.Areas.Admin.Controllers
         #region Method
         public async Task<IActionResult> Index()
         {
-            var categoryTask = await _categoryService.GetAllCategories();
-            var category = categoryTask.Data;
-            var result = _mapper.Map<IList<Category>, IList<CategoryModel>>(category);
-            ViewBag.plist = result;
+            var category =(await _categoryService.GetAllCategories()).Data;
+            ViewBag.plist = category;
             return View();
         }
 
         public async Task<JsonResult> GetHierarchy()
         {
-            var records=await _categoryDAL.GetHierarchy();
-            return Json(records.Data, new JsonSerializerSettings());
+            var records=(await _categoryDAL.GetHierarchy()).Data;
+
+            return Json(records, new JsonSerializerSettings());
         }
 
         [HttpPost]
@@ -64,7 +64,7 @@ namespace eCommerce.Areas.Admin.Controllers
             if (parentId == 0)
                 parentId = null;
 
-            ResponseAlert(await _categoryService.ChangeNodePosition(id, parentId));
+            ResponseAlert(await _categoryService.ChangeNodePosition(new ChangeNodePosition(id, parentId)));
             return Json(true, new JsonSerializerSettings());
         }
 
@@ -76,7 +76,7 @@ namespace eCommerce.Areas.Admin.Controllers
             {
                 model.ParentName = null;
             }
-            Category categoryDetail = new Category()
+            var categoryDetail = new Category()
             {
                 CategoryName = model.NodeName,
                 ParentCategoryId = model.ParentName,
@@ -88,7 +88,7 @@ namespace eCommerce.Areas.Admin.Controllers
         [HttpPost]
         public async Task<JsonResult> DeleteNode(string values)
         {
-            ResponseAlert(await _categoryService.DeleteNodes(values));
+            ResponseAlert(await _categoryService.DeleteNodes(new DeleteNodes(values)));
             Alert("İşlem Başarılı", NotificationType.success);
             return Json(new { success = true });
         }
@@ -96,13 +96,25 @@ namespace eCommerce.Areas.Admin.Controllers
 
         public async Task<IActionResult> CategoryEdit(int id)
         {
-            var model = new CategorySpeficationModel();
-            model.CategorySpeficationDTO = (await _categoryDAL.GetCategorySpefication(id)).Data;
-            model.SpeficationAttributeSelectList = (await _specificationAttributeService.GetProductSpeficationAttributeDropdwon()).Data;
+            var model = new CategoryEditVM();
+
+            var categorySpeficationDTOTask = _categoryDAL.GetCategorySpefication(
+                new GetCategorySpefication(id));
+
+            var speficationAttributeSelectListTask = _specificationAttributeService.GetProductSpeficationAttributeDropdwon(
+                new GetProductSpeficationAttributeDropdwon());
+
+            await Task.WhenAll(categorySpeficationDTOTask, 
+               speficationAttributeSelectListTask).ContinueWith((t) =>
+            {
+                model.CategorySpeficationDTO = categorySpeficationDTOTask.Result.Data;
+                model.SpeficationAttributeSelectList = speficationAttributeSelectListTask.Result.Data;
+            });
+
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> CategoryEdit(CategorySpeficationModel model)
+        public async Task<IActionResult> CategoryEdit(CategoryEditVM model)
         {
             ResponseAlert(await _categoryService.UpdateCategory(model.CategorySpeficationDTO.Category));
 
@@ -110,14 +122,14 @@ namespace eCommerce.Areas.Admin.Controllers
         }
         public async Task<IActionResult> CategoryFilterDelete(int speficationId,int categoryId)
         {
-            var deletedData = await _categorySpeficationService.GetByCategorySpeficationId(speficationId,categoryId);
+            var deletedData = await _categorySpeficationService.GetByCategorySpeficationId(new GetByCategorySpeficationId(speficationId, categoryId));
             ResponseAlert(await _categorySpeficationService.DeleteCategorySpefication(deletedData.Data));
 
             return RedirectToAction("CategoryEdit", "CategoryTree", new { id = deletedData.Data.CategoryId });
         }
 
         [HttpPost]
-        public async Task<IActionResult> CategoryFilterCreate(CategorySpeficationModel model)
+        public async Task<IActionResult> CategoryFilterCreate(CategoryEditVM model)
         {
             ResponseAlert(await _categorySpeficationService.InsertCategorySpefication(model.CategorySpefication));
 

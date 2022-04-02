@@ -19,10 +19,10 @@ app.controller("Catalog", function ($scope, $http, $window) {
 
     $scope.BrandFilter = function (data) {
         if (data.checked === true) {
-            $scope.BrandIdFilterList.push(data.Id);
+            $scope.BrandIdFilterList.push(data.BrandId);
         }
         else {
-            var index = $scope.BrandIdFilterList.indexOf(data.Id);
+            var index = $scope.BrandIdFilterList.indexOf(data.BrandId);
             if (index > -1) {
                 $scope.BrandIdFilterList.splice(index, 1);
             }
@@ -54,7 +54,7 @@ app.controller("Catalog", function ($scope, $http, $window) {
 
         $http({
             method: "get",
-            url: "../Home/GetCatalogProduct",
+            url: "../Catalog/GetCatalogProduct",
             params: {
                 id: CatId,
                 pageNumber: pageNum,
@@ -82,14 +82,14 @@ app.controller("Catalog", function ($scope, $http, $window) {
     $scope.GetAllBrandFilter = function (CatId, pageNum) {
         $http({
             method: "get",
-            url: "../Home/GetCatalogBrand",
+            url: "../Catalog/GetCatalogBrand",
             params: {
                 categoryId: CatId,
             }
         }).then(function (response) {
 
             if ($scope.BrandData.length === 0)
-                $scope.BrandData = response.data.Data;
+                $scope.BrandData = response.data;
 
         }, function () {
             alert("Hata");
@@ -98,7 +98,7 @@ app.controller("Catalog", function ($scope, $http, $window) {
 
     $scope.GetAllCategoryFilter = function (CatId) {
         $http({
-            url: "../Home/GetAllCategoryFilter",
+            url: "../Catalog/GetAllCategoryFilter",
             method: "GET",
             params: {
                 CategoryId: CatId
@@ -198,7 +198,7 @@ app.controller("ProductDetail", function ($scope, $http, $window) {
 
     $scope.AnotherProduct = function () {
         $http({
-            url: "../Home/GetAnotherProduct",
+            url: "../ProductDetail/GetAnotherProduct",
             method: "GET",
         }).then(function (response) {
             if ($scope.AnotherProductList.length === 0) {

@@ -1,17 +1,11 @@
-﻿using Business.Abstract;
-using Business.Abstract.Categories;
-using Business.Abstract.Products;
-using Business.Abstract.Spefications;
-using Entities.ViewModels.Web;
-using Entities.Concrete;
+﻿using Entities.ViewModels.Other;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 
-namespace eCommerce.Helpers { 
+namespace eCommerce.Helpers
+{
     public static class SelectListHelper
     {
 
@@ -58,7 +52,7 @@ namespace eCommerce.Helpers {
         //    return items;
         //}
 
-        public static List<SelectListItem> fillCommentApprove(bool? SelectedApprove = false)
+        public static List<SelectListItem> FillCommentApprove(bool? SelectedApprove = false)
         {
             List<SelectListItem> SpeficationList = new List<SelectListItem>();
             SpeficationList.Add(new SelectListItem { Text = "Onaylanmamış", Value = "false", Selected = (SelectedApprove == false? true : false)  });
@@ -66,7 +60,7 @@ namespace eCommerce.Helpers {
             return SpeficationList;
         }
 
-        public static List<SelectListItem> fillDiscountType(int? selectedDiscountLimitationId = 0)
+        public static List<SelectListItem> FillDiscountType(int? selectedDiscountLimitationId = 0)
         {
             var values = from DiscountTypeModel e in Enum.GetValues(typeof(DiscountTypeModel))
                          select new { Id = Convert.ToInt32(e), Name = e.ToString() };
@@ -80,7 +74,7 @@ namespace eCommerce.Helpers {
             return Discounts;
         }
 
-        public static List<SelectListItem> fillDiscountLimitationType(int? selectedDiscountLimitationId = 0)
+        public static List<SelectListItem> FillDiscountLimitationType(int? selectedDiscountLimitationId = 0)
         {
             var values = from DiscountLimitationModel e in Enum.GetValues(typeof(DiscountLimitationModel))
                          select new { Id = Convert.ToInt32(e), Name = e.ToString() };

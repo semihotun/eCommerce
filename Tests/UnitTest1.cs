@@ -1,12 +1,12 @@
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntitiyFramework;
-using Entities.Concrete;
+using DataAccess.DALs.EntitiyFramework.PhotoAggregate.ProductPhotos;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products;
+using Entities.Concrete.PhotoAggregate;
+using Entities.Concrete.ProductAggregate;
 using Entities.Enum;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Threading.Tasks;
 
 namespace Tests
 {

@@ -1,4 +1,4 @@
-﻿@model Entities.ViewModels.Admin.ProductModel
+﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
 
 
 <form id="ProductShipmentInfoAddOrUpdate">
@@ -69,7 +69,7 @@
         let formData = new FormData(form);
 
         $.ajax({
-            url: "/Admin/AdminProduct/ProductShipmentInfoAddOrUpdate",
+            url: "/Admin/ProductShipment/ProductShipmentInfoAddOrUpdate",
             method: "POST",
             data: formData,
             processData: false,

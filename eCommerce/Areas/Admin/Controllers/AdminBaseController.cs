@@ -1,22 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Core.Utilities.DataTable;
 using Core.Utilities.Results;
 using Entities.Others;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using X.PagedList;
-using Core.Utilities.DataTable;
 
 namespace eCommerce.Areas.Admin.Controllers
 {
     public class AdminBaseController : Controller
     {
+
         [NonAction]
         protected IActionResult ToDataTableJson<T>(IDataResult<IPagedList<T>> data,DataTablesParam param)
         {
-            return Json(new
+            return Json(new DataTableResult<T>
             {
                 aaData = data.Data,
                 sEcho = param.sEcho,
@@ -27,7 +24,7 @@ namespace eCommerce.Areas.Admin.Controllers
         [NonAction]
         protected IActionResult ToDataTableJson<T>(IDataResult<IPagedList<T>> data, DTParameters param)
         {
-            return Json(new
+            return Json(new DataTableNewVersionResult<T>
             {
                 draw = param.Draw,
                 recordsFiltered = data.Data.TotalItemCount,
@@ -36,11 +33,13 @@ namespace eCommerce.Areas.Admin.Controllers
             }, new JsonSerializerSettings());
         }
 
-        protected void Alert(string Message, NotificationType NotificationType)
+        protected void Alert(string message, NotificationType notificationType)
         {
-            var Msg = "toastr." + NotificationType.ToString().ToLower() + "('" + Message + "','" + NotificationType + "')" + "";
-            TempData["notification"] = Msg;
+            var msg = "toastr." + notificationType.ToString().ToLower() + "('" + message + "','" + notificationType + "')" + "";
+            TempData["notification"] = msg;
+
         }
+
         protected enum NotificationType
         {
             error,
@@ -58,6 +57,13 @@ namespace eCommerce.Areas.Admin.Controllers
             else
             {
                 Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : "İşlem Başarısız", NotificationType.error);
+            }
+        }
+
+        protected void QueryAlert(IResult result)
+        {
+            if (!result.Success) { 
+                Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : "Böyle bir Kullanıcı Yok", NotificationType.error);
             }
         }
 

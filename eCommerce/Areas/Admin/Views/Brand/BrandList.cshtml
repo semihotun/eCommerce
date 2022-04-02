@@ -1,4 +1,4 @@
-﻿@model Entities.ViewModels.Admin.BrandModel
+﻿
 @{
     ViewData["Title"] = "BrandList";
     Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
@@ -25,10 +25,10 @@
                     <form method="post" id="BrandFilterForm" action="/Admin/Brand/BrandList">
                         <br />
                         <div class="form-group col-md-6 row">
-                            @Html.LabelFor(x => x.BrandName, "Marka", new { @class = "control-label col-md-2 " })
+                            <span class = "control-label col-md-2 ">Marka </span>
 
                             <div class="col-md-6 ">
-                                @Html.TextBoxFor(model => model.BrandName, new { @class = " form-control" })
+                               <input type="text" id="BrandName" class = " form-control" />
 
                             </div>
                         </div>
@@ -44,7 +44,7 @@
 
 
 
-                    @Html.Partial("BrandDatatable", Model)
+                    @Html.Partial("BrandDatatable")
 
                 </div>
             </div>

@@ -1,5 +1,4 @@
-﻿
-(function ($, $validator) {
+﻿(function ($, $validator) {
     //$validator = $validator || $.validator;
     //if ($validator) {
     //    $validator.addMethod("serverError", function (value, element) {
@@ -28,15 +27,19 @@
     //});
 
     $(document).ajaxError(function (event, jqXHR, settings, thrownError) {
-
+   
         if (jqXHR.status === 400 && jqXHR.responseJSON.TypeName === "ValidationErrors") {
-            var errors = $(jqXHR.responseJSON.Value);
+
+            let errors = $(jqXHR.responseJSON.Value);
+            var notfication = jqXHR.responseJSON.DictionaryNotification.toString().replaceAll("\'","\"");
+
             errors.each(function () {
-                var that = this;
+                let that = this;
                 $('[name="' + that.Key + '"]').each(function () {
                     $(this).data("serverError-value", $(this).val());
-                    var form = $(this).closest("form").attr('id');
+                    let form = $(this).closest("form").attr('id');
                     form = form == null ? null : "#" + form;
+                
                     $(form + ' span[data-valmsg-for="' + that.Key + '"]').html(that.Message);
                     $(form + ' input[name="' + that.Key + '"]').css({ "border": "1px red solid" });
 
@@ -44,13 +47,11 @@
                         $(form + ' span[data-valmsg-for="' + that.Key + '"]').html("");
                         $(form + ' input[name="' + that.Key + '"]').css({ "border-color": "rgba(29, 37, 59, 0.5)" });
                     });
-                    //console.log(form);
-                    //if (form.validate) {
-                    //    var validator = form.validate();
-                    //    validator.element(this);
-                    //}
+       
                 });
             });
+            eval(notfication);
+
         }
     });
 

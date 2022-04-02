@@ -1,4 +1,4 @@
-﻿using Entities.Concrete;
+﻿using Entities.Concrete.SpeficationAggregate;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +7,7 @@ namespace Entities.DTO.Category
 {
     public class CategorySpeficationDTO
     {
-        public Entities.Concrete.Category Category { get; set; }
+        public Concrete.CategoriesAggregate.Category Category { get; set; }
 
         public IList<SpecificationAttribute> CategorySpeficationList { get; set; }
     }

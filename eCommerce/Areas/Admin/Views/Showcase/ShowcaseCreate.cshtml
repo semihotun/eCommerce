@@ -1,4 +1,4 @@
-﻿@model Entities.ViewModels.Admin.ShowCaseModel
+﻿@model Entities.ViewModels.AdminViewModel.Showcase.ShowCaseCreateOrUpdateVM
 
 @{
     ViewBag.Title = "ShowcaseCreate";
@@ -15,7 +15,7 @@
                         <h2 class="card-title">Showcase Ekle</h2>
                     </div>
                     <div class="col-md-8" style="float:right;">
-                      
+
                     </div>
                 </div>
                 <div class="card-body">
@@ -57,7 +57,7 @@
                                     <div class="form-group">
                                         <div class="col-md-2"> Show Case Tipi</div>
                                         <div class="col-md-10">
-                                            @Html.DropDownListFor(x => x.ShowCaseType, Model.ShowCaseTypeList, new {@class = "form-control col-md-6"})
+                                            @Html.DropDownListFor(x => x.ShowCaseType, Model.ShowCaseTypeList, new { @class = "form-control col-md-6" })
 
                                             @Html.ValidationMessageFor(model => model.ShowCaseType, "", new { @class = "text-danger" })
                                         </div>

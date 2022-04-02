@@ -2,6 +2,7 @@
 using X.PagedList.Web.Common;
 using System;
 using IHtmlHelper = Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper;
+using Core.Utilities.Nuget.X.PagedList.Web.Common;
 
 namespace X.PagedList.Mvc.Core
 {

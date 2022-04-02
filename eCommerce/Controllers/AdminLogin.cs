@@ -4,8 +4,6 @@ using eCommerce.Areas.Admin.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace eCommerce.Controllers
@@ -55,7 +53,7 @@ namespace eCommerce.Controllers
             }
             else
             {
-                Alert("Daha Önce Admin İlk kaydı yapıldı", NotificationType.error);
+                Alert("Previously Admin First registered", NotificationType.error);
                 return View();
             }
         }
@@ -78,7 +76,7 @@ namespace eCommerce.Controllers
             }
             else
             {
-                Alert("Daha Önce Admin İlk kaydı yapıldı", NotificationType.error);
+                Alert("Previously Admin First registered", NotificationType.error);
             }
 
 

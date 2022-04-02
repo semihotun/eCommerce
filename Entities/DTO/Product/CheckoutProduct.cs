@@ -1,4 +1,6 @@
-﻿using Entities.Concrete;
+﻿using Entities.Concrete.DiscountsAggregate;
+using Entities.Concrete.PhotoAggregate;
+using Entities.Concrete.ProductAggregate;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,14 +10,14 @@ namespace Entities.DTO.Product
     public class CheckoutProduct
     {
         public int ProductPiece { get; set; }
-        public Concrete.Product ProductModel { get; set; }
+        public Concrete.ProductAggregate.Product ProductModel { get; set; }
         public double ProductPieceTotalPrice { get; set; }
 
         #region Brand
         public Brand BrandModel { get; set; }
         public class Brand
         {
-            public Entities.Concrete.Brand BrandInfo { get; set; }
+            public Concrete.BrandAggregate.Brand BrandInfo { get; set; }
             public List<DiscountBrand> DiscountBrandList { get; set; }
         }
 
@@ -25,14 +27,14 @@ namespace Entities.DTO.Product
         public Category CategoryModel { get; set; }
         public class Category
         {
-            public Entities.Concrete.Category CategoryInfo { get; set; }
+            public Concrete.CategoriesAggregate.Category CategoryInfo { get; set; }
             public List<DiscountCategory> DiscountBrandList { get; set; }
 
         }
         #endregion
 
         #region ProductPhoto
-        public IEnumerable<Entities.Concrete.ProductPhoto> ProductPhotoList { get; set; }
+        public IEnumerable<ProductPhoto> ProductPhotoList { get; set; }
 
         #endregion
 

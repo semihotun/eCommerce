@@ -1,4 +1,7 @@
+@using Entities.ViewModels.WebViewModel.IdentityManage;
+@using Entities.ViewModels.WebViewModel.IdentityModel;
 @model TwoFactorAuthenticationViewModel
+
 @{
     ViewData["Title"] = "Two-factor authentication";
     ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication);
@@ -40,7 +43,7 @@
 }
 else
 {
-<a asp-action="EnableAuthenticator" class="btn btn-default">Configure authenticator app</a>
-<a asp-action="ResetAuthenticatorWarning" class="btn btn-default">Kimlik doðrulayýcý anahtarýný sýfýrla</a>
+    <a asp-action="EnableAuthenticator" class="btn btn-default">Configure authenticator app</a>
+    <a asp-action="ResetAuthenticatorWarning" class="btn btn-default">Kimlik doðrulayýcý anahtarýný sýfýrla</a>
 }
 

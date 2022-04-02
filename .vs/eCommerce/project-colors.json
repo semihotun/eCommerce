@@ -1,0 +1,46 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "c8a0fcd5-1d73-4be5-86f0-39a00195cf4e": {
+      "ProjectGuid": "c8a0fcd5-1d73-4be5-86f0-39a00195cf4e",
+      "DisplayName": "eCommerce",
+      "ColorIndex": 0
+    },
+    "0be3fccd-c8e9-4195-a6b7-30e4d85e2e10": {
+      "ProjectGuid": "0be3fccd-c8e9-4195-a6b7-30e4d85e2e10",
+      "DisplayName": "Core",
+      "ColorIndex": 1
+    },
+    "ae881c37-d8a7-48ba-ba9a-8886e9e7a92f": {
+      "ProjectGuid": "ae881c37-d8a7-48ba-ba9a-8886e9e7a92f",
+      "DisplayName": "Plugin.Iyzico",
+      "ColorIndex": 2
+    },
+    "10df7593-abc0-4195-9412-ff31ac2f1bdf": {
+      "ProjectGuid": "10df7593-abc0-4195-9412-ff31ac2f1bdf",
+      "DisplayName": "Business",
+      "ColorIndex": 3
+    },
+    "e8cfb4ad-cb2b-4c97-9ca3-fc8d3d43bef8": {
+      "ProjectGuid": "e8cfb4ad-cb2b-4c97-9ca3-fc8d3d43bef8",
+      "DisplayName": "DataAccess",
+      "ColorIndex": 4
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "1dd4144a-bfb7-47c5-8878-64dc1aba65a6": {
+      "ProjectGuid": "1dd4144a-bfb7-47c5-8878-64dc1aba65a6",
+      "DisplayName": "Entities",
+      "ColorIndex": 5
+    },
+    "edfd7647-b7d2-441a-b248-1a2578ac8993": {
+      "ProjectGuid": "edfd7647-b7d2-441a-b248-1a2578ac8993",
+      "DisplayName": "Tests",
+      "ColorIndex": 6
+    }
+  },
+  "NextColorIndex": 7
+}

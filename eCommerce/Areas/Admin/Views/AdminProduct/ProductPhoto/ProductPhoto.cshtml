@@ -1,4 +1,4 @@
-﻿@model Entities.ViewModels.Admin.ProductModel
+﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
 <br />
 
 <span></span>
@@ -25,7 +25,7 @@
         }
         else {
             oTable = $("#ProductPhotoTable").DataTable({
-                "sAjaxSource": "/Admin/AdminProduct/ProductPhotoList?productId="+@Model.Id,
+                "sAjaxSource": "/Admin/ProductPhoto/ProductPhotoList?productId="+@Model.Id,
                 "bServerSide": true,
                 "bProcessing": true,
                 "bSearchable": true,
@@ -74,7 +74,7 @@
                 type: 'GET',
                 dataType: 'json',
                 data: 'productId=' + productId,
-                url: '/Admin/AdminProduct/ProductPhotoListDelete?Id=' + photoid + '&ProductId=' + productId,
+                url: '/Admin/ProductPhoto/ProductPhotoListDelete?Id=' + photoid + '&ProductId=' + productId,
                 success: function (datas) {
                     toastr.success("Başrıyla Eklendi");
                     $(thisFunc).parent().parent().remove();
@@ -94,7 +94,7 @@
                 type: 'GET',
                 dataType: 'json',
                 data: 'productId=' + productId,
-                url: '/Admin/AdminProduct/PhotoCombinationdata',
+                url: '/Admin/ProductPhoto/PhotoCombinationdata',
                 error: function () {
                     $('#info').html('<p>Hata verdi</p>');
                 },
@@ -121,7 +121,7 @@
                     $.ajax({
                         type: 'GET',
                         dataType: 'json',
-                        url: '/Admin/AdminProduct/PhotoSelectedCombination',
+                        url: '/Admin/ProductPhoto/PhotoSelectedCombination',
                         data: 'ProductId=' + productId + '&PhotoId=' + photoid,
                         error: function () {
                             $('#info').html('<p>Hata verdi</p>');
@@ -172,7 +172,7 @@
                 dataType: 'json',
                 data: 'ProductId=' + productId + '&PhotoId=' + photoid + '&Combinations=' +
                     checkedCombination + '&NotCombinations=' + notCheckedCombination + '',
-                url: '/Admin/AdminProduct/PhotoCombinationAdded',
+                url: '/Admin/ProductPhoto/PhotoCombinationAdded',
                 error: function () {
                     toastr.warning("Eklenirken bi hata");
                 },
@@ -191,7 +191,7 @@
             }
             formData.append("ProductId", $("#Id").val());
             $.ajax({
-                url: "/Admin/AdminProduct/AddProductPhoto",
+                url: "/Admin/ProductPhoto/AddProductPhoto",
                 data: formData,
                 type: 'POST',
                 processData: false,

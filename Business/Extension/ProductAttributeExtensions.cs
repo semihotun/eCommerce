@@ -1,12 +1,5 @@
-using Business.Abstract;
-using DataAccess.Abstract;
-using Entities.Concrete;
+using Entities.Concrete.ProductAggregate;
 using Entities.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using X.PagedList;
 namespace Business.Extension
 {
     /// <summary>

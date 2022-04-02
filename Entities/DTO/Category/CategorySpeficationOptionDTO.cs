@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Entities.Concrete;
+using Entities.Concrete.SpeficationAggregate;
 
 namespace Entities.DTO.Category
 {

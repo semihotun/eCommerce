@@ -1,12 +1,12 @@
 ﻿@using Entities.Enum
-@model Entities.ViewModels.Admin.ProductModel
+@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
 
 @{
     Layout = null;
 }
 
 
-@using (Html.BeginForm("ProductStockAdd", "AdminProduct", FormMethod.Post, new { id = "ProductStockCreateForm" }))
+@using (Html.BeginForm("ProductStockAdd", "ProductStock", FormMethod.Post, new { id = "ProductStockCreateForm" }))
 {
     <div class="d-flex flex-wrap">
 

@@ -1,16 +1,9 @@
 ﻿using AutoMapper;
-using Business.Abstract;
-using Business.Abstract.Categories;
-using Entities.ViewModels.Admin;
-using Entities.Concrete;
+using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using DataAccess.Abstract;
 
-namespace eCommerce.Views.Home.ViewComponents
+namespace eCommerce.Components
 {
     public class CategoryMenu : ViewComponent
     {
@@ -18,14 +11,14 @@ namespace eCommerce.Views.Home.ViewComponents
         private readonly IMapper _mapper;
         public CategoryMenu(ICategoryDAL categoryDAL, IMapper mapper)
         {
-           this._categoryDAL = categoryDAL;
-           this._mapper=mapper;
+            _categoryDAL = categoryDAL;
+            _mapper = mapper;
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var data =(await _categoryDAL.GetAllCategoryTreeList()).Data;
+            var data = (await _categoryDAL.GetAllCategoryTreeList()).Data;
 
-            return View("CategoryMenu",data);
+            return View("CategoryMenu", data);
         }
     }
 

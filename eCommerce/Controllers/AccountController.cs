@@ -1,22 +1,21 @@
-﻿
-using Business.Abstract;
+﻿using Core.Library;
+using Core.Utilities.Email;
+using Core.Utilities.Helper;
 using eCommerce.Extensions;
-using Entities.ViewModels.Web;
-using Entities.Concrete;
+using Entities.ViewModels.WebViewModel.IdentityAccount;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Globalization;
+using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Core.Library;
 
 namespace eCommerce.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Authorize]
     [Route("[controller]/[action]")]
     public class AccountController : Controller
@@ -24,21 +23,21 @@ namespace eCommerce.Controllers
         private readonly UserManager<MyUser> _userManager;
         private readonly SignInManager<MyUser> _signInManager;
         private readonly RoleManager<MyRole> _roleManager;
-        private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly IMailService _mailService;
 
         public AccountController(
             UserManager<MyUser> userManager,
             SignInManager<MyUser> signInManager,
-            IEmailSender emailSender,
             ILogger<AccountController> logger,
-            RoleManager<MyRole> roleManager)
+            RoleManager<MyRole> roleManager,
+            IMailService mailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
             _logger = logger;
             _roleManager = roleManager;
+            _mailService = mailService;
         }
 
         [TempData]
@@ -219,21 +218,23 @@ namespace eCommerce.Controllers
         {
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
-            {
-                
+            {          
                 var user = new MyUser {UserName=model.Username,
                     Name= model.Name,
-                    Surname=model.Surname,ActivationCode= MyStringHelpers.GetCode(),
+                    Surname=model.Surname,ActivationCode= StringHelpers.GetCode(),
                     Email = model.Email,
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
-
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
-                    //await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+                    _mailService.Send(new EmailMessage()
+                    {
+                        Content = $"Hesabı onaylama linki <a href=\"{callbackUrl}\">Onaylama Linki</a>",
+                        ToAddresses = new List<string>() { model.Email }
+                    });
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
@@ -249,7 +250,7 @@ namespace eCommerce.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out.");
+            _logger.LogInformation("Kullanıcı Çıkış yaptı.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
@@ -269,7 +270,7 @@ namespace eCommerce.Controllers
         {
             if (remoteError != null)
             {
-                ErrorMessage = $"Error from external provider: {remoteError}";
+                ErrorMessage = $"Harici Sağlayıcıdan Hata: {remoteError}";
                 return RedirectToAction(nameof(Login));
             }
             var info = await _signInManager.GetExternalLoginInfoAsync();
@@ -281,7 +282,7 @@ namespace eCommerce.Controllers
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
             if (result.Succeeded)
             {
-                _logger.LogInformation("User logged in with {Name} provider.", info.LoginProvider);
+                _logger.LogInformation("Kullanıcı adı {Name} ile giriş yaptı.", info.LoginProvider);
                 return RedirectToLocal(returnUrl);
             }
             if (result.IsLockedOut)
@@ -307,7 +308,7 @@ namespace eCommerce.Controllers
                 var info = await _signInManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
-                    throw new ApplicationException("Error loading external login information during confirmation.");
+                    throw new ApplicationException("Onay sırasında harici oturum açma bilgileri yüklenirken hata oluştu");
                 }
                 var user = new MyUser { UserName = model.Email, ActivationCode = "c", Email = model.Email };
                 var result = await _userManager.CreateAsync(user);
@@ -317,7 +318,7 @@ namespace eCommerce.Controllers
                     if (result.Succeeded)
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                        _logger.LogInformation("Kullanıcı {Name} adını kullanarak bir kullanıcı oluşturdu.", info.LoginProvider);
                         return RedirectToLocal(returnUrl);
                     }
                 }
@@ -339,7 +340,7 @@ namespace eCommerce.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{userId}'.");
+                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyor '{userId}'.");
             }
             var result = await _userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
@@ -360,15 +361,20 @@ namespace eCommerce.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                if (user == null )
                 {
                     return RedirectToAction(nameof(ForgotPasswordConfirmation));
                 }
 
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.ResetPasswordCallbackLink(user.Id.ToString(), code, Request.Scheme);
-                await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+
+                _mailService.Send(new EmailMessage()
+                {
+                    Content=$"Şifreyi sıfırlamak için ilgili linke tıklayın <a href=\"{callbackUrl}\">Sıfırlama Linki</a>",
+                    ToAddresses=new List<string>(){model.Email}
+                });
+
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
 
@@ -388,7 +394,7 @@ namespace eCommerce.Controllers
         {
             if (code == null)
             {
-                throw new ApplicationException("A code must be supplied for password reset.");
+                throw new ApplicationException("Hatalı parola sıfırlama linki");
             }
             var model = new ResetPasswordViewModel { Code = code };
             return View(model);
@@ -457,55 +463,6 @@ namespace eCommerce.Controllers
 
 
 
-        public static class MyStringHelpers
-        {
-            public static string UrlFormatConverter(string name)
-            {
-                string sonuc = name.ToLower();
-                sonuc = sonuc.Replace("'", "");
-                sonuc = sonuc.Replace(" ", "-");
-                sonuc = sonuc.Replace("<", "");
-                sonuc = sonuc.Replace(">", "");
-                sonuc = sonuc.Replace("&", "");
-                sonuc = sonuc.Replace("[", "");
-                sonuc = sonuc.Replace("!", "");
-                sonuc = sonuc.Replace("]", "");
-                sonuc = sonuc.Replace("ı", "i");
-                sonuc = sonuc.Replace("ö", "o");
-                sonuc = sonuc.Replace("ü", "u");
-                sonuc = sonuc.Replace("ş", "s");
-                sonuc = sonuc.Replace("ç", "c");
-                sonuc = sonuc.Replace("ğ", "g");
-                sonuc = sonuc.Replace("İ", "I");
-                sonuc = sonuc.Replace("Ö", "O");
-                sonuc = sonuc.Replace("Ü", "U");
-                sonuc = sonuc.Replace("Ş", "S");
-                sonuc = sonuc.Replace("Ç", "C");
-                sonuc = sonuc.Replace("Ğ", "G");
-                sonuc = sonuc.Replace("|", "");
-                sonuc = sonuc.Replace(".", "-");
-                sonuc = sonuc.Replace("?", "-");
-                sonuc = sonuc.Replace(";", "-");
-                sonuc = sonuc.Replace("#", "-sharp");
 
-                return sonuc;
-            }
-            public static string Capitilize(string text)
-            {
-                if (string.IsNullOrEmpty(text)) return text;
-                var items = text.Split(' ');
-                var result = string.Empty;
-                foreach (var item in items)
-                {
-                    if (item.Length > 1)
-                        result += $"{(item.Substring(0, 1).ToUpper())}{item.Substring(1).ToLower()} ";
-                    else
-                        result += $"{item} ";
-                }
-                return result.Trim();
-            }
-
-            public static string GetCode() => Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "").ToLower(new CultureInfo("en-US", false));
-        }
     }
 }

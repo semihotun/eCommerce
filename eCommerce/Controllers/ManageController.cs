@@ -1,47 +1,44 @@
-﻿using Business.Abstract;
+﻿using Core.Library;
+using Core.Utilities.Email;
 using eCommerce.Extensions;
-using Entities.ViewModels.Web;
-using Entities.Concrete;
+using Entities.ViewModels.WebViewModel.IdentityManage;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Core.Library;
 
 namespace eCommerce.Controllers
 {
-
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("[controller]/[action]")]
     public class ManageController : Controller
     {
         private readonly UserManager<MyUser> _userManager;
         private readonly SignInManager<MyUser> _signInManager;
-        private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
-
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
+        private readonly IMailService _mailService;
 
         public ManageController(
           UserManager<MyUser> userManager,
           SignInManager<MyUser> signInManager,
-          IEmailSender emailSender,
           ILogger<ManageController> logger,
-          UrlEncoder urlEncoder)
+          UrlEncoder urlEncoder,
+          IMailService mailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
+            _mailService = mailService;
         }
 
         [TempData]
@@ -109,7 +106,6 @@ namespace eCommerce.Controllers
             {
                 return View(model);
             }
-
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -118,9 +114,12 @@ namespace eCommerce.Controllers
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
-            var email = user.Email;
-            await _emailSender.SendEmailConfirmationAsync(email, callbackUrl);
 
+            _mailService.Send(new EmailMessage()
+            {
+                Content = $@"<a href='{ callbackUrl }'>Doğrulama Linki</a>",
+                ToAddresses = new List<string>() { user.Email }
+            }); 
             StatusMessage = "Doğrulama e-postası gönderildi. Lütfen emailinizi kontrol edin.";
             return RedirectToAction(nameof(Index));
         }
@@ -296,7 +295,7 @@ namespace eCommerce.Controllers
             }
 
             await _signInManager.SignInAsync(user, isPersistent: false);
-            StatusMessage = "The external login was removed.";
+            StatusMessage = "Harici oturum açma kaldırıldı.";
             return RedirectToAction(nameof(ExternalLogins));
         }
 

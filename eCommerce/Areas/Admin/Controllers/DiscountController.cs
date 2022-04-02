@@ -1,22 +1,21 @@
-﻿using System;
-using System.Globalization;
-using AutoMapper;
-using Business.Abstract.Discounts;
-using DataAccess.Abstract;
-using Entities.ViewModels.Admin;
+﻿using AutoMapper;
+using Business.Services.DiscountsAggregate.Discounts;
+using Business.Services.DiscountsAggregate.Discounts.DiscountServiceModel;
+using DataAccess.DALs.EntitiyFramework.DiscountsAggregate.Discounts;
+using DataAccess.DALs.EntitiyFramework.DiscountsAggregate.Discounts.DiscountDALModels;
 using eCommerce.Helpers;
-using Entities.Concrete;
+using Entities.Concrete.DiscountsAggregate;
 using Entities.DTO.Discount;
-using Entities.Others;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using Entities.Helpers.AutoMapper;
-using Microsoft.VisualBasic;
-using eCommerce.Models;
+using Entities.Others;
+using Entities.ViewModels.AdminViewModel.Discount;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace eCommerce.Areas.Admin.Controllers
 {
-    [Kontrol("")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("[area]/[controller]/[action]")]
     [Area("Admin")]
     public class DiscountController : AdminBaseController
@@ -33,10 +32,11 @@ namespace eCommerce.Areas.Admin.Controllers
             this._discountDal = discountDal;
         }
 
-
-        public async Task<IActionResult> DiscountListJson(DiscountDataTableFilter model, DataTablesParam param, string approve = null)
+        public async Task<IActionResult> DiscountListJson(DiscountDataTableFilter model, DataTablesParam param, 
+            string approve = null)
         {
-            var query = await _discountDal.GetDataTableList(model, param);
+            var query = await _discountDal.GetDataTableList(
+                new GetDataTableList(model, param));
 
             return ToDataTableJson(query, param);
         }
@@ -44,23 +44,21 @@ namespace eCommerce.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult DiscountList() => View();
 
-        [HttpPost]
-        public IActionResult DiscountList(DiscountModel model) => View(model);
-
         public IActionResult DiscountCreate()
         {
-            var model = new DiscountModel();
-            model.DiscountLimitationList = SelectListHelper.fillDiscountLimitationType();
-            model.DiscountTypeList = SelectListHelper.fillDiscountType();
+            var model = new DiscountCreateOrUpdateVM();
+            model.DiscountLimitationList = SelectListHelper.FillDiscountLimitationType();
+            model.DiscountTypeList = SelectListHelper.FillDiscountType();
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> DiscountCreate(DiscountModel model)
+        public async Task<IActionResult> DiscountCreate(DiscountCreateOrUpdateVM model)
         {
-            model.DiscountLimitationList = SelectListHelper.fillDiscountLimitationType(model.DiscountLimitationId);
-            model.DiscountTypeList = SelectListHelper.fillDiscountType(model.DiscountTypeId);
-            var mapData = _mapper.Map<DiscountModel, Discount>(model);
+            model.DiscountLimitationList = SelectListHelper.FillDiscountLimitationType(model.DiscountLimitationId);
+            model.DiscountTypeList = SelectListHelper.FillDiscountType(model.DiscountTypeId);
+
+            var mapData = _mapper.Map<DiscountCreateOrUpdateVM, Discount>(model);
             ResponseAlert(await _discountService.AddDiscount(mapData));
 
             return View(model);
@@ -68,9 +66,11 @@ namespace eCommerce.Areas.Admin.Controllers
 
         public async Task<IActionResult> DiscountEdit(int id = 0)
         {
-            var model =(await _discountService.GetDiscount(id)).MapTo<DiscountModel>();
-            model.DiscountLimitationList = SelectListHelper.fillDiscountLimitationType(model.DiscountLimitationId);
-            model.DiscountTypeList = SelectListHelper.fillDiscountType(model.DiscountTypeId);
+            var model =(await _discountService.GetDiscount(new GetDiscount(id))).Data.MapTo<DiscountCreateOrUpdateVM>();
+
+            model.DiscountLimitationList = SelectListHelper.FillDiscountLimitationType(model.DiscountLimitationId);
+            model.DiscountTypeList = SelectListHelper.FillDiscountType(model.DiscountTypeId);
+
             model.StartDateUtcFormat =model.EndDateUtc.ToString("yyyy-MM-ddThh:mm");
             model.EndDateUtcFormat=model.EndDateUtc.ToString("yyyy-MM-ddThh:mm");
 
@@ -78,10 +78,11 @@ namespace eCommerce.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DiscountEdit(DiscountModel model)
+        public async Task<IActionResult> DiscountEdit(DiscountCreateOrUpdateVM model)
         {
-            model.DiscountLimitationList = SelectListHelper.fillDiscountLimitationType(model.DiscountLimitationId);
-            model.DiscountTypeList = SelectListHelper.fillDiscountType(model.DiscountTypeId);
+            model.DiscountLimitationList = SelectListHelper.FillDiscountLimitationType(model.DiscountLimitationId);
+            model.DiscountTypeList = SelectListHelper.FillDiscountType(model.DiscountTypeId);
+
             model.EndDateUtc =DateTime.Parse(model.EndDateUtcFormat);
             model.StartDateUtc = DateTime.Parse(model.StartDateUtcFormat);
             model.EndDateUtc = DateTime.Parse(model.EndDateUtcFormat);
@@ -92,10 +93,9 @@ namespace eCommerce.Areas.Admin.Controllers
             return View(model);
         }
 
-
         public async Task<IActionResult> DiscountDelete(int id)
         {
-            var discountTask = await _discountService.GetDiscount(id);
+            var discountTask = await _discountService.GetDiscount(new GetDiscount(id));
             ResponseAlert(await _discountService.DeleteDiscount(discountTask.Data));
 
             return View(nameof(DiscountList));

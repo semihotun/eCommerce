@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace Entities.ViewModels.UI
+namespace Entities.DTO
 {
     public class CatalogProduct
     {

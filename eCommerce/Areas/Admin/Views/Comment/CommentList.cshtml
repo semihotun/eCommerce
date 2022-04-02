@@ -1,4 +1,4 @@
-﻿@model Entities.ViewModels.Admin.CommentModel
+﻿@model Entities.Concrete.CommentsAggregate.Comment
 @{
     ViewData["Title"] = "CommentList";
     Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
@@ -14,9 +14,7 @@
                     <div class="col-md-4" style="float:left;">
                         <h2 class="card-title">Yorum Listesi</h2>
                     </div>
-                    @*<div class="col-md-8" style="float:right;">
-                        <div class="col-md-3" style="float:right;"><a href="~/Admin/Comment/CommentCreate"><button type="submit" class="btn btn-outline-default pd10-50" style="text-align:center;">Ekle</button></a></div>
-                    </div>*@
+
                 </div>
                 <div class="card-body">
 

@@ -1,4 +1,4 @@
-﻿@model Entities.ViewModels.Admin.CommentModel
+﻿@model Entities.Concrete.CommentsAggregate.Comment
 @{
     ViewData["Title"] = "CommentList";
     Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
@@ -15,8 +15,19 @@
                         <h2 class="card-title">Yorum Bilgisi</h2>
                     </div>
                     <div class="col-md-8" style="float:right;">
-                        <div class="col-md-4" style="float:right;"><a href="~/Admin/Comment/CommentDelete?Id=@Model.Id"><button type="submit" class="btn btn-outline-danger pd10-50" style="text-align:center;">Yorumu Sil</button></a></div>
-                        <div class="col-md-4" style="float:right;"><a href="~/Admin/Comment/CommentApprove?Id=@Model.Id"><button type="submit" class="btn btn-outline-success pd10-50" style="text-align:center;">Yorumu Onayla</button></a></div>
+                        <div class="col-md-4" style="float:right;">
+                            <a href="~/Admin/Comment/CommentDelete?Id=@Model.Id">
+                                <button type="submit" class="btn btn-outline-danger pd10-50" style="text-align:center;">Yorumu Sil</button>
+                            </a>
+                        </div>
+                        @if (!Model.IsApproved)
+                        {
+                            <div class="col-md-4" style="float:right;">
+                                <a href="~/Admin/Comment/CommentApprove?Id=@Model.Id">
+                                    <button type="submit" class="btn btn-outline-success pd10-50" style="text-align:center;">Yorumu Onayla</button>
+                                </a>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div class="card-body">
@@ -41,9 +52,9 @@
                     </div>
 
 
-           
-           
-              
+
+
+
 
                 </div>
             </div>

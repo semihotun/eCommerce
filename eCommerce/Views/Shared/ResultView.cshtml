@@ -2,8 +2,8 @@
     ViewBag.Title = "Checkout";
     Layout = "";
 }
-@model Entities.ViewModels.Web.Search.SearchModel
-@using Entities.ViewModels.Web.Search;
+@model Entities.ViewModels.WebViewModel.Home.SearchVM
+@using Core.Extension;
 
 <div class='MenuItemHeader SearchResultHead'>
     <div class='SearchResultHeadLeft'>ProductName</div><div class='SearchResultHeadRight'>
@@ -16,7 +16,7 @@
             @foreach (var item in Model.ProductList)
             {
                 <li class='SearchResultItem'>
-                    » @Html.Raw("<a href='/Home/ProductDetail?productId=" + item.Id + "'>" + item.ProductName.Replace(Model.SearchKey, "<b><font color='#990066'>" + Model.SearchKey + "</font></b></a>")
+                    » @Html.Raw("<a href='/ProductDetail/ProductDetail?productId=" + item.Id + "'>" + item.ProductName.Replace(Model.SearchKey, "<b><font color='#990066'>" + Model.SearchKey + "</font></b></a>")
                  .Replace(HtmlHelperExtensions.UppercaseFirst(Model.SearchKey), "<b><font color='#990066'>" + HtmlHelperExtensions.UppercaseFirst(Model.SearchKey) + "</font></b>")
                  .Replace(Model.SearchKey.ToLower(), "<b><font color='#990066'>" + Model.SearchKey.ToLower() + "</font></b>")
                  .Replace(Model.SearchKey.ToUpper(), "<b><font color='#990066'>" + Model.SearchKey.ToUpper() + "</font></b>")

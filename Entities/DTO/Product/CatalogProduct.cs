@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Entities.Concrete.PhotoAggregate;
+using Entities.Concrete.ProductAggregate;
 using System;
 using System.Collections.Generic;
 using System.Text;

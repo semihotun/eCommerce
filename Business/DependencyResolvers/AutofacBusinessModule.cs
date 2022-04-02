@@ -1,40 +1,62 @@
-﻿using Autofac;
+﻿#region using
+
+using Autofac;
 using Autofac.Extras.DynamicProxy;
-using Business.Abstract;
-using Business.Abstract.Brands;
-using Business.Abstract.Categories;
-using Business.Abstract.Comments;
-using Business.Abstract.Discounts;
-using Business.Abstract.Products;
-using Business.Abstract.Showcases;
-using Business.Abstract.Sliders;
-using Business.Abstract.Spefications;
-using Business.Concrete;
-using Business.Concrete.Brands;
-using Business.Concrete.Categories;
-using Business.Concrete.Comments;
-using Business.Concrete.Discounts;
-using Business.Concrete.Products;
-using Business.Concrete.Showcases;
-using Business.Concrete.Sliders;
-using Business.Concrete.Spefications;
+using Business.Services.BrandAggregate.Brands;
+using Business.Services.BrandAggregate.CatalogBrands;
+using Business.Services.CategoriesAggregate.Categories;
+using Business.Services.CommentsAggregate.Comments;
+using Business.Services.DiscountsAggregate.Discounts;
+using Business.Services.ProductAggregate.ProductAttributes;
+using Business.Services.ProductAggregate.Products;
+using Business.Services.ProductAggregate.ProductShipmentInfos;
+using Business.Services.ProductAggregate.ProductStocks;
+using Business.Services.ProductAggregate.ProductStockTypes;
+using Business.Services.ShowcaseAggregate.ShowcaseServices;
+using Business.Services.ShowcaseAggregate.ShowcaseTypes;
+using Business.Services.SliderAggregate.Sliders;
+using Business.Services.SpeficationAggregate.SpecificationAttributes;
 using Castle.DynamicProxy;
-using Core.Library.Business.Abstract;
-using Core.Library.Business.Concrete;
 using Core.Library.DAL.EntityFramework.Abstract;
 using Core.Library.DAL.EntityFramework.Concrete;
 using Core.Utilities.Interceptors;
-using Core.Utilities.Security.Jwt;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntitiyFramework;
-using DataAccess.Concrete.EntityFramework;
-using eCommerce.Core.DataAccess;
+using DataAccess.DALs.EntitiyFramework.AddressAggregate.Adress;
+using DataAccess.DALs.EntitiyFramework.AddressAggregate.MyUserAdressess;
+using DataAccess.DALs.EntitiyFramework.BrandAggregate.Brands;
+using DataAccess.DALs.EntitiyFramework.BrandAggregate.CatalogBrands;
+using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories;
+using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.CategorySpefications;
+using DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments;
+using DataAccess.DALs.EntitiyFramework.DiscountsAggregate.DiscountBrands;
+using DataAccess.DALs.EntitiyFramework.DiscountsAggregate.DiscountCategorys;
+using DataAccess.DALs.EntitiyFramework.DiscountsAggregate.DiscountProducts;
+using DataAccess.DALs.EntitiyFramework.DiscountsAggregate.Discounts;
+using DataAccess.DALs.EntitiyFramework.DiscountsAggregate.DiscountUsageHistorys;
+using DataAccess.DALs.EntitiyFramework.OrderAggregate.OrderItems;
+using DataAccess.DALs.EntitiyFramework.OrderAggregate.OrderNotes;
+using DataAccess.DALs.EntitiyFramework.OrderAggregate.Orders;
+using DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos;
+using DataAccess.DALs.EntitiyFramework.PhotoAggregate.ProductPhotos;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.PredefinedProductAttributeValues;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeCombinations;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeFormatter;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributes;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeValues;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSeos;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductShipmentInfos;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecificationAttributes;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStocks;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStockTypes;
+using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowCaseProducts;
+using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices;
+using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseTypes;
+using DataAccess.DALs.EntitiyFramework.SliderAggregate.Sliders;
+using DataAccess.DALs.EntitiyFramework.SpeficationAggregate.SpecificationAttributeOptions;
+using DataAccess.DALs.EntitiyFramework.SpeficationAggregate.SpecificationAttributes;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
+#endregion
 
 namespace Business.DependencyResolvers
 {
@@ -43,7 +65,6 @@ namespace Business.DependencyResolvers
         protected override void Load(ContainerBuilder builder)
         {
 
-
             builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
 
             builder.RegisterType<SliderService>().As<ISliderService>();
@@ -51,21 +72,14 @@ namespace Business.DependencyResolvers
             builder.RegisterType<CategoryService>().As<ICategoryService>();
             builder.RegisterType<ShowcaseService>().As<IShowcaseService>();
             builder.RegisterType<ProductService>().As<IProductService>();
-            builder.RegisterType<ProductAttributeParser>().As<IProductAttributeParser>();
             builder.RegisterType<ProductAttributeService>().As<IProductAttributeService>();
             builder.RegisterType<ProductAttributeFormatter>().As<IProductAttributeFormatter>();
             builder.RegisterType<SpecificationAttributeService>().As<ISpecificationAttributeService>();
             builder.RegisterType<BrandService>().As<IBrandService>();
             builder.RegisterType<DiscountService>().As<IDiscountService>();
             builder.RegisterType<ShowcaseTypeService>().As<IShowcaseTypeService>();
-
-            //builder.RegisterType<eCommerceContext>().AsSelf().As<DbContext>().InstancePerLifetimeScope();
-            //builder.RegisterGeneric(typeof(EFQueryable<>)).As(typeof(IEfQueryable<>)).InstancePerLifetimeScope();
-
             builder.RegisterType<ProductShipmentInfoDAL>().As<IProductShipmentInfoDAL>();
             builder.RegisterType<ProductShipmentInfoService>().As<IProductShipmentInfoService>();
-
-
             builder.RegisterType<ShowcaseTypeDAL>().As<IShowcaseTypeDAL>();
             builder.RegisterType<ProductDAL>().As<IProductDAL>();
             builder.RegisterType<AddressDAL>().As<IAddressDAL>();
@@ -100,13 +114,9 @@ namespace Business.DependencyResolvers
             builder.RegisterType<ProductStockService>().As<IProductStockService>();
             builder.RegisterType<ProductStockTypeDAL>().As<IProductStockTypeDAL>();
             builder.RegisterType<ProductStockTypeService>().As<IProductStockTypeService>();
-
-
-
-
-            //builder.RegisterType<ProductAttributeParser>().As<IProductAttributeParser>();
-            //builder.RegisterType<ProductAttributeFormatter>().As<IProductAttributeFormatter>();
-
+            builder.RegisterType<CatalogBrandDAL>().As<ICatalogBrandDAL>();
+            builder.RegisterType<CatalogBrandService>().As<ICatalogBrandService>();
+ 
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

@@ -1,5 +1,5 @@
-﻿@model Entities.ViewModels.Admin.ProductModel
-
+﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
+@using Core.Utilities.Razor;
 @{
     ViewData["Title"] = "ProductSpeficationCreate";
     Layout = null;
@@ -21,7 +21,7 @@
         }
         else {
             ProductSpeficationTable = $("#ProductSpeficationList").DataTable({
-                "sAjaxSource": "/Admin/AdminProduct/ProductSpeficationJson?Id="+@Model.Id,
+                "sAjaxSource": "/Admin/ProductSpecificationAttribute/ProductSpeficationJson?Id="+@Model.Id,
                 "bServerSide": true,
                 "bProcessing": true,
                 "bSearchable": true,
@@ -29,7 +29,7 @@
                 "searching": false,
                 "columns": [
                     { "data": "Id", "name": "Id", "autoWidth": true },
-                    { "data": "SpeficationAtributeTypeName", "name": "SpecificationAttributeOptionName", "autoWidth": true },
+                    { "data": "SpeficationAtributeTypeName", "name": "SpeficationAtributeTypeName", "autoWidth": true },
                     { "data": "SpecificationAttributeOptionName", "name": "SpecificationAttributeOptionName", "autoWidth": true },
                     { "data": "DisplayOrder", "name": "DisplayOrder", "autoWidth": true },
                     {
@@ -77,7 +77,7 @@
 
     function ProductSpeficationDelete(id) {
         $.ajax({
-            url: "/Admin/AdminProduct/ProductSpeficationDelete?id=" + id,
+            url: "/Admin/ProductSpecificationAttribute/ProductSpeficationDelete?id=" + id,
             error : function() {
                 swal("işlem başarısız", "", "error");
             },
@@ -93,7 +93,7 @@
         $("#SpecificationAttributeOptionId").prop("disabled", true);
         $.ajax({
             type: "post",
-            url: "/Admin/AdminProduct/GetSpeficationOptionById?speficationAttrId=" + AttrTypeId,
+            url: "/Admin/ProductSpecificationAttribute/GetSpeficationOptionById?speficationAttrId=" + AttrTypeId,
             dataType: "json",
             success: function (sonuc) {
                 $("#SpecificationAttributeOptionId option").remove();
@@ -121,22 +121,25 @@
     });
 
     $("#ProductSpeficationCreate").submit(function (event) {
-        event.preventDefault(); 
+        event.preventDefault();
         $('input[name="ProductSpecificationAttribute.ProductId"]').val($("#Id").val());
+
         $('input[name="ProductSpecificationAttribute.SpeficationAtributeTypeName"]')
             .val($('select[name="ProductSpecificationAttribute.AttributeTypeId"] option:selected').text());
+
         $('input[name="ProductSpecificationAttribute.SpecificationAttributeOptionName"]')
             .val($('select[name="ProductSpecificationAttribute.SpecificationAttributeOptionId"] option:selected').text());
 
         var data = $("#ProductSpeficationCreate").serialize();
+
         $.ajax({
             type: "Post",
-            url: "/Admin/AdminProduct/ProductSpeficationCreate?" + data,
+            url: "/Admin/ProductSpecificationAttribute/ProductSpeficationCreate?" + data,
             dataType: "json",
-            success: function (data) {
-                swal("işlem başarılı", "", "success");
-                console.log(data);
-                $("#ProductSpeficationList").DataTable().row.add(data).draw();
+            success: function (result) {
+                let formObject = $("#ProductSpeficationCreate").serializeObject("ProductSpecificationAttribute.");
+                formObject["Id"] = result.Id;
+                $("#ProductSpeficationList").DataTable().row.add(formObject).draw();
             }
         });
     });

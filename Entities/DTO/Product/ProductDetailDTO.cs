@@ -2,24 +2,26 @@
 using System.Collections.Generic;
 using System.Text;
 using Core.Library;
-using Entities.Concrete;
+using Entities.Concrete.DiscountsAggregate;
+using Entities.Concrete.PhotoAggregate;
+using Entities.Concrete.ProductAggregate;
 using Entities.DTO.ProductMapping;
 using Entities.DTO.ShowCase;
-using Entities.ViewModels.Admin;
+using Entities.ViewModels.AdminViewModel.AdminProduct;
 using BaseEntity = Entities.Concrete.BaseEntity;
 
 namespace Entities.DTO.Product
 {
     public class ProductDetailDTO
     {
-        public Concrete.Product ProductModel { get; set; }
+        public Concrete.ProductAggregate.Product ProductModel { get; set; }
 
 
         #region Brand
         public Brand BrandModel { get; set; }
         public class Brand
         {
-            public Entities.Concrete.Brand BrandInfo { get; set; }
+            public Concrete.BrandAggregate.Brand BrandInfo { get; set; }
             public List<DiscountBrand> DiscountBrandList { get; set; }
         }
 
@@ -29,14 +31,14 @@ namespace Entities.DTO.Product
         public Category CategoryModel { get; set; }
         public class Category
         {
-            public Entities.Concrete.Category CategoryInfo { get; set; }
+            public Concrete.CategoriesAggregate.Category CategoryInfo { get; set; }
             public List<DiscountCategory> DiscountBrandList { get; set; }
 
         }
         #endregion
 
         #region ProductPhoto
-        public IEnumerable<Entities.Concrete.ProductPhoto> ProductPhotoList { get; set; }
+        public IEnumerable<ProductPhoto> ProductPhotoList { get; set; }
 
         #endregion
 
@@ -53,7 +55,7 @@ namespace Entities.DTO.Product
         }
         public class Comment
         {
-            public Entities.Concrete.Comment CommentInfo { get; set; }
+            public Concrete.CommentsAggregate.Comment CommentInfo { get; set; }
             public MyUser User { get; set; }
         }
         public List<Comment> CommentList { get; set; }
@@ -92,6 +94,6 @@ namespace Entities.DTO.Product
         public List<ProductSpecificationAttributeDTO> ProductSpecificationAttributeList { get; set; }
         public List<ShowCaseProductDTO.Product> AnotherProductList { get; set; }
         public ProductStock ProductStock { get; set; }
-        public List<ProductAttributeCombinationModel> AttrCombinationList { get; set; }
+        public List<ProductAttributeCombinationVM> AttrCombinationList { get; set; }
     }
 }

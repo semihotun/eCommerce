@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Entities.ViewModels.All
+namespace Entities.DTO
 {
     public class MappingAttrXml
     {
@@ -13,7 +13,7 @@ namespace Entities.ViewModels.All
         public int MappingId { get; set; }
 
         public int AttributeId { get; set; }
-        public List<MappingAttrXml>MappingAttrXmlList{ get;  set;}
+        public List<MappingAttrXml> MappingAttrXmlList { get; set; }
 
     }
 

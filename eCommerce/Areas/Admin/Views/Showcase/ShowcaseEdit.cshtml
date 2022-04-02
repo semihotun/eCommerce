@@ -1,7 +1,7 @@
 ﻿
 @using Entities.Enum
 @using X.PagedList;
-@model Entities.ViewModels.Admin.ShowCaseModel
+@model Entities.ViewModels.AdminViewModel.Showcase.ShowCaseCreateOrUpdateVM
 
 @{
     ViewBag.Title = "ShowcaseCreate";
@@ -87,7 +87,7 @@
                                         <div class="form-group">
                                             <div class="col-md-2"> Show Case Tipi</div>
                                             <div class="col-md-10">
-                                                @Html.DropDownListFor(x => x.ShowCaseDto.ShowCaseType, Model.ShowCaseTypeList, new { @class = "form-control col-md-6" })
+                                                @Html.DropDownListFor(x => x.ShowCaseDto.ShowCaseType, Model.ShowCaseTypeList, new { @class = "form-control col-md-6",disabled="disabled" })
                                                 @Html.ValidationMessageFor(model => model.ShowCaseDto.ShowCaseType, "", new { @class = "text-danger" })
                                             </div>
                                         </div>

@@ -1,45 +1,69 @@
-﻿using Core.Utilities.Interceptors;
-using Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
-using System.Text;
+﻿using Core.Library;
+using Core.Library.Entities.Concrete;
+using Entities.Concrete.AdressAggregate;
+using Entities.Concrete.BrandAggregate;
+using Entities.Concrete.CategoriesAggregate;
+using Entities.Concrete.CommentsAggregate;
+using Entities.Concrete.DiscountsAggregate;
+using Entities.Concrete.PhotoAggregate;
+using Entities.Concrete.ProductAggregate;
+using Entities.Concrete.ShowcaseAggregate;
+using Entities.Concrete.SliderAggregate;
+using Entities.Concrete.SpeficationAggregate;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
-using Core.Library;
+using System;
+using System.Linq;
+using System.Reflection;
 
-namespace DataAccess.Concrete.EntityFramework
+namespace DataAccess.Context
 {
-
     public class eCommerceContext : CoreContext
     {
+        private DbContextOptions<eCommerceContext> dbContextOptions;
         protected static DbContextOptions<T> ChangeOptionsType<T>(DbContextOptions options) where T : DbContext
         {
             var sqlExt = options.Extensions.FirstOrDefault(e => e is SqlServerOptionsExtension);
 
             if (sqlExt == null)
-                throw (new Exception("Failed to retrieve SQL connection string for base Context"));
+                throw new Exception("Failed to retrieve SQL connection string for base Context");
+
+            var ssq = ((SqlServerOptionsExtension)sqlExt).ConnectionString;
 
             return new DbContextOptionsBuilder<T>()
-                        .UseSqlServer(((SqlServerOptionsExtension)sqlExt).ConnectionString)
                         .Options;
         }
+
         public eCommerceContext(DbContextOptions<eCommerceContext> options) : base(ChangeOptionsType<CoreContext>(options))
         {
-
+            dbContextOptions = options;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("data source=DESKTOP-OB76QRL\\SQLEXPRESS;initial catalog=eCommerce;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework");
+            var sqlServerOptionsExtension = dbContextOptions.
+                  FindExtension<SqlServerOptionsExtension>();
+
+            var connectionString = sqlServerOptionsExtension.ConnectionString;
+
+            optionsBuilder.UseSqlServer(connectionString);               
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            var assm = Assembly.GetExecutingAssembly();
+            modelBuilder.ApplyConfigurationsFromAssembly(assm);
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+        #region DBSets
+        public virtual DbSet<Address> Addres { get; set; }
         public virtual DbSet<ProductShipmentInfo> ProductShipmentInfo { get; set; }
         public virtual DbSet<Brand> Brand { get; set; }
+        public virtual DbSet<CatalogBrand> CatalogBrand { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<PredefinedProductAttributeValue> PredefinedProductAttributeValue { get; set; }
         public virtual DbSet<Product> Product { get; set; }
@@ -67,32 +91,9 @@ namespace DataAccess.Concrete.EntityFramework
         public virtual DbSet<ProductStock> ProductStock { get; set; }
         public virtual DbSet<ProductStockType> ProductStockType { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
+        #endregion
 
-            modelBuilder.Entity<MyUser>()
-                .ToTable("Users");
-
-            modelBuilder.Entity<MyRole>()
-                .ToTable("Role");
-
-            modelBuilder.Entity<MyUserRole>()
-                .ToTable("UserRole");
-
-            modelBuilder.Entity<MyClaim>()
-                .ToTable("Claim");
-
-            modelBuilder.Entity<MyLogin>()
-                .ToTable("Login");
-
-            modelBuilder.Entity<MyUser>().Property(r => r.Id).ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<MyRole>().Property(r => r.Id).ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<MyClaim>().Property(r => r.Id).ValueGeneratedOnAdd();
-
-        }
+      
 
     }
 }

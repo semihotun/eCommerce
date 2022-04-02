@@ -12,7 +12,9 @@ using System.Xml.Linq;
 
 namespace eCommerce.Core.DataAccess.EntitiyFramework
 {
-    public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity> where TEntity : class, IEntity where TContext : DbContext
+    public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity> 
+        where TEntity : class,
+        IEntity where TContext : DbContext  
     {
         protected readonly TContext Context;
 
@@ -29,6 +31,10 @@ namespace eCommerce.Core.DataAccess.EntitiyFramework
         public TEntity Add(TEntity entity)
         {
             return Context.Add(entity).Entity;
+        }
+        public void AddRange(List<TEntity> entity)
+        {
+             Context.AddRange(entity);
         }
 
         public TEntity Update(TEntity entity)
@@ -66,7 +72,6 @@ namespace eCommerce.Core.DataAccess.EntitiyFramework
             return expression == null ? await Context.Set<TEntity>().ToListAsync() :
                  await Context.Set<TEntity>().Where(expression).ToListAsync();
         }
-        [TransactionAspect]
         public int SaveChanges()
         {
             return Context.SaveChanges();

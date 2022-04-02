@@ -23,7 +23,7 @@ namespace Entities.Others
         public int PageIndex {
             get {
                 int pageNo = 1;
-                if (iDisplayStart >= iDisplayLength)
+                if (iDisplayStart >= iDisplayLength && iDisplayStart != 0 || iDisplayLength !=0)
                 {
                     pageNo = (iDisplayStart / iDisplayLength) + 1;
                 }

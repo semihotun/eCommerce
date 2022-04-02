@@ -1,3 +1,8 @@
+C:\Users\Semih\source\repos\eCommerce\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.csproj.AssemblyReference.cache
+C:\Users\Semih\source\repos\eCommerce\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Semih\source\repos\eCommerce\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.AssemblyInfoInputs.cache
+C:\Users\Semih\source\repos\eCommerce\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.AssemblyInfo.cs
+C:\Users\Semih\source\repos\eCommerce\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.csproj.CoreCompileInputs.cache
 C:\Users\Semih\source\repos\eCommerce\DataAccess\bin\Debug\netcoreapp3.1\DataAccess.deps.json
 C:\Users\Semih\source\repos\eCommerce\DataAccess\bin\Debug\netcoreapp3.1\DataAccess.dll
 C:\Users\Semih\source\repos\eCommerce\DataAccess\bin\Debug\netcoreapp3.1\DataAccess.pdb
@@ -5,10 +10,6 @@ C:\Users\Semih\source\repos\eCommerce\DataAccess\bin\Debug\netcoreapp3.1\Core.dl
 C:\Users\Semih\source\repos\eCommerce\DataAccess\bin\Debug\netcoreapp3.1\Entities.dll
 C:\Users\Semih\source\repos\eCommerce\DataAccess\bin\Debug\netcoreapp3.1\Core.pdb
 C:\Users\Semih\source\repos\eCommerce\DataAccess\bin\Debug\netcoreapp3.1\Entities.pdb
-C:\Users\Semih\source\repos\eCommerce\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.csprojAssemblyReference.cache
-C:\Users\Semih\source\repos\eCommerce\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.AssemblyInfoInputs.cache
-C:\Users\Semih\source\repos\eCommerce\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.AssemblyInfo.cs
-C:\Users\Semih\source\repos\eCommerce\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.csproj.CoreCompileInputs.cache
 C:\Users\Semih\source\repos\eCommerce\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.csproj.CopyComplete
 C:\Users\Semih\source\repos\eCommerce\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.dll
 C:\Users\Semih\source\repos\eCommerce\DataAccess\obj\Debug\netcoreapp3.1\DataAccess.pdb

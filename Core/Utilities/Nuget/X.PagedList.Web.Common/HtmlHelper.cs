@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Utilities.Nuget.X.PagedList.Web.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

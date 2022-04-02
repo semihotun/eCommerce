@@ -11,6 +11,7 @@ using Core.Library.DAL.EntityFramework.Concrete;
 using Core.Utilities.IoC;
 using Core.Utilities.Security.Jwt;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.DependencyResolvers
@@ -23,6 +24,9 @@ namespace Core.DependencyResolvers
             serviceCollection.AddSingleton<Stopwatch>();
             serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             serviceCollection.AddSingleton<ICacheManager, MemoryCacheManager>();
+
+
+            serviceCollection.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             serviceCollection.AddTransient<IAdminUserDAL, AdminUserDAL> ();
             serviceCollection.AddTransient<IAdminAuthService, AdminAuthService>();

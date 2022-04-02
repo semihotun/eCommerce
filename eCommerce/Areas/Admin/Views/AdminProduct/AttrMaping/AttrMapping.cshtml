@@ -1,4 +1,4 @@
-﻿@model Entities.ViewModels.Admin.ProductModel
+﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
 
 
 @{Html.RenderPartial("AttrMaping/_AttrMapingCreate", Model);}
@@ -58,7 +58,7 @@
         };
 
         $.ajax({
-            url: "/Admin/AdminProduct/AddProductAttirubeMapping",
+            url: "/Admin/ProductAttributeMapping/AddProductAttirubeMapping",
             type: "POST",
             data: JSON.stringify(productMapping),
             dataType: 'json',
@@ -81,7 +81,7 @@
     function GetMappingAttribute(id) {
         $("#MappingTable" + id + " tbody").html("");
         $.ajax({
-            url: "/Admin/AdminProduct/ProductAttributeValueList?productAttrMapingId=" + id,
+            url: "/Admin/ProductAttributeMapping/ProductAttributeValueList?productAttrMapingId=" + id,
             type: "GET",
             success: function (data) {
                 $.each(data,
@@ -97,7 +97,7 @@
 
     function AttrMapingDelete(id) {
         $.ajax({
-            url: "/Admin/AdminProduct/AttrMapingDelete?id=" + id,
+            url: "/Admin/ProductAttributeMapping/AttrMapingDelete?id=" + id,
             type: "GET",
             success: function (data) {
                 $("#Mappingcard" + id).remove();
@@ -110,7 +110,7 @@
 
     function DeleteAttributeValue(id) {
         $.ajax({
-            url: "/Admin/AdminProduct/ProductAttributeValueDelete?AttributeValueid=" + id,
+            url: "/Admin/ProductAttributeMapping/ProductAttributeValueDelete?AttributeValueid=" + id,
             type: "GET",
             success: function (data) {
                 $("#AttibuteValue" + id).remove();
@@ -153,26 +153,25 @@
         if (ProductModel.ProductAttributeValue.Id === 0) {
             console.log(JSON.stringify(ProductModel));
             $.ajax({
-                url: "/Admin/AdminProduct/AddProductEditPageMappingAttributeValue",
+                url: "/Admin/ProductAttributeMapping/AddProductEditPageMappingAttributeValue",
                 data: JSON.stringify(ProductModel),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 type: "POST",
                 success: function (data) {
                     $("input[name='ProductAttributeValue.Id']").val(data.Id);
-                    AddProductMappingAttributeValueTable(data, data.ProductAttributeMappingId);
-                    swal("İşlem Başarılı", "", "success");
+                    AddProductMappingAttributeValueTable(data, data.ProductAttributeMappingId);      
                     $('#productMappingAttributeValueModal').modal('toggle');
                 },
                 error: function (xhr, status, error) {
-                    swal("Hata", "", "error");
+                  
                 }
             });
         }
         //Update
         else {
             $.ajax({
-                url: "/Admin/AdminProduct/UpdateProductMappingAttributeValue",
+                url: "/Admin/ProductAttributeMapping/UpdateProductMappingAttributeValue",
                 data: JSON.stringify(ProductModel),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
@@ -180,11 +179,11 @@
                 success: function (data) {
                     $("#AttibuteValue" + data.Id).remove();
                     AddProductMappingAttributeValueTable(data, data.ProductAttributeMappingId);
-                    swal("İşlem Başarılı", "", "success");
+                 
                     $('#productMappingAttributeValueModal').modal('toggle');
                 },
                 error: function (data) {
-                    swal("Hata", "", "error");
+
                 }
             });
         }
@@ -194,7 +193,7 @@
     function EditFillAttributeValue(id) {
         $.ajax({
             type: "GET",
-            url: '/Admin/AdminProduct/GetMappingAttributeValue?id=' + id,
+            url: '/Admin/ProductAttributeMapping/GetMappingAttributeValue?id=' + id,
             success: function (data) {
                 //ispreselected eksik
                 $("#productMappingAttributeValueModal").modal();

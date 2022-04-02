@@ -1,4 +1,4 @@
-﻿@model Entities.ViewModels.Admin.ShowCaseModel
+﻿@model Entities.ViewModels.AdminViewModel.Showcase.ShowCaseCreateOrUpdateVM
 
 <div class="table-responsive">
 
@@ -7,12 +7,14 @@
 
 
 
-    @using (Html.BeginForm("ShowcaseEdit", "ShowCase",FormMethod.Get,new { Tap = "tap3"}))
+    @using (Html.BeginForm("ShowcaseEdit", "ShowCase",FormMethod.Get,new { Tap = "tap3", Id = "ProductListForm" }))
     {
 
         <input type="hidden" name="Tap" value="tab3" class="tabsaklayici"/>
         <div style="display:flex;flex-wrap:wrap;">
             <div class="form-group col-md-6 row">
+
+                <input type="hidden" name="id" value="@Model.ShowCaseDto.Id" />
                 @Html.LabelFor(x => x.ProductModel.Id, "Id", new { @class = "control-label col-md-2 " })
 
                 <div class="col-md-10 ">
@@ -128,6 +130,11 @@
         $(document).ready(function () {
             BindProductList();
 
+        });
+        $("#ProductListForm").submit(function (event) {
+            event.preventDefault();
+            $('#ProductList').DataTable().destroy();
+            BindProductList();
         });
     </script>
 

@@ -1,5 +1,4 @@
-﻿@model Entities.ViewModels.Admin.DiscountModel
-
+﻿
 @{
     ViewData["Title"] = "DiscountList";
     Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
@@ -22,16 +21,7 @@
 
 
 
-                    @*<form method="post" id="CommentForm" action="/Admin/Comment/CommentList">
-                        <br />
-
-                        @Html.DropDownListFor(model => model.IsApproved, (List<SelectListItem>)ViewBag.Approve, new { @class = " form-control  col-md-4", onchange = "this.form.submit()" })
-
-                    </form>*@
-
-
-
-                    @Html.Partial("DiscountDatatable", Model)
+                    @Html.Partial("DiscountDatatable")
 
                 </div>
             </div>

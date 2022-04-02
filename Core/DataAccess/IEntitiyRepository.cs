@@ -11,6 +11,8 @@ namespace eCommerce.Core.DataAccess
     public interface IEntityRepository<T> where T : class, IEntity
     {
         T Add(T entity);
+
+        void AddRange(List<T> entity);
         T Update(T entity);
         void Delete(T entity);
         void DeleteRange(List<T> entity);

@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace Plugin.Iyzico.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
+    //https://localhost:44375/Iyzico/Iyzico/Index
     [Route("Iyzico/[controller]/[action]")]
     public class IyzicoController : Controller
     {

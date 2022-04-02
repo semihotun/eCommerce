@@ -25,13 +25,12 @@ namespace Entities.DTO.Product
         [Filter(FilterOperators.Equals)]
         public bool ProductShow { get; set; }
 
-        public Brand BrandModel { get; set; }
-        public class Brand:IFilterable
-        {
-            [Filter(FilterOperators.Equals)]
-            public int Id { get; set; }
-   
-        }
+        public BrandDataTableFilter BrandModel { get; set; }
+    }
+    public class BrandDataTableFilter : IFilterable
+    {
+        [Filter(FilterOperators.Equals)]
+        public int Id { get; set; }
 
     }
 }

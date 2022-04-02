@@ -1,13 +1,21 @@
-﻿
-
-using Entities.Concrete;
-using Entities.DTO.Product;
-using Entities.ViewModels.Admin;
-using Entities.ViewModels.All;
+﻿using Entities.DTO.Product;
 using AutoMapper;
 using Entities.DTO.ShowCase;
-using Entities.ViewModels.Admin.Products;
-using Entities.ViewModels.Admin.Products.ProductStock;
+using Entities.ViewModels.AdminViewModel.AdminSlider;
+using Entities.ViewModels.AdminViewModel.Discount;
+using Entities.ViewModels.AdminViewModel.Showcase;
+using Entities.ViewModels.AdminViewModel.SpeficationAttribute;
+using Entities.ViewModels.AdminViewModel.AdminProduct;
+using Entities.Others;
+using Entities.Concrete.ProductAggregate;
+using Entities.Concrete.ShowcaseAggregate;
+using Entities.Concrete.DiscountsAggregate;
+using Entities.Concrete.CategoriesAggregate;
+using Entities.Concrete.SliderAggregate;
+using Entities.Concrete.SpeficationAggregate;
+using Entities.DTO;
+using Entities.Concrete.BrandAggregate;
+using Entities.Concrete.PhotoAggregate;
 
 namespace Entities.Helpers.AutoMapper
 {
@@ -15,16 +23,6 @@ namespace Entities.Helpers.AutoMapper
     {
         public AdminAuthoMapperProfile()
         {
-
-            CreateMap<Product, ProductDataTableJson>();
-
-            CreateMap<ProductModel, Product>();
-            CreateMap<Product, ProductModel>();
-            CreateMap<Product, ProductListModel>();
-
-
-
-            //Farklı Dosya Taşı Başla
             CreateMap<ProductShipmentInfo, ProductShipmentInfo>().ForMember(x => x.Id, mo => mo.Ignore());
             CreateMap<Product, Product>().ForMember(x => x.Id, mo => mo.Ignore()); 
             CreateMap<SpecificationAttribute, SpecificationAttribute>().ForMember(x => x.Id, mo => mo.Ignore()); 
@@ -47,91 +45,17 @@ namespace Entities.Helpers.AutoMapper
             CreateMap<Category, Category>().ForMember(x => x.Id, mo => mo.Ignore());
 
 
-            //Farklı Dosya Taşı Bitiş
 
-
-
-            CreateMap<ProductStock, ProductStockCreateOrUpdate>();
-            CreateMap<ProductStockCreateOrUpdate, ProductStock>();
-
-
-            CreateMap<SpecificationAttribute, SpecificationAttributeModel>();
-            CreateMap<SpecificationAttributeModel, SpecificationAttribute>();
-
-            CreateMap<SpecificationAttributeOption, SpecificationAttributeOptionModel>();
-            CreateMap<SpecificationAttributeOptionModel, SpecificationAttributeOption>();
-
-            CreateMap<ProductSpecificationAttribute, ProductSpecificationAttributeModel>();
-            CreateMap<ProductSpecificationAttributeModel, ProductSpecificationAttribute>();
-
-            CreateMap<CategoryModel, Category>();
-            CreateMap<Category, CategoryModel>();
-
-            CreateMap<CategorySpeficationModel, CategorySpefication>();
-            CreateMap<CategorySpefication, CategorySpeficationModel>();
-
-            CreateMap<CommentModel, Comment>();
-            CreateMap<Comment, CommentModel>();
-
-            CreateMap<ProductPhotoModel, ProductPhoto>();
-            CreateMap<ProductPhoto, ProductPhotoModel>();
-
-            CreateMap<ProductAttribute, ProductAttributeModel>();
-            CreateMap<ProductAttributeModel, ProductAttribute>();
-
-            CreateMap<Brand, BrandModel>();
-            CreateMap<BrandModel, Brand>();
-
-            CreateMap<ProductAttributeMappingModel, ProductAttributeMapping>();
-            CreateMap<ProductAttributeMapping, ProductAttributeMappingModel>();
-
-            CreateMap<MappingAttrModel, MappingAttrXml>();
-            CreateMap<MappingAttrXml, MappingAttrModel>();
-
-            CreateMap<PredefinedProductAttributeValue, PredefinedProductAttributeValueModel>();
-            CreateMap<PredefinedProductAttributeValueModel, PredefinedProductAttributeValue>();
-
-            CreateMap<ProductAttributeCombinationModel, ProductAttributeCombination>();
-            CreateMap<ProductAttributeCombination, ProductAttributeCombinationModel>();
-
-            //CreateMap<ProductAttributeValue, ProductAttributeValueModel>();
-            CreateMap<ProductAttributeValueModel, ProductAttributeValue>();
-
-            CreateMap<ProductAttributeValue, ProductAttributeValueModel>();
-
-            CreateMap<ProductSeo, ProductSeoModel>();
-            CreateMap<ProductSeoModel, ProductSeo>();
-
-            CreateMap<SliderModel, Slider>();
-            CreateMap<Slider, SliderModel>();
-
-            CreateMap<ShowCase, ShowCaseModel>();
-            CreateMap<ShowCaseDTO, ShowCase>();
-            CreateMap<ShowCase, ShowCaseDTO>();
-            CreateMap<ShowCaseModel, ShowCase>();
-
-            CreateMap<ShowCaseProduct, ShowCaseProductModel>();
-            CreateMap<ShowCaseProductModel, ShowCaseProduct>();
-
-            CreateMap<CombinationPhoto, CombinationPhotoModel>();
-            CreateMap<CombinationPhotoModel, CombinationPhoto>();
-
-            CreateMap<Discount, DiscountModel>();
-            CreateMap<DiscountModel, Discount>();
-
-            CreateMap<DiscountProduct, DiscountProductModel>();
-            CreateMap<DiscountProductModel, DiscountProduct>();
-
-            CreateMap<DiscountBrand, DiscountBrandModel>();
-            CreateMap<DiscountBrandModel, DiscountBrand>();
-
-            CreateMap<DiscountCategory, DiscountCategoryModel>();
-            CreateMap<DiscountCategoryModel, DiscountCategory>();
-
-            CreateMap<DiscountUsageHistory, DiscountUsageHistoryModel>();
-            CreateMap<DiscountUsageHistoryModel, DiscountUsageHistory>();
-
-
+            CreateMap<Product, ProductDataTableJson>().ReverseMap();
+            CreateMap<MappingAttrModel, MappingAttrXml>().ReverseMap();
+            CreateMap<SliderCreateOrUpdateVM, Slider>().ReverseMap();
+            CreateMap<DiscountCreateOrUpdateVM,Discount>().ReverseMap();
+            CreateMap<ShowCaseCreateOrUpdateVM, ShowCase>().ReverseMap();
+            CreateMap<SpecificationAttributeVM, SpecificationAttribute>().ReverseMap();
+            CreateMap<SpecificationAttributeOptionVM, SpecificationAttributeOption>().ReverseMap();
+            CreateMap<Product, ProductVM>().ReverseMap();
+            CreateMap<ProductStockCreateOrUpdateVM, ProductStock>().ReverseMap();
+            CreateMap<ProductAttributeCombinationVM, ProductAttributeCombination>().ReverseMap();
         }
     }
 }

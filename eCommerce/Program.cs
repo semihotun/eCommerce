@@ -1,14 +1,10 @@
-using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Business.DependencyResolvers;
+using Core.Utilities.Migration;
+using DataAccess.Context;
+using DataAccess.ContextSeed.eCommerceContextSeed;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace eCommerce
 {
@@ -16,16 +12,25 @@ namespace eCommerce
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+
+            host.MigrateDbContext<eCommerceContext>((context, services,created) =>
+            {            
+                if(created)
+                {
+                    var logger = (ILogger<eCommerceContext>)services.GetService(typeof(ILogger<eCommerceContext>));
+                    var dbContextSeeder = new EcommerceContextSeed();
+                    dbContextSeeder.SeedAsync(context, logger).Wait();
+                }
+       
+            });
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                //.ConfigureContainer<ContainerBuilder>(builder =>
-                //{
-                //    builder.RegisterModule(new AutofacBusinessModule());
-                //})
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     //Removing Server Header

@@ -1,4 +1,4 @@
-﻿@model Entities.ViewModels.Web.MainPageModel
+﻿@model Entities.ViewModels.WebViewModel.Home.MainPageVM
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -69,7 +69,7 @@
                                         }
                                         @*<span class="sale">-20%</span>*@
                                     </div>
-                                    @{var productlink = "/Home/ProductDetail?productId=" + product.ProductId +
+                                    @{var productlink = "/ProductDetail/ProductDetail?productId=" + product.ProductId +
                                               "&combinationId=" + (product.ProductModel.ProductAttributeCombination != null
                                                                   ? product.ProductModel.ProductAttributeCombination.Id
                                                                   : 0);
@@ -186,7 +186,7 @@
                                                 <li><span>00 M</span></li>
                                                 <li><span>00 S</span></li>
                                             </ul>*@
-                                            @{var productlink = "~/Home/ProductDetail?productId=" + product.ProductId +
+                                            @{var productlink = "/ProductDetail/ProductDetail?productId=" + product.ProductId +
                                     "&combinationId=" + (product.ProductModel.ProductAttributeCombination != null
                                                         ? product.ProductModel.ProductAttributeCombination.Id
                                                         : 0);
@@ -206,7 +206,7 @@
                                         <div class="product-body">
                                             <h3 class="product-price">
                                                 @*@product.Product.ProductPrice-@product.Product.ProductDiscount*@
-                                                @product.ProductModel.ProductStock.ProductPrice TL
+                                                @product.ProductModel.ProductStock?.ProductPrice TL
                                                 <del class="product-old-price"></del>
                                             </h3>
                                             @*<div class="product-rating">
