@@ -176,7 +176,7 @@
                                             </div><br /><br />
 
                                         }
-                                        @if (Model.ProductInfo.CommentList.Count != 0)
+                                        @if (Model.ProductInfo.CommentList.Count() > 0)
                                         {
                                             <a href="/Comment/AllCommentProduct?id=@Model.ProductInfo.ProductModel.Id">
                                                 <button class="main-btn quick-view">

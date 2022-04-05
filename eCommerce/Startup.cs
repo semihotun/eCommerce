@@ -8,6 +8,8 @@ using Core.Utilities.Filter;
 using Core.Utilities.Generate;
 using Core.Utilities.IoC;
 using Core.Utilities.Quartz;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeFormatter;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products;
 using eCommerce.StartUpSettings;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -62,7 +64,6 @@ namespace eCommerce
             #endregion
 
             services.AddRazorPages().AddNewtonsoftJson();
-            //services.AddControllersWithViews(x => x.SuppressAsyncSuffixInActionNames = false).AddRazorRuntimeCompilation();
 
             services.AddTransient<ValidationFilter>();
             services.AddMvc(options =>
@@ -83,8 +84,6 @@ namespace eCommerce
 
             services.UseQuartz();
             services.AddJobList();
-
-         
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

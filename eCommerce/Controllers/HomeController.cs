@@ -90,7 +90,7 @@ namespace eCommerce.Controllers
         {
             var result = (await _basketService.GetBasket()).Data;
 
-            return Json(result, new JsonSerializerSettings());
+            return Json(result);
         }
 
         public async Task<IActionResult> Checkout()
