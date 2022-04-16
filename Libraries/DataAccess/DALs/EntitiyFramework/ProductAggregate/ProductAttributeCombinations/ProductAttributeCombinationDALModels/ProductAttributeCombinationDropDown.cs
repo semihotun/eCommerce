@@ -12,5 +12,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeComb
         {
             ProductId = productId;
         }
+
+        public ProductAttributeCombinationDropDown()
+        {
+        }
     }
 }

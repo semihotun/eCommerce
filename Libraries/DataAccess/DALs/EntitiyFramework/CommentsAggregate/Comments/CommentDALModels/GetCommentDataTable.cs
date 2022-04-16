@@ -16,5 +16,9 @@ namespace DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments.CommentDAL
             Comment = comment;
             DataTableParam = dataTableParam;
         }
+
+        public GetCommentDataTable()
+        {
+        }
     }
 }

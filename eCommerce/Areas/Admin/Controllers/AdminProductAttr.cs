@@ -1,5 +1,6 @@
 ﻿using Business.Services.ProductAggregate.ProductAttributes;
 using Business.Services.ProductAggregate.ProductAttributes.ProductAttributeServiceModel;
+using Core.Utilities.Identity;
 using Entities.Concrete.ProductAggregate;
 using Entities.Others;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Areas.Admin.Controllers
 {
+    [AuthorizeControl("")]
     [Route("[area]/[controller]/[action]")]
     [ApiExplorerSettings(IgnoreApi = true)]
     [Area("Admin")]

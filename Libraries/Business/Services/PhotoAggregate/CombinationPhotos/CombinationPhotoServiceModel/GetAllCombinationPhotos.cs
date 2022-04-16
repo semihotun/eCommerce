@@ -12,6 +12,10 @@ namespace Business.Services.PhotoAggregate.CombinationPhotos.CombinationPhotoSer
             PhotoId = photoId;
         }
 
+        public GetAllCombinationPhotos()
+        {
+        }
+
         public int ProductId { get; set; }
         public int PhotoId { get; set; }
     }

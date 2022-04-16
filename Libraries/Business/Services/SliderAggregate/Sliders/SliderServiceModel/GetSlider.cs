@@ -11,6 +11,10 @@ namespace Business.Services.SliderAggregate.Sliders.SliderServiceModel
             Id = ıd;
         }
 
+        public GetSlider()
+        {
+        }
+
         public int Id { get; set; }
     }
 }

@@ -13,6 +13,8 @@ using Business.Services.ShowcaseAggregate.ShowCaseProducts.ShowCaseProductServic
 using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowCaseProducts;
 using Entities.Concrete.ShowcaseAggregate;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Services.ShowcaseAggregate.ShowCaseProducts
 {
@@ -33,7 +35,9 @@ namespace Business.Services.ShowcaseAggregate.ShowCaseProducts
         #region Method
 
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("IShowCaseProductService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("IShowCaseProductService.Get", 
+        "IShowCaseDAL.GetShowCaseDto","IShowCaseProductService.GetAllShowCaseDto")]
         public async Task<IResult> DeleteShowCaseProduct(DeleteShowCaseProduct request)
         {
             if (request.Id == 0)
@@ -48,7 +52,9 @@ namespace Business.Services.ShowcaseAggregate.ShowCaseProducts
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("IShowCaseProductService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("IShowCaseProductService.Get",
+        "IShowCaseDAL.GetShowCaseDto", "IShowCaseProductService.GetAllShowCaseDto")]
         public async Task<IResult> InsertProductShowcase(ShowCaseProduct showCaseProduct)
         {
             if (showCaseProduct == null)

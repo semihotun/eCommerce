@@ -21,6 +21,7 @@ namespace eCommerce.StartUpSettings
                     {
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
+                            SaveSigninToken=true,
                             ValidateIssuer = true,
                             ValidateAudience = true,
                             ValidateLifetime = true,

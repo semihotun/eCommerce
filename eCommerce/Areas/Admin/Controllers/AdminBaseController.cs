@@ -66,6 +66,14 @@ namespace eCommerce.Areas.Admin.Controllers
                 Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : "Böyle bir Kullanıcı Yok", NotificationType.error);
             }
         }
+        protected void ResponseDataAlert<T>(IDataResult<T> result, out IDataResult<T> outResult)
+        {
+            outResult = result;
+            if (!result.Success)
+            {
+                Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : "İşlem Başarısız", NotificationType.error);
+            }
+        }
 
 
 

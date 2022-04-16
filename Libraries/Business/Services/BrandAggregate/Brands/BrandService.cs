@@ -33,9 +33,10 @@ namespace Business.Services.BrandAggregate.Brands
 
 
         #region Method
-
-        [CacheRemoveAspect("IBrandService.Get")]
-        public async Task<IResult> BrandAdd(Brand model)
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("IBrandService.Get","IBrandDAL.Get")]
+        [TransactionAspect(typeof(eCommerceContext))]
+        public async Task<IResult> AddBrand(Brand model)
         {
             _brandRepository.Add(model);
             await _brandRepository.SaveChangesAsync();
@@ -64,8 +65,8 @@ namespace Business.Services.BrandAggregate.Brands
             return new SuccessDataResult<Brand>(data);
         }
 
-        [CacheRemoveAspect("IBrandService.Get")]
-        [LogAspect(typeof(FileLogger))]
+        [CacheRemoveAspect("IBrandService.Get", "IBrandDAL.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         public async Task<IResult> DeleteBrand(Brand brand)
         {
@@ -74,7 +75,8 @@ namespace Business.Services.BrandAggregate.Brands
             return new SuccessResult();
         }
 
-        [CacheRemoveAspect("IBrandService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("IBrandService.Get", "IBrandDAL.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
         public async Task<IResult> UpdateBrand(Brand brand)
         {

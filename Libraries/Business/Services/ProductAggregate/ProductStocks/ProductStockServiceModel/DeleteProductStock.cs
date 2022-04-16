@@ -11,6 +11,10 @@ namespace Business.Services.ProductAggregate.ProductStocks.ProductStockServiceMo
             Id = ıd;
         }
 
+        public DeleteProductStock()
+        {
+        }
+
         public int Id { get; set; }
     }
 }

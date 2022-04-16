@@ -12,5 +12,9 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues.ProductAttri
         {
             Id = ıd;
         }
+
+        public DeleteProductAttributeValue()
+        {
+        }
     }
 }

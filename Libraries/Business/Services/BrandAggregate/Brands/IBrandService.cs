@@ -11,7 +11,7 @@ namespace Business.Services.BrandAggregate.Brands
     public interface IBrandService
     {
         Task<IDataResult<IPagedList<Brand>>> GetBrandList(GetBrandList request);
-        Task<IResult> BrandAdd(Brand model);
+        Task<IResult> AddBrand(Brand model);
         Task<IDataResult<Brand>> GetBrand(GetBrand request);
         Task<IResult> DeleteBrand(Brand brand);
         Task<IResult> UpdateBrand(Brand brand);

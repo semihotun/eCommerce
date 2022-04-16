@@ -15,5 +15,9 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes.Specifi
             PageIndex = pageIndex;
             PageSize = pageSize;
         }
+
+        public GetSpecificationAttributes()
+        {
+        }
     }
 }

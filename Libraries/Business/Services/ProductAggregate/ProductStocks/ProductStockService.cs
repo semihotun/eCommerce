@@ -1,5 +1,7 @@
 ﻿using Business.Services.ProductAggregate.ProductStocks.ProductStockServiceModel;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Infrastructure.Filter;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
@@ -35,7 +37,9 @@ namespace Business.Services.ProductAggregate.ProductStocks
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("IProductStockService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("IProductStockService.Get", 
+        "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
         public async Task<IResult> AddProductStock(ProductStock productStock)
         {
             _productStockDal.Add(productStock);
@@ -45,7 +49,9 @@ namespace Business.Services.ProductAggregate.ProductStocks
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("IProductStockService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("IProductStockService.Get", "IShowcaseDAL.GetShowCaseDto", 
+        "IShowcaseDAL.GetAllShowCaseDto")]
         public async Task<IResult> DeleteProductStock(DeleteProductStock request)
         {
             var productStock = await _productStockDal.GetAsync(x => x.Id == request.Id);

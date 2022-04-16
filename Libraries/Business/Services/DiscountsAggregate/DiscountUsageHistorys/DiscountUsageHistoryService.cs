@@ -1,5 +1,7 @@
 ﻿using Business.Services.DiscountsAggregate.DiscountUsageHistorys.DiscountUsageHistoryServiceModel;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -24,7 +26,8 @@ namespace Business.Services.DiscountsAggregate.DiscountUsageHistorys
         #endregion
         #region Method
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("IDiscountUsageHistoryService.Get")]
+        [CacheRemoveAspect("IDiscountUsageHistoryService.Get", "IDiscountUsageHistoryDAL.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> AddDiscountUsageHistory(DiscountUsageHistory discountUsageHistory)
         {
             if (discountUsageHistory == null)
@@ -37,7 +40,8 @@ namespace Business.Services.DiscountsAggregate.DiscountUsageHistorys
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("IDiscountUsageHistoryService.Get")]
+        [CacheRemoveAspect("IDiscountUsageHistoryService.Get,IDiscountUsageHistoryDAL.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> DeleteDiscountUsageHistory(DiscountUsageHistory discountUsageHistory)
         {
             if (discountUsageHistory == null)
@@ -63,7 +67,8 @@ namespace Business.Services.DiscountsAggregate.DiscountUsageHistorys
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("IDiscountUsageHistoryService.Get")]
+        [CacheRemoveAspect("IDiscountUsageHistoryService.Get,IDiscountUsageHistoryDAL.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> UpdateDiscountUsageHistory(DiscountUsageHistory discountUsageHistory)
         {
             if (discountUsageHistory == null)

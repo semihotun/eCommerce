@@ -11,6 +11,10 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings.ProductAtt
             Id = ıd;
         }
 
+        public DeleteProductAttributeMapping()
+        {
+        }
+
         public int Id { get; set; }
     }
 }

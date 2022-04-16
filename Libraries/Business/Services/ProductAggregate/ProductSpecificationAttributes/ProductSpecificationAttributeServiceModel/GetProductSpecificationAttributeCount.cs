@@ -14,5 +14,9 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes.Prod
             ProductId = productId;
             SpecificationAttributeOptionId = specificationAttributeOptionId;
         }
+
+        public GetProductSpecificationAttributeCount()
+        {
+        }
     }
 }

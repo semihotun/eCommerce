@@ -12,5 +12,9 @@ namespace Business.Services.CategoriesAggregate.Categories.CategoryServiceModel
         {
             Id = ıd;
         }
+
+        public RemoveGroup()
+        {
+        }
     }
 }

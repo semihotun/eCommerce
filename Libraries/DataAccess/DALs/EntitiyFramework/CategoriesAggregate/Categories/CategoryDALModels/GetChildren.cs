@@ -13,6 +13,10 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories.Catego
             ParentId = parentId;
         }
 
+        public GetChildren()
+        {
+        }
+
         public IList<Category> HdList { get; set; }
         public int ParentId { get; set; }
        

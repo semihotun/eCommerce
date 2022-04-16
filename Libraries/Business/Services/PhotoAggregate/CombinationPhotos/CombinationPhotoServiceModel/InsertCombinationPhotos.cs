@@ -10,6 +10,10 @@ namespace Business.Services.PhotoAggregate.CombinationPhotos.CombinationPhotoSer
         public string Combinations { get; set; }
         public string NotCombinations { get; set; }
 
+        public InsertCombinationPhotos()
+        {
+        }
+
         public InsertCombinationPhotos(int photoId, string combinations = "", string notCombinations = "")
         {
             PhotoId = photoId;

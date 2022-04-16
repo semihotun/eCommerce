@@ -52,10 +52,18 @@ namespace eCommerce.StartUpSettings
             foreach (var item in plugin)
             {
                 var pluginFolderName = item.ManifestModule.Name.Replace(".dll", "");
-                var option = new StaticFileOptions();
-                var solutionPath = new DirectoryInfo(Directory.GetCurrentDirectory()).Parent;
+                var option = new StaticFileOptions();     
+                try
+                {
+                    var solutionPath = new DirectoryInfo(Directory.GetCurrentDirectory()).Parent;
+                    option.FileProvider = new PhysicalFileProvider(solutionPath + "\\Plugins\\" + pluginFolderName + "\\wwwroot");
+                }
+                catch (System.Exception)
+                {
 
-                option.FileProvider = new PhysicalFileProvider(solutionPath+"\\" + pluginFolderName + "\\wwwroot");
+                    var solutionPath = new DirectoryInfo(Directory.GetCurrentDirectory());
+                    option.FileProvider = new PhysicalFileProvider(solutionPath + "\\Plugins\\" + pluginFolderName + "\\wwwroot");
+                }
                 var pluginName = pluginFolderName.Replace("Plugin.", "");
                 option.RequestPath = "/" + pluginName;
                 staticOptions.Add(option);

@@ -11,6 +11,10 @@ namespace Business.Services.CategoriesAggregate.Categories.CategoryServiceModel
             Id = ıd;
         }
 
+        public RemoveRangeCategory()
+        {
+        }
+
         public int Id { get; set; }
     }
 }

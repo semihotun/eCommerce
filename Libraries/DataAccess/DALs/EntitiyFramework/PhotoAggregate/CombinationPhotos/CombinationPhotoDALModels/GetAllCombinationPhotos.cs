@@ -14,5 +14,9 @@ namespace DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos.Comb
             ProductId = productId;
             PhotoId = photoId;
         }
+
+        public GetAllCombinationPhotosDTO()
+        {
+        }
     }
 }

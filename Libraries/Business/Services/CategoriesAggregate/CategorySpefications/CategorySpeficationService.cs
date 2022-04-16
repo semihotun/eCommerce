@@ -10,6 +10,8 @@ using Business.Services.CategoriesAggregate.CategorySpefications.CategorySpefica
 using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.CategorySpefications;
 using DataAccess.Context;
 using Entities.Concrete.CategoriesAggregate;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Business.Services.CategoriesAggregate.CategorySpefications
 {
@@ -36,7 +38,7 @@ namespace Business.Services.CategoriesAggregate.CategorySpefications
 
             return new SuccessDataResult<CategorySpefication>(data);
         }
-
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("ICategorySpeficationService.Get")]
         public async Task<IResult> DeleteCategorySpefication(CategorySpefication categorySpefication)
@@ -48,7 +50,7 @@ namespace Business.Services.CategoriesAggregate.CategorySpefications
             await _categorySpeficationRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("ICategorySpeficationService.Get")]
         public async Task<IResult> InsertCategorySpefication(CategorySpefication categorySpefication)
@@ -61,7 +63,7 @@ namespace Business.Services.CategoriesAggregate.CategorySpefications
 
             return new SuccessResult();
         }
-
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("ICategorySpeficationService.Get")]
         public async Task<IResult> UpdateCategorySpefication(CategorySpefication categorySpefication)

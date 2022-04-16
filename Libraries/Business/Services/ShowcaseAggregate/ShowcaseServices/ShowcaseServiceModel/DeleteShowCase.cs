@@ -11,6 +11,10 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseServices.ShowcaseServiceMo
             Id = ıd;
         }
 
+        public DeleteShowCase()
+        {
+        }
+
         public int Id { get; set; }
     }
 }

@@ -19,12 +19,12 @@ using Business.Services.ProductAggregate.ProductStockTypes.ProductStockTypeServi
 using Business.Services.SpeficationAggregate.SpecificationAttributes;
 using Business.Services.SpeficationAggregate.SpecificationAttributes.SpecificationAttributeServiceModel;
 using Core.Utilities.Helper;
+using Core.Utilities.Identity;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeCombinations;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeCombinations.ProductAttributeCombinationDALModels;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeFormatter;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels;
-using eCommerce.Models;
 using Entities.Concrete.ProductAggregate;
 using Entities.DTO.Product;
 using Entities.Helpers.AutoMapper;
@@ -41,7 +41,7 @@ using System.Threading.Tasks;
 namespace eCommerce.Areas.Admin.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
-    [Kontrol("")]
+    [AuthorizeControl("")]
     [Route("[area]/[controller]/[action]")]
     [Area("Admin")]
     public class AdminProductController : AdminBaseController

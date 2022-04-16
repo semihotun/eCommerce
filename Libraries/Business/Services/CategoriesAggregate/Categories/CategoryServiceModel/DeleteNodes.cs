@@ -11,6 +11,10 @@ namespace Business.Services.CategoriesAggregate.Categories.CategoryServiceModel
             Values = values;
         }
 
+        public DeleteNodes()
+        {
+        }
+
         public string Values { get; set; }
     }
 }

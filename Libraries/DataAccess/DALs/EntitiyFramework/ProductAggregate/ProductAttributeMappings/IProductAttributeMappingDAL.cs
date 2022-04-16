@@ -12,8 +12,8 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMapp
 
     public interface IProductAttributeMappingDAL : IEntityRepository<ProductAttributeMapping>
     {
-        Task<IDataResult<IList<Entities.DTO.ProductMapping.ProductDetailMappingJson>>> ProductDetailMappingJson
-            (DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingDALModels.ProductDetailMappingJson request);
+        Task<IDataResult<IList<Entities.DTO.ProductMapping.ProductDetailMappingJson>>> GetProductDetailMappingJson
+            (DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingDALModels.GetProductDetailMappingJson request);
 
         Task<IDataResult<MappingProductAttribute>> GetMappingProductAttributeList(GetMappingProductAttributeList request);
     }

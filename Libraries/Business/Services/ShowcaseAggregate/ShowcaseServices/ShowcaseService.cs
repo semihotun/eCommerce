@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Business.Services.ShowcaseAggregate.ShowcaseServices.ShowcaseServiceModel;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -33,7 +35,8 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseServices
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("IShowCaseProductService.Get", "IShowcaseService.Get")]
+        [CacheRemoveAspect("IShowCaseProductService.Get", "IShowcaseService.Get","ShowcaseDAL.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> InsertShowcase(ShowCase showCase)
         {
             if (showCase == null)
@@ -46,7 +49,8 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseServices
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("IShowCaseProductService.Get", "IShowcaseService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("IShowCaseProductService.Get", "IShowcaseService.Get", "ShowcaseDAL.Get")]
         public async Task<IResult> DeleteShowCase(DeleteShowCase showCase)
         {
             if (showCase.Id == 0)
@@ -66,7 +70,8 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseServices
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("IShowCaseProductService.Get", "IShowcaseService.Get")]
+        [CacheRemoveAspect("IShowCaseProductService.Get", "IShowcaseService.Get", "ShowcaseDAL.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> UpdateShowcase(ShowCase showCase)
         {
             if (showCase == null)

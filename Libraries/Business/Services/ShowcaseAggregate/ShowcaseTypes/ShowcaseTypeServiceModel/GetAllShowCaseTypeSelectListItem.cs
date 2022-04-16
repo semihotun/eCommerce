@@ -11,6 +11,10 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseTypes.ShowcaseTypeServiceM
             SelectedId = selectedId;
         }
 
+        public GetAllShowCaseTypeSelectListItem()
+        {
+        }
+
         public int? SelectedId { get; set; }
     }
 }

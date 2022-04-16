@@ -11,6 +11,10 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings.ProductAtt
             ProductId = productId;
         }
 
+        public GetProductAttributeMappingsByProductId()
+        {
+        }
+
         public int ProductId { get; set; }
     }
 }

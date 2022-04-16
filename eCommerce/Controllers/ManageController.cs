@@ -1,23 +1,23 @@
-﻿using Core.Library;
+﻿using Business.Services.UserIdentityAggregate.Manages;
+using Business.Services.UserIdentityAggregate.Manages.ManageServiceModels;
+using Core.Library;
 using Core.Utilities.Email;
-using eCommerce.Extensions;
 using Entities.ViewModels.WebViewModel.IdentityManage;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace eCommerce.Controllers
 {
+    [Authorize]
     [ApiExplorerSettings(IgnoreApi = true)]
     [Route("[controller]/[action]")]
-    public class ManageController : Controller
+    public class ManageController : BaseController
     {
         private readonly UserManager<MyUser> _userManager;
         private readonly SignInManager<MyUser> _signInManager;
@@ -26,121 +26,77 @@ namespace eCommerce.Controllers
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
         private readonly IMailService _mailService;
-
+        private readonly IManageService _manageService;
         public ManageController(
           UserManager<MyUser> userManager,
           SignInManager<MyUser> signInManager,
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder,
-          IMailService mailService)
+          IMailService mailService,
+          IManageService manageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _urlEncoder = urlEncoder;
             _mailService = mailService;
+            _manageService = manageService;
         }
 
-        [TempData]
-        public string StatusMessage { get; set; }
+        #region Utilities
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
+        [NonAction]
+        public async Task<MyUser> GetUser()
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyor '{_userManager.GetUserId(User)}'.");
+                TempData["notification"] = "Kimliğe sahip kullanıcı yüklenemiyor";
             }
-            var model = new IndexViewModel
-            {
-                Username = user.UserName,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                IsEmailConfirmed = user.EmailConfirmed,
-                StatusMessage = StatusMessage
-            };
-            return View(model);
+            return user;
         }
+
+        #endregion
+
+        [HttpGet]
+        public async Task<IActionResult> Index() => View(await GetUser());
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(IndexViewModel model)
+        public async Task<IActionResult> Index(MyUser model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyor '{_userManager.GetUserId(User)}'.");
-            }
-            var email = user.Email;
-            if (model.Email != email)
-            {
-                var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
-                if (!setEmailResult.Succeeded)
-                {
-                    throw new ApplicationException($"Kimliğine sahip kullanıcı için e-posta ayarlanırken beklenmeyen bir hata oluştu '{user.Id}'.");
-                }
-            }
-            var phoneNumber = user.PhoneNumber;
-            if (model.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    throw new ApplicationException($"Kimliği olan kullanıcı için telefon numarası ayarlanırken beklenmeyen bir hata oluştu '{user.Id}'.");
-                }
-            }
-            StatusMessage = "Profiliniz GÜncellendi";
+            var user = await GetUser();
+            ResponseAlert(await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber));
+
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SendVerificationEmail(IndexViewModel model)
+        public async Task<IActionResult> SendVerificationEmail(MyUser model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyor '{_userManager.GetUserId(User)}'.");
-            }
-
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
-
-            _mailService.Send(new EmailMessage()
-            {
-                Content = $@"<a href='{ callbackUrl }'>Doğrulama Linki</a>",
-                ToAddresses = new List<string>() { user.Email }
-            }); 
-            StatusMessage = "Doğrulama e-postası gönderildi. Lütfen emailinizi kontrol edin.";
+            ResponseAlert(await _manageService.SendVerificationEmail(new SendVerificationEmail(User, base.Url, base.Request.Scheme)));
             return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public async Task<IActionResult> ChangePassword()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyor '{_userManager.GetUserId(User)}'.");
-            }
-
+            var user = await GetUser();
             var hasPassword = await _userManager.HasPasswordAsync(user);
             if (!hasPassword)
             {
                 return RedirectToAction(nameof(SetPassword));
             }
-
-            var model = new ChangePasswordViewModel { StatusMessage = StatusMessage };
-            return View(model);
+            return View();
         }
 
         [HttpPost]
@@ -152,44 +108,22 @@ namespace eCommerce.Controllers
                 return View(model);
             }
 
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyor '{_userManager.GetUserId(User)}'.");
-            }
-
-            var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-            if (!changePasswordResult.Succeeded)
-            {
-                AddErrors(changePasswordResult);
-                return View(model);
-            }
-
-            await _signInManager.SignInAsync(user, isPersistent: false);
-            _logger.LogInformation("Şifre değiştirme başarılı");
-            StatusMessage = "Şifren Değiştirildi";
-
+            ResponseAlert(await _manageService.ChangePassword(new ChangePassword(model, base.User)));
             return RedirectToAction(nameof(ChangePassword));
         }
 
         [HttpGet]
         public async Task<IActionResult> SetPassword()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyor '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUser();
 
             var hasPassword = await _userManager.HasPasswordAsync(user);
-
             if (hasPassword)
             {
                 return RedirectToAction(nameof(ChangePassword));
             }
 
-            var model = new SetPasswordViewModel { StatusMessage = StatusMessage };
-            return View(model);
+            return View();
         }
 
         [HttpPost]
@@ -200,41 +134,22 @@ namespace eCommerce.Controllers
             {
                 return View(model);
             }
-
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyor '{_userManager.GetUserId(User)}'.");
-            }
-
-            var addPasswordResult = await _userManager.AddPasswordAsync(user, model.NewPassword);
-            if (!addPasswordResult.Succeeded)
-            {
-                AddErrors(addPasswordResult);
-                return View(model);
-            }
-
-            await _signInManager.SignInAsync(user, isPersistent: false);
-            StatusMessage = "Şifreniz Ayarlanmıştır";
-
+            ResponseAlert(await _manageService.SetPassword(new SetPassword(model, base.User)));
             return RedirectToAction(nameof(SetPassword));
         }
 
         [HttpGet]
         public async Task<IActionResult> ExternalLogins()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyor'{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUser();
 
             var model = new ExternalLoginsViewModel { CurrentLogins = await _userManager.GetLoginsAsync(user) };
+
             model.OtherLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync())
                 .Where(auth => model.CurrentLogins.All(ul => auth.Name != ul.LoginProvider))
                 .ToList();
+
             model.ShowRemoveButton = await _userManager.HasPasswordAsync(user) || model.CurrentLogins.Count > 1;
-            model.StatusMessage = StatusMessage;
 
             return View(model);
         }
@@ -243,7 +158,6 @@ namespace eCommerce.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LinkLogin(string provider)
         {
-
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
             var redirectUrl = Url.Action(nameof(LinkLoginCallback));
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl, _userManager.GetUserId(User));
@@ -253,28 +167,24 @@ namespace eCommerce.Controllers
         [HttpGet]
         public async Task<IActionResult> LinkLoginCallback()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyo '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUser();
 
             var info = await _signInManager.GetExternalLoginInfoAsync(user.Id.ToString());
             if (info == null)
             {
-                throw new ApplicationException($"Kimliğine sahip kullanıcı için harici giriş bilgileri yüklenirken beklenmeyen bir hata oluştu '{user.Id}'.");
+                TempData["notification"]=$"Kimliğine sahip kullanıcı için harici giriş bilgileri yüklenirken beklenmeyen bir hata oluştu '{user.Id}'.";
             }
 
             var result = await _userManager.AddLoginAsync(user, info);
             if (!result.Succeeded)
             {
-                throw new ApplicationException($"Kimliğine sahip kullanıcı için harici giriş eklenirken beklenmeyen bir hata oluştu '{user.Id}'.");
+                TempData["notification"]=$"Kimliğine sahip kullanıcı için harici giriş eklenirken beklenmeyen bir hata oluştu '{user.Id}'.";
             }
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            StatusMessage = "The external login was added.";
+            TempData["notification"] = "Harici giriş eklendi.";
             return RedirectToAction(nameof(ExternalLogins));
         }
 
@@ -282,37 +192,25 @@ namespace eCommerce.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveLogin(RemoveLoginViewModel model)
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyo '{_userManager.GetUserId(User)}'.");
-            }
-
-            var result = await _userManager.RemoveLoginAsync(user, model.LoginProvider, model.ProviderKey);
-            if (!result.Succeeded)
-            {
-                throw new ApplicationException($"Kimliğine sahip kullanıcı için harici oturum açma kaldırılırken beklenmeyen bir hata oluştu '{user.Id}'.");
-            }
+            var user = await GetUser();
+            await _userManager.RemoveLoginAsync(user, model.LoginProvider, model.ProviderKey);
 
             await _signInManager.SignInAsync(user, isPersistent: false);
-            StatusMessage = "Harici oturum açma kaldırıldı.";
+            TempData["notification"] = "Harici oturum açma kaldırıldı.";
             return RedirectToAction(nameof(ExternalLogins));
         }
 
         [HttpGet]
         public async Task<IActionResult> TwoFactorAuthentication()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyo '{_userManager.GetUserId(User)}'.");
-            }
-
+            var user = await GetUser();
+            var qq = (await _userManager.GetAuthenticatorKeyAsync(user));
+            var qq2 = (await _userManager.CountRecoveryCodesAsync(user));
             var model = new TwoFactorAuthenticationViewModel
             {
-                HasAuthenticator = await _userManager.GetAuthenticatorKeyAsync(user) != null,
+                HasAuthenticator = (await _userManager.GetAuthenticatorKeyAsync(user)) != null,
                 Is2faEnabled = user.TwoFactorEnabled,
-                RecoveryCodesLeft = await _userManager.CountRecoveryCodesAsync(user),
+                RecoveryCodesLeft = (await _userManager.CountRecoveryCodesAsync(user)),
             };
 
             return View(model);
@@ -321,15 +219,11 @@ namespace eCommerce.Controllers
         [HttpGet]
         public async Task<IActionResult> Disable2faWarning()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyo '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUser();
 
             if (!user.TwoFactorEnabled)
             {
-                throw new ApplicationException($"Kimliğine sahip kullanıcı için 2FA devre dışı bırakılırken beklenmeyen bir hata oluştu '{user.Id}'.");
+                TempData["notification"] = $"Kimliğine sahip kullanıcı için 2FA devre dışı bırakılırken beklenmeyen bir hata oluştu '{user.Id}'.";
             }
 
             return View(nameof(Disable2fa));
@@ -339,18 +233,13 @@ namespace eCommerce.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Disable2fa()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyo '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUser();
 
             var disable2faResult = await _userManager.SetTwoFactorEnabledAsync(user, false);
             if (!disable2faResult.Succeeded)
             {
-                throw new ApplicationException($"Kimliğine sahip kullanıcı için 2FA devre dışı bırakılırken beklenmeyen bir hata oluştu '{user.Id}'.");
+                TempData["notification"] = "$Kimliğine sahip kullanıcı için 2FA devre dışı bırakılırken beklenmeyen bir hata oluştu '{user.Id}'.";
             }
-
             _logger.LogInformation("{UserId} 2FA Devre Dışı bırakıldı ", user.Id);
             return RedirectToAction(nameof(TwoFactorAuthentication));
         }
@@ -358,14 +247,10 @@ namespace eCommerce.Controllers
         [HttpGet]
         public async Task<IActionResult> EnableAuthenticator()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyo '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUser();
 
             var model = new EnableAuthenticatorViewModel();
-            await LoadSharedKeyAndQrCodeUriAsync(user, model);
+            await _manageService.LoadSharedKeyAndQrCodeUriAsync(new LoadSharedKeyAndQrCodeUriAsync(user, model));
 
             return View(model);
         }
@@ -374,35 +259,20 @@ namespace eCommerce.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EnableAuthenticator(EnableAuthenticatorViewModel model)
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyo '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUser();
 
             if (!ModelState.IsValid)
             {
-                await LoadSharedKeyAndQrCodeUriAsync(user, model);
+                await _manageService.LoadSharedKeyAndQrCodeUriAsync(new LoadSharedKeyAndQrCodeUriAsync(user, model));
                 return View(model);
             }
-
-            // Strip spaces and hypens
-            var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
-
-            var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
-                user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
-
-            if (!is2faTokenValid)
+            ResponseDataAlert(await _manageService.EnableAuthenticator(new EnableAuthenticator(model, user)), out var result);
+            if(!result.Success)
             {
-                ModelState.AddModelError("Code", "Doğrulama kodu geçersiz.");
-                await LoadSharedKeyAndQrCodeUriAsync(user, model);
+                await _manageService.LoadSharedKeyAndQrCodeUriAsync(new LoadSharedKeyAndQrCodeUriAsync(user, model));
                 return View(model);
             }
-
-            await _userManager.SetTwoFactorEnabledAsync(user, true);
-            _logger.LogInformation("{UserId} 2FA Etkinleştirildi.", user.Id);
-            var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-            TempData[RecoveryCodesKey] = recoveryCodes.ToArray();
+            TempData[RecoveryCodesKey] = result.Data;
 
             return RedirectToAction(nameof(ShowRecoveryCodes));
         }
@@ -430,31 +300,19 @@ namespace eCommerce.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetAuthenticator()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyo '{_userManager.GetUserId(User)}'.");
-            }
-
-            await _userManager.SetTwoFactorEnabledAsync(user, false);
-            await _userManager.ResetAuthenticatorKeyAsync(user);
-            _logger.LogInformation("'{UserId}' kimlik doğrulama uygulama anahtarını sıfırladı.", user.Id);
-
+            var user = await GetUser();
+            var result = _manageService.ResetAuthenticator(new ResetAuthenticator(user));
             return RedirectToAction(nameof(EnableAuthenticator));
         }
 
         [HttpGet]
         public async Task<IActionResult> GenerateRecoveryCodesWarning()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyo '{_userManager.GetUserId(User)}'.");
-            }
+            var user = await GetUser();
 
             if (!user.TwoFactorEnabled)
             {
-                throw new ApplicationException($"'{user.Id}' Doğrulama kodu oluşturulamaz çünkü 2FA kapalı");
+                TempData["notification"] = $"Kimliğe sahip kullanıcı yüklenemiyo '{_userManager.GetUserId(User)}'.";
             }
 
             return View(nameof(GenerateRecoveryCodes));
@@ -464,74 +322,13 @@ namespace eCommerce.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GenerateRecoveryCodes()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyo '{_userManager.GetUserId(User)}'.");
-            }
+            ResponseDataAlert(await _manageService.GenerateRecoveryCodes(new GenerateRecoveryCodes(User)), out var result);
 
-            if (!user.TwoFactorEnabled)
-            {
-                throw new ApplicationException($"'{user.Id}' Doğrulama kodu oluşturulamaz çünkü 2FA kapalı");
-            }
-
-            var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-            _logger.LogInformation("{UserId} hesap için Kurtarma kodu oluşturuldu.", user.Id);
-
-            var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes.ToArray() };
-
-            return View(nameof(ShowRecoveryCodes), model);
+            if (result.Success)
+                return View(nameof(ShowRecoveryCodes), result);
+            else
+                return View(nameof(GenerateRecoveryCodesWarning));
         }
 
-        #region Helpers
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-        }
-
-        private string FormatKey(string unformattedKey)
-        {
-            var result = new StringBuilder();
-            int currentPosition = 0;
-            while (currentPosition + 4 < unformattedKey.Length)
-            {
-                result.Append(unformattedKey.Substring(currentPosition, 4)).Append(" ");
-                currentPosition += 4;
-            }
-            if (currentPosition < unformattedKey.Length)
-            {
-                result.Append(unformattedKey.Substring(currentPosition));
-            }
-
-            return result.ToString().ToLowerInvariant();
-        }
-
-        private string GenerateQrCodeUri(string email, string unformattedKey)
-        {
-            return string.Format(
-                AuthenticatorUriFormat,
-                _urlEncoder.Encode("AspNetCoreMvcIdentity"),
-                _urlEncoder.Encode(email),
-                unformattedKey);
-        }
-
-        private async Task LoadSharedKeyAndQrCodeUriAsync(MyUser user, EnableAuthenticatorViewModel model)
-        {
-            var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
-            if (string.IsNullOrEmpty(unformattedKey))
-            {
-                await _userManager.ResetAuthenticatorKeyAsync(user);
-                unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
-            }
-
-            model.SharedKey = FormatKey(unformattedKey);
-            model.AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey);
-        }
-
-        #endregion
     }
 }

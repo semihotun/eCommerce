@@ -13,6 +13,10 @@ namespace Business.Services.ProductAggregate.Products.ProductServiceModel
             PageSize = pageSize;
         }
 
+        public GetProductsBySpecificationAttributeId()
+        {
+        }
+
         public int SpecificationAttributeId { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }

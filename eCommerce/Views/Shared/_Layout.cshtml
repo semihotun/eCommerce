@@ -43,17 +43,13 @@
 </head>
 
 <body ng-app="myApp">
-
-
-    @if (TempData["notification"] != null)
+    @if (@TempData["notification"] != null)
     {
-
         <script>
-            if(TempData["notification"] != null);
-              String.Raw(TempData["notification"]);
-          
+    @Html.Raw(@TempData["notification"]);
         </script>
     }
+
     <!-- HEADER -->
     <header>
         <!-- top Header -->
@@ -357,34 +353,38 @@
 
 
 
-
 <script type="text/javascript">
+
+
     $(document).ready(function () {
-        var searchboxID = "#txtSearch";
+                var searchboxID = "#txtSearch";
         $('#srcButton').click(function () {
             $(searchboxID).keyup();
-        });
+                });
 
         $(searchboxID).keyup(function (event) {
             if (event.keyCode != 13 && event.keyCode != 37 && event.keyCode != 39) {
-                if ($.trim($(searchboxID).val()).length >= 2) {
-                    delay(function () {
+            if ($.trim($(searchboxID).val()).length >= 2) {
+                delay(function () {
                         $.ajax({
-                            url : '/Home/Search?searchKey=' + $(searchboxID).val(),
+                    url : '/Home/Search?searchKey=' + $(searchboxID).val(),
                             type: "POST",
                             success: function (result) {
                                 $("#searchDiv").hide();
                                 $("#searchDiv").html(result);
                                 $("#searchDiv").show();
                                 $("#searchDiv").css('z-index', '1');
-                            }
-                        });
-                    }, 1000);
-                } else {
+                        }
+                    });
+                }, 1000);
+            } else {
                     $("#searchDiv").hide();
-                }
             }
+        }
         });
+
+
+
     });
 
 
@@ -417,6 +417,7 @@
     $(window).load(function () {
         $('.loadingbody').delay(350).fadeOut('slow', function () { $(this).remove(); });
     });
+
 
 
 </script>

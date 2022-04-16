@@ -17,5 +17,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecification
             ProductId = productId;
             Param = param;
         }
+
+        public ProductSpecAttrList()
+        {
+        }
     }
 }

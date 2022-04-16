@@ -14,5 +14,9 @@ namespace Business.Services.CategoriesAggregate.CategorySpefications.CategorySpe
             SpeficationId = speficationId;
             CategoryId = categoryId;
         }
+
+        public GetByCategorySpeficationId()
+        {
+        }
     }
 }

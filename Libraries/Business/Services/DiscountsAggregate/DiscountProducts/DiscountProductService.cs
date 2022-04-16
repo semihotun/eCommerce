@@ -1,5 +1,7 @@
 ﻿using Business.Services.DiscountsAggregate.DiscountProducts.DiscountProductServiceModel;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -27,6 +29,7 @@ namespace Business.Services.DiscountsAggregate.DiscountProducts
         #region Method
         [CacheRemoveAspect("IDiscountProductService.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> DeleteDiscountProduct(DiscountProduct discountProduct)
         {
             if (discountProduct == null)
@@ -40,6 +43,7 @@ namespace Business.Services.DiscountsAggregate.DiscountProducts
 
         [CacheRemoveAspect("IDiscountProductService.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> AddDiscountProduct(DiscountProduct discountProduct)
         {
             if (discountProduct == null)

@@ -1,5 +1,7 @@
 ﻿using Business.Services.DiscountsAggregate.DiscountCategorys.DiscountCategoryServiceModel;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Nuget.X.PagedList;
 using Core.Utilities.Results;
@@ -26,6 +28,7 @@ namespace Business.Services.DiscountsAggregate.DiscountCategorys
         #region Method
         [CacheRemoveAspect("IDiscountCategoryService.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> DeleteDiscountCategory(DiscountCategory discountCategory)
         {
             if (discountCategory == null)
@@ -51,6 +54,7 @@ namespace Business.Services.DiscountsAggregate.DiscountCategorys
 
         [CacheRemoveAspect("IDiscountCategoryService.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> AddDiscountCategory(DiscountCategory discountCategory)
         {
             if (discountCategory == null)

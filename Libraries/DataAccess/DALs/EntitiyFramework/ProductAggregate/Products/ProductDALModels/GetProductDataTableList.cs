@@ -14,6 +14,10 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALM
             this.DataTablesParam = dataTablesParam;
         }
 
+        public GetProductDataTableList()
+        {
+        }
+
         public ProductDataTableFilter ProductDataTableDTO { get; set; }
         public DataTablesParam DataTablesParam { get; set; }
 

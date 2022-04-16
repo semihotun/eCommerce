@@ -12,5 +12,9 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes.Prod
         {
             this.productSpecificationAttributeId = productSpecificationAttributeId;
         }
+
+        public GetProductSpecificationAttributeById()
+        {
+        }
     }
 }

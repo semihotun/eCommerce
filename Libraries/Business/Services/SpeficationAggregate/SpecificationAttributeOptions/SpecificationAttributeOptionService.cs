@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Business.Services.SpeficationAggregate.SpecificationAttributeOptions.SpecificationAttributeOptionServiceModel;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -81,7 +83,9 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("ISpecificationAttributeOptionService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("ISpecificationAttributeOptionService.Get",
+        "ICategoryDAL.GetCategorySpeficationOptionDTO", "ICategoryDAL.GetCategorySpefication")]
         public async Task<IResult> DeleteSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption)
         {
             if (specificationAttributeOption == null)
@@ -93,7 +97,9 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("ISpecificationAttributeOptionService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("ISpecificationAttributeOptionService.Get",
+        "ICategoryDAL.GetCategorySpeficationOptionDTO", "ICategoryDAL.GetCategorySpefication")]
         public async Task<IResult> InsertSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption)
         {
             if (specificationAttributeOption == null)
@@ -105,7 +111,9 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("ISpecificationAttributeOptionService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("ISpecificationAttributeOptionService.Get",
+        "ICategoryDAL.GetCategorySpeficationOptionDTO", "ICategoryDAL.GetCategorySpefication")]
         public async Task<IResult> UpdateSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption)
         {
             if (specificationAttributeOption == null)

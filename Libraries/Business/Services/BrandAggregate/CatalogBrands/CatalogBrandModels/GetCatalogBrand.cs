@@ -12,5 +12,9 @@ namespace Business.Services.BrandAggregate.CatalogBrands.CatalogBrandModels
         {
             CategoryId = categoryId;
         }
+
+        public GetCatalogBrand()
+        {
+        }
     }
 }

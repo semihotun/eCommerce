@@ -14,5 +14,9 @@ namespace Business.Services.ProductAggregate.ProductStocks.ProductStockServiceMo
             this.ProductStockFilter = productStockFilter;
             this.Param = param;
         }
+
+        public GetAllProductStock()
+        {
+        }
     }
 }

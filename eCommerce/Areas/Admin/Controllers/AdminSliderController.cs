@@ -2,7 +2,7 @@
 using Business.Services.SliderAggregate.Sliders;
 using Business.Services.SliderAggregate.Sliders.SliderServiceModel;
 using Core.Utilities.Helper;
-using eCommerce.Models;
+using Core.Utilities.Identity;
 using Entities.Concrete.SliderAggregate;
 using Entities.Helpers.AutoMapper;
 using Entities.ViewModels.AdminViewModel.AdminSlider;
@@ -16,7 +16,7 @@ namespace eCommerce.Areas.Admin.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
     [Route("[area]/[controller]/[action]")]
-    [Kontrol("")]
+    [AuthorizeControl("")]
     [Area("Admin")]
     public class AdminSliderController : AdminBaseController
     {

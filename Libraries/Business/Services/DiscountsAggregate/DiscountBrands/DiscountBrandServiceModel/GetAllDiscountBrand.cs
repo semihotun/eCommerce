@@ -16,5 +16,9 @@ namespace Business.Services.DiscountsAggregate.DiscountBrands.DiscountBrandServi
             Pageindex = pageindex;
             PageSize = pageSize;
         }
+
+        public GetAllDiscountBrand()
+        {
+        }
     }
 }

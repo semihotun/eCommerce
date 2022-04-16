@@ -17,6 +17,10 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions.S
             SpecificationAttributeId = 0;
         }
 
+        public GetSpecificationAttributeOptionsBySpecificationAttribute()
+        {
+        }
+
         public int SpecificationAttributeId { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }

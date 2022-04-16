@@ -1,7 +1,9 @@
 ﻿using Business.Services.ProductAggregate.ProductSpecificationAttributes.ProductSpecificationAttributeServiceModel;
 using Business.Services.ProductAggregate.ProductSpecificationAttributes.Validator;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -28,6 +30,7 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes
         #endregion
 
         #region Method
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductShipmentInfoService.Get")]
         public async Task<IResult> DeleteProductSpecificationAttribute(DeleteProductSpecificationAttribute request)
@@ -77,6 +80,7 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes
         [ValidationAspect(typeof(CreateProductSpecificationAttributeValidator))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductShipmentInfoService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> InsertProductSpecificationAttribute(ProductSpecificationAttribute productSpecificationAttribute)
         {
             if (productSpecificationAttribute == null)
@@ -89,6 +93,7 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes
 
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductShipmentInfoService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> UpdateProductSpecificationAttribute(ProductSpecificationAttribute productSpecificationAttribute)
         {
             if (productSpecificationAttribute == null)

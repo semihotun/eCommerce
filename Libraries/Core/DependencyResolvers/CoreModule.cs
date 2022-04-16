@@ -1,21 +1,21 @@
-﻿using System;
+﻿using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Caching.Microsoft;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Library.Business.AdminAggregate.AdminAuths;
+using Core.Library.Business.AdminAggregate.AdminServices;
+using Core.Library.DAL.EntityFramework.AdminAuths;
+using Core.Utilities.Email;
+using Core.Utilities.Filter;
+using Core.Utilities.IoC;
+using Core.Utilities.Security.Jwt;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Caching.Microsoft;
-using Core.Library.Business.Abstract;
-using Core.Library.Business.Concrete;
-using Core.Library.DAL.EntityFramework.Abstract;
-using Core.Library.DAL.EntityFramework.Concrete;
-using Core.Utilities.IoC;
-using Core.Utilities.Security.Jwt;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Core.DependencyResolvers
 {
@@ -25,14 +25,16 @@ namespace Core.DependencyResolvers
         {
             serviceCollection.AddMemoryCache();
             serviceCollection.AddSingleton<Stopwatch>();
-            serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             serviceCollection.AddSingleton<ICacheManager, MemoryCacheManager>();
             serviceCollection.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             serviceCollection.AddTransient<IAdminUserDAL, AdminUserDAL> ();
             serviceCollection.AddTransient<IAdminAuthService, AdminAuthService>();
             serviceCollection.AddTransient<IAdminService, AdminService>();
             serviceCollection.AddTransient<ITokenHelper, JwtHelper>();
-
+            serviceCollection.AddTransient<ValidationFilter>();
+            serviceCollection.AddTransient<IMailService, MailManager>();
+            serviceCollection.AddTransient<FileLogger>();
+            serviceCollection.AddTransient<MsSqlLogger>();
 
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
             var assembliesFilter = assemblies.Where(
@@ -53,8 +55,8 @@ namespace Core.DependencyResolvers
             foreach (var item in assemblyClass)
             {
                 var classInterface = assemblyInterFace.Where(x => x.Name == "I" + item.Name).FirstOrDefault();
-
-                serviceCollection.TryAdd(ServiceDescriptor.Transient(classInterface, item));
+                if(classInterface != null)
+                     serviceCollection.TryAdd(ServiceDescriptor.Transient(classInterface, item));
             }
 
         }

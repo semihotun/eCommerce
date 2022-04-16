@@ -11,6 +11,10 @@ namespace Business.Services.ProductAggregate.ProductShipmentInfos.ProductShipmen
             ProductId = productId;
         }
 
+        public GetProductShipmentInfo()
+        {
+        }
+
         public int ProductId { get; set; }
     }
 }

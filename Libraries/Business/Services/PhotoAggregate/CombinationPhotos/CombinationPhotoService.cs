@@ -1,6 +1,8 @@
 ﻿using Business.Services.PhotoAggregate.CombinationPhotos.CombinationPhotoServiceModel;
 using Business.Services.PhotoAggregate.ProductPhotos;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -39,6 +41,7 @@ namespace Business.Services.PhotoAggregate.CombinationPhotos
             return new SuccessDataResult<List<CombinationPhoto>>(data);
         }
 
+        [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("ICombinationPhotoService.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
         public async Task<IResult> InsertCombinationPhotos(InsertCombinationPhotos request)

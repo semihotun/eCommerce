@@ -11,6 +11,10 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes.Specifi
             SpecificationAttributeId = specificationAttributeId;
         }
 
+        public GetSpecificationAttributeById()
+        {
+        }
+
         public int SpecificationAttributeId { get; set; }
     }
 }

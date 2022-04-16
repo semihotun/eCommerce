@@ -19,5 +19,8 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Produc
             Orderbytext = orderbytext;
         }
 
+        public GetAllProductAttributeCombinations()
+        {
+        }
     }
 }

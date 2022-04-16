@@ -11,6 +11,10 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Produc
             Id = ıd;
         }
 
+        public DeleteProductAttributeCombination()
+        {
+        }
+
         public int Id { get; set; }
     }
 }

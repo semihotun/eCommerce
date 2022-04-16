@@ -1,5 +1,7 @@
 ﻿using Business.Services.ProductAggregate.PredefinedProductAttributeValues.PredefinedProductAttributeValueServiceModel;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -27,6 +29,7 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues
         #endregion
 
         #region Method
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IPredefinedProductAttributeValueService.Get")]
         public virtual async Task<IResult> DeletePredefinedProductAttributeValue(PredefinedProductAttributeValue ppav)
@@ -63,6 +66,7 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
+        [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IPredefinedProductAttributeValueService.Get")]
         public virtual async Task<IResult> InsertPredefinedProductAttributeValue(PredefinedProductAttributeValue ppav)
         {
@@ -76,6 +80,7 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
+        [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IPredefinedProductAttributeValueService.Get")]
         public virtual async Task<IResult> UpdatePredefinedProductAttributeValue(PredefinedProductAttributeValue ppav)
         {

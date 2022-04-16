@@ -11,6 +11,10 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories.Catego
             CategoryId = categoryId;
         }
 
+        public GetCategorySpefication()
+        {
+        }
+
         public int CategoryId { get; set; }
     }
 }

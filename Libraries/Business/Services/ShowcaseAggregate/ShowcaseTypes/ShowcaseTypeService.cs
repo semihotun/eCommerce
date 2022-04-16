@@ -9,6 +9,7 @@ using System.Linq;
 using Business.Services.ShowcaseAggregate.ShowcaseTypes.ShowcaseTypeServiceModel;
 using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseTypes;
 using Entities.Concrete.ShowcaseAggregate;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Services.ShowcaseAggregate.ShowcaseTypes
 {
@@ -26,6 +27,8 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseTypes
         #endregion
 
         #region  Method
+
+        [CacheAspect]
         public async Task<IDataResult<IList<ShowCaseType>>> GetAllShowCaseType()
         {
             var query = _showcaseTypeDal.Query();
@@ -33,7 +36,7 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseTypes
 
             return new SuccessDataResult<IList<ShowCaseType>>(data);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IEnumerable<SelectListItem>>> GetAllShowCaseTypeSelectListItem(GetAllShowCaseTypeSelectListItem request)
         {
             var query = from s in _showcaseTypeDal.Query()
@@ -46,8 +49,6 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseTypes
             var data = await query.ToListAsync();
             return new SuccessDataResult<IEnumerable<SelectListItem>>(data);
         }
-
-
 
         #endregion
 

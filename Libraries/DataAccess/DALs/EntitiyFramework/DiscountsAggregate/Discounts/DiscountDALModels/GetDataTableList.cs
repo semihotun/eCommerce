@@ -13,5 +13,9 @@ namespace DataAccess.DALs.EntitiyFramework.DiscountsAggregate.Discounts.Discount
             DiscountDataTableFilter = discountDataTableFilter;
             DataTablesParam = dataTablesParam;
         }
+
+        public GetDataTableList()
+        {
+        }
     }
 }

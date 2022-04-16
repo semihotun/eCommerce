@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Infrastructure.Filter;
+﻿using Core.Aspects.Autofac.Caching;
+using Core.Utilities.Infrastructure.Filter;
 using Core.Utilities.Results;
 using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments.CommentDALModels;
@@ -15,6 +16,7 @@ namespace DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments
         public CommentDAL(eCommerceContext context) : base(context)
         {
         }
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<Comment>>> GetCommentDataTable(GetCommentDataTable request)
         {
             var query = from c in Context.Comment.ApplyFilter(request.Comment)

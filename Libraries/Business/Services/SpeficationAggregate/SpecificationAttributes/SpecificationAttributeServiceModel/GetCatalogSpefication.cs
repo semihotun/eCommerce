@@ -11,6 +11,10 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes.Specifi
             CategoryId = categoryId;
         }
 
+        public GetCatalogSpefication()
+        {
+        }
+
         public int CategoryId { get; set; }
     }
 }

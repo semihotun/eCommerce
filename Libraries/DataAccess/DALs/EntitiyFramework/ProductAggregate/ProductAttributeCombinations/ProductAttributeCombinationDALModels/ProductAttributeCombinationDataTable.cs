@@ -15,5 +15,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeComb
             ProductId = productId;
             Param = param;
         }
+
+        public ProductAttributeCombinationDataTable()
+        {
+        }
     }
 }

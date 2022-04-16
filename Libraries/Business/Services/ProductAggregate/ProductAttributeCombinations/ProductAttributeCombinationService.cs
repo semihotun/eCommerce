@@ -2,6 +2,8 @@
 using Business.Services.ProductAggregate.ProductAttributeValues;
 using Business.Services.ProductAggregate.ProductAttributeValues.ProductAttributeValueServiceModel;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -48,7 +50,9 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
         //            </ProductAttribute >
         //</ Attributes >
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("IProductAttributeCombinationService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("IProductAttributeCombinationService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
+        "IShowcaseDAL.GetAllShowCaseDto")]
         public async Task<IResult> InsertPermutationCombination(InsertPermutationCombination request)
         {
             if (request.ProductId == 0)
@@ -80,7 +84,9 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("IProductAttributeCombinationService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("IProductAttributeCombinationService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
+         "IShowcaseDAL.GetAllShowCaseDto")]
         public async Task<IResult> DeleteProductAttributeCombination(DeleteProductAttributeCombination request)
         {
             if (request.Id == 0)
@@ -146,7 +152,9 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("IProductAttributeCombinationService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("IProductAttributeCombinationService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
+        "IShowcaseDAL.GetAllShowCaseDto")] 
         public async Task<IResult> InsertProductAttributeCombination(ProductAttributeCombination combination)
         {
             if (combination == null)
@@ -158,7 +166,9 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("IProductAttributeCombinationService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("IProductAttributeCombinationService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
+        "IShowcaseDAL.GetAllShowCaseDto")]
         public async Task<IResult> UpdateProductAttributeCombination(ProductAttributeCombination combination)
         {
             if (combination == null)

@@ -2,7 +2,9 @@
 using Business.Services.ProductAggregate.ProductAttributeValues.ProductAttributeValueServiceModel;
 using Business.Services.ProductAggregate.ProductAttributeValues.Validator;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -34,6 +36,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues
 
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductAttributeValueService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
         public virtual async Task<IResult> DeleteProductAttributeValue(DeleteProductAttributeValue request)
         {
             if (request.Id == 0)
@@ -68,6 +71,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues
         [ValidationAspect(typeof(CreateProductAttributeValueValidator))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductAttributeValueService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> InsertProductAttributeValue(ProductAttributeValue productAttributeValue)
         {
             if (productAttributeValue == null)
@@ -79,6 +83,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
+        [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductAttributeValueService.Get")]
         public async Task<IResult> InsertOrUpdateProductAttributeValue(ProductAttributeValue productAttributeValue)
         {
@@ -97,6 +102,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
+        [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductAttributeValueService.Get")]
         public async Task<IResult> UpdateProductAttributeValue(ProductAttributeValue productAttributeValue)
         {

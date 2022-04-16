@@ -16,5 +16,9 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings.ProductAtt
             ProductId = productId;
             Param = param;
         }
+
+        public GetAllProductAttributeMapping()
+        {
+        }
     }
 }

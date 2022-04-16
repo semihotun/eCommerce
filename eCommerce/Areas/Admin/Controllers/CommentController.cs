@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Business.Services.CommentsAggregate.Comments;
 using Business.Services.CommentsAggregate.Comments.CommentServiceModel;
+using Core.Utilities.Identity;
 using DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments;
 using DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments.CommentDALModels;
 using eCommerce.Helpers;
-using eCommerce.Models;
 using Entities.Concrete.CommentsAggregate;
 using Entities.DTO.Comment;
 using Entities.Others;
@@ -15,7 +15,7 @@ namespace eCommerce.Areas.Admin.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
     [Route("[area]/[controller]/[action]")]
-    [Kontrol("")]
+    [AuthorizeControl("")]
     [Area("Admin")]
     public class CommentController : AdminBaseController
     {

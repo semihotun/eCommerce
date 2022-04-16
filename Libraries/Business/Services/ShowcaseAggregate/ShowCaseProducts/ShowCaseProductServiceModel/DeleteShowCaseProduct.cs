@@ -11,6 +11,10 @@ namespace Business.Services.ShowcaseAggregate.ShowCaseProducts.ShowCaseProductSe
             Id = ıd;
         }
 
+        public DeleteShowCaseProduct()
+        {
+        }
+
         public int Id { get; set; }
     }
 }

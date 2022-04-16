@@ -31,6 +31,8 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes.Prod
             PageSize = pageSize;
         }
 
-
+        public GetProductSpecificationAttributes()
+        {
+        }
     }
 }

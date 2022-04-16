@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Infrastructure.Filter;
+﻿using Core.Aspects.Autofac.Caching;
+using Core.Utilities.Infrastructure.Filter;
 using Core.Utilities.Results;
 using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.BrandAggregate.Brands.BrandDALModels;
@@ -17,6 +18,7 @@ namespace DataAccess.DALs.EntitiyFramework.BrandAggregate.Brands
         public BrandDAL(eCommerceContext context) : base(context)
         {
         }
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<Brand>>> GetBrandDataTable(GetBrandDataTable request)
         {
             var query = from b in Context.Brand.ApplyDataTableFilter(request.DataTableParam).ApplyFilter(request.Brand)

@@ -11,6 +11,10 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories.Catego
 
         public int? ParentId { get; set; }
 
+        public CategoriesForTreeList()
+        {
+        }
+
         public CategoriesForTreeList(IList<Category> source, int? parentId = null)
         {
             Source = source;

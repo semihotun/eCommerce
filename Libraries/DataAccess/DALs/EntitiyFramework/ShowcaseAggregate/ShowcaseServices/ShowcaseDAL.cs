@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Results;
+﻿using Core.Aspects.Autofac.Caching;
+using Core.Utilities.Results;
 using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices.ShowcaseDALModels;
 using eCommerce.Core.DataAccess.EntitiyFramework;
@@ -17,9 +18,7 @@ namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices
         public ShowcaseDAL(eCommerceContext context) : base(context)
         {
         }
-
-
-
+        [CacheAspect]
         public async Task<IDataResult<ShowCaseDTO>> GetShowCaseDto(GetShowCaseDto request)
         {
             var query = from s in Context.ShowCase
@@ -67,7 +66,7 @@ namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices
             return new SuccessDataResult<ShowCaseDTO>(result);
         }
 
-
+        [CacheAspect]
         public async Task<IDataResult<IList<ShowCaseDTO>>> GetAllShowCaseDto()
         {
             var query = from s in Context.ShowCase

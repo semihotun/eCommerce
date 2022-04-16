@@ -47,7 +47,7 @@ namespace eCommerce.Controllers
             if (Rating != null)
                 model.Rating = int.Parse(Rating);
 
-            _commentservice.CommentAdd(model);
+            _commentservice.AddComment(model);
             return RedirectToAction("ProductDetail", "Home", new { productId = model.Productid, combinationId = entitiy.CombinationId });
         }
     }

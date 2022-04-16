@@ -12,5 +12,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMapp
         {
             MappingId = mappingId;
         }
+
+        public GetMappingProductAttributeList()
+        {
+        }
     }
 }

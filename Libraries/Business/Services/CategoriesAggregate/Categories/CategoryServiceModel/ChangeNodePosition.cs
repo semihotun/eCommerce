@@ -12,6 +12,10 @@ namespace Business.Services.CategoriesAggregate.Categories.CategoryServiceModel
             ParentId = parentId;
         }
 
+        public ChangeNodePosition()
+        {
+        }
+
         public int Id { get; set; }
         public int? ParentId { get; set; }
     }

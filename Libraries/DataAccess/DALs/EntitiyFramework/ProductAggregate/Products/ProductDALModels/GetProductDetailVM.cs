@@ -14,5 +14,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALM
             ProductId = productId;
             CombinationId = combinationId;
         }
+
+        public GetProductDetailVM()
+        {
+        }
     }
 }

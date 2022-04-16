@@ -11,6 +11,10 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Produc
             Sku = sku;
         }
 
+        public GetProductAttributeCombinationBySku()
+        {
+        }
+
         public string Sku { get; set; }
     }
 }

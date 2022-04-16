@@ -1,11 +1,12 @@
 ﻿using Business.Services.CommentsAggregate.Comments.CommentServiceModel;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments;
 using Entities.Concrete.CommentsAggregate;
-using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
 
@@ -19,10 +20,10 @@ namespace Business.Services.CommentsAggregate.Comments
         {
             _commentService = commentService;
         }
-
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("ICommentService.Get")]
-        public async Task<IResult> CommentAdd(Comment model)
+        [CacheRemoveAspect("ICommentService.Get", "ICommentDAL.Get")]
+        public async Task<IResult> AddComment(Comment model)
         {
             if (model == null)
                 return new ErrorResult();
@@ -52,8 +53,8 @@ namespace Business.Services.CommentsAggregate.Comments
 
             return new SuccessDataResult<Comment>(data);
         }
-
-        [CacheRemoveAspect("ICommentService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("ICommentService.Get", "ICommentDAL.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
         public async Task<IResult> DeleteComment(Comment comment)
         {
@@ -65,8 +66,8 @@ namespace Business.Services.CommentsAggregate.Comments
 
             return new SuccessResult();
         }
-
-        [CacheRemoveAspect("ICommentService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("ICommentService.Get", "ICommentDAL.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
         public async Task<IResult> UpdateComment(Comment comment)
         {

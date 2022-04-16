@@ -11,6 +11,10 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes.Prod
             Id = ıd;
         }
 
+        public DeleteProductSpecificationAttribute()
+        {
+        }
+
         public int Id { get; set; }
     }
 }

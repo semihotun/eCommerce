@@ -11,7 +11,7 @@ namespace Business.Services.ProductAggregate.Products
         Task<IResult> UpdateProduct(Product product);
         Task<IResult> DeleteProduct(DeleteProduct request);
         Task<IDataResult<Product>> GetProduct(GetProduct request);
-        Task<IDataResult<IPagedList<Product>>> MainSearchProduct(MainSearchProduct request);
+        Task<IDataResult<IPagedList<Product>>> GetMainSearchProduct(MainSearchProduct request);
         Task<IDataResult<IPagedList<Product>>> GetProductsBySpecificationAttributeId(GetProductsBySpecificationAttributeId request);
 
     }

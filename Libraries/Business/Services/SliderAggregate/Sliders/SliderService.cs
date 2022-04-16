@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Business.Services.SliderAggregate.Sliders.SliderServiceModel;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -24,6 +26,7 @@ namespace Business.Services.SliderAggregate.Sliders
 
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("ISliderService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> DeleteSlider(DeleteSlider request)
         {
             if (request.Id == 0)
@@ -52,6 +55,7 @@ namespace Business.Services.SliderAggregate.Sliders
 
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("ISliderService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> InsertSlider(Slider slider)
         {
             if (slider == null)
@@ -64,6 +68,7 @@ namespace Business.Services.SliderAggregate.Sliders
 
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("ISliderService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> UpdateSlider(Slider slider)
         {
             if (slider == null)

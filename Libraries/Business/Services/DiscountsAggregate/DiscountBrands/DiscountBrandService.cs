@@ -1,5 +1,7 @@
 ﻿using Business.Services.DiscountsAggregate.DiscountBrands.DiscountBrandServiceModel;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -26,6 +28,7 @@ namespace Business.Services.DiscountsAggregate.DiscountBrands
 
         [CacheRemoveAspect("IDiscountBrandService.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> DeleteDiscountBrand(DiscountBrand discountBrand)
         {
 
@@ -46,7 +49,7 @@ namespace Business.Services.DiscountsAggregate.DiscountBrands
 
             return new SuccessDataResult<IPagedList<DiscountBrand>>(data);
         }
-
+        [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IDiscountBrandService.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
         public async Task<IResult> AddDiscountBrand(DiscountBrand discountBrand)

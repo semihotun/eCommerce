@@ -23,5 +23,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALM
             OrderByText = orderByText;
             IsApproved = isApproved;
         }
+
+        public GetCommentListDTO()
+        {
+        }
     }
 }

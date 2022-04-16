@@ -17,5 +17,9 @@ namespace Business.Services.DiscountsAggregate.DiscountCategorys.DiscountCategor
             Pageindex = pageindex;
             PageSize = pageSize;
         }
+
+        public GetAllDiscountCategory()
+        {
+        }
     }
 }

@@ -1,4 +1,7 @@
 ﻿using Business.Services.ProductAggregate.Products.ProductServiceModel;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -35,7 +38,7 @@ namespace Business.Services.ProductAggregate.Products
             _productSpecificationAttributeRepository = productSpecificationAttributeRepository;
             _specificationAttributeOptionRepository = specificationAttributeOptionRepository;
         }
-
+        [CacheAspect]
         public async Task<IDataResult<Product>> GetProduct(GetProduct request)
         {
             if (request.Id == 0)
@@ -46,8 +49,10 @@ namespace Business.Services.ProductAggregate.Products
             return new SuccessDataResult<Product>(data);
         }
 
-
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
+        [CacheRemoveAspect("IProductService.Get",
+        "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
         public async Task<IResult> DeleteProduct(DeleteProduct request)
         {
             if (request.Id == 0)
@@ -58,8 +63,10 @@ namespace Business.Services.ProductAggregate.Products
 
             return new SuccessResult();
         }
-
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
+        [CacheRemoveAspect("IProductService.Get",
+        "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
         public async Task<IResult> AddProduct(Product product)
         {
             if (product == null)
@@ -70,8 +77,8 @@ namespace Business.Services.ProductAggregate.Products
 
             return new SuccessResult();
         }
-
-        public async Task<IDataResult<IPagedList<Product>>> MainSearchProduct(MainSearchProduct request)
+        [CacheAspect]
+        public async Task<IDataResult<IPagedList<Product>>> GetMainSearchProduct(MainSearchProduct request)
         {
             var query = _productRepository.Query();
 
@@ -83,8 +90,10 @@ namespace Business.Services.ProductAggregate.Products
             return new SuccessDataResult<IPagedList<Product>>(data);
         }
 
-
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
+        [CacheRemoveAspect("IProductService.Get",
+        "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
         public async Task<IResult> UpdateProduct(Product product)
         {
             var query = await _productRepository.GetAsync(x => x.Id == product.Id);
@@ -96,7 +105,7 @@ namespace Business.Services.ProductAggregate.Products
         }
 
 
-
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<Product>>> GetProductsBySpecificationAttributeId(
             GetProductsBySpecificationAttributeId request)
         {

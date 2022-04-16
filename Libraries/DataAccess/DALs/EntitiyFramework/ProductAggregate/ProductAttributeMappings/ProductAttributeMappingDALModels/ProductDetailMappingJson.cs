@@ -4,11 +4,15 @@ using System.Text;
 
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingDALModels
 {
-    public class ProductDetailMappingJson
+    public class GetProductDetailMappingJson
     {
-        public ProductDetailMappingJson(int productId)
+        public GetProductDetailMappingJson(int productId)
         {
             ProductId = productId;
+        }
+
+        public GetProductDetailMappingJson()
+        {
         }
 
         public int ProductId { get; set; }

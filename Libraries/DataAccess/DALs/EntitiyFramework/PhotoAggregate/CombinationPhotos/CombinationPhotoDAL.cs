@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Results;
+﻿using Core.Aspects.Autofac.Caching;
+using Core.Utilities.Results;
 using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos.CombinationPhotoDALModels;
 using eCommerce.Core.DataAccess.EntitiyFramework;
@@ -16,6 +17,8 @@ namespace DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos
         public CombinationPhotoDAL(eCommerceContext context) : base(context)
         {
         }
+        
+        [CacheAspect]
         public async Task<IDataResult<List<CombinationPhotoDTO>>> GetAllCombinationPhotosDTO(GetAllCombinationPhotosDTO request)
         {
 
@@ -28,15 +31,6 @@ namespace DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos
                             CombinationId = cp.CombinationId,
                             PhotoId = cp.PhotoId,
                             Id = cp.Id,
-                            //AllowOutOfStockOrders = pac.AllowOutOfStockOrders,
-                            //OverriddenPrice = pac.OverriddenPrice,
-                            //Sku = pac.Sku,
-                            //AttributesXml = pac.AttributesXml,
-                            //ManufacturerPartNumber = pac.ManufacturerPartNumber,
-                            //Gtin = pac.Gtin,
-                            //StockQuantity = pac.StockQuantity,
-                            //NotifyAdminForQuantityBelow = pac.NotifyAdminForQuantityBelow,
-                            //ProductPhotoName = p.ProductPhotoName,
                         };
 
             return new SuccessDataResult<List<CombinationPhotoDTO>>(await query.ToListAsync());

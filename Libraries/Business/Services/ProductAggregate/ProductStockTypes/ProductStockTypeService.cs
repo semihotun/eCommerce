@@ -8,6 +8,7 @@ using System.Linq;
 using Core.Utilities.Results;
 using Business.Services.ProductAggregate.ProductStockTypes.ProductStockTypeServiceModel;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStockTypes;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Services.ProductAggregate.ProductStockTypes
 {
@@ -30,10 +31,9 @@ namespace Business.Services.ProductAggregate.ProductStockTypes
 
         #endregion
         #region Method
-
+        [CacheAspect]
         public async Task<IDataResult<IEnumerable<SelectListItem>>> GetAllProductStockType(GetAllProductStockType request)
         {
-
             var query = from pst in _productStockTypeDal.Query()
                         select new SelectListItem
                         {

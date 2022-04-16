@@ -1,5 +1,7 @@
 ﻿using Business.Services.ProductAggregate.ProductShipmentInfos.ProductShipmentInfoServiceModel;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -29,7 +31,7 @@ namespace Business.Services.ProductAggregate.ProductShipmentInfos
 
             return new SuccessDataResult<ProductShipmentInfo>(query);
         }
-
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductShipmentInfoService.Get")]
         public async Task<IResult> AddProductShipmentInfo(ProductShipmentInfo productShipmentInfo)
@@ -39,7 +41,7 @@ namespace Business.Services.ProductAggregate.ProductShipmentInfos
 
             return new SuccessResult();
         }
-
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductShipmentInfoService.Get")]
         public async Task<IResult> UpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo)
@@ -51,7 +53,7 @@ namespace Business.Services.ProductAggregate.ProductShipmentInfos
 
             return new SuccessResult();
         }
-
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductShipmentInfoService.Get")]
         public async Task<IResult> AddOrUpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo)

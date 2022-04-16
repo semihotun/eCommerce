@@ -1,4 +1,7 @@
 ﻿using Business.Services.PhotoAggregate.ProductPhotos.ProductPhotoServiceModel;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Helper;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
@@ -27,13 +30,14 @@ namespace Business.Services.PhotoAggregate.ProductPhotos
         #endregion
         #region Method
 
+        [CacheAspect]
         public async Task<IDataResult<ProductPhoto>> GetProductPhotoById(GetProductPhotoById request)
         {
             var data = await _productPhotoRepository.GetAsync(x => x.Id == request.PhotoId);
 
             return new SuccessDataResult<ProductPhoto>(data);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<IPagedList<ProductPhoto>>> GetProductPhoto(GetProductPhoto request)
         {
             var query = _productPhotoRepository.Query().Where(x => x.ProductId == request.Id);
@@ -46,6 +50,9 @@ namespace Business.Services.PhotoAggregate.ProductPhotos
             return new SuccessDataResult<IPagedList<ProductPhoto>>(data);
         }
 
+        [CacheRemoveAspect("IProductPhotoService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
+            "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         public async Task<IResult> ProductPhotoInsert(ProductPhoto product)
         {
@@ -57,6 +64,9 @@ namespace Business.Services.PhotoAggregate.ProductPhotos
             return new SuccessResult();
         }
 
+        [CacheRemoveAspect("IProductPhotoService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
+         "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         public async Task<IResult> AddRangeProductPhotoInsert(AddRangeProductPhotoInsert request)
         {
@@ -79,6 +89,9 @@ namespace Business.Services.PhotoAggregate.ProductPhotos
             return new SuccessResult();
         }
 
+        [CacheRemoveAspect("IProductPhotoService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
+         "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         public async Task<IResult> ProductPhotoDelete(ProductPhotoDelete request)
         {

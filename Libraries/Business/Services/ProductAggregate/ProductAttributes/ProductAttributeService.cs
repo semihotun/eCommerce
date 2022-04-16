@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Business.Services.ProductAggregate.ProductAttributes.ProductAttributeServiceModel;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -35,6 +37,7 @@ namespace Business.Services.ProductAggregate.ProductAttributes
 
         #region Methods
 
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductAttributeService.Get")]
         public async Task<IResult> DeleteProductAttribute(ProductAttribute productAttribute)
@@ -80,6 +83,7 @@ namespace Business.Services.ProductAggregate.ProductAttributes
 
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductAttributeService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> InsertProductAttribute(ProductAttribute productAttribute)
         {
             if (productAttribute == null)
@@ -92,6 +96,7 @@ namespace Business.Services.ProductAggregate.ProductAttributes
 
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductAttributeService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> UpdateProductAttribute(ProductAttribute productAttribute)
         {
             if (productAttribute == null)

@@ -19,7 +19,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMapp
         }
 
 
-        public async Task<IDataResult<IList<Entities.DTO.ProductMapping.ProductDetailMappingJson>>> ProductDetailMappingJson(ProductAttributeMappingDALModels.ProductDetailMappingJson request)
+        public async Task<IDataResult<IList<Entities.DTO.ProductMapping.ProductDetailMappingJson>>> GetProductDetailMappingJson(ProductAttributeMappingDALModels.GetProductDetailMappingJson request)
         {
             var query = from p in Context.ProductAttributeMapping
                         where p.ProductId == request.ProductId

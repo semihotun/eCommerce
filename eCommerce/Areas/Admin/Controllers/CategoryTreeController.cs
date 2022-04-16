@@ -5,9 +5,9 @@ using Business.Services.CategoriesAggregate.CategorySpefications;
 using Business.Services.CategoriesAggregate.CategorySpefications.CategorySpeficationServiceModel;
 using Business.Services.SpeficationAggregate.SpecificationAttributes;
 using Business.Services.SpeficationAggregate.SpecificationAttributes.SpecificationAttributeServiceModel;
+using Core.Utilities.Identity;
 using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories;
 using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories.CategoryDALModels;
-using eCommerce.Models;
 using Entities.Concrete.CategoriesAggregate;
 using Entities.ViewModels.AdminViewModel.CategoryTree;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +18,7 @@ namespace eCommerce.Areas.Admin.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
     [Route("[area]/[controller]/[action]")]
-    [Kontrol("")]
+    [AuthorizeControl("")]
     [Area("Admin")]
     public class CategoryTreeController : AdminBaseController
     {

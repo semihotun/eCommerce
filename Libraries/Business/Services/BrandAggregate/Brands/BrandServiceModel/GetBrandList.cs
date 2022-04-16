@@ -11,12 +11,17 @@ namespace Business.Services.BrandAggregate.Brands.BrandServiceModel
         public int PageSize { get; set; }
         public string OrderByText { get; set; }
 
-        public GetBrandList(string brandName = null, int pageIndex = 1, int pageSize = int.MaxValue, string orderByText = null)
+        public GetBrandList()
         {
-            BrandName = brandName;
-            PageIndex = pageIndex;
-            PageSize = pageSize;
-            OrderByText = orderByText;
         }
+
+
+        //public GetBrandList(string brandName = null, int pageIndex = 1, int pageSize = int.MaxValue, string orderByText = null)
+        //{
+        //    BrandName = brandName;
+        //    PageIndex = pageIndex;
+        //    PageSize = pageSize;
+        //    OrderByText = orderByText;
+        //}
     }
 }

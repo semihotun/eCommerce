@@ -22,6 +22,7 @@
 	<ItemGroup>
 		<Folder Include="Services\ProductAggregate\ProductStockTypes\Validator\" />
 		<Folder Include="Services\SpeficationAggregate\SpecificationAttributes\Validator\" />
+		<Folder Include="Services\UserIdentityAggregate\Users\" />
 	</ItemGroup>
 
 </Project>

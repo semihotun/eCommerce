@@ -11,6 +11,10 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Produc
             ProductAttributeCombinationId = productAttributeCombinationId;
         }
 
+        public GetProductAttributeCombinationById()
+        {
+        }
+
         public int ProductAttributeCombinationId { get; set; }
     }
 }

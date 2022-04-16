@@ -1,4 +1,5 @@
 using Autofac.Extensions.DependencyInjection;
+using Core.Utilities.Generate;
 using Core.Utilities.Migration;
 using DataAccess.Context;
 using DataAccess.ContextSeed.eCommerceContextSeed;
@@ -33,9 +34,7 @@ namespace eCommerce
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    //Removing Server Header
-                    webBuilder.ConfigureKestrel(options => options.AddServerHeader = false);
-
+                    webBuilder.ConfigureKestrel(options => options.AddServerHeader = true);
                     webBuilder.UseStartup<Startup>();
                 });
     }

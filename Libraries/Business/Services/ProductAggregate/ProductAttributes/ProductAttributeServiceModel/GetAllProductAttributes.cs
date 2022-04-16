@@ -17,5 +17,9 @@ namespace Business.Services.ProductAggregate.ProductAttributes.ProductAttributeS
             PageSize = pageSize;
             Name = name;
         }
+
+        public GetAllProductAttributes()
+        {
+        }
     }
 }

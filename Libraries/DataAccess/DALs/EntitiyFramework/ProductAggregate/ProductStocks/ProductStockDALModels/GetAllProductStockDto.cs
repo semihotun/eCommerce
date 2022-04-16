@@ -15,5 +15,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStocks.Produc
             ProductId = productId;
             Param = param;
         }
+
+        public GetAllProductStockDto()
+        {
+        }
     }
 }

@@ -17,5 +17,9 @@ namespace Business.Services.DiscountsAggregate.DiscountUsageHistorys.DiscountUsa
             Pageindex = pageindex;
             Pagesize = pagesize;
         }
+
+        public GetAllDiscountUsageHistory()
+        {
+        }
     }
 }

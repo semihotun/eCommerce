@@ -11,6 +11,10 @@ namespace Business.Services.ProductAggregate.ProductAttributes.ProductAttributeS
             AttributeId = attributeId;
         }
 
+        public GetNotExistingAttributes()
+        {
+        }
+
         public int[] AttributeId { get; set; }
     }
 }

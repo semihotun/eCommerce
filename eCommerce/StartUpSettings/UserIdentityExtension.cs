@@ -20,6 +20,7 @@ using System.Reflection;
 using System.Runtime.Loader;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Context;
+using Core.Utilities.Identity;
 
 namespace eCommerce.StartUpSettings
 {
@@ -29,9 +30,11 @@ namespace eCommerce.StartUpSettings
         {
             services.AddIdentity<MyUser, MyRole>()
              .AddEntityFrameworkStores<eCommerceContext>()
-             .AddDefaultTokenProviders();
+             .AddErrorDescriber<CustomIdentityErrorDescriber>()
+             .AddDefaultTokenProviders(); 
+
             services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromHours(3));
-            services.Configure<Microsoft.AspNetCore.Identity.IdentityOptions>(options =>
+            services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
@@ -45,6 +48,8 @@ namespace eCommerce.StartUpSettings
                 options.User.AllowedUserNameCharacters =
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = false;
+                //options.Tokens.AuthenticatorTokenProvider = "email";
+               
             });
             services.ConfigureApplicationCookie(options =>
             {
@@ -53,7 +58,7 @@ namespace eCommerce.StartUpSettings
                 options.SlidingExpiration = true;
             });
 
-            services.AddAuthentication();
+         
             //.AddFacebook(x =>
             //{
             //    x.AppId = Configuration["FacebookAppId"];

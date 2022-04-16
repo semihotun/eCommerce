@@ -19,5 +19,9 @@ namespace Business.Services.PhotoAggregate.ProductPhotos.ProductPhotoServiceMode
             PageSize = pageSize;
             OrderByText = orderByText;
         }
+
+        public GetProductPhoto()
+        {
+        }
     }
 }

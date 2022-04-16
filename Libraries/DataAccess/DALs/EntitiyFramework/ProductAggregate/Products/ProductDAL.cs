@@ -1,19 +1,14 @@
-﻿using AutoMapper;
-using Core.Utilities.Helper;
-using Core.Utilities.Infrastructure.Filter;
+﻿using Core.Utilities.Infrastructure.Filter;
 using Core.Utilities.Results;
 using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeFormatter;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels;
 using eCommerce.Core.DataAccess.EntitiyFramework;
-using Entities.Concrete.BasketAggregate;
-using Entities.Concrete.CommentsAggregate;
 using Entities.Concrete.ProductAggregate;
 using Entities.DTO;
 using Entities.DTO.Product;
 using Entities.DTO.ShowCase;
 using Entities.Enum;
-using Entities.Others;
 using Entities.ViewModels.WebViewModel.Home;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -36,6 +31,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
         {
             _productAttributeFormatter = productAttributeFormatter;
         }
+        //Category,Brand,Product,ProductAttributeCombination,ProductStock
         public async Task<IDataResult<IPagedList<ProductDataTableJson>>> GetProductDataTableList(GetProductDataTableList request)
         {
             var query = from p in Context.Product.ApplyFilter(request.ProductDataTableDTO)
@@ -63,6 +59,10 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
             var result = await query.ToPagedListAsync(request.DataTablesParam.PageIndex, request.DataTablesParam.PageSize);
             return new SuccessDataResult<IPagedList<ProductDataTableJson>>(result);
         }
+
+        //Brand,DiscountBrand,ProductAttributeMapping,ProductAttributeValue,ProductAttributeCombination,ProductStock,Category
+        //ProductSpecificationAttribute,SpecificationAttributeOption,SpecificationAttribute,Comment,Users,ProductPhoto
+        //CombinationPhoto,ProductStock
         public async Task<IDataResult<ProductDetailDTO>> GetHomeProductDetail(GetHomeProductDetail request)
         {
             var query = from p in Context.Product
@@ -171,6 +171,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
             return new SuccessDataResult<ProductDetailDTO>(result);
         }
 
+        //Product,ProductPhoto,ProductStock
         public async Task<IDataResult<List<ShowCaseProductDTO.Product>>> GetAnotherProductList()
         {
             var anotherProductGroup = from ap in Context.Product.OrderBy(x => Guid.NewGuid()).Take(4)
@@ -195,6 +196,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
             return new SuccessDataResult<List<ShowCaseProductDTO.Product>>(result);
         }
 
+        //Product,Brand,DiscountBrand,ProductAttributeCombination,Category,ProductPhoto,CombinationPhoto,ProductStock
         public async Task<IDataResult<Checkout>> GetCheckout(GetCheckout request)
         {
             var result = new Checkout();
@@ -261,6 +263,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
             return new SuccessDataResult<Checkout>(result);
         }
 
+        //Product,Comment,ProductPhoto
         public async Task<IDataResult<ProductCommentDTO>> GetCommentListDTO(
            GetCommentListDTO request)
         {
@@ -284,6 +287,8 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
             return new SuccessDataResult<ProductCommentDTO>(data);
         }
 
+        //Product,Brand,Category,ProductAttributeCombination,ProductStock,ProductPhoto,CombinationPhoto,ProductSpecificationAttribute,
+        //CatalogProduct
         public async Task<IDataResult<IPagedList<Entities.DTO.Product.CatalogProduct>>> GetCatalogProduct(CatalogVM catalog)
         {
             var data = JsonConvert.DeserializeObject<IList<CatalogVM.SelectFilterModel>>(catalog.SelectFilter);
@@ -389,6 +394,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
 
         }
 
+        //
         public async Task<IDataResult<ProductDetailVM>> GetProductDetailVM(GetProductDetailVM request)
         {
             var model = new ProductDetailVM();

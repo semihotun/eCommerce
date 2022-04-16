@@ -12,6 +12,10 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALM
             Basket = basket;
         }
 
+        public GetCheckout()
+        {
+        }
+
         public List<Basket> Basket { get; set; }
       
     }

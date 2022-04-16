@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace Core.Utilities.Security.Jwt
 {
     public class AccessToken : IAccessToken
     {
-        public List<string> Claims { get; set; }
+        public IEnumerable<ClaimTypeValue> Claims { get; set; }
         public string Token { get; set; }
         public DateTime Expiration { get; set; } 
+    }
+
+    public class ClaimTypeValue
+    {
+        public string ClaimType { get; set; }
+        public string Value { get; set; }
     }
 }

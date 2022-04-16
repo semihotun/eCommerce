@@ -11,6 +11,10 @@ namespace Business.Services.ProductAggregate.Products.ProductServiceModel
             Id = ıd;
         }
 
+        public DeleteProduct()
+        {
+        }
+
         public int Id { get; set; }
 
     }

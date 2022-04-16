@@ -1,4 +1,5 @@
-﻿using Core.Library.Business.Abstract;
+﻿using Core.Library.Business.AdminAggregate.AdminAuths;
+using Core.Library.Business.AdminAggregate.AdminServices;
 using Core.Library.Entities.Concrete;
 using eCommerce.Areas.Admin.Controllers;
 using Microsoft.AspNetCore.Http;
@@ -24,21 +25,13 @@ namespace eCommerce.Controllers
         [HttpPost]
         public async Task<ActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            var userToLogin = await _adminAuthService.Login(userForLoginDto);
-            if (!userToLogin.Success)
-            {
-                return View();
-            }
-            var result = await _adminAuthService.CreateAccessToken(userToLogin.Data);
+            var result = await _adminAuthService.Login(userForLoginDto);
             if (result.Success)
             {
                 var basketCookie = Request.Cookies["UserToken"];
                 CookieOptions cookieOptions = new CookieOptions();
                 cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddDays(1));
                 Response.Cookies.Append("UserToken", result.Data.Token, cookieOptions);
-            }
-            if (result.Success)
-            {
                 return Redirect("/Admin/AdminProduct/ProductList");
             }
 
@@ -53,7 +46,7 @@ namespace eCommerce.Controllers
             }
             else
             {
-                Alert("Previously Admin First registered", NotificationType.error);
+                Alert("Daha önceden Admin Kayıdı yapıldı", NotificationType.error);
                 return View();
             }
         }
@@ -63,8 +56,7 @@ namespace eCommerce.Controllers
         {
             if ((await _adminService.GetAdminCount()).Data == 0)
             {
-                var registerUser = (await _adminAuthService.Register(adminUser)).Data;
-                var result = await _adminAuthService.CreateAccessToken(registerUser);
+                var result = await _adminAuthService.Register(adminUser);        
                 if (result.Success)
                 {
                     var basketCookie = Request.Cookies["UserToken"];
@@ -76,9 +68,8 @@ namespace eCommerce.Controllers
             }
             else
             {
-                Alert("Previously Admin First registered", NotificationType.error);
+                Alert("Daha önceden Admin Kayıdı yapıldı", NotificationType.error);
             }
-
 
             return View();
         }

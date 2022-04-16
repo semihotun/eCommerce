@@ -11,6 +11,10 @@ namespace Business.Services.CommentsAggregate.Comments.CommentServiceModel
             CommentId = commentId;
         }
 
+        public GetComment()
+        {
+        }
+
         public int CommentId { get; set; }
     }
 }

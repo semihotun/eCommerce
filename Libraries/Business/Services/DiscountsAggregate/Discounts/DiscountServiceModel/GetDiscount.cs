@@ -12,5 +12,9 @@ namespace Business.Services.DiscountsAggregate.Discounts.DiscountServiceModel
         {
             Id = ıd;
         }
+
+        public GetDiscount()
+        {
+        }
     }
 }

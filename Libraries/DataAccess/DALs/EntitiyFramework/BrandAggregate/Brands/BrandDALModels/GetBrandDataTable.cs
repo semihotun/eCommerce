@@ -14,6 +14,10 @@ namespace DataAccess.DALs.EntitiyFramework.BrandAggregate.Brands.BrandDALModels
             DataTableParam = dataTableParam;
         }
 
+        public GetBrandDataTable()
+        {
+        }
+
         public BrandDataTableFilter Brand { get; set; }
         public DTParameters DataTableParam { get; set; }
        

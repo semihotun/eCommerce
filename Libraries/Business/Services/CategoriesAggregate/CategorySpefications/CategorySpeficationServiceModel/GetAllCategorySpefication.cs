@@ -11,6 +11,10 @@ namespace Business.Services.CategoriesAggregate.CategorySpefications.CategorySpe
             CategoryId = categoryId;
         }
 
+        public GetAllCategorySpefication()
+        {
+        }
+
         public int CategoryId { get; set; }
     }
 }

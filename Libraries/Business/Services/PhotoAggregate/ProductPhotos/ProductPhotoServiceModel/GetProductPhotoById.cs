@@ -11,6 +11,10 @@ namespace Business.Services.PhotoAggregate.ProductPhotos.ProductPhotoServiceMode
             PhotoId = photoId;
         }
 
+        public GetProductPhotoById()
+        {
+        }
+
         public int PhotoId { get; set; }
     }
 }

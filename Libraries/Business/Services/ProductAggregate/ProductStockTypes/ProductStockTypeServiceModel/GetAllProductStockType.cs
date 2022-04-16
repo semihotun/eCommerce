@@ -12,5 +12,9 @@ namespace Business.Services.ProductAggregate.ProductStockTypes.ProductStockTypeS
         {
             SelectedId = selectedId;
         }
+
+        public GetAllProductStockType()
+        {
+        }
     }
 }

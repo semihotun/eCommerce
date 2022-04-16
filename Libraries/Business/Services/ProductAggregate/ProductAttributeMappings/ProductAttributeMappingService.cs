@@ -1,5 +1,7 @@
 ﻿using Business.Services.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingServiceModel;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -46,6 +48,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings
 
         [CacheRemoveAspect("IProductAttributeMappingService.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
+        [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> DeleteProductAttributeMapping(DeleteProductAttributeMapping request)
         {
             if (request.Id == 0)
@@ -95,6 +98,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
+        [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductAttributeMappingService.Get")]
         public async Task<IResult> InsertProductAttributeMapping(ProductAttributeMapping productAttributeMapping)
         {
@@ -108,6 +112,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings
         }
 
         [TransactionAspect(typeof(eCommerceContext))]
+        [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductAttributeMappingService.Get")]
         public async Task<IResult> UpdateProductAttributeMapping(ProductAttributeMapping productAttributeMapping)
         {

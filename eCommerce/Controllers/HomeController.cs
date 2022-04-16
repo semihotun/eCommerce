@@ -1,22 +1,13 @@
-﻿using AutoMapper;
-using Business.Services.BasketAggregate.Baskets;
+﻿using Business.Services.BasketAggregate.Baskets;
 using Business.Services.ProductAggregate.Products;
 using Business.Services.ProductAggregate.Products.ProductServiceModel;
 using Business.Services.SliderAggregate.Sliders;
-using Core.CrossCuttingConcerns.Caching;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels;
 using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices;
 using Entities.Concrete.BasketAggregate;
-using Entities.DTO.Product;
 using Entities.ViewModels.WebViewModel.Home;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
 namespace eCommerce.Controllers
@@ -58,7 +49,7 @@ namespace eCommerce.Controllers
             {
                 SearchKey = searchKey
             };
-            var productList = _productService.MainSearchProduct(new MainSearchProduct(searchProductName: searchKey, pageSize: 6));
+            var productList = _productService.GetMainSearchProduct(new MainSearchProduct(searchProductName: searchKey, pageSize: 6));
             await Task.WhenAll(productList);
             viewModel.ProductList = productList.Result.Data;
 

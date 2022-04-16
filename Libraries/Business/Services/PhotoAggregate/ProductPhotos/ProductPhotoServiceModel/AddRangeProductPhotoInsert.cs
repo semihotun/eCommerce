@@ -15,5 +15,9 @@ namespace Business.Services.PhotoAggregate.ProductPhotos.ProductPhotoServiceMode
             ProductPhotos = productPhotos;
             ProductId = productId;
         }
+
+        public AddRangeProductPhotoInsert()
+        {
+        }
     }
 }

@@ -11,6 +11,10 @@ namespace Business.Services.CategoriesAggregate.Categories.CategoryServiceModel
             CategoryId = categoryId;
         }
 
+        public GetCategoryById()
+        {
+        }
+
         public int CategoryId { get; set; }
     }
 }

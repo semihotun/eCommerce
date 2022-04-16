@@ -13,5 +13,9 @@ namespace Business.Services.ProductAggregate.Products.ProductServiceModel
             PageSize = pageSize;
             SearchProductName = searchProductName;
         }
+
+        public MainSearchProduct()
+        {
+        }
     }
 }

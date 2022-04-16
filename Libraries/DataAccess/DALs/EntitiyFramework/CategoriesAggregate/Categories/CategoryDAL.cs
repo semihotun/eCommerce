@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Results;
+﻿using Core.Aspects.Autofac.Caching;
+using Core.Utilities.Results;
 using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories.CategoryDALModels;
 using eCommerce.Core.DataAccess.EntitiyFramework;
@@ -17,6 +18,7 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
         public CategoryDAL(eCommerceContext context) : base(context)
         {
         }
+        [CacheAspect]
         private async Task<IDataResult<List<CategoryDTO>>> CategoriesForTreeList(CategoriesForTreeList request)
         {
             var result = new List<CategoryDTO>();
@@ -33,6 +35,7 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
             return new SuccessDataResult<List<CategoryDTO>>(result);
         }
 
+        [CacheAspect]
         public async Task<IDataResult<List<CategoryDTO>>> GetAllCategoryTreeList()
         {
             var query = from c in Context.Category select c;
@@ -41,7 +44,7 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
 
             return new SuccessDataResult<List<CategoryDTO>>(result);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<CategorySpeficationDTO>> GetCategorySpefication(GetCategorySpefication request)
         {
             var query = from c in Context.Category
@@ -60,7 +63,7 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
             return new SuccessDataResult<CategorySpeficationDTO>(data);
         }
 
-
+        [CacheAspect]
         public async Task<IDataResult<CategorySpeficationOptionDTO>> GetCategorySpeficationOptionDTO(GetCategorySpeficationOptionDTO request)
         {
             var query = from c in Context.Category
@@ -89,7 +92,7 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
         }
 
 
-
+        [CacheAspect]
         public async Task<IDataResult<IList<HierarchyViewModel>>> GetHierarchy()
         {
             var hdList = await Context.Category.ToListAsync();
@@ -105,7 +108,7 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
 
             return new SuccessDataResult<List<HierarchyViewModel>>(records);
         }
-
+        [CacheAspect]
         private List<HierarchyViewModel> GetChildren(GetChildren request)
         {
             return request.HdList.Where(l => l.ParentCategoryId == request.ParentId)

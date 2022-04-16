@@ -12,5 +12,9 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues.ProductAttri
         {
             ProductAttributeMappingId = productAttributeMappingId;
         }
+
+        public GetProductAttributeValues()
+        {
+        }
     }
 }

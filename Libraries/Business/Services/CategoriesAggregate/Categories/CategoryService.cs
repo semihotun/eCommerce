@@ -1,5 +1,7 @@
 ﻿using Business.Services.CategoriesAggregate.Categories.CategoryServiceModel;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
@@ -29,7 +31,8 @@ namespace Business.Services.CategoriesAggregate.Categories
         }
         #endregion
 
-        [CacheRemoveAspect("ICategoryService.Get")]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("ICategoryService.Get", "ICategoryDAL.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
         public async Task<IResult> DeleteCategory(DeleteCategory request)
         {
@@ -43,9 +46,9 @@ namespace Business.Services.CategoriesAggregate.Categories
             return new SuccessResult();
 
         }
-
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("ICategoryService.Get")]
+        [CacheRemoveAspect("ICategoryService.Get", "ICategoryDAL.Get")]
         public async Task<IResult> RemoveRangeCategory(RemoveRangeCategory request)
         {
             RemoveGroup(new RemoveGroup(request.Id));
@@ -80,8 +83,9 @@ namespace Business.Services.CategoriesAggregate.Categories
             return new SuccessDataResult<Category>(result);
         }
 
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("ICategoryService.Get")]
+        [CacheRemoveAspect("ICategoryService.Get", "ICategoryDAL.Get")]
         public async Task<IResult> InsertCategory(Category category)
         {
             if (category == null)
@@ -93,8 +97,9 @@ namespace Business.Services.CategoriesAggregate.Categories
 
         }
 
+        [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("ICategoryService.Get")]
+        [CacheRemoveAspect("ICategoryService.Get", "ICategoryDAL.Get")]
         public async Task<IResult> UpdateCategory(Category category)
         {
             var data = await _categoryRepository.GetAsync(x => x.Id == category.Id);
@@ -118,6 +123,9 @@ namespace Business.Services.CategoriesAggregate.Categories
             return new SuccessDataResult<IEnumerable<SelectListItem>>(data);
         }
 
+        [TransactionAspect(typeof(eCommerceContext))]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("ICategoryService.Get", "ICategoryDAL.Get")]
         public async Task<IResult> ChangeNodePosition(ChangeNodePosition request)
         {
             if (request.ParentId == 0)
@@ -129,6 +137,10 @@ namespace Business.Services.CategoriesAggregate.Categories
 
             return new SuccessResult();
         }
+
+        [TransactionAspect(typeof(eCommerceContext))]
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("ICategoryService.Get", "ICategoryDAL.Get")]
         public async Task<IResult> DeleteNodes(DeleteNodes request)
         {
             var ids = request.Values.Split(',');

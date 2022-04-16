@@ -12,6 +12,10 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Produc
             ProductId = productId;
         }
 
+        public InsertPermutationCombination()
+        {
+        }
+
         public List<List<int>> Data { get; set; }
 
         public int ProductId { get; set; }

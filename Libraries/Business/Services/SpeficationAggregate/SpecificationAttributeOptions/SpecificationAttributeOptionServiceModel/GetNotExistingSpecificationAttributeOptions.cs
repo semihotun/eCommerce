@@ -11,6 +11,10 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions.S
             AttributeOptionIds = attributeOptionIds;
         }
 
+        public GetNotExistingSpecificationAttributeOptions()
+        {
+        }
+
         public int[] AttributeOptionIds { get; set; }
     }
 }

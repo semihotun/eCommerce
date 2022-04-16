@@ -19,5 +19,9 @@ namespace Business.Services.DiscountsAggregate.DiscountProducts.DiscountProductS
             Pageindex = pageindex;
             Pagesize = pagesize;
         }
+
+        public GetAllDiscountProduct()
+        {
+        }
     }
 }

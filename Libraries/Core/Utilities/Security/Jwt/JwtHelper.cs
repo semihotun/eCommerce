@@ -44,7 +44,11 @@ namespace Core.Utilities.Security.Jwt
             return new AccessToken
             {
                 Token = token,
-                Expiration = _accessTokenExpiration
+                Expiration = _accessTokenExpiration,
+                Claims = jwt.Claims.Select(x=>new ClaimTypeValue {
+                    ClaimType=x.Type,
+                    Value=x.Value
+                })
             };
         }
 
@@ -70,6 +74,7 @@ namespace Core.Utilities.Security.Jwt
             claims.AddEmail(user.Email);
             claims.AddName($"{user.FirstName} {user.LastName}");
             //claims.AddRoles(operationClaims.Select(c => c.Name).ToArray());
+
 
             return claims;
         }

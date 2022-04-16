@@ -11,6 +11,10 @@ namespace Business.Services.PhotoAggregate.ProductPhotos.ProductPhotoServiceMode
             Id = ıd;
         }
 
+        public ProductPhotoDelete()
+        {
+        }
+
         public int Id { get; set; }
     }
 }

@@ -11,6 +11,10 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues.ProductAttri
             ProductAttributeValueId = productAttributeValueId;
         }
 
+        public GetProductAttributeValueById()
+        {
+        }
+
         public int ProductAttributeValueId { get; set; }
     }
 }
