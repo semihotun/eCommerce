@@ -1,28 +1,35 @@
+#region using
 using Autofac;
 using Business.DependencyResolvers;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.DependencyResolvers;
 using Core.Extensions;
-using Core.Utilities.Email;
 using Core.Utilities.Filter;
 using Core.Utilities.Generate;
 using Core.Utilities.IoC;
 using Core.Utilities.Middlewares;
 using Core.Utilities.Quartz;
 using Core.Utilities.Swagger;
+using Core.Utilities.Identity;
+using eCommerce.Extensions;
 using eCommerce.StartUpSettings;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Plugin.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using Business.Extension;
+using Utilities.Cookie;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
+#endregion
 namespace eCommerce
 {
     public class Startup
@@ -52,70 +59,51 @@ namespace eCommerce
             });
             services.AddCustomSwaggerGen();
             services.AddDbContext(Configuration);
-            services.AddDependencyResolvers(new ICoreModule[] { new CoreModule()});
+            services.AddDependencyResolvers(new ICoreModule[] { new CoreModule() });
             services.AutoMapperSettings();
             services.AddHttpContextAccessor();
 
-            #region TempData
-
+            //TempData
             services.AddMemoryCache();
             services.AddSession();
 
-            #endregion
-
-            #region Identity  
-
-            services.AddIdentitySettings(Configuration);
+            //Identity  
+            services.AddIdentitySettings(Configuration, JwtBearerDefaults.AuthenticationScheme);
             services.AddUserIdentitySettings(Configuration);
 
-            #endregion
-
-            #region Jobs
-
+            //Jobs
             services.UseQuartz();
             services.AddJobList();
 
-            #endregion
-
-            #region PluginSetting
-
+            //PluginSetting
             ApiGenerator.GenerateApi();
             var pluginAssemblies = PluginExtension.GetPluginAssemblies();
             PluginExtension.RegisterMvc(services, pluginAssemblies);
-            PluginExtension.SetupEmbeddedViewsForPlugins(services, pluginAssemblies);
-            services.AddPluginStaticFileProvier(CurrentEnvironment);
+            PluginExtension.SetupEmbeddedViewsForPlugins(services, pluginAssemblies);      
             PluginAssembly = pluginAssemblies;
 
-            #endregion
-
+            services.ConfigureApplicationCookie(CurrentEnvironment);
             services.AddRazorPages().AddNewtonsoftJson();
             services.AddMvc(options =>
             {
                 options.Filters.AddService<ValidationFilter>();
             }).AddFluentValidation();
 
+          
             services.AddControllers()
              .AddJsonOptions(options =>
              {
                  options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                  options.JsonSerializerOptions.IgnoreNullValues = true;
              });
-            services.AddRazorPages();
-
-   
 
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
             //Plugin Autofac Modullerini inject ettiðim Kýsým
-            #region Moduleinject
-
             var pluginAssemblies = PluginAssembly;
-
             builder.RegisterAssemblyModules(pluginAssemblies.ToArray());
-
-            #endregion
 
             //Projenin AutoFacModule'ü
             builder.RegisterModule(new AutofacBusinessModule());
@@ -147,7 +135,7 @@ namespace eCommerce
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-            //app.UseCookiePolicy();
+
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseCors("AllowOrigin");
             app.UseHttpsRedirection();

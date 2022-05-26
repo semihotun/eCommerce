@@ -25,7 +25,7 @@ namespace Core.Aspects.Autofac.Caching
         {
             if(invocation.Arguments.Count() > 0)
             {
-                var methodName = string.Format($"{invocation.Arguments[0]}.{invocation.Method.Name}");
+                var methodName = string.Format($"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}");
                 var arguments = invocation.Arguments;
                 var key = $"{methodName}({BuildKey(arguments)})";
                 if (_cacheManager.IsAdd(key))

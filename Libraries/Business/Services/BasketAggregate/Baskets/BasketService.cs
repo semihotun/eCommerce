@@ -24,13 +24,13 @@ namespace Business.Services.BasketAggregate.Baskets
             var result = new List<Basket>();
             if (data != null)
             {
-                 result = JsonConvert.DeserializeObject<List<Basket>>((string)data);
+                result = JsonConvert.DeserializeObject<List<Basket>>((string)data);
             }
 
             return new SuccessDataResult<List<Basket>>(result);
         }
 
-        public async Task<IResult> BasketAdded(Basket basket)
+        public async Task<IResult> AddBasket(Basket basket)
         {
             var basketJson = new List<Basket>();
             var basketData = _cacheManager.Get("Basket");
@@ -55,7 +55,58 @@ namespace Business.Services.BasketAggregate.Baskets
             return new SuccessResult();
         }
 
-        
+        public async Task<IResult> DeleteBasketProduct(Basket basket)
+        {
+            var basketJson = new List<Basket>();
+            var basketData = _cacheManager.Get("Basket");
+            if (basketData != null)
+            {
+                basketJson = JsonConvert.DeserializeObject<List<Basket>>((string)basketData);
+
+                var includeProduct = basketJson.Where(x => x.ProductId != basket.ProductId && x.CombinationId != x.CombinationId);
+                if (includeProduct != null)
+                {
+                    _cacheManager.Remove("Basket");
+                    var data = JsonConvert.SerializeObject(includeProduct);
+                    _cacheManager.Add("Basket", data, DateTime.Now.AddDays(7).Minute);
+                }
+                else
+                {
+                    _cacheManager.Remove("Basket");
+                }
+            }
+            else
+            {
+                return new ErrorResult("Sepet Boş");
+            }
+
+            return new SuccessResult();
+        }
+        public async Task<IResult> UpdateBasketProductPiece(Basket basket)
+        {
+            var basketJson = new List<Basket>();
+            var basketData = _cacheManager.Get("Basket");
+            if (basketData != null)
+            {
+                basketJson = JsonConvert.DeserializeObject<List<Basket>>((string)basketData);
+            }
+            var includeProduct = basketJson.Where(x => x.ProductId != basket.ProductId && x.CombinationId != x.CombinationId).ToList();
+            if (includeProduct != null)
+            {
+                _cacheManager.Remove("Basket");
+                includeProduct.Add(basket);
+                var data = JsonConvert.SerializeObject(includeProduct);    
+                _cacheManager.Add("Basket", data, DateTime.Now.AddDays(7).Minute);
+            }
+            else
+            {
+                _cacheManager.Remove("Basket");
+            }
+
+            return new SuccessResult();
+        }
+
+
 
     }
 }

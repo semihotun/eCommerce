@@ -24,6 +24,9 @@
                  .Replace(HtmlHelperExtensions.UppercaseFirst(Model.SearchKey.ToUpper()), "<b><font color='#990066'>" + HtmlHelperExtensions.UppercaseFirst(Model.SearchKey.ToUpper()) + "</font></b>")
                )
                 </li>
+                @*<li class="SearchResultItem">
+                    »<a href="/ProductDetail/ProductDetail?productId=@item.Id">@item.ProductName</a>
+                </li>*@
             }
         }
     </ul>

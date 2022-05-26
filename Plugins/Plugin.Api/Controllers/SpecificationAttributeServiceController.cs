@@ -65,20 +65,6 @@ using Entities.Concrete.SpeficationAggregate;
  
  
  [Produces("application/json", "text/plain")] 
- [HttpGet("getspecificationattributeswithoptions")] 
- [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
- public async Task<IActionResult> GetSpecificationAttributesWithOptions () { 
- 
- var result = await _specificationAttributeService.GetSpecificationAttributesWithOptions(); 
- 
- if(result.Success) 
- return Ok(result.Data); 
- else 
- return BadRequest(result.Message); 
- } 
- 
- 
- [Produces("application/json", "text/plain")] 
  [HttpPost("deletespecificationattribute")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> DeleteSpecificationAttribute ([FromBody]SpecificationAttribute specificationAttribute) { 
@@ -139,6 +125,20 @@ using Entities.Concrete.SpeficationAggregate;
  
  [Produces("application/json", "text/plain")] 
  [HttpGet("getproductspeficationattributedropdwon")] 
+ [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
+ public async Task<IActionResult> GetProductSpeficationAttributeDropdwon ([FromQuery]GetProductSpeficationAttributeDropdwon request) { 
+ 
+ var result = await _specificationAttributeService.GetProductSpeficationAttributeDropdwon(request); 
+ 
+ if(result.Success) 
+ return Ok(result.Data); 
+ else 
+ return BadRequest(result.Message); 
+ } 
+ 
+ } 
+ }
+cationattributedropdwon")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> GetProductSpeficationAttributeDropdwon ([FromQuery]GetProductSpeficationAttributeDropdwon request) { 
  

@@ -6,7 +6,7 @@ namespace Entities.DTO.Product
 {
     public class Checkout
     {
-        public List<CheckoutProduct> CheckoutProductList { get; set; }
+        public IEnumerable<CheckoutProduct> CheckoutProductList { get; set; }
         public double AllProductTotalPrice { get; set; }
     }
 }

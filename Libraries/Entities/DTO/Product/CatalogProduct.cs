@@ -8,6 +8,7 @@ namespace Entities.DTO.Product
 {
     public class CatalogProduct
     {
+        public string CreatedOnUtc { get; set; }
         public int Id { get; set; }
         public string ProductName { get; set; }
         public int BrandId { get; set; }

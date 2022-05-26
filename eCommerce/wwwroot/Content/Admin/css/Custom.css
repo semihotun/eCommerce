@@ -1,17 +1,60 @@
 ﻿
-.paginate_button {
-    padding: 1px 1em !important;
-    border: 0px !important;
-    border-radius: 25px !important;
-    color: white !important;
-    border: 1px solid #979797 !important;
-    background-color: #fafafa !important;
+.TableFilterForm .form-group {
+    border: none !important;
 }
 
-.paginate_button .current {
-    border: 5px solid black !important;
-    background-color: black !important;
+.dt-button {
+    border: 1px #ccc solid !important;
+    box-shadow: none !important;
+    background: none !important;
 }
+
+.dataTable input {
+    border-radius: 0px;
+    border: 1px #ccc solid !important;
+}
+
+.dataTable select {
+    border-radius: 0px;
+    border: 1px #ccc solid !important;
+}
+
+.dataTable .no-footer {
+    border: 0px !important;
+}
+
+.dataTable {
+    border-bottom: 1px solid #ccc !important;
+}
+
+.dataTables_info {
+    font-size: 0.875rem !important;
+    font-weight: 300 !important;
+    color: #666 !important;
+}
+
+
+.paginate_button {
+    background: none !important;
+    padding: 1px 1em !important;
+    border: 0px !important;
+    border-radius: 0px !important;
+    color: white !important;
+    border: 1px solid #979797 !important;
+    background-color: #fff !important;
+}
+
+    .paginate_button:hover {
+        background-color: #f5f6fa !important;
+        color: black !important;
+    }
+
+
+.dataTables_paginate .current {
+    background-color: #f5f6fa !important;
+    color: black !important;
+}
+
 
 .control-label {
     text-align: right;
@@ -62,6 +105,7 @@
         display: block;
         color: black;
     }
+
 .ProductKaydet {
     height: 39px;
     background-color: #004e92;
@@ -72,10 +116,11 @@
     border-top-right-radius: 10px;
     margin-top: 30px;
 }
+
     .ProductKaydet:hover {
         background-color: #000428;
         transition: 0.2s ease-in-out;
-        border: 0px;  
+        border: 0px;
         cursor: pointer;
     }
 

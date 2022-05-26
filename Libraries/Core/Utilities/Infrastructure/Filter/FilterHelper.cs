@@ -72,7 +72,6 @@ namespace Core.Utilities.Infrastructure.Filter
 
         public static IQueryable<T> ApplyDataTableFilter<T>(this IQueryable<T> contex, DTParameters filtermodel)
         {
-
             Expression finalExpression = Expression.Constant(true);
             var parameter = Expression.Parameter(typeof(T), "x");
             var filters = filtermodel.Columns.Where(x => x.Search.Value != null);
@@ -126,6 +125,7 @@ namespace Core.Utilities.Infrastructure.Filter
             }
             var data = contex.Where(Expression.Lambda<Func<T, bool>>(finalExpression, parameter));
             return data;
+
         }
     }
 }

@@ -16,7 +16,6 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes
         Task<IDataResult<List<SpecificationAttribute>>> GetCatalogSpefication(GetCatalogSpefication request);
         Task<IDataResult<IList<SpecificationAttribute>>> GetSpecificationAttributeByIds(GetSpecificationAttributeByIds request);
         Task<IDataResult<IPagedList<SpecificationAttribute>>> GetSpecificationAttributes(GetSpecificationAttributes request);
-        Task<IDataResult<IList<SpecificationAttribute>>> GetSpecificationAttributesWithOptions();
         Task<IDataResult<SpecificationAttribute>> GetSpecificationAttributeById(GetSpecificationAttributeById request);
         Task<IResult> DeleteSpecificationAttribute(SpecificationAttribute specificationAttribute);
         Task<IResult> InsertSpecificationAttribute(SpecificationAttribute specificationAttribute);

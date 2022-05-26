@@ -131,7 +131,8 @@ namespace eCommerce.Areas.Admin.Controllers
 
             ResponseAlert(await _showcaseService.UpdateShowcase(showCaseMap));
 
-            return View(model);
+            return RedirectToAction("ShowcaseEdit", "ShowCase", new{ id = model.Id,});
+
         }
         public async Task<IActionResult> ShowcaseAdded(ShowCaseProduct showCaseProduct)
         {

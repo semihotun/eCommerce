@@ -120,5 +120,19 @@ using Entities.ViewModels.WebViewModel.Home;
  return BadRequest(result.Message); 
  } 
  
+ 
+ [Produces("application/json", "text/plain")] 
+ [HttpGet("getmainsearchproduct")] 
+ [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
+ public async Task<IActionResult> GetMainSearchProduct ([FromQuery]GetMainSearchProduct request) { 
+ 
+ var result = await _productDAL.GetMainSearchProduct(request); 
+ 
+ if(result.Success) 
+ return Ok(result.Data); 
+ else 
+ return BadRequest(result.Message); 
+ } 
+ 
  } 
  }

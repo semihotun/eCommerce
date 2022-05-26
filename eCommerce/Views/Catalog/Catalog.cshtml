@@ -7,7 +7,7 @@
 
 <!-- BREADCRUMB -->
 <div id="breadcrumb">
-    <div class="container">
+    <div class="container-fluid home-container">
         <ul class="breadcrumb">
             <li><a href="#">Home</a></li>
             <li class="active">Products</li>
@@ -25,7 +25,7 @@
         <!-- section -->
         <div class="section">
             <!-- container -->
-            <div class="container">
+            <div class="container-fluid home-container" >
                 <!-- row -->
                 <div class="row">
                     <!-- ASIDE -->
@@ -120,7 +120,7 @@
                                     <a href="#" class="active"><i class="fa fa-bars"></i></a>
                                     </div>*@
                                 <div class="sort-filter">
-                                    <span class="text-uppercase">Sort By:</span>
+                                    <span class="text-uppercase">Sıralayın:</span>
                                     @Html.DropDownListFor(model => model.Sortingenum,
                                                                (List<SelectListItem>)ViewBag.Sortingenum, new
                                                                     {
@@ -139,12 +139,16 @@
                         <div id="store">
                             <!-- row -->
                             <div style="display:flex;flex-wrap:wrap;" class="row" ng-init="GetAllData(@Model.CategoryId,@Model.pageNumber)">
+                                <div ng-if="ProductData.length === 0" style="width:100%;">
+                                    <h3 class="text-center" >Bu Kategoriye Ait Ürün bulunamadı</h3>
+                                </div>
                                 <div ng-repeat="product in ProductData" class="col-md-4 col-sm-6 col-xs-6">
                                     <div class="product product-single">
 
                                         <div class="product-thumb">
                                             <div class="product-label">
-                                                <span>New</span>
+                                          
+                                                <span ng-if="product.CreatedOnUtc == CurrentDate">Yeni</span>
                                                 <span class="sale"
                                                       ng-if="product.ProductDiscount > 0">-{{(((product.ProductPrice-product.ProductDiscount)-product.ProductPrice)/product.ProductPrice)*-100  | number:0}}%</span>
                                             </div>
@@ -186,8 +190,8 @@
                                             <a href="#" ng-click="GetAllData(@Model.CategoryId,BackwardOne)">
                                                 <i class="fa fa-fast-backward"></i>
                                             </a>
-                                            <a class="page-number active page-item" ng-repeat="data in PageNumberArray"
-                                               ng-click="GetAllData(@Model.CategoryId,data)" href="#">
+                                            <a class="page-number page-item" ng-repeat="data in PageNumberArray"
+                                               ng-click="GetAllData(@Model.CategoryId,data)" href="#"  ng-class="data == CurrentPage ? 'active' :''">
                                                 {{data}}
                                                 &nbsp;&nbsp;
                                             </a>

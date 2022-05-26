@@ -25,14 +25,14 @@
                 <div class="card-body">
                     <br />
                     <div class="col-md-12">
-                        @using (Html.BeginForm("ProductList", "AdminProduct",FormMethod.Post ,new { Id = "ProductListForm" }))
-                        {
+                        <form id="ProductListForm" class="TableFilterForm">
+
                             <div style="display:flex;flex-wrap:wrap;">
                                 <div class="form-group col-md-6 row">
                                     @Html.LabelFor(x => x.Id, "Id", new { @class = "control-label col-md-2 " })
 
                                     <div class="col-md-10 ">
-                                        @Html.TextBoxFor(model => model.Id, new { @class = " form-control",Type="number",min="0" })
+                                        @Html.TextBoxFor(model => model.Id, new { @class = " form-control", Type = "number", min = "0" })
 
                                     </div>
                                 </div>
@@ -50,7 +50,7 @@
                                     @Html.LabelFor(x => x.BrandId, "Marka", new { @class = "control-label col-md-2 " })
 
                                     <div class="col-md-10 ">
-                                        @Html.DropDownListFor(model => model.BrandId,Model.BrandSelectListItems, new { @class = " form-control  " })
+                                        @Html.DropDownListFor(model => model.BrandId, Model.BrandSelectListItems, new { @class = " form-control  " })
 
                                     </div>
                                 </div>
@@ -59,7 +59,7 @@
                                     @Html.LabelFor(x => x.CategoryId, "Kategori", new { @class = "control-label col-md-2 " })
 
                                     <div class="col-md-10 ">
-                                        @Html.DropDownListFor(model => model.CategoryId,Model.CategorySelectListItems, new { @class = " form-control  " })
+                                        @Html.DropDownListFor(model => model.CategoryId, Model.CategorySelectListItems, new { @class = " form-control  " })
 
                                     </div>
                                 </div>
@@ -71,128 +71,114 @@
 
                                 </div>
                             </div>
-                        }
+                        </form>
 
 
                     </div>
 
 
-                    <div class="table-responsive">
+                    <div class="table-responsive ps ps--active-x">
+                        <table id="ProductList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th filterType="int">Id</th>
+                                    <th filterType="string">İsim</th>
+                                    <th filterType="string">Marka</th>
+                                    <th filterType="string">Kategori</th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
 
+                    </div>
 
-                        <br />
+                    <script>
+                        let ProductListTableo;
+                        let BindProductList = function (response) {
+                            if ($.fn.DataTable.isDataTable("#ProductList")) {
+                                ProductListTableo.draw();
 
-                        <div class="table-responsive ps ps--active-x">
-
-
-                            <table id="ProductList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>İsim</th>
-                                        <th>Marka</th>
-                                        <th>Kategori</th>
-                                        <th> </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-
-
-                        <div class="content">
-                            @Html.HiddenFor(x => x.Id)
-                        </div>
-
-
-
-                        <script>
-                            var ProductListTableo;
-                            var BindProductList = function (response) {
-                                if ($.fn.DataTable.isDataTable("#ProductList")) {
-                                    ProductListTableo.draw();
-
-                                }
-                                else {
-
-                                    ProductListTableo = $("#ProductList").DataTable({
-                                        "sAjaxSource": "/Admin/AdminProduct/ProductListJson?Id=" + $("#Id").val()
+                            }
+                            else {
+                                ProductListTableo = $("#ProductList").DataTable({
+                                    "ajax": {
+                                        "url": "/Admin/AdminProduct/ProductListJson?Id=" + $("#Id").val()
                                             + "&ProductName=" + $("#ProductName").val()
                                             + "&CategoryId=" + $("#CategoryId").val()
                                             + "&BrandModel.Id=" + $("#BrandId").val(),
-                                        "bServerSide": true,
-                                        "bProcessing": true,
-                                        "bSearchable": true,
-                                        "bLengthChange": false,
-                                        "searching": false,
-                                        
-                                        "columns": [
-                                            { "data": "Id", "name": "Id", "autoWidth": true },
-                                            { "data": "ProductName", "name": "ProductName", "autoWidth": true },
-                                            { "data": "BrandName", "name": "BrandId", "autoWidth": true },
-                                            { "data": "CategoryName", "name": "CategoryId", "autoWidth": true },
-                                            {
-                                                data: null,
-                                                render: function (data, type, row) {
-                                                    return "<a href='#' id='" + row.Id + "' ><i class='fa fa-trash-o datatablesil ' style='font-size:20px;' ></i></a>" +
-                                                        "<a href='/Admin/AdminProduct/ProductEdit?Id=" + row.Id + "'><i class='fa fa-edit datatableduzenle' style='font-size:20px;'></i></a>";
-                                                }, "orderable": false
-                                            },
-
-                                        ],
-                                        "language": {
-                                            "url": "/datatablelanguage.json"
-                                        }
-                                       
-
-                                    });
-
-                                }
-
+                                        "datatype": "json",
+                                        "type": "POST"
+                                    },
+                                    dom: '<"bottom">rtip',
+                                    buttons: [
+                                        'copy', 'csv', 'excel', 'pdf', 'print'
+                                    ],
+                                    "orderCellsTop": true,
+                                    "fixedHeader": true,
+                                    "pagingType": "full_numbers",
+                                    "processing": true,
+                                    "serverSide": true,
+                                    "responsive": true,
+                                    "searching": true,
+                                    "columns": [
+                                        { "data": "Id", "name": "Id", "autoWidth": true },
+                                        { "data": "ProductName", "name": "ProductName", "autoWidth": true },
+                                        { "data": "BrandName", "name": "BrandName", "autoWidth": true },
+                                        { "data": "CategoryName", "name": "CategoryName", "autoWidth": true },
+                                        {
+                                            data: null,
+                                            render: function (data, type, row) {
+                                                return "<a href='#' id='" + row.Id + "' ><i class='fa fa-trash-o datatablesil ' style='font-size:20px;' ></i></a>" +
+                                                    "<a href='/Admin/AdminProduct/ProductEdit?Id=" + row.Id + "'><i class='fa fa-edit datatableduzenle' style='font-size:20px;'></i></a>";
+                                            }, "orderable": false
+                                        },
+                                    ], "language": {
+                                        "url": "/datatablelanguage.json"
+                                    }
+                                });
                             }
 
+                        }
 
-                            var FilterRecord = function () {
-                                BindProductList();
-                            }
-                            $(document).ready(function () {
-                                BindProductList();
-                                var productid = $("#Id").val();
+                        $(document).ready(function () {
+                            BindProductList();
+                            AddDataTableFilter(ProductListTableo);
 
-                                $('#ProductList tbody').on('click', '.ProductListDelete', function () {
-                                    var combinationid = $(this).attr('Id');
+                            let productid = $("#Id").val();
+                            $('#ProductList tbody').on('click', '.ProductListDelete', function () {
+                                let combinationid = $(this).attr('Id');
 
-                                    $.ajax({
-                                        type: 'GET',
-                                        dataType: 'json',
-                                        data: 'ProductId=' + productid,
-                                        url: '/Admin/AdminProduct/ProductDelete',
-                                        success: function (datas) {
-                                            toastr.success("Basariyla Silindi");
-                                            BindProductList();
-                                        },
-                                        error: function () {
-                                            toastr.warning("Veri Silerken hata");
-                                        },
-                                    });
-
-
+                                $.ajax({
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    data: 'ProductId=' + productid,
+                                    url: '/Admin/AdminProduct/ProductDelete',
+                                    success: function (datas) {
+                                        toastr.success("Basariyla Silindi");
+                                        BindProductList();
+                                    },
+                                    error: function () {
+                                        toastr.warning("Veri Silerken hata");
+                                    },
                                 });
 
 
                             });
-                            $("#ProductListForm").submit(function (event) {
-                                event.preventDefault();
-                                $('#ProductList').DataTable().destroy();
-                                BindProductList();
-                            });
-
-                        </script>
 
 
+                        });
+                        $("#ProductListForm").submit(function (event) {
+                            event.preventDefault();
+                            $('#ProductList').DataTable().destroy();
+                            BindProductList();
+                        });
 
-                    </div>
+                    </script>
+
+
+
 
 
                 </div>

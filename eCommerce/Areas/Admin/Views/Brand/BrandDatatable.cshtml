@@ -18,6 +18,7 @@
 </div>
 
 
+
 <script>
     let Brandable;
     let BindBrand = function (response) {
@@ -31,7 +32,7 @@
                     "datatype": "json",
                     "type": "POST"
                 },
-                dom: 'Bfrtip',
+                dom: 'Brtip',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print'
                 ],
@@ -61,16 +62,12 @@
 
 
 
-
-    let FilterRecord = function () {
-        BindBrand();
-    }
     $(document).ready(function () {
- 
+
         BindBrand();
 
         AddDataTableFilter(Brandable);
-        $(".dataTables_filter").hide();
+        $(".dataTables_filter").remove();
     });
 
     $("#BrandFilterForm").submit(function (event) {

@@ -21,8 +21,9 @@ namespace DataAccess.DALs.EntitiyFramework.BrandAggregate.Brands
         [CacheAspect]
         public async Task<IDataResult<IPagedList<Brand>>> GetBrandDataTable(GetBrandDataTable request)
         {
-            var query = from b in Context.Brand.ApplyDataTableFilter(request.DataTableParam).ApplyFilter(request.Brand)
+            var query = from b in Context.Brand.ApplyFilter(request.Brand)
                         select b;
+            query=query.ApplyDataTableFilter(request.DataTableParam);
 
             var data = await query.OrderBy(request.DataTableParam.SortOrder)
                 .ToPagedListAsync(request.DataTableParam.PageIndex, request.DataTableParam.PageSize);

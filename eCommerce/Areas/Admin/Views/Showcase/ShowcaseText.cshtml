@@ -4,8 +4,8 @@
 
 @using (Html.BeginForm("ShowcaseProduct", "Showcase", FormMethod.Post))
 {
-
-        @Html.HiddenFor(x => x.ShowCaseType, new { @class = "form-control" })
+        @Html.HiddenFor(x=>x.Id)
+        @Html.HiddenFor(x => x.ShowCaseDto.ShowCaseType, new { @class = "form-control" })
         @*@Html.EditorFor(model => model.ShowCaseText, new { @class = " form-control col-md-12" })*@
 
 

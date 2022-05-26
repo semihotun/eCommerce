@@ -34,7 +34,7 @@ namespace eCommerce.Areas.Admin.Controllers
         #endregion
 
         #region Method
-        public async Task<IActionResult> BrandListJson(BrandDataTableFilter model,DTParameters param,string json)
+        public async Task<IActionResult> BrandListJson(BrandDataTableFilter model,DTParameters param)
        {
             ResponseDataAlert(await _brandDal.GetBrandDataTable(new GetBrandDataTable(model, param)),out var result);
 

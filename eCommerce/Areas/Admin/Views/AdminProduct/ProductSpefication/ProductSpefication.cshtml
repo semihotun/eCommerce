@@ -92,7 +92,7 @@
     var OptionGetir = function (AttrTypeId) {
         $("#SpecificationAttributeOptionId").prop("disabled", true);
         $.ajax({
-            type: "post",
+            type: "get",
             url: "/Admin/ProductSpecificationAttribute/GetSpeficationOptionById?speficationAttrId=" + AttrTypeId,
             dataType: "json",
             success: function (sonuc) {

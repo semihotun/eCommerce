@@ -67,20 +67,6 @@ using Entities.Concrete.ProductAggregate;
  
  
  [Produces("application/json", "text/plain")] 
- [HttpGet("getmainsearchproduct")] 
- [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
- public async Task<IActionResult> GetMainSearchProduct ([FromQuery]MainSearchProduct request) { 
- 
- var result = await _productService.GetMainSearchProduct(request); 
- 
- if(result.Success) 
- return Ok(result.Data); 
- else 
- return BadRequest(result.Message); 
- } 
- 
- 
- [Produces("application/json", "text/plain")] 
  [HttpPost("updateproduct")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> UpdateProduct ([FromBody]Product product) { 

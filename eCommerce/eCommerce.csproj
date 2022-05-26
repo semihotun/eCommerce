@@ -4,10 +4,6 @@
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
     <UserSecretsId>a8b204f6-a9b2-414d-a7f1-d0abc02dc74e</UserSecretsId>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
-    <!--<GeneratePackageOnBuild>false</GeneratePackageOnBuild>-->
-	<!--<PreBuildEvent>del /s /q *.cs ..\..\..\..\eCommerce\Areas\Api\</PreBuildEvent>-->
-	<!--<PostBuildEvent>del /s /q *.cs ..\..\..\..\eCommerce\Areas\Api\</PostBuildEvent>-->
-	
   </PropertyGroup>
 
 
@@ -50,7 +46,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Logs\" />
     <Folder Include="wwwroot\Files\ShowCase\" />
     <Folder Include="wwwroot\Files\Slider\" />
     <Folder Include="wwwroot\Files\Product\" />

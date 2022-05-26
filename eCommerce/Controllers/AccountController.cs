@@ -67,7 +67,7 @@ namespace eCommerce.Controllers
                 var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
+                    _logger.LogInformation("Kullanıcı giriş yaptı.");
                     return RedirectToLocal(returnUrl);
                 }
                 else if(result.RequiresTwoFactor)
@@ -76,12 +76,12 @@ namespace eCommerce.Controllers
                 }
                 else if(result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
+                    _logger.LogWarning("Kullanıcı hesabı kilitlendi.");
                     return RedirectToAction(nameof(Lockout));
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Geçersiz oturum açma girişimi.");
                     return View(model);
                 }
             }
@@ -96,7 +96,7 @@ namespace eCommerce.Controllers
 
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load two-factor authentication user.");
+                throw new ApplicationException($"İki faktörlü kimlik doğrulama kullanıcısı yüklenemiyor.");
             }
 
             var model = new LoginWith2faViewModel { RememberMe = rememberMe };
@@ -118,7 +118,7 @@ namespace eCommerce.Controllers
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyor '{_userManager.GetUserId(User)}'.");
             }
 
             var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
@@ -127,18 +127,18 @@ namespace eCommerce.Controllers
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User with ID {UserId} logged in with 2fa.", user.Id);
+                _logger.LogInformation("Kimliğe sahip kullanıcı {UserId} 2fa ile giriş yaptı.", user.Id);
                 return RedirectToLocal(returnUrl);
             }
             else if (result.IsLockedOut)
             {
-                _logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
+                _logger.LogWarning("Kimliğe sahip kullanıcı {UserId} hesap kilitlendi.", user.Id);
                 return RedirectToAction(nameof(Lockout));
             }
             else
             {
-                _logger.LogWarning("Invalid authenticator code entered for user with ID {UserId}.", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
+                _logger.LogWarning("Kimliğe sahip kullanıcı için geçersiz kimlik doğrulama kodu girildi {UserId}.", user.Id);
+                ModelState.AddModelError(string.Empty, "Geçersiz kimlik doğrulama kodu.");
                 return View();
             }
         }
@@ -150,7 +150,7 @@ namespace eCommerce.Controllers
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load two-factor authentication user.");
+                throw new ApplicationException($"İki faktörlü kimlik doğrulama kullanıcısı yüklenemiyor.");
             }
 
             ViewData["ReturnUrl"] = returnUrl;
@@ -171,7 +171,7 @@ namespace eCommerce.Controllers
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load two-factor authentication user.");
+                throw new ApplicationException($"İki faktörlü kimlik doğrulama kullanıcısı yüklenemiyor.");
             }
 
             var recoveryCode = model.RecoveryCode.Replace(" ", string.Empty);
@@ -180,18 +180,18 @@ namespace eCommerce.Controllers
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User with ID {UserId} logged in with a recovery code.", user.Id);
+                _logger.LogInformation("Kimliğe sahip kullanıcı {UserId} kurtarma koduyla giriş yaptı.", user.Id);
                 return RedirectToLocal(returnUrl);
             }
             if (result.IsLockedOut)
             {
-                _logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
+                _logger.LogWarning("Kimliğe sahip kullanıcı {UserId} hesap kilitlendi.", user.Id);
                 return RedirectToAction(nameof(Lockout));
             }
             else
             {
-                _logger.LogWarning("Invalid recovery code entered for user with ID {UserId}", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid recovery code entered.");
+                _logger.LogWarning("Kimliğe sahip kullanıcı için geçersiz kurtarma kodu girildi{ UserId}", user.Id);
+                ModelState.AddModelError(string.Empty, "Geçersiz kurtarma kodu girildi.");
                 return View();
             }
         }
@@ -237,7 +237,7 @@ namespace eCommerce.Controllers
                     });
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("Kullanıcı şifre ile yeni bir hesap oluşturdu.");
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);

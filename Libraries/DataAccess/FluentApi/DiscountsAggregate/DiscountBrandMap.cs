@@ -11,6 +11,7 @@ namespace DataAccess.FluentApi.DiscountsAggregate
     {
         public void Configure(EntityTypeBuilder<DiscountBrand> builder)
         {
+            builder.HasIndex(x => x.BrandId);
             builder.HasKey(x => x.Id);
             builder.Property(t => t.Id).UseIdentityColumn();
         }

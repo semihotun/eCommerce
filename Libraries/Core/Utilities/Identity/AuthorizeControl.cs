@@ -26,10 +26,10 @@ namespace Core.Utilities.Identity
   
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var roleClaims = _httpContextAccessor.HttpContext.User.Claims;
+            var roleClaims = _httpContextAccessor?.HttpContext?.User?.Claims;
             var isLogin = filterContext.HttpContext.Request.Cookies["UserToken"];
 
-            if (isLogin != null || roleClaims.Count() > 0)
+            if (isLogin != null || roleClaims?.Count() > 0)
             {
                 base.OnActionExecuting(filterContext);
             }

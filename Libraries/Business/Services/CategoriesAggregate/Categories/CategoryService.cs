@@ -10,6 +10,8 @@ using Entities.Concrete.CategoriesAggregate;
 using Entities.Helpers.AutoMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -57,7 +59,6 @@ namespace Business.Services.CategoriesAggregate.Categories
             _categoryRepository.SaveChanges();
             return new SuccessResult();
         }
-
         [CacheAspect]
         public async Task<IDataResult<IList<Category>>> GetAllCategories()
         {
@@ -120,6 +121,7 @@ namespace Business.Services.CategoriesAggregate.Categories
                             Selected = s.Id == request.SelectedId ? true : false
                         };
             var data = await query.ToListAsync();
+            data.Insert(0, new SelectListItem("Seçiniz", "0", request.SelectedId == 0));
             return new SuccessDataResult<IEnumerable<SelectListItem>>(data);
         }
 

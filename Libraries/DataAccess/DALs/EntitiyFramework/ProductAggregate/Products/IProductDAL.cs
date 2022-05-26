@@ -28,5 +28,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
         Task<IDataResult<List<ShowCaseProductDTO.Product>>> GetAnotherProductList();
 
         Task<IDataResult<ProductDetailVM>> GetProductDetailVM(GetProductDetailVM request);
+
+        Task<IDataResult<IEnumerable<ProductSearch>>> GetMainSearchProduct(GetMainSearchProduct request);
     }
 }

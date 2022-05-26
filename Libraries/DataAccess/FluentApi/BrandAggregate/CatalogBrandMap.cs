@@ -12,6 +12,8 @@ namespace DataAccess.FluentApi.BrandAggregate
     {
         public void Configure(EntityTypeBuilder<CatalogBrand> builder)
         {
+            builder.HasIndex(x => x.CategoryId);
+
             builder.HasKey(x => x.Id);
             builder.Property(t => t.Id).UseIdentityColumn();
         }

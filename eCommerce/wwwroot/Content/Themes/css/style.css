@@ -20,6 +20,7 @@ Table OF Contents
 ------ Lists
 ------ Sections
 ------ Breadcrumb
+------ Container
 2 > HEADER
 ------ Top header
 ------ Logo
@@ -303,6 +304,11 @@ textarea.input {
   color: #DADADA;
 }
 
+/*----------------------------*\
+	Container
+\*----------------------------*/
+
+
 /*=========================================================
 	02 -> HEADER
 ===========================================================*/
@@ -352,11 +358,20 @@ textarea.input {
 /*----------------------------*\
 	Search header
 \*----------------------------*/
+@media (max-width:992px) {
+    .header-search {
+        display: inline-block;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        width: 100% !important;
+    }
+}
+
 
 .header-search {
   display: inline-block;
   padding: 15px 0px;
-  max-width: 400px;
+  width: 400px;
 }
 
 .header-search>form {
@@ -1567,6 +1582,12 @@ textarea.input {
 	09 -> CHECKOUT PAGE
 ===========================================================*/
 
+.deleteCheckoutProductBtn {
+    cursor:pointer;
+    border: 1px solid red;
+    padding: 6px;
+    color: red;
+}
 .shiping-methods {
   margin-bottom: 30px;
 }

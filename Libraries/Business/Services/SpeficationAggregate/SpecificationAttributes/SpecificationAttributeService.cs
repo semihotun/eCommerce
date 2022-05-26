@@ -84,15 +84,7 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes
 
             return new SuccessDataResult<IPagedList<SpecificationAttribute>>(data);
         }
-        [CacheAspect]
-        public async Task<IDataResult<IList<SpecificationAttribute>>> GetSpecificationAttributesWithOptions()
-        {
-            var query = from sa in _specificationAttributeRepository.Query()
-                        where _specificationAttributeOptionRepository.Query().Any(o => o.SpecificationAttributeId == sa.Id)
-                        select sa;
 
-            return new SuccessDataResult<IList<SpecificationAttribute>>(await query.ToListAsync());
-        }
 
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
@@ -104,7 +96,7 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes
                 throw new ArgumentNullException(nameof(specificationAttribute));
 
             _specificationAttributeRepository.Delete(specificationAttribute);
-            await _specificationAttributeOptionRepository.SaveChangesAsync();
+            await _specificationAttributeRepository.SaveChangesAsync();
 
             return new SuccessResult();
         }
@@ -119,7 +111,7 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes
                 throw new ArgumentNullException(nameof(specificationAttribute));
 
             _specificationAttributeRepository.Add(specificationAttribute);
-            await _specificationAttributeOptionRepository.SaveChangesAsync();
+            await _specificationAttributeRepository.SaveChangesAsync();
 
             return new SuccessResult();
 

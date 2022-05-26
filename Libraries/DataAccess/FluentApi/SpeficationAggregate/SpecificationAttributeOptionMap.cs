@@ -10,6 +10,7 @@ namespace DataAccess.FluentApi.SpeficationAggregate
     {
         public void Configure(EntityTypeBuilder<SpecificationAttributeOption> builder)
         {
+            builder.HasIndex(x => x.SpecificationAttributeId);
             builder.HasKey(x => x.Id);
             builder.Property(t => t.Id).UseIdentityColumn();
 

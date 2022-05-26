@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "P6hKL9tmNUdm+oEXIleJmUPkR1yWXMRairouFbYAK1yo03rA7MKuzd6JZKx2wfcVgRBk7e8uOcEWKnooFGtykg==",
+  "dgSpecHash": "2ugvyd/yeJiqNMvIsNV5/tfwrD5295dtypwtPVhjj8cirsM8aauVR1rVimZPf+5VKZC1ategkpdLuj9RxIJ3jg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Tests\\Tests.csproj",
   "expectedPackageFiles": [
@@ -17,8 +17,10 @@
     "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.authentication.cookies\\2.2.0\\microsoft.aspnetcore.authentication.cookies.2.2.0.nupkg.sha512",
     "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.authentication.core\\2.2.0\\microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",
+    "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\2.2.0\\microsoft.aspnetcore.authentication.jwtbearer.2.2.0.nupkg.sha512",
     "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.authorization\\2.2.0\\microsoft.aspnetcore.authorization.2.2.0.nupkg.sha512",
     "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.authorization.policy\\2.2.0\\microsoft.aspnetcore.authorization.policy.2.2.0.nupkg.sha512",
+    "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.cookiepolicy\\2.2.8\\microsoft.aspnetcore.cookiepolicy.2.2.8.nupkg.sha512",
     "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",
     "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.13\\microsoft.aspnetcore.cryptography.internal.5.0.13.nupkg.sha512",
     "C:\\Users\\Semih\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.13\\microsoft.aspnetcore.cryptography.keyderivation.5.0.13.nupkg.sha512",

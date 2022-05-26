@@ -97,7 +97,7 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<IActionResult> SpeficationAttributeOptionListJson(SpecificationAttributeOptionVM model, DataTablesParam param)
         {
             var query = await _specificationAttributeOptionService.GetSpecificationAttributeOptionsBySpecificationAttribute(
-                new GetSpecificationAttributeOptionsBySpecificationAttribute(param.PageIndex, param.PageSize, model.SpecificationAttributeId));
+                new GetSpecificationAttributeOptionsBySpecificationAttribute(model.SpecificationAttributeId,param.PageIndex, param.PageSize));
     
 
             return ToDataTableJson(query,param);

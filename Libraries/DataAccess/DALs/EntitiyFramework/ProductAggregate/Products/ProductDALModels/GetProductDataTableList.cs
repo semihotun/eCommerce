@@ -1,4 +1,5 @@
-﻿using Entities.DTO.Product;
+﻿using Core.Utilities.DataTable;
+using Entities.DTO.Product;
 using Entities.Others;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALM
 {
     public class GetProductDataTableList
     {
-        public GetProductDataTableList(ProductDataTableFilter productDataTableDTO , DataTablesParam dataTablesParam )
+        public GetProductDataTableList(ProductDataTableFilter productDataTableDTO , DTParameters dataTablesParam )
         {
             this.ProductDataTableDTO = productDataTableDTO;
             this.DataTablesParam = dataTablesParam;
@@ -19,7 +20,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALM
         }
 
         public ProductDataTableFilter ProductDataTableDTO { get; set; }
-        public DataTablesParam DataTablesParam { get; set; }
+        public DTParameters DataTablesParam { get; set; }
 
     }
 }

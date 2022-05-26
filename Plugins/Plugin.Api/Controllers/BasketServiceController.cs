@@ -36,11 +36,41 @@ using Entities.Concrete.BasketAggregate;
  
  
  [Produces("application/json", "text/plain")] 
- [HttpPost("basketadded")] 
+ [HttpPost("addbasket")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
- public async Task<IActionResult> BasketAdded ([FromBody]Basket basket) { 
+ public async Task<IActionResult> AddBasket ([FromBody]Basket basket) { 
  
- var result = await _basketService.BasketAdded(basket); 
+ var result = await _basketService.AddBasket(basket); 
+ 
+ if(result.Success) 
+ return Ok(result.Success); 
+ else 
+ return BadRequest(result.Message); 
+ 
+ } 
+ 
+ 
+ [Produces("application/json", "text/plain")] 
+ [HttpPost("deletebasketproduct")] 
+ [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
+ public async Task<IActionResult> DeleteBasketProduct ([FromBody]Basket basket) { 
+ 
+ var result = await _basketService.DeleteBasketProduct(basket); 
+ 
+ if(result.Success) 
+ return Ok(result.Success); 
+ else 
+ return BadRequest(result.Message); 
+ 
+ } 
+ 
+ 
+ [Produces("application/json", "text/plain")] 
+ [HttpPost("updatebasketproductpiece")] 
+ [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
+ public async Task<IActionResult> UpdateBasketProductPiece ([FromBody]Basket basket) { 
+ 
+ var result = await _basketService.UpdateBasketProductPiece(basket); 
  
  if(result.Success) 
  return Ok(result.Success); 

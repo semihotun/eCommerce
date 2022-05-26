@@ -1,5 +1,4 @@
-﻿@model Entities.DTO.Product.Checkout
-@{
+﻿@{
     ViewBag.Title = "Checkout";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -30,61 +29,46 @@
                         <div class="section-title">
                             <h3 class="title">Siparişler</h3>
                         </div>
-                        <table class="shopping-cart-table table">
-                            <tbody>
+                        <div ng-controller="CheckOut" ng-init="GetCheckout()">
+                            <table class="shopping-cart-table table">
+                                <tbody>
+                                    <tr ng-repeat="item in CheckoutData.CheckoutProductList">
+                                        <td><strong>{{item.ProductModel.ProductName}}  {{item.ProductCombinationText}}</strong></td>
+                                        @*<td class="thumb"><img src="@item.ProductPhotoList?.First()?.ProductPhotoName" alt=""></td>*@
+                                        <td class="details">
+                                        </td>
+                                        <td class=" text-center">
+                                            Stokda
+                                            {{item.ProductStock.ProductStockPiece}}
+                                            <br /> adet kaldı
+                                        </td>
+                                        <td class="text-center">Adet Fiyatı {{item.ProductStock.ProductPrice}} TL</td>
+                                        <td class="qty text-center">
+                                            <input class="input" type="number" value="{{item.ProductPiece}}" max="{{item.ProductStock.ProductStockPiece}}" min="0"  ng-model="ProductStockPiece" ng-change="ChangePieceProduct(item.ProductModel.Id,item.ProductModel.ProductAttributeCombination.Id,ProductStockPiece  )" />
 
-                                @if (Model.CheckoutProductList != null)
-                                {
-                                    foreach (var item in Model.CheckoutProductList)
-                                    {
-                                        <tr>
-                                            <td><strong>@item.ProductModel.ProductName  @item.ProductCombinationText</strong></td>
-
-                                            @*<td class="thumb"><img src="@item.ProductPhotoList?.First()?.ProductPhotoName" alt=""></td>*@
-                                            <td class="details">
-                                            </td>
-                                            <td class=" text-center">
-                                                Stokda
-                                                @item.ProductStock.ProductStockPiece
-                                                <br /> adet kaldı
-                                            </td>
-
-
-
-                                            <td class="text-center">Adet Fiyatı @item.ProductStock.ProductPrice TL</td>
-
-
-                                            <td class="qty text-center">
-                                                <input class="input" type="number" value="@item.ProductPiece" max="@item.ProductStock.ProductStockPiece" min="0">
-
-                                            </td>
-
-                                            <td>Toplam Fiyat <span class="price">@item.ProductPieceTotalPrice</span> TL</td>
-
-                                        </tr>
-
-                                    }
-                                }
-                                else
-                                {
-                                    <tr>
+                                        </td>
+                                        <td>Toplam Fiyat <span class="price">{{item.ProductPieceTotalPrice}}</span> TL</td>
+                                        <td><span class="deleteCheckoutProductBtn" ng-click="DeleteCheckoutProduct(item.ProductModel.Id,item.ProductModel.ProductAttributeCombination.Id,1)">X</span></td>
+                                    </tr>
+                                    <tr ng-if="CheckoutData.CheckoutProductList.length == 0">
                                         <td colspan="7" style="text-align:center;background-color:#F6F7F8;">Sepetiniz boş</td>
                                     </tr>
-                                }
-                            </tbody>
+                                </tbody>
 
-                        </table>
-                        <table class="shopping-cart-table table">
-                            <tfoot style="float:right">
-                                <tr>                            
-                                    <th>Toplam Tutar</th>
-                                    <th colspan="2" class="total">@Model.AllProductTotalPrice TL</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                        <div class="pull-right">
-                            <button class="primary-btn">Devam Et</button>
+                            </table>
+                            <table class="shopping-cart-table table">
+                                <tfoot style="float:right">
+                                    <tr>
+                                        <th>Toplam Tutar</th>
+                                        <th colspan="2" class="total">{{CheckoutData.AllProductTotalPrice}} TL</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div class="pull-right">
+                                <button class="primary-btn">Devam Et</button>
+                            </div>
                         </div>
+                       
                     </div>
 
                 </div>

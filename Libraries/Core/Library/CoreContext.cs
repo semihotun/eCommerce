@@ -8,6 +8,7 @@ namespace Core.Library
 {
     public class CoreContext : IdentityDbContext<MyUser, MyRole, int, MyClaim, MyUserRole, MyLogin, MyRoleClaim, MyUserToken>
     {
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var sqlServerOptionsExtension = optionsBuilder.Options.

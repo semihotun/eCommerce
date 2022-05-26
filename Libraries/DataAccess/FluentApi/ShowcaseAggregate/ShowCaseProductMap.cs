@@ -11,6 +11,7 @@ namespace DataAccess.FluentApi.ShowcaseAggregate
     {
         public void Configure(EntityTypeBuilder<ShowCaseProduct> builder)
         {
+            builder.HasIndex(x => new { x.ProductId, x.CombinationId });
             builder.HasKey(x => x.Id);
             builder.Property(t => t.Id).UseIdentityColumn();
         }

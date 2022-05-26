@@ -100,6 +100,7 @@ namespace Business.Services.BrandAggregate.Brands
                             Selected = s.Id == request.SelectedId ? true : false
                         };
             var data = await query.ToListAsync();
+            data.Insert(0, new SelectListItem("Seçiniz", "0", request.SelectedId == 0));
             return new SuccessDataResult<IEnumerable<SelectListItem>>(data);
         }
         #endregion

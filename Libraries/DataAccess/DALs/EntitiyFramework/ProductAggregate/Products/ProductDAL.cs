@@ -2,10 +2,10 @@
 using Core.Utilities.Results;
 using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeFormatter;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.CompiledQueries;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels;
 using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.ProductAggregate;
-using Entities.DTO;
 using Entities.DTO.Product;
 using Entities.DTO.ShowCase;
 using Entities.Enum;
@@ -42,9 +42,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                         from pacljf in paclj.DefaultIfEmpty()
 
                         let productStockGroup = (from ps in Context.ProductStock
-                                                orderby ps.CreateTime
-                                                where ps.ProductId == p.Id && (p.ProductStockTypeId == (int)ProductStockTypeEnum.VaryasyonUrun ? ps.CombinationId == pacljf.Id : ps.CombinationId == null)
-                                                select ps).AsEnumerable()
+                                                 orderby ps.CreateTime
+                                                 where ps.ProductId == p.Id && (p.ProductStockTypeId == (int)ProductStockTypeEnum.VaryasyonUrun ? ps.CombinationId == pacljf.Id : ps.CombinationId == null)
+                                                 select ps).AsEnumerable()
 
                         select new ProductDataTableJson
                         {
@@ -55,6 +55,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                             ProductAttributeCombination = pacljf,
                             ProductStockList = productStockGroup
                         };
+            query=query.ApplyDataTableFilter(request.DataTablesParam);
 
             var result = await query.ToPagedListAsync(request.DataTablesParam.PageIndex, request.DataTablesParam.PageSize);
             return new SuccessDataResult<IPagedList<ProductDataTableJson>>(result);
@@ -65,125 +66,24 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
         //CombinationPhoto,ProductStock
         public async Task<IDataResult<ProductDetailDTO>> GetHomeProductDetail(GetHomeProductDetail request)
         {
-            var query = from p in Context.Product
-                        where p.Id == request.ProductId
-                        join b in Context.Brand on p.BrandId equals b.Id
-                        let dblg =(from dbl in Context.DiscountBrand where dbl.BrandId == p.BrandId select dbl).AsEnumerable()
-
-                        let pmg = (from pm in Context.ProductAttributeMapping
-                                  where pm.ProductId == p.Id
-                                  let pmavg = (from pmav in Context.ProductAttributeValue 
-                                              where pmav.ProductAttributeMappingId == pm.Id select pmav).AsEnumerable()
-                                  select new ProductDetailDTO.ProductAttributeMapping()
-                                  {
-                                      Id = pm.Id,
-                                      ProductAttributeId = pm.ProductAttributeId,
-                                      TextPrompt = pm.TextPrompt,
-                                      IsRequired = pm.IsRequired,
-                                      AttributeControlTypeId = pm.AttributeControlTypeId,
-                                      ProductAttributeValueList = pmavg
-                                  }).AsEnumerable()
-
-                        let pacg =(from pac in Context.ProductAttributeCombination
-                            where pac.ProductId == p.Id
-
-                            let pacpsg = (from pacps in Context.ProductStock
-                                         orderby pacps.CreateTime
-                                         where pac.Id == pacps.CombinationId
-                                         && (pacps.AllowOutOfStockOrders == true || pacps.ProductStockPiece > 0)
-                                         select pacps).First()
-                            select new ProductDetailDTO.ProductAttributeCombination
-                            {
-                                Id = pac.Id,
-                                AttributesXml = pac.AttributesXml,
-                                Gtin = pac.Gtin,
-                                ManufacturerPartNumber = pac.ManufacturerPartNumber,
-                                Sku = pac.Sku,
-                                ProductStockModel = pacpsg
-                            }).AsEnumerable()
-
-                        join c in Context.Category on p.CategoryId equals c.Id
-                        //let dclg = from dcl in Context.DiscountCategory where dcl.CategoryId == p.CategoryId select dcl
-
-                        let pasog = (from psa in Context.ProductSpecificationAttribute
-                                    where psa.ProductId == p.Id
-                                    join sao in Context.SpecificationAttributeOption on psa.SpecificationAttributeOptionId equals sao.Id
-                                    join sa in Context.SpecificationAttribute on psa.AttributeTypeId equals sa.Id
-                                    select new ProductSpecificationAttributeDTO
-                                    {
-                                        Id = psa.Id,
-                                        AllowFiltering = psa.AllowFiltering,
-                                        ShowOnProductPage = psa.ShowOnProductPage,
-                                        SpecificationAttributeOptionId = psa.Id,
-                                        SpecificationAttributeOptionName = sao.Name,
-                                        DisplayOrder = psa.DisplayOrder,
-                                        SpeficationAtributeTypeName = sa.Name
-                                    }).AsEnumerable()
-
-                        let pcg = (from pc in Context.Comment
-                                  where pc.IsApproved == true && pc.Productid == p.Id
-                                  join u in Context.Users on pc.UserId equals u.Id
-                                  select new ProductDetailDTO.Comment()
-                                  {
-                                      CommentInfo = pc,
-                                      User = u
-                                  }).AsEnumerable()
-
-                        let pplg = (from ppl in Context.ProductPhoto
-                                   where ppl.ProductId == p.Id
-                                   join ppcp in Context.CombinationPhoto on ppl.Id equals ppcp.PhotoId into ppcplj
-                                   from ppcpljg in ppcplj.DefaultIfEmpty()
-                                   where request.CombinationId != 0 ? ppcpljg.CombinationId == request.CombinationId : true == true
-                                   select ppl).AsEnumerable()
-
-                        let productStockGroup = (from ps in Context.ProductStock.DefaultIfEmpty()
-                                                orderby ps.CreateTime
-                                                where ps.ProductId == p.Id && (ps.AllowOutOfStockOrders == true || ps.ProductStockPiece > 0) &&
-
-                                                (p.ProductStockTypeId == (int)ProductStockTypeEnum.VaryasyonUrun
-                                                ? pacg.Count() > 0 && request.CombinationId == 0 ? ps.CombinationId == pacg.First().Id : ps.CombinationId == request.CombinationId
-                                                : ps.CombinationId == 0)
-
-
-                                                select ps).First()
-
-                        select new ProductDetailDTO()
-                        {
-                            ProductModel = p,
-                            BrandModel = new ProductDetailDTO.Brand()
-                            {
-                                BrandInfo = b,
-                                DiscountBrandList = dblg,
-                            },
-                            CategoryModel = new ProductDetailDTO.Category()
-                            {
-                                CategoryInfo = c,
-                            },
-                            ProductPhotoList = pplg,
-                            ProductSpecificationAttributeList = pasog,
-                            CommentList = pcg,
-                            ProductStock = productStockGroup,
-                            ProductAttributeMappingList = pmg,
-                            ProductAttributeCombinationList = pacg
-                        };
-
-            var result = await query.FirstOrDefaultAsync();
-            return new SuccessDataResult<ProductDetailDTO>(result);
+            var data = await GetHomeProductDetailCQ.Get(Context, request.ProductId, request.CombinationId);
+            return new SuccessDataResult<ProductDetailDTO>(data);
         }
 
         //Product,ProductPhoto,ProductStock
         public async Task<IDataResult<List<ShowCaseProductDTO.Product>>> GetAnotherProductList()
         {
             var anotherProductGroup = from ap in Context.Product.OrderBy(x => Guid.NewGuid()).Take(4)
-                                      let appg = (from app in Context.ProductPhoto where ap.Id == app.ProductId 
+                                      let appg = (from app in Context.ProductPhoto
+                                                  where ap.Id == app.ProductId
                                                   select app).AsEnumerable()
                                       let anotherProductStockGroup = (from aps in Context.ProductStock
-                                                                     orderby aps.CreateTime
-                                                                     where aps.ProductId == ap.Id &&
-                                                                           (aps.AllowOutOfStockOrders == false
-                                                                               ? aps.ProductStockPiece > 0
-                                                                               : aps.ProductStockPiece != null)
-                                                                     select aps).First()
+                                                                      orderby aps.CreateTime
+                                                                      where aps.ProductId == ap.Id &&
+                                                                            (aps.AllowOutOfStockOrders == false
+                                                                                ? aps.ProductStockPiece > 0
+                                                                                : aps.ProductStockPiece != null)
+                                                                      select aps).First()
                                       select new ShowCaseProductDTO.Product()
                                       {
                                           Id = ap.Id,
@@ -200,14 +100,15 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
         public async Task<IDataResult<Checkout>> GetCheckout(GetCheckout request)
         {
             var result = new Checkout();
-            var checkoutProduct = new List<CheckoutProduct>();
+            var checkoutProduct = new List<Task<CheckoutProduct>>();
             foreach (var item in request.Basket)
             {
                 var query = from p in Context.Product
                             where p.Id == item.ProductId
                             join b in Context.Brand on p.BrandId equals b.Id
 
-                            let dblg = (from dbl in Context.DiscountBrand where dbl.BrandId == p.BrandId 
+                            let dblg = (from dbl in Context.DiscountBrand
+                                        where dbl.BrandId == p.BrandId
                                         select dbl).AsEnumerable()
 
                             join pac in Context.ProductAttributeCombination on p.Id equals pac.ProductId into paclj
@@ -217,21 +118,21 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                             join c in Context.Category on p.CategoryId equals c.Id
                             //let dclg = from dcl in Context.DiscountCategory where dcl.CategoryId == p.CategoryId select dcl
 
-                            let pplg =(from ppl in Context.ProductPhoto.DefaultIfEmpty()
-                                       where ppl.ProductId == p.Id
-                                       join ppcp in Context.CombinationPhoto on ppl.Id equals ppcp.PhotoId into ppcplj
-                                       from ppcpljg in ppcplj.DefaultIfEmpty()
-                                       where pacljf != null ? ppcpljg.CombinationId == pacljf.Id : true == true
-                                       select ppl).AsEnumerable()
+                            let pplg = (from ppl in Context.ProductPhoto.DefaultIfEmpty()
+                                        where ppl.ProductId == p.Id
+                                        join ppcp in Context.CombinationPhoto on ppl.Id equals ppcp.PhotoId into ppcplj
+                                        from ppcpljg in ppcplj.DefaultIfEmpty()
+                                        where pacljf != null ? ppcpljg.CombinationId == pacljf.Id : true == true
+                                        select ppl).AsEnumerable()
 
 
                             let productStockGroup = (from ps in Context.ProductStock
-                                                    orderby ps.CreateTime
-                                                    where ps.ProductId == p.Id && ps.CombinationId == item.CombinationId &&
-                                                          (ps.AllowOutOfStockOrders == false
-                                                              ? ps.ProductStockPiece > 0
-                                                              : ps.ProductStockPiece != null)
-                                                    select ps).First()
+                                                     orderby ps.CreateTime
+                                                     where ps.ProductId == p.Id && ps.CombinationId == item.CombinationId &&
+                                                           (ps.AllowOutOfStockOrders == false
+                                                               ? ps.ProductStockPiece > 0
+                                                               : ps.ProductStockPiece != null)
+                                                     select ps).First()
 
                             select new CheckoutProduct()
                             {
@@ -248,18 +149,21 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                                 ProductPhotoList = pplg,
                                 ProductStock = productStockGroup,
                                 ProductAttributeCombination = pacljf,
-                                ProductCombinationText = _productAttributeFormatter.XmlCatalogProductString(pacljf.AttributesXml).Result
+                                ProductCombinationText = _productAttributeFormatter.XmlCatalogProductString(pacljf.AttributesXml).Result,
+                                ProductPiece = item.ProductPiece,
+                                ProductPieceTotalPrice = (double)(Convert.ToDouble(item.ProductPiece) * productStockGroup.ProductPrice)
                             };
 
-                var product = await query.FirstOrDefaultAsync();
-                product.ProductPiece = item.ProductPiece;
-                product.ProductPieceTotalPrice = (double)(Convert.ToDouble(item.ProductPiece) * product.ProductStock.ProductPrice);
-
+                var product =  query.FirstOrDefaultAsync();
                 checkoutProduct.Add(product);
             }
-            result.CheckoutProductList = checkoutProduct;
-            result.AllProductTotalPrice = checkoutProduct.Select(x => x.ProductPieceTotalPrice).Sum();
 
+            await Task.WhenAll(checkoutProduct.AsEnumerable()).ContinueWith((t) =>
+            {
+                result.CheckoutProductList = checkoutProduct.Select(x => x.Result);
+                result.AllProductTotalPrice = result.CheckoutProductList.Select(x => x.ProductPieceTotalPrice).Sum();
+            });
+ 
             return new SuccessDataResult<Checkout>(result);
         }
 
@@ -270,16 +174,16 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
             var result = from p in Context.Product
                          where p.Id == request.ProductId
 
-                         let cg = from c in Context.Comment
-                                  where p.Id == c.Productid && c.IsApproved==request.IsApproved
-                                  select c
+                         let cg = (from c in Context.Comment
+                                  where p.Id == c.Productid && c.IsApproved == request.IsApproved
+                                  select c).AsEnumerable()
 
-                         let ppg = from pp in Context.ProductPhoto where p.Id == pp.ProductId select pp
+                         let ppg = (from pp in Context.ProductPhoto where p.Id == pp.ProductId select pp).FirstOrDefault()
                          select new ProductCommentDTO
                          {
                              CommentList = cg.ToPagedList(request.PageIndex, request.PageSize),
                              Product = p,
-                             ProductPhoto = ppg.FirstOrDefault(),
+                             ProductPhoto = ppg,
                              Averagecount = Math.Round(cg.Average(x => x.Rating), 2)
                          };
 
@@ -311,6 +215,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                     filterfinalExpression = Expression.And(filterfinalExpression, filterExpression);
                 }
             }
+            var lamdaFinalExpression = Expression.Lambda<Func<ProductSpecificationAttribute, bool>>(filterfinalExpression, filterparameter);
 
             var query = from p in Context.Product
                         join b in Context.Brand on p.BrandId equals b.Id
@@ -319,30 +224,31 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                         join pac in Context.ProductAttributeCombination on p.Id equals pac.ProductId into paclj
                         from pacljf in paclj.DefaultIfEmpty()
 
-                        let productStockGroup =(from ps in Context.ProductStock.DefaultIfEmpty().Take(1)
-                                                orderby ps.CreateTime
-                                                where ps.ProductId == p.Id
-                                                //&& (ps.ProductStockPiece >=0 || ps.AllowOutOfStockOrders==true) 
-                                                && (p.ProductStockTypeId == (int)ProductStockTypeEnum.VaryasyonUrun
-                                                ? ps.CombinationId == pacljf.Id
-                                                : true == true)
-                                                select ps).First()
+                        let productStockGroup = (from ps in Context.ProductStock.DefaultIfEmpty().Take(1)
+                                                 orderby ps.CreateTime
+                                                 where ps.ProductId == p.Id
+                                                 //&& (ps.ProductStockPiece >=0 || ps.AllowOutOfStockOrders==true) 
+                                                 && (p.ProductStockTypeId == (int)ProductStockTypeEnum.VaryasyonUrun
+                                                 ? ps.CombinationId == pacljf.Id
+                                                 : true == true)
+                                                 select ps).First()
 
                         let pplg = (from ppl in Context.ProductPhoto.DefaultIfEmpty()
-                                   where ppl.ProductId == p.Id
-                                   join ppcp in Context.CombinationPhoto on ppl.Id equals ppcp.PhotoId into ppcplj
-                                   from ppcpljg in ppcplj.DefaultIfEmpty()
-                                   where pacljf != null ? ppcpljg.CombinationId == pacljf.Id : true == true
-                                   select ppl).First()
+                                    where ppl.ProductId == p.Id
+                                    join ppcp in Context.CombinationPhoto on ppl.Id equals ppcp.PhotoId into ppcplj
+                                    from ppcpljg in ppcplj.DefaultIfEmpty()
+                                    where pacljf != null ? ppcpljg.CombinationId == pacljf.Id : true == true
+                                    select ppl).First()
+
 
                         let psg = (from pse in Context.ProductSpecificationAttribute
                                    where pse.ProductId == p.Id
-                                   select pse).Any(Expression.Lambda<Func<ProductSpecificationAttribute, bool>>
-                                   (filterfinalExpression, filterparameter))
+                                   select pse).Any(lamdaFinalExpression)
 
                         select new Entities.DTO.Product.CatalogProduct
                         {
                             Id = p.Id,
+                            CreatedOnUtc=p.CreatedOnUtc.ToString("MM/dd/yyyy"),
                             ProductName = p.ProductName,
                             BrandName = b.BrandName,
                             BrandId = b.Id,
@@ -354,7 +260,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                             ProductPhotoModel = pplg,
                         };
             query = query.Where(x => x.SpeficationIn == true);
-
 
 
             if (catalog.SelectedBrand != null)
@@ -446,7 +351,23 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
             return new SuccessDataResult<ProductDetailVM>(model);
         }
 
+        public async Task<IDataResult<IEnumerable<ProductSearch>>> GetMainSearchProduct(GetMainSearchProduct request)
+        {
+            try
+            {
+                var data = GetMainSearchProductCompiledQuery.Get(Context, request.PageSize, request.SearchProductName.ToUpper());
+                return new SuccessDataResult<IEnumerable<ProductSearch>>(data);
+            }
+            catch (Exception ex)
+            {
+                if (request.SearchProductName != null)
+                {
+                    return new SuccessDataResult<IPagedList<ProductSearch>>();
+                }
+                throw ex;
+            }
 
+        }
 
     }
 }

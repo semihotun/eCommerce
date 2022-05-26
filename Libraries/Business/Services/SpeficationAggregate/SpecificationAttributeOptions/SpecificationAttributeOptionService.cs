@@ -35,6 +35,7 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions
         #endregion
 
         #region method
+
         [CacheAspect]
         public async Task<IDataResult<SpecificationAttributeOption>> GetSpecificationAttributeOptionById(GetSpecificationAttributeOptionById request)
         {

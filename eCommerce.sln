@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Base", "Plugins\Plug
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Iyzico", "Plugins\Plugin.Iyzico\Plugin.Iyzico.csproj", "{B2ED26B6-D7D2-4BC3-861C-47920D0164AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Api", "Plugins\Plugin.Api\Plugin.Api.csproj", "{4115A101-09B8-4210-B7B3-5D62794FDCFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Api", "Plugins\Plugin.Api\Plugin.Api.csproj", "{4115A101-09B8-4210-B7B3-5D62794FDCFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

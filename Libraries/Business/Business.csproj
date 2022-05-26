@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>netstandard2.1</TargetFramework>
-	</PropertyGroup>
+ <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Autofac" Version="6.1.0" />
@@ -20,7 +20,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="Services\ProductAggregate\ProductLikes\CompiledQueries\" />
+		<Folder Include="Services\ProductAggregate\ProductLikes\Validator\" />
+		<Folder Include="Services\ProductAggregate\ProductLikes\ProductLikesModel\" />
 		<Folder Include="Services\ProductAggregate\ProductStockTypes\Validator\" />
+		<Folder Include="Services\ProductAggregate\Products\CompiledQueries\" />
 		<Folder Include="Services\SpeficationAggregate\SpecificationAttributes\Validator\" />
 		<Folder Include="Services\UserIdentityAggregate\Users\" />
 	</ItemGroup>

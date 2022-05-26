@@ -10,9 +10,8 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Controllers
 {
-    public class CommentController : Controller
+    public class CommentController : BaseController
     {
-
         private readonly IProductDAL _productDAL;
         private readonly ICommentService _commentservice;
         private readonly UserManager<MyUser> _userManager;
@@ -35,20 +34,21 @@ namespace eCommerce.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult CommentAdded(ProductDetailVM entitiy, string Rating = "")
+        public async Task<IActionResult> CommentAdded(ProductDetailVM entitiy, string Rating = "")
         {
-            var user = _userManager.GetUserAsync(User);
+            var user =await  _userManager.GetUserAsync(User);
 
             var model = entitiy.CommentModel;
             model.IsApproved = false;
             model.CreatedOnUtc = DateTime.Now;
-            model.UserId = user.Result.Id;
+            model.UserId = user.Id;
 
             if (Rating != null)
                 model.Rating = int.Parse(Rating);
 
-            _commentservice.AddComment(model);
-            return RedirectToAction("ProductDetail", "Home", new { productId = model.Productid, combinationId = entitiy.CombinationId });
+            ResponseAlert(await _commentservice.AddComment(model));
+
+            return RedirectToAction("ProductDetail", "ProductDetail", new { productId = model.Productid, combinationId = entitiy.CombinationId });
         }
     }
 }

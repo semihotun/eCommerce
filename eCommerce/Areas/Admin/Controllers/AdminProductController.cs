@@ -18,6 +18,7 @@ using Business.Services.ProductAggregate.ProductStockTypes;
 using Business.Services.ProductAggregate.ProductStockTypes.ProductStockTypeServiceModel;
 using Business.Services.SpeficationAggregate.SpecificationAttributes;
 using Business.Services.SpeficationAggregate.SpecificationAttributes.SpecificationAttributeServiceModel;
+using Core.Utilities.DataTable;
 using Core.Utilities.Helper;
 using Core.Utilities.Identity;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeCombinations;
@@ -164,7 +165,7 @@ namespace eCommerce.Areas.Admin.Controllers
 
             return View(model);
         }
-        public async Task<IActionResult> ProductListJson(ProductDataTableFilter model, DataTablesParam param)
+        public async Task<IActionResult> ProductListJson(ProductDataTableFilter model, DTParameters param)
         {
             var result = await _productDAL.GetProductDataTableList(
                 new GetProductDataTableList(model, param));

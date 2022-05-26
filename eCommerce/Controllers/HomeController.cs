@@ -1,6 +1,5 @@
 ﻿using Business.Services.BasketAggregate.Baskets;
 using Business.Services.ProductAggregate.Products;
-using Business.Services.ProductAggregate.Products.ProductServiceModel;
 using Business.Services.SliderAggregate.Sliders;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels;
@@ -8,12 +7,13 @@ using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices;
 using Entities.Concrete.BasketAggregate;
 using Entities.ViewModels.WebViewModel.Home;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace eCommerce.Controllers
 {
     //[Authorize(Roles ="Admin")]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
 
         #region Fields
@@ -45,14 +45,14 @@ namespace eCommerce.Controllers
 
         public async Task<PartialViewResult> Search(string searchKey)
         {
+            var productList = _productDAL.GetMainSearchProduct(new GetMainSearchProduct(searchProductName: searchKey, pageSize: 6));
+            await Task.WhenAll(productList);
+
             var viewModel = new SearchVM
             {
-                SearchKey = searchKey
+                SearchKey = searchKey,
+                ProductList = productList.Result.Data
             };
-            var productList = _productService.GetMainSearchProduct(new MainSearchProduct(searchProductName: searchKey, pageSize: 6));
-            await Task.WhenAll(productList);
-            viewModel.ProductList = productList.Result.Data;
-
             return PartialView("ResultView", viewModel);
         }
 
@@ -73,9 +73,9 @@ namespace eCommerce.Controllers
 
         public async Task<IActionResult> BasketAdded(Basket basket)
         {
-            var result=await _basketService.BasketAdded(basket);
+            var result = await _basketService.AddBasket(basket);
 
-            return RedirectToAction("Index");
+            return Json(result);
         }
         public async Task<IActionResult> Basket()
         {
@@ -83,13 +83,33 @@ namespace eCommerce.Controllers
 
             return Json(result);
         }
-
-        public async Task<IActionResult> Checkout()
+        public async Task<IActionResult> Checkout() => View();
+        public async Task<IActionResult> GetCheckout()
         {
             var basket = (await _basketService.GetBasket()).Data;
             var result = (await _productDAL.GetCheckout(new GetCheckout(basket))).Data;
-           
-            return View(result);
+
+            return Json(result, new JsonSerializerSettings());
+        }
+        public async Task<IActionResult> DeleteProductCheckout(Basket basket)
+        {
+            await _basketService.DeleteBasketProduct(basket);
+
+            var basketData = (await _basketService.GetBasket()).Data;
+            var result = (await _productDAL.GetCheckout(new GetCheckout(basketData))).Data;
+
+            return Json(result, new JsonSerializerSettings());
+        }
+        public async Task<IActionResult> UpdateProductPiece(Basket basket)
+        {
+            var result = await _basketService.UpdateBasketProductPiece(basket);
+
+            return Json(result, new JsonSerializerSettings());
+        }
+
+        public async Task<IActionResult> LikeProduct()
+        {
+            return Json(null,new JsonSerializerSettings());
         }
         #endregion
 

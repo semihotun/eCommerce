@@ -23,29 +23,31 @@ namespace Business.Jobs.Quartz.CatalogAggregate
 
         public async Task Execute(IJobExecutionContext context)
         {
-            var productsGroup = (from p in _productDAL.Query().AsEnumerable()
-                                 group p by p.CategoryId into pg
-                                 select pg);
-
-            var catalogList = new List<CatalogBrand>();
-            foreach (var category in productsGroup)
+            var productsGroup = _productDAL.Query().GroupBy(x => new { x.BrandId, x.CategoryId })
+            .Select(gcs => new
             {
-                foreach (var item in category.Distinct())
-                {
-                    var brand = _brandDal.Query().Where(x => x.Id == item.BrandId).FirstOrDefault();
+                BrandId = gcs.Key.BrandId,
+                CategoryId = gcs.Key.CategoryId
+            });
 
-                    var isAddedBrand = _catalogBrandDal.Query().Where(x => x.CategoryId == category.Key.Value)
-                        .Any(x => x.BrandName == brand.BrandName);
+            //Olmayan markaları Ekle
+            var catalogList = new List<CatalogBrand>();
+            foreach (var item in productsGroup)
+            {
+                var brand = _brandDal.Query().Where(x => x.Id == item.BrandId).FirstOrDefault();
 
-                    if (!isAddedBrand && catalogList.Any(x=>x.CategoryId == item.CategoryId && x.BrandName == brand.BrandName) == false)
-                        catalogList.Add(new CatalogBrand
-                        {
-                            BrandName = brand.BrandName,
-                            CategoryId = (int)item.CategoryId,
-                            BrandId = brand.Id
-                        });
-                }
+                var isAddedBrand = _catalogBrandDal.Query().Where(x => x.CategoryId == item.CategoryId)
+                    .Any(x => x.BrandId == brand.Id);
+
+                if (!isAddedBrand && catalogList.Any(x => x.CategoryId == item.CategoryId && x.BrandId == brand.Id) == false)
+                    catalogList.Add(new CatalogBrand
+                    {
+                        BrandName = brand.BrandName,
+                        CategoryId = (int)item.CategoryId,
+                        BrandId = brand.Id
+                    });
             }
+
             _catalogBrandDal.AddRange(catalogList);
             _catalogBrandDal.SaveChanges();
 

@@ -11,9 +11,9 @@ using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecificationAttr
 using DataAccess.DALs.EntitiyFramework.SpeficationAggregate.SpecificationAttributeOptions;
 using Entities.Concrete.ProductAggregate;
 using Entities.Helpers.AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using X.PagedList;
 namespace Business.Services.ProductAggregate.Products
@@ -69,6 +69,8 @@ namespace Business.Services.ProductAggregate.Products
         "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
         public async Task<IResult> AddProduct(Product product)
         {
+            product.CreatedOnUtc = DateTime.Now;
+            product.ProductNameUpper = product.ProductName.ToUpper();
             if (product == null)
                 return new ErrorResult();
 
@@ -77,18 +79,6 @@ namespace Business.Services.ProductAggregate.Products
 
             return new SuccessResult();
         }
-        [CacheAspect]
-        public async Task<IDataResult<IPagedList<Product>>> GetMainSearchProduct(MainSearchProduct request)
-        {
-            var query = _productRepository.Query();
-
-            if (request.SearchProductName != null)
-                query = query.Where(x => x.ProductName.ToUpper().Contains(request.SearchProductName.ToUpper()));
-
-            var data = await query.ToPagedListAsync(1, request.PageSize);
-
-            return new SuccessDataResult<IPagedList<Product>>(data);
-        }
 
         [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
@@ -96,6 +86,7 @@ namespace Business.Services.ProductAggregate.Products
         "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
         public async Task<IResult> UpdateProduct(Product product)
         {
+            product.CreatedOnUtc = DateTime.Now;
             var query = await _productRepository.GetAsync(x => x.Id == product.Id);
             var data = query.MapTo<Product>(product);
             _productRepository.Update(query);

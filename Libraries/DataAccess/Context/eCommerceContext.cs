@@ -22,6 +22,7 @@ namespace DataAccess.Context
 {
     public class eCommerceContext : CoreContext
     {
+       
         private DbContextOptions<eCommerceContext> dbContextOptions;
         protected static DbContextOptions<T> ChangeOptionsType<T>(DbContextOptions options) where T : DbContext
         {
@@ -30,27 +31,22 @@ namespace DataAccess.Context
             if (sqlExt == null)
                 throw new Exception("Failed to retrieve SQL connection string for base Context");
 
-            var ssq = ((SqlServerOptionsExtension)sqlExt).ConnectionString;
-
             return new DbContextOptionsBuilder<T>()
                         .Options;
         }
-
         public eCommerceContext(DbContextOptions<eCommerceContext> options) : base(ChangeOptionsType<CoreContext>(options))
         {
             dbContextOptions = options;
         }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var sqlServerOptionsExtension = dbContextOptions.
                   FindExtension<SqlServerOptionsExtension>();
 
             var connectionString = sqlServerOptionsExtension.ConnectionString;
-
+          
             optionsBuilder.UseSqlServer(connectionString);               
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var assm = Assembly.GetExecutingAssembly();
@@ -58,8 +54,8 @@ namespace DataAccess.Context
 
             base.OnModelCreating(modelBuilder);
         }
-
         #region DBSets
+        public virtual DbSet<ProductLike> ProductLike { get; set; }
         public virtual DbSet<Address> Addres { get; set; }
         public virtual DbSet<ProductShipmentInfo> ProductShipmentInfo { get; set; }
         public virtual DbSet<Brand> Brand { get; set; }

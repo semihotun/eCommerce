@@ -9,15 +9,22 @@
  * Included libraries:
  *   DataTables 1.10.16
  */
-
+.dt-button {
+    color: #fff;
+    background-color: #344675;
+    border-color: #344675;
+    border: 0px;
+    margin: 0px;
+    padding: 9px;
+}
 table.dataTable {
-  clear: both;
-  width: 100%!important;
-  margin-top: 6px !important;
-  margin-bottom: 6px !important;
-  max-width: none !important;
-  border-collapse: separate !important;
-  border: none;
+    clear: both;
+    width: 100% !important;
+    margin-top: 6px !important;
+    margin-bottom: 6px !important;
+    max-width: none !important;
+    border-collapse: separate !important;
+    border: none;
 }
 table.dataTable td,
 table.dataTable th {

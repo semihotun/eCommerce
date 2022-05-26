@@ -8,13 +8,15 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions.S
     {
         public GetSpecificationAttributeOptionsBySpecificationAttribute(int specificationAttributeId, int pageIndex, int pageSize)
         {
-            SpecificationAttributeId = 0;
-            PageIndex = 1;
-            PageSize = int.MaxValue;
+            SpecificationAttributeId = specificationAttributeId;
+            PageIndex = pageIndex;
+            PageSize = pageSize;
         }
         public GetSpecificationAttributeOptionsBySpecificationAttribute(int specificationAttributeId)
         {
-            SpecificationAttributeId = 0;
+            SpecificationAttributeId = specificationAttributeId;
+            PageIndex = 1;
+            PageSize = 10;
         }
 
         public GetSpecificationAttributeOptionsBySpecificationAttribute()

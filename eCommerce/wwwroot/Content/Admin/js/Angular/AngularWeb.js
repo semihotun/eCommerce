@@ -1,7 +1,25 @@
 ﻿
 var app = angular.module("myApp", []);
 
+//Global Function
+app.run(function ($rootScope, $http, $window) {
+    $rootScope.BasketSize = 0;
+    $rootScope.BasketGlobalFunction = function () {
+        $http({
+            url: "/Home/Basket",
+            method: "Get"
+        }).then(function (response) {
+            $rootScope.BasketSize = response.data.length;
+            $rootScope.Basket = response.data;
+        }, function () {
+            alert("hata");
+        });
+    };
+});
+
 app.controller("Catalog", function ($scope, $http, $window) {
+
+    $scope.CurrentDate = new Date().toLocaleDateString().toString();
 
     $scope.BrandData = [];
 
@@ -50,7 +68,8 @@ app.controller("Catalog", function ($scope, $http, $window) {
 
     $scope.GetAllData = function (CatId, pageNum) {
         $scope.CatId = CatId;
-        $scope.pageNum = pageNum;
+        $scope.pageNum = pageNum; 
+        $('.loadingbody').css("display", "flex").delay(10).fadeIn("slow");
 
         $http({
             method: "get",
@@ -66,8 +85,6 @@ app.controller("Catalog", function ($scope, $http, $window) {
                 SelectFilter: JSON.stringify($scope.CatalogFilterIdList)
             }
         }).then(function (response) {
-
-
             $scope.ProductData = response.data.Productlist;
             if ($scope.BrandData.length === 0)
                 $scope.BrandData = response.data.BrandList;
@@ -77,6 +94,7 @@ app.controller("Catalog", function ($scope, $http, $window) {
         }, function () {
             alert("Hata");
         });
+        $('.loadingbody').css("display", "none").delay(10).fadeOut('slow');
     };
 
     $scope.GetAllBrandFilter = function (CatId, pageNum) {
@@ -118,18 +136,17 @@ app.controller("Catalog", function ($scope, $http, $window) {
         $scope.CurrentPage = currentPage;
         $scope.PageNumberArray = Array();
 
-        var basla = currentPage;
         var countIncr = 1;
 
-        if (basla === 2) {
-            basla = basla - 1;
-        } else if (basla > 2) {
-            basla = basla - 2;
+        if (currentPage === 2) {
+            currentPage = currentPage - 1;
+        } else if (currentPage > 2) {
+            currentPage = currentPage - 2;
         }
 
-        for (var i = basla; i <= totalPage; i++) {
-            $scope.PageNumberArray[0] = basla;
-            if (totalPage !== basla && $scope.PageNumberArray[countIncr - 1] !== totalPage) {
+        for (var i = currentPage; i <= totalPage; i++) {
+            $scope.PageNumberArray[0] = currentPage;
+            if (totalPage !== currentPage && $scope.PageNumberArray[countIncr - 1] !== totalPage) {
                 $scope.PageNumberArray[countIncr] = i + 1;
             }
             countIncr++;
@@ -148,49 +165,6 @@ app.controller("Catalog", function ($scope, $http, $window) {
 
     };
 });
-
-
-app.controller("Basket", function ($scope, $http, $window) {
-
-    $scope.Basket = function (arttir) {
-        $http({
-            url: "/Home/Basket",
-            method: "Get"
-        }).then(function (response) {
-            $scope.BasketSize = response.data.length;
-            $scope.Basket = response.data;
-        }, function () {
-            alert("hata");
-        });
-    };
-    $scope.Basketadded = function (productId, combinationId, productPiece, productStockPiece) {
-        console.log(productId, combinationId, productPiece, productStockPiece);
-        if (productStockPiece > productPiece) {
-            $http({
-                url: "/Home/BasketAdded",
-                method: "Post",
-                params: {
-                    ProductId: productId,
-                    CombinationId: combinationId,
-                    ProductPiece: productPiece
-                }
-            }).then(function (response) {
-                swal("Başarılı", "Ürününüz Sepete Eklendi", "success");
-                $scope.BasketSize = $scope.BasketSize + 1;
-
-            }, function () {
-                    swal("Hata", "Ürün Eklerken bir hata" + productStockPiece, "error");
-                }
-            );
-        }
-        else {
-            swal("Hata","Ekleyebileceğin maximum adet" + productStockPiece, "error");
-        }
-
-    };
-
-});
-
 
 app.controller("ProductDetail", function ($scope, $http, $window) {
 
@@ -211,6 +185,97 @@ app.controller("ProductDetail", function ($scope, $http, $window) {
 
 });
 
+app.controller("Basket", function ($scope, $http, $rootScope,$window) {
+
+    //$scope.BasketSize = 0;
+    //$scope.Basket = function (BasketSize) {
+    //    $scope.BasketSize = BasketSize;
+    //    $http({
+    //        url: "/Home/Basket",
+    //        method: "Get"
+    //    }).then(function (response) {
+    //        $scope.BasketSize = response.data.length;
+    //        $scope.Basket = response.data;
+    //    }, function () {
+    //        alert("hata");
+    //    });
+    //};
+    $scope.Basketadded = function (productId, combinationId, productPiece, productStockPiece) {
+
+        if (productStockPiece > productPiece) {
+            $http({
+                url: "/Home/BasketAdded",
+                method: "Post",
+                params: {
+                    ProductId: productId,
+                    CombinationId: combinationId,
+                    ProductPiece: productPiece
+                }
+            }).then(function (response) {
+                swal("Başarılı", "Ürününüz Sepete Eklendi", "success");
+                $rootScope.BasketGlobalFunction();
+
+            }, function () {
+                swal("Hata", "Ürün Eklerken bir hata" + productStockPiece, "error");
+            }
+            );
+        }
+        else {
+            swal("Hata", "Ekleyebileceğin maximum adet" + productStockPiece, "error");
+        }
+
+    };
+
+});
+
+app.controller("CheckOut", function ($scope, $http, $rootScope, $window) {
+
+    $scope.GetCheckout = function () {
+        $http({
+            url: "/Home/GetCheckout",
+            method: "Get"
+        }).then(function (response) {
+            $scope.CheckoutData = response.data;
+        }, function () {
+            alert("hata");
+        });
+    };
+    $scope.DeleteCheckoutProduct = function (productId,combinationId,productPiece) {
+        $http({
+            url: "/Home/DeleteProductCheckout",
+            method: "Post",
+            params: {
+                ProductId: productId,
+                CombinationId: combinationId,
+                ProductPiece: productPiece
+            }
+        }).then(function (response) {        
+            swal("Başarılı", "Ürününüz Sepetten Silindi", "success");
+            $scope.GetCheckout();
+            $rootScope.BasketGlobalFunction();
+        }, function () {
+            swal("Hata", "Ürün Silerken bir hata", "error");
+        });
+    };
+    $scope.ChangePieceProduct = function (productId,productCombinatonId = 0,productPiece) {
+        $('.loadingbody').css("display", "flex").delay(10).fadeIn("slow");
+        $http({
+            url: "/Home/UpdateProductPiece",
+            method: "Post",
+            params: {
+                ProductId: productId,
+                CombinationId: productCombinatonId,
+                ProductPiece: productPiece
+            }
+        }).then(function (response) {
+            $scope.GetCheckout();
+            $rootScope.BasketGlobalFunction();
+        }, function () {
+            swal("Hata", "Ürün Adeti Güncelendi" + productStockPiece, "error");
+        });
+        $('.loadingbody').css("display", "none").delay(10).fadeOut('slow');
+    };
+});
 
 app.filter("groupBy", ["$parse", "$filter", function ($parse, $filter) {
     return function (array, groupByField) {

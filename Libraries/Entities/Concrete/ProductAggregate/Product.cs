@@ -6,7 +6,6 @@ namespace Entities.Concrete.ProductAggregate
 
     public class Product : BaseEntity
     {
-
         public string ProductName { get; set; }
         public int? BrandId { get; set; }
         public int? CategoryId { get; set; }
@@ -17,8 +16,8 @@ namespace Entities.Concrete.ProductAggregate
         public string Gtin { get; set; }
         public string Sku { get; set; }
         public DateTime CreatedOnUtc { get; set; }
-
         public int ProductStockTypeId { get; set; }
+        public string ProductNameUpper { get; set; }
     }
 
 

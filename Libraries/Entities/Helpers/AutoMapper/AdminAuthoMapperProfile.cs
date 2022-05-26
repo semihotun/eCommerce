@@ -44,7 +44,7 @@ namespace Entities.Helpers.AutoMapper
             CreateMap<ProductAttributeValue, ProductAttributeValue>().ForMember(x => x.Id, mo => mo.Ignore());
             CreateMap<Category, Category>().ForMember(x => x.Id, mo => mo.Ignore());
 
-
+            CreateMap<ShowCaseDTO, ShowCase>();
 
             CreateMap<Product, ProductDataTableJson>().ReverseMap();
             CreateMap<MappingAttrModel, MappingAttrXml>().ReverseMap();
