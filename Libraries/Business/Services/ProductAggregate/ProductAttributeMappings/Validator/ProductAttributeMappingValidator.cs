@@ -10,12 +10,6 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings.Validator
         {
             RuleFor(x => x.ProductId).NotEmpty();
             RuleFor(x => x.ProductAttributeId).NotEmpty();
-            RuleFor(x => x.TextPrompt).NotEmpty();
-            RuleFor(x => x.IsRequired).NotEmpty();
-            RuleFor(x => x.AttributeControlTypeId).NotEmpty();
-            RuleFor(x => x.DisplayOrder).NotEmpty();
-            RuleFor(x => x.DefaultValue).NotEmpty();
-
         }
     }
     public class UpdateProductAttributeMappingValidator : AbstractValidator<ProductAttributeMapping>
@@ -24,12 +18,6 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings.Validator
         {
             RuleFor(x => x.ProductId).NotEmpty();
             RuleFor(x => x.ProductAttributeId).NotEmpty();
-            RuleFor(x => x.TextPrompt).NotEmpty();
-            RuleFor(x => x.IsRequired).NotEmpty();
-            RuleFor(x => x.AttributeControlTypeId).NotEmpty();
-            RuleFor(x => x.DisplayOrder).NotEmpty();
-            RuleFor(x => x.DefaultValue).NotEmpty();
-
         }
     }
 }

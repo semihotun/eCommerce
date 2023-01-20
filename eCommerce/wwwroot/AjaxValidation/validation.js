@@ -25,6 +25,18 @@
     //    jqXHR.success = jqXHR.done;
     //    jqXHR.error = jqXHR.fail;
     //});
+ 
+    $(document).ajaxSuccess(function (event, xhr, settings ) {
+        if (settings.url.includes("Add") ||
+            settings.url.includes("Insert") ||
+            settings.url.includes("Delete") ||
+            settings.url.includes("Remove") ||
+            settings.url.includes("Update") 
+        ) {
+            console.log(settings);
+            toastr.success("İşlem Başarılı")
+        }
+    });
 
     $(document).ajaxError(function (event, jqXHR, settings, thrownError) {
    

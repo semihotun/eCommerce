@@ -55,7 +55,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                             ProductAttributeCombination = pacljf,
                             ProductStockList = productStockGroup
                         };
-            query=query.ApplyDataTableFilter(request.DataTablesParam);
+            query = query.ApplyDataTableFilter(request.DataTablesParam);
 
             var result = await query.ToPagedListAsync(request.DataTablesParam.PageIndex, request.DataTablesParam.PageSize);
             return new SuccessDataResult<IPagedList<ProductDataTableJson>>(result);
@@ -154,7 +154,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                                 ProductPieceTotalPrice = (double)(Convert.ToDouble(item.ProductPiece) * productStockGroup.ProductPrice)
                             };
 
-                var product =  query.FirstOrDefaultAsync();
+                var product = query.FirstOrDefaultAsync();
                 checkoutProduct.Add(product);
             }
 
@@ -163,7 +163,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                 result.CheckoutProductList = checkoutProduct.Select(x => x.Result);
                 result.AllProductTotalPrice = result.CheckoutProductList.Select(x => x.ProductPieceTotalPrice).Sum();
             });
- 
+
             return new SuccessDataResult<Checkout>(result);
         }
 
@@ -175,8 +175,8 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                          where p.Id == request.ProductId
 
                          let cg = (from c in Context.Comment
-                                  where p.Id == c.Productid && c.IsApproved == request.IsApproved
-                                  select c).AsEnumerable()
+                                   where p.Id == c.Productid && c.IsApproved == request.IsApproved
+                                   select c).AsEnumerable()
 
                          let ppg = (from pp in Context.ProductPhoto where p.Id == pp.ProductId select pp).FirstOrDefault()
                          select new ProductCommentDTO
@@ -192,7 +192,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
         }
 
         //Product,Brand,Category,ProductAttributeCombination,ProductStock,ProductPhoto,CombinationPhoto,ProductSpecificationAttribute,
-        //CatalogProduct
         public async Task<IDataResult<IPagedList<Entities.DTO.Product.CatalogProduct>>> GetCatalogProduct(CatalogVM catalog)
         {
             var data = JsonConvert.DeserializeObject<IList<CatalogVM.SelectFilterModel>>(catalog.SelectFilter);
@@ -248,7 +247,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                         select new Entities.DTO.Product.CatalogProduct
                         {
                             Id = p.Id,
-                            CreatedOnUtc=p.CreatedOnUtc.ToString("MM/dd/yyyy"),
+                            CreatedOnUtc = p.CreatedOnUtc.ToString("MM/dd/yyyy"),
                             ProductName = p.ProductName,
                             BrandName = b.BrandName,
                             BrandId = b.Id,

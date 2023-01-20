@@ -51,7 +51,6 @@ namespace Core.Aspects.Autofac.Validation
 
                         foreach (var parameterDescriptor in ContextBody.ActionDescriptor.Parameters)
                         {
-                            var qq = parameterDescriptor.ParameterType.GetProperties();
                             var propertyInfos = parameterDescriptor.ParameterType.GetProperties().Where(x => x.PropertyType == entityType);
                             if (propertyInfos.Any())
                             {

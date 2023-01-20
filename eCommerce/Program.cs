@@ -23,7 +23,6 @@ namespace eCommerce
                     var dbContextSeeder = new EcommerceContextSeed();
                     dbContextSeeder.SeedAsync(context, logger).Wait();
                 }
-       
             });
 
             host.Run();

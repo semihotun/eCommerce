@@ -138,17 +138,3 @@ using Entities.Concrete.SpeficationAggregate;
  
  } 
  }
-cationattributedropdwon")] 
- [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
- public async Task<IActionResult> GetProductSpeficationAttributeDropdwon ([FromQuery]GetProductSpeficationAttributeDropdwon request) { 
- 
- var result = await _specificationAttributeService.GetProductSpeficationAttributeDropdwon(request); 
- 
- if(result.Success) 
- return Ok(result.Data); 
- else 
- return BadRequest(result.Message); 
- } 
- 
- } 
- }

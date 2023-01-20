@@ -13,35 +13,40 @@ namespace Core.Utilities.Generate
     {
         public static void GenerateApi()
         {
-            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-            var assembliesFilter = assemblies.Where(
-                 x => x.ManifestModule.Name == "Business.dll" ||
-                 x.ManifestModule.Name == "DataAccess.dll" ||
-                 x.ManifestModule.Name == "Core.dll"
-                 );
-            var assemblyClass = assembliesFilter.SelectMany(x => x.GetTypes()
-            .Where(x => x.IsClass == true && x.IsPublic == true &&
-            (x.Name.ToLowerInvariant().Contains("service") ||
-             x.Name.ToLowerInvariant().Contains("dal")) &&
-
-             (x.FullName.Contains("Business.Services") ||
-             x.FullName.Contains("DataAccess.DALs.EntitiyFramework") ||
-             x.FullName.Contains("Core.Library.Business")) ||
-             x.FullName.Contains("Core.Library.DAL"))
-
-             );
-
-            foreach (var item in assemblyClass)
+            try
             {
-                var parameterReferenceList = new List<string>();
-                parameterReferenceList.AddRange(new List<string>
+                var batDirectory = new DirectoryInfo(Directory.GetCurrentDirectory()).Parent;
+                var batPath = batDirectory + "\\Plugins\\Plugin.Api\\build.bat";
+
+                Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+                var assembliesFilter = assemblies.Where(
+                     x => x.ManifestModule.Name == "Business.dll" ||
+                     x.ManifestModule.Name == "DataAccess.dll" ||
+                     x.ManifestModule.Name == "Core.dll"
+                     );
+                var assemblyClass = assembliesFilter.SelectMany(x => x.GetTypes()
+                .Where(x => x.IsClass == true && x.IsPublic == true &&
+                (x.Name.ToLowerInvariant().Contains("service") ||
+                 x.Name.ToLowerInvariant().Contains("dal")) &&
+
+                 (x.FullName.Contains("Business.Services") ||
+                 x.FullName.Contains("DataAccess.DALs.EntitiyFramework") ||
+                 x.FullName.Contains("Core.Library.Business")) ||
+                 x.FullName.Contains("Core.Library.DAL"))
+
+                 );
+
+                foreach (var item in assemblyClass)
+                {
+                    var parameterReferenceList = new List<string>();
+                    parameterReferenceList.AddRange(new List<string>
                 {
                     "System", "System.Collections.Generic","System.Text","X.PagedList","Microsoft.AspNetCore.Mvc",
                     item.Namespace,"Microsoft.AspNetCore.Http","System.Threading.Tasks","Microsoft.AspNetCore.Authorization","Core.Utilities.Identity"
                 });
 
-                var controllerText = $@" 
+                    var controllerText = $@" 
                         namespace eCommerce.Areas.Api {{
                             [AuthorizeControl]
                             [Route(""api/[controller]"")]
@@ -53,31 +58,31 @@ namespace Core.Utilities.Generate
                                     {"_" + item.Name.FirstCharToLowerCase()}={item.Name.FirstCharToLowerCase()};
                                  }}
                       ";
-            
-                var methods = item.GetMethods().Where(
-                 x => x.DeclaringType.Name != "EfEntityRepositoryBase`2" &&
-                 x.Module.Name != "System.Private.CoreLib.dll"
-                 );
+
+                    var methods = item.GetMethods().Where(
+                     x => x.DeclaringType.Name != "EfEntityRepositoryBase`2" &&
+                     x.Module.Name != "System.Private.CoreLib.dll"
+                     );
 
 
-                if (methods.Count() > 0)
-                {
-                    foreach (var methodInfo in methods)
+                    if (methods.Count() > 0)
                     {
-                        var isAllowAnonymous = methodInfo.GetCustomAttributes<ApiGenerateAllowAnonymous>().Count() > 0 ? "[AllowAnonymous]" : "";
-
-                        var parameterReference = (methodInfo.GetParameters().ToList()).Select(x => x.ParameterType.Namespace);
-                        parameterReferenceList.AddRange(parameterReference);
-                        var parameterList = methodInfo.GetParameters().ToList();
-                        var parameterMethod = String.Join(",", parameterList.Select(x => x.ParameterType.Name.ToString() + " " + x.Name));
-                        var pushParmas = String.Join(",", parameterList.Select(x => x.Name));
-
-                        if ((methodInfo.Name.Contains("Get") || methodInfo.Name.Contains("get")) &&
-                            !methodInfo.Name.Contains("DataTable")
-                            )
+                        foreach (var methodInfo in methods)
                         {
-                            parameterMethod = String.IsNullOrWhiteSpace(parameterMethod) == true ? parameterMethod : "[FromQuery]" + parameterMethod;
-                            controllerText += $@"
+                            var isAllowAnonymous = methodInfo.GetCustomAttributes<ApiGenerateAllowAnonymous>().Count() > 0 ? "[AllowAnonymous]" : "";
+
+                            var parameterReference = (methodInfo.GetParameters().ToList()).Select(x => x.ParameterType.Namespace);
+                            parameterReferenceList.AddRange(parameterReference);
+                            var parameterList = methodInfo.GetParameters().ToList();
+                            var parameterMethod = String.Join(",", parameterList.Select(x => x.ParameterType.Name.ToString() + " " + x.Name));
+                            var pushParmas = String.Join(",", parameterList.Select(x => x.Name));
+
+                            if ((methodInfo.Name.Contains("Get") || methodInfo.Name.Contains("get")) &&
+                                !methodInfo.Name.Contains("DataTable")
+                                )
+                            {
+                                parameterMethod = String.IsNullOrWhiteSpace(parameterMethod) == true ? parameterMethod : "[FromQuery]" + parameterMethod;
+                                controllerText += $@"
                                     {isAllowAnonymous}
                                     [Produces(""application/json"", ""text/plain"")]
                                     [HttpGet(""{methodInfo.Name.ToLowerInvariant()}"")]
@@ -92,10 +97,10 @@ namespace Core.Utilities.Generate
                                              return BadRequest(result.Message);
                                     }}                
                         ";
-                        }
-                        else
-                        {
-                            var returnSuccess = methodInfo.ReturnType.ToString().Contains("IResult") ? "return Ok(result.Success);" : "return Ok(result.Data);";
+                            }
+                            else
+                            {
+                                var returnSuccess = methodInfo.ReturnType.ToString().Contains("IResult") ? "return Ok(result.Success);" : "return Ok(result.Data);";
                                 controllerText += $@"
                                     {isAllowAnonymous}
                                     [Produces(""application/json"", ""text/plain"")]
@@ -112,31 +117,34 @@ namespace Core.Utilities.Generate
                                  
                                      }}                
                              ";
-                            
-                           
+
+
+                            }
                         }
-                    }
-                    var parameterReferenceListJoin = String.Join("\n", parameterReferenceList.Distinct().Select(x => "using " + x.ToString() + ";"));
-                    controllerText = parameterReferenceListJoin + controllerText;
-                    controllerText += $@"     
+                        var parameterReferenceListJoin = String.Join("\n", parameterReferenceList.Distinct().Select(x => "using " + x.ToString() + ";"));
+                        controllerText = parameterReferenceListJoin + controllerText;
+                        controllerText += $@"     
                                  }}
                         }}";
 
-                    var solutionPath = new DirectoryInfo(Directory.GetCurrentDirectory()).Parent;
-                    var path=solutionPath + "\\Plugins\\Plugin.Api\\Controllers\\"+ item.Name + "Controller.cs";
+                        var solutionPath = new DirectoryInfo(Directory.GetCurrentDirectory()).Parent;
+                        var path = solutionPath + "\\Plugins\\Plugin.Api\\Controllers\\" + item.Name + "Controller.cs";
 
-                    TextFileHelper.CreateFile(path, RegexHelper.RemoveFromTap(controllerText));
+                        TextFileHelper.CreateFile(path, RegexHelper.RemoveFromTap(controllerText));
 
+                    }
                 }
-            }
-            var batDirectory = new DirectoryInfo(Directory.GetCurrentDirectory()).Parent;
-            var batPath = batDirectory + "\\Plugins\\Plugin.Api\\build.bat";
 
-            System.Diagnostics.ProcessStartInfo p = new System.Diagnostics.ProcessStartInfo(batPath);
-            System.Diagnostics.Process proc = new System.Diagnostics.Process();
-            proc.StartInfo = p;
-            proc.Start();
-            proc.WaitForExit();
+                System.Diagnostics.ProcessStartInfo p = new System.Diagnostics.ProcessStartInfo(batPath);
+                System.Diagnostics.Process proc = new System.Diagnostics.Process();
+                proc.StartInfo = p;
+                proc.Start();
+                proc.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
 

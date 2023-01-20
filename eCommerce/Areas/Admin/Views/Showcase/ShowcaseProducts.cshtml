@@ -7,10 +7,10 @@
 
 
 
-    @using (Html.BeginForm("ShowcaseEdit", "ShowCase",FormMethod.Get,new { Tap = "tap3", Id = "ProductListForm" }))
+    @using (Html.BeginForm("ShowcaseEdit", "ShowCase", FormMethod.Get, new { Tap = "tap3", Id = "ProductListForm" }))
     {
 
-        <input type="hidden" name="Tap" value="tab3" class="tabsaklayici"/>
+        <input type="hidden" name="Tap" value="tab3" class="tabsaklayici" />
         <div style="display:flex;flex-wrap:wrap;">
             <div class="form-group col-md-6 row">
 
@@ -87,37 +87,46 @@
 
             }
             else {
-
                 ProductListTableo = $("#ProductList").DataTable({
-                    "sAjaxSource": "/Admin/AdminProduct/ProductListJson?id="
-                        + $("#ProductModel_Id").val()
-                        + "&ProductName=" + $("#ProductModel_ProductName").val()
-                        + "&CategoryId=" + $("#ProductModel_CategoryId").val()
-                        + "&BrandModel.Id=" + $("#ProductModel_BrandId").val(),
-                    "bServerSide": true,
-                    "bProcessing": true,
-                    "bSearchable": true,
-                    "bLengthChange": false,
-                    "searching": false,
-                    "columns": [
-                        { "data": "Id", "name": "Id", "autoWidth": true },
-                        { "data": "ProductName", "name": "ProductName", "autoWidth": true },
-                        { "data": "BrandName", "name": "BrandId", "autoWidth": true },
-                        { "data": "CategoryName", "name": "CategoryId", "autoWidth": true },
-                        {
-                            data: null,
+                                    "ajax": {
+                                        "url": "/Admin/AdminProduct/ProductListJson?Id=" + $("#ProductModel_Id").val()
+                                            + "&ProductName=" + $("#ProductModel_ProductName").val()
+                                            + "&CategoryId=" + $("#ProductModel_CategoryId").val()
+                                            + "&BrandModel.Id=" + $("#ProductModel_BrandId").val(),
+                                        "datatype": "json",
+                                        "type": "POST"
+                                    },
+                                    dom: '<"bottom">rtip',
+                                    buttons: [
+                                        'copy', 'csv', 'excel', 'pdf', 'print'
+                                    ],
+                                    "orderCellsTop": true,
+                                    "fixedHeader": true,
+                                    "pagingType": "full_numbers",
+                                    "processing": true,
+                                    "serverSide": true,
+                                    "responsive": true,
+                                    "searching": true,
+                                    "columns": [
+                                        { "data": "Id", "name": "Id", "autoWidth": true },
+                                        { "data": "ProductName", "name": "ProductName", "autoWidth": true },
+                                        { "data": "BrandName", "name": "BrandName", "autoWidth": true },
+                                        { "data": "CategoryName", "name": "CategoryName", "autoWidth": true },
+                                        {
+                                           data: null,
                             render: function (data, type, row) {
                                 return "<a href='/Admin/Showcase/ShowcaseAdded?productid=" + row.Id +
                                     "&showcaseid=" +@Model.ShowCaseDto.Id+
                                     "&combinationId=" + (row.ProductAttributeCombination != null ? row.ProductAttributeCombination.Id : 0) +
                                     "' class='btn btn btn-outline-default'  >Ekle</a>";
                             }, "orderable": false
-                        }
-                    ], "language": {
-                        "url": "/datatablelanguage.json"
-                    }
+                                        },
+                                    ], "language": {
+                                        "url": "/datatablelanguage.json"
+                                    }
+                                });
 
-                });
+             
 
             }
 
