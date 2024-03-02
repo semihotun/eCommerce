@@ -10,7 +10,6 @@ using Entities.Concrete.DiscountsAggregate;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.DiscountsAggregate.DiscountBrands
 {
     public class DiscountBrandService : IDiscountBrandService
@@ -25,28 +24,22 @@ namespace Business.Services.DiscountsAggregate.DiscountBrands
         }
         #endregion
         #region Method
-
         [CacheRemoveAspect("IDiscountBrandService.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         public async Task<IResult> DeleteDiscountBrand(DiscountBrand discountBrand)
         {
-
             _discountBrandRepository.Delete(discountBrand);
             await _discountBrandRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [CacheAspect]
         public async Task<IDataResult<IPagedList<DiscountBrand>>> GetAllDiscountBrand(GetAllDiscountBrand request)
         {
             var query = _discountBrandRepository.Query();
-
             if (request.DiscountId != 0)
                 query = query.Where(x => x.DiscountId == request.DiscountId);
-
             var data = await query.ToPagedListAsync(request.Pageindex, request.PageSize);
-
             return new SuccessDataResult<IPagedList<DiscountBrand>>(data);
         }
         [LogAspect(typeof(MsSqlLogger))]
@@ -56,10 +49,8 @@ namespace Business.Services.DiscountsAggregate.DiscountBrands
         {
             if (discountBrand == null)
                 return new ErrorResult();
-
             _discountBrandRepository.Add(discountBrand);
             await _discountBrandRepository.SaveChangesAsync();
-
             return new SuccessResult();
         }
         #endregion

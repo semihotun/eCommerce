@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace DataAccess.FluentApi.ProductAggregate
 {
     public class ProductStockTypeMap : IEntityTypeConfiguration<ProductStockType>,ISeed<ProductStockType>
@@ -15,7 +14,6 @@ namespace DataAccess.FluentApi.ProductAggregate
             builder.HasKey(x => x.Id);
             builder.Property(t => t.Id).UseIdentityColumn();
         }
-
         public List<ProductStockType> GetSeedData()
         {
             return new List<ProductStockType>()

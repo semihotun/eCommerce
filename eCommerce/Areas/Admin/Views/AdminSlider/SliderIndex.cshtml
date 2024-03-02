@@ -1,14 +1,8 @@
 ﻿@model Entities.ViewModels.AdminViewModel.AdminSlider.SliderListVM
-
 @{
     ViewBag.Title = "SliderIndex";
     Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
 }
-
-
-
-
-
 <div class="content">
     <div class="row">
         <div class="col-md-12">
@@ -31,15 +25,12 @@
                                 <th>Link</th>
                                 <th>Yazı</th>
                                 <th> </th>
-
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model.SliderList)
                             {
-
                                 <tr>
-
                                     <td>@item.Id</td>
                                     <td>@item.SliderHeading</td>
                                     <td><img src="@item.SliderImage" width="40px" height="40px" /></td>
@@ -47,29 +38,20 @@
                                     <td>@item.SliderText</td>
                                     <td></td>
                                     <td>
-
                                         <a href="SliderEdit?id=@item.Id"><i class='fa fa-edit datatableduzenle' style='font-size:20px;'></i></a>
                                         <a href="#" onclick="DeleteFunction(@item.Id)" id="@item.Id"> <i class="fa fa-trash-o datatablesil" style="font-size:20px;"></i></a>
-
-
-
                                     </td>
                                 </tr>
-
-
                             }
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 <script>
                             function DeleteFunction(id) {
-
                                 console.log(id);
                                 $.ajax({
                                     type: "post",
@@ -81,9 +63,6 @@
                                     error: function (result) {
                                         pushalert("Kayıt Silinemedi","Danger");
                                     }
-
-
                                 });
                             }
-
 </script>

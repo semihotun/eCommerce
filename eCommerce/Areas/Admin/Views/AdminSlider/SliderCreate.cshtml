@@ -1,13 +1,8 @@
 ﻿@model Entities.ViewModels.AdminViewModel.AdminSlider.SliderCreateOrUpdateVM
-
 @{
     ViewBag.Title = "SliderCreate";
     Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
 }
-
-
-
-
     <div class="content">
         <div class="row">
             <div class="col-md-12">
@@ -21,7 +16,6 @@
                         @using (Html.BeginForm("SliderCreate", "AdminSlider", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             @Html.AntiForgeryToken()
-
                             <div class="form-horizontal">
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="form-group">
@@ -34,7 +28,6 @@
                                         @Html.ValidationMessageFor(model => model.SliderImage, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.SliderHeading, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-7">
@@ -42,7 +35,6 @@
                                         @Html.ValidationMessageFor(model => model.SliderHeading, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.SliderText, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-7">
@@ -50,7 +42,6 @@
                                         @Html.ValidationMessageFor(model => model.SliderText, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.SliderLink, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-7">
@@ -58,7 +49,6 @@
                                         @Html.ValidationMessageFor(model => model.SliderLink, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-7">
                                         <input type="submit" value="Create" class="btn btn-default" />
@@ -75,7 +65,6 @@
     @Html.ActionLink("Geri Dön", "Index")
 </div>
 <script type="text/javascript">
-
     $("#Uploadfile").change(function () {//eğer file değişirse
         var resim = document.getElementById("Uploadfile");//resime eriş
         if (resim.files && resim.files[0]) {//eğer dosya var ise

@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-
 namespace Core.Aspects.Autofac.Logging
 {
     public class LogAspect : MethodInterception
@@ -26,7 +25,6 @@ namespace Core.Aspects.Autofac.Logging
             {
                 throw new ArgumentException(AspectMessages.WrongLoggerType);
             }
-
             _loggerServiceBase = (LoggerServiceBase)ServiceTool.ServiceProvider.GetService(loggerService);
             _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
             actionContextAccessor = ServiceTool.ServiceProvider.GetService<IActionContextAccessor>();
@@ -35,7 +33,6 @@ namespace Core.Aspects.Autofac.Logging
         {
             _loggerServiceBase?.Info(GetLogDetail(invocation));
         }
-
         private string GetLogDetail(IInvocation invocation)
         {
             var logParameters = new List<LogParameter>();
@@ -48,7 +45,6 @@ namespace Core.Aspects.Autofac.Logging
                     Type = invocation.Arguments[i].GetType().Name
                 });
             }
-
             var requestIdentity = _httpContextAccessor.HttpContext.User.Identity;
             var logDetail = new LogDetail();
             if (requestIdentity != null)
@@ -66,7 +62,6 @@ namespace Core.Aspects.Autofac.Logging
                 var tokenCookie = httpContext.Request.Cookies["UserToken"];
                 var token = new JwtSecurityTokenHandler().ReadJwtToken(tokenCookie);
                 var email = token?.Claims.FirstOrDefault(x => x.Type == "email")?.Value;
-
                 logDetail = new LogDetail
                 {
                     MethodName = invocation.Method.Name,
@@ -74,7 +69,6 @@ namespace Core.Aspects.Autofac.Logging
                     User = email
                 };
             }
-
             return JsonConvert.SerializeObject(logDetail);
         }
     }

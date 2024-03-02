@@ -1,5 +1,4 @@
-﻿
-namespace Core.Utilities.Email
+﻿namespace Core.Utilities.Email
 {
     public interface IMailService
     {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions.SpecificationAttributeOptionServiceModel
 {
     public class GetSpecificationAttributeOptionsByIds
@@ -10,11 +9,9 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions.S
         {
             SpecificationAttributeOptionIds = specificationAttributeOptionIds;
         }
-
         public GetSpecificationAttributeOptionsByIds()
         {
         }
-
         public int[] SpecificationAttributeOptionIds { get; set; }
     }
 }

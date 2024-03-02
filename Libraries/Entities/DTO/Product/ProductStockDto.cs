@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Entities.DTO.Product
 {
     public class ProductStockDto
@@ -17,7 +16,6 @@ namespace Entities.DTO.Product
         public int ProductId { get; set; }
         public int CombinationId { get; set; }
         public String ProductName { get; set; }
-
         public Concrete.ProductAggregate.Product Product { get; set; }
         public ProductAttributeCombination ProductAttributeCombination { get; set; }
     }

@@ -4,13 +4,10 @@
 @using Core.Library;
 @using Microsoft.AspNetCore.Identity;
 @model Entities.ViewModels.WebViewModel.IdentityAccount.LoginViewModel
-   
 @inject SignInManager<MyUser> SignInManager
-
 @{
     ViewData["Title"] = "Log in";
 }
-
 <br />
 <br />
 <div class="container">
@@ -86,7 +83,6 @@
             </section>
         </div>
     </div>
-
     @section Scripts {
         @await Html.PartialAsync("_ValidationScriptsPartial")
     }

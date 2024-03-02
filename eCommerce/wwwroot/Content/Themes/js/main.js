@@ -1,23 +1,19 @@
 (function($) {
   "use strict"
-
   // NAVIGATION
   var responsiveNav = $('#responsive-nav'),
     catToggle = $('#responsive-nav .category-nav .category-header'),
     catList = $('#responsive-nav .category-nav .category-list'),
     menuToggle = $('#responsive-nav .menu-nav .menu-header'),
     menuList = $('#responsive-nav .menu-nav .menu-list');
-
   catToggle.on('click', function() {
     menuList.removeClass('open');
     catList.toggleClass('open');
   });
-
   menuToggle.on('click', function() {
     catList.removeClass('open');
     menuList.toggleClass('open');
   });
-
   $(document).click(function(event) {
     if (!$(event.target).closest(responsiveNav).length) {
       if (responsiveNav.hasClass('open')) {
@@ -34,7 +30,6 @@
       }
     }
   });
-
   // HOME SLICK
   $('#home-slick').slick({
     autoplay: true,
@@ -42,7 +37,6 @@
     speed: 300,
     arrows: true,
   });
-
   // PRODUCTS SLICK
   $('.product-slick-1').slick({
     slidesToShow: 3,
@@ -71,7 +65,6 @@
       },
     ]
   });
-
     $('.product-slick-2').slick({
         slidesToShow: 4,
         slidesToScroll: 2,
@@ -99,7 +92,6 @@
         },
         ]
     });
-
   // PRODUCT DETAILS SLICK
   $('#product-main-view').slick({
     infinite: false,
@@ -109,7 +101,6 @@
     fade: true,
     asNavFor: '#product-view',
   });
-
   $('#product-view').slick({
     slidesToShow: 3,
     slidesToScroll: 1,
@@ -118,10 +109,8 @@
     focusOnSelect: true,
     asNavFor: '#product-main-view',
   });
-
   // PRODUCT ZOOM
   $('#product-main-view .product-view').zoom();
-
   // PRICE SLIDER
   var slider = document.getElementById('price-slider');
   if (slider) {
@@ -143,5 +132,4 @@
       }
     });
   }
-
 })(jQuery);

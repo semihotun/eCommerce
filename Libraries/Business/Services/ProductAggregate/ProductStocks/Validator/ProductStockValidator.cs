@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.ProductAggregate;
 using FluentValidation;
-
 namespace Business.Services.ProductAggregate.ProductStocks.Validator
 {
-
     public class CreateProductStockValidator : AbstractValidator<ProductStock>
     {
         public CreateProductStockValidator()
@@ -13,7 +11,6 @@ namespace Business.Services.ProductAggregate.ProductStocks.Validator
             RuleFor(x => x.CreateTime).NotEmpty();
             RuleFor(x => x.ProductId).NotEmpty();
             RuleFor(x => x.CombinationId).NotEmpty();
-
         }
     }
     public class UpdateProductStockValidator : AbstractValidator<ProductStock>
@@ -25,7 +22,6 @@ namespace Business.Services.ProductAggregate.ProductStocks.Validator
             RuleFor(x => x.CreateTime).NotEmpty();
             RuleFor(x => x.ProductId).NotEmpty();
             RuleFor(x => x.CombinationId).NotEmpty();
-
         }
     }
 }

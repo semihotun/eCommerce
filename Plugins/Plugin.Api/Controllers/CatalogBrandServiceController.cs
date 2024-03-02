@@ -15,24 +15,18 @@ using Business.Services.BrandAggregate.CatalogBrands.CatalogBrandModels;
  [ApiController] 
  public class CatalogBrandServiceController : ControllerBase{ 
  private readonly ICatalogBrandService _catalogBrandService; 
- 
  public CatalogBrandServiceController(ICatalogBrandService catalogBrandService){ 
  _catalogBrandService=catalogBrandService; 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpGet("getcatalogbrand")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> GetCatalogBrand ([FromQuery]GetCatalogBrand request) { 
- 
  var result = await _catalogBrandService.GetCatalogBrand(request); 
- 
  if(result.Success) 
  return Ok(result.Data); 
  else 
  return BadRequest(result.Message); 
  } 
- 
  } 
  }

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Core.Utilities.Identity
 {
     public class CustomIdentityErrorDescriber : IdentityErrorDescriber
@@ -93,8 +92,6 @@ namespace Core.Utilities.Identity
                 Code = nameof(PasswordRequiresUpper), Description = "Parolalarda en az bir büyük harf ('A'-'Z') olmalıdır"
             };
         }
-
-
         //public override IdentityError DuplicateUserName(string userName) => new IdentityError { Code = "DuplicateUserName", Description = $"\"{ userName }\" kullanıcı adı kullanılmaktadır." };
         //public override IdentityError InvalidUserName(string userName) => new IdentityError { Code = "InvalidUserName", Description = "Geçersiz kullanıcı adı." };
         //public override IdentityError DuplicateEmail(string email) => new IdentityError { Code = "DuplicateEmail", Description = $"\"{ email }\" başka bir kullanıcı tarafından kullanılmaktadır." };

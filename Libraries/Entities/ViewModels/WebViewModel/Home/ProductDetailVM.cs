@@ -4,7 +4,6 @@ using Entities.DTO.ProductAttributeCombinations;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Entities.ViewModels.WebViewModel.Home
 {
     public class ProductDetailVM
@@ -16,9 +15,5 @@ namespace Entities.ViewModels.WebViewModel.Home
         public ProductAttributeCombinationDTO SelectedCombination { get; set; }
         public List<int> EnabledList { get; set; }
         public int CombinationId { get; set; }
-
-
-      
-
     }
 }

@@ -15,38 +15,28 @@ using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices.Showca
  [ApiController] 
  public class ShowcaseDALController : ControllerBase{ 
  private readonly IShowcaseDAL _showcaseDAL; 
- 
  public ShowcaseDALController(IShowcaseDAL showcaseDAL){ 
  _showcaseDAL=showcaseDAL; 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpGet("getshowcasedto")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> GetShowCaseDto ([FromQuery]GetShowCaseDto request) { 
- 
  var result = await _showcaseDAL.GetShowCaseDto(request); 
- 
  if(result.Success) 
  return Ok(result.Data); 
  else 
  return BadRequest(result.Message); 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpGet("getallshowcasedto")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> GetAllShowCaseDto () { 
- 
  var result = await _showcaseDAL.GetAllShowCaseDto(); 
- 
  if(result.Success) 
  return Ok(result.Data); 
  else 
  return BadRequest(result.Message); 
  } 
- 
  } 
  }

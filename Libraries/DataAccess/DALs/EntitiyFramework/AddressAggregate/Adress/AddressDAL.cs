@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 namespace DataAccess.DALs.EntitiyFramework.AddressAggregate.Adress
 {
     public class AddressDAL : EfEntityRepositoryBase<Address, eCommerceContext>, IAddressDAL
@@ -14,6 +13,5 @@ namespace DataAccess.DALs.EntitiyFramework.AddressAggregate.Adress
         public AddressDAL(eCommerceContext context) : base(context)
         {
         }
-
     }
 }

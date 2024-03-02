@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-
-
 namespace Entities.Helpers.AutoMapper
 {
     public class AutoMapperConfig

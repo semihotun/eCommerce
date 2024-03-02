@@ -1,43 +1,30 @@
 ﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
-
 @{
     ViewBag.Title = null;
     Layout = null;
 }
-
 @*<h2 style="font-weight:100;">Seo Ayarları</h2>*@
-
     <div style="display:flex;flex-wrap:wrap;">
         @Html.HiddenFor(x => x.ProductSeoId)
         <div class="form-group col-md-12">
             @Html.LabelFor(x => x.ProductSeoModel.SeoTitle, "Seo Başlık", new { @class = "control-label col-md-2" })
-
             <div class="col-md-10">
                 @Html.TextBoxFor(x => x.ProductSeoModel.SeoTitle, new { @class = "form-control  col-md-8" })
             </div>
         </div>
-
-
         <div class="form-group col-md-12">
             @Html.LabelFor(x => x.ProductSeoModel.SeoKey, "Seo Anahtar(Coklu anahtarları " + "," + " ile ayırınız)", new { @class = "control-label col-md-2" })
-
             <div class="col-md-10">
                 @Html.TextAreaFor(x => x.ProductSeoModel.SeoKey, new { @class = "textareaform form-control  col-md-8" })
             </div>
         </div>
-
         <div class="form-group col-md-12">
             @Html.LabelFor(x => x.ProductSeoModel.SeoContent, "Seo İçerik", new { @class = "control-label col-md-2" })
-
             <div class="col-md-10">
                 @Html.TextAreaFor(x => x.ProductSeoModel.SeoContent, new { @class = "textareaform form-control  col-md-8" })
             </div>
         </div>
-
-
     </div>
-
-
 @*<table>
         <tbody>
             <tr>
@@ -58,6 +45,5 @@
             <tr>
                 <td><input type="submit" /></td>
             </tr>
-
         </tbody>
     </table>*@

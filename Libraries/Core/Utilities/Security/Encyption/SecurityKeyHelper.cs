@@ -1,6 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Text;
-
 namespace Core.Utilities.Security.Encyption
 {
     public static class SecurityKeyHelper

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-
 namespace Entities.ViewModels.AdminViewModel.AdminProduct
 {
     public class ProductVM
@@ -44,7 +43,6 @@ namespace Entities.ViewModels.AdminViewModel.AdminProduct
         public IEnumerable<SelectListItem> SpeficationAttributeSelectList { get; set; }
         public IEnumerable<SelectListItem> BrandSelectListItems { get; set; }
         public IEnumerable<SelectListItem> CategorySelectListItems { get; set; }
-
         public class ProductStockCreateOrUpdate : BaseEntity
         {
             public double? ProductPrice { get; set; }
@@ -57,7 +55,6 @@ namespace Entities.ViewModels.AdminViewModel.AdminProduct
             public int CombinationId { get; set; }
             public string ProductName { get; set; }
         }
-
         public partial class ProductSpecificationAttributeModel : BaseEntity
         {
             public string SpecificationAttributeOptionName { get; set; }
@@ -65,15 +62,9 @@ namespace Entities.ViewModels.AdminViewModel.AdminProduct
             public int ProductId { get; set; }
             public int? AttributeTypeId { get; set; }
             public int? SpecificationAttributeOptionId { get; set; }
-
             public bool AllowFiltering { get; set; }
-
             public bool ShowOnProductPage { get; set; }
-
             public int DisplayOrder { get; set; }
-
-
         }
-
     }
 }

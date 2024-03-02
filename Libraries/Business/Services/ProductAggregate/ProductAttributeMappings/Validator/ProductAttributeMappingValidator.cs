@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.ProductAggregate;
 using FluentValidation;
-
 namespace Business.Services.ProductAggregate.ProductAttributeMappings.Validator
 {
-
     public class CreateProductAttributeMappingValidator : AbstractValidator<ProductAttributeMapping>
     {
         public CreateProductAttributeMappingValidator()

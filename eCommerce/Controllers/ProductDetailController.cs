@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
-
 namespace eCommerce.Controllers
 {
     public class ProductDetailController : Controller
@@ -18,7 +17,6 @@ namespace eCommerce.Controllers
         private readonly IProductDAL _productDAL;
         private readonly IMapper _mapper;
         #endregion
-
         #region Constructors
         public ProductDetailController(UserManager<MyUser> userManager, ICommentService commentservice, IProductDAL productDAL, IMapper mapper)
         {
@@ -28,22 +26,16 @@ namespace eCommerce.Controllers
             _mapper = mapper;
         }
         #endregion
-
         public async Task<IActionResult> ProductDetail(int productId, int combinationId)
         {
             var model = (await _productDAL.GetProductDetailVM(
                 new GetProductDetailVM(productId, combinationId))).Data;
-
             return View(model);
         }
-
         public async Task<IActionResult> GetAnotherProduct()
         {
             var data = (await _productDAL.GetAnotherProductList()).Data;
             return Json(data, new JsonSerializerSettings());
         }
-
-
-
     }
 }

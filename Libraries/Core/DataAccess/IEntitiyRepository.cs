@@ -5,13 +5,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace eCommerce.Core.DataAccess
 {
     public interface IEntityRepository<T> where T : class, IEntity
     {
         T Add(T entity);
-
         void AddRange(List<T> entity);
         T Update(T entity);
         void Delete(T entity);
@@ -29,6 +27,4 @@ namespace eCommerce.Core.DataAccess
         int GetCount(Expression<Func<T, bool>> expression = null);
         T GetById(int Id);
     }
-
-
 }

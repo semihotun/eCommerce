@@ -6,7 +6,6 @@ using Quartz;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace Business.Jobs.Quartz.CatalogAggregate
 {
     public class AddCatalogBrandJob : IJob
@@ -20,7 +19,6 @@ namespace Business.Jobs.Quartz.CatalogAggregate
             _brandDal = brandDal;
             _catalogBrandDal = catalogBrandDal;
         }
-
         public async Task Execute(IJobExecutionContext context)
         {
             var productsGroup = _productDAL.Query().GroupBy(x => new { x.BrandId, x.CategoryId })
@@ -29,16 +27,13 @@ namespace Business.Jobs.Quartz.CatalogAggregate
                 BrandId = gcs.Key.BrandId,
                 CategoryId = gcs.Key.CategoryId
             });
-
             //Olmayan markaları Ekle
             var catalogList = new List<CatalogBrand>();
             foreach (var item in productsGroup)
             {
                 var brand = _brandDal.Query().Where(x => x.Id == item.BrandId).FirstOrDefault();
-
                 var isAddedBrand = _catalogBrandDal.Query().Where(x => x.CategoryId == item.CategoryId)
                     .Any(x => x.BrandId == brand.Id);
-
                 if (!isAddedBrand && catalogList.Any(x => x.CategoryId == item.CategoryId && x.BrandId == brand.Id) == false)
                     catalogList.Add(new CatalogBrand
                     {
@@ -47,10 +42,8 @@ namespace Business.Jobs.Quartz.CatalogAggregate
                         BrandId = brand.Id
                     });
             }
-
             _catalogBrandDal.AddRange(catalogList);
             _catalogBrandDal.SaveChanges();
-
         }
     }
 }

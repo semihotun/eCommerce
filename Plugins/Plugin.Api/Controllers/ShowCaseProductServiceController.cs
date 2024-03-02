@@ -16,40 +16,28 @@ using Entities.Concrete.ShowcaseAggregate;
  [ApiController] 
  public class ShowCaseProductServiceController : ControllerBase{ 
  private readonly IShowCaseProductService _showCaseProductService; 
- 
  public ShowCaseProductServiceController(IShowCaseProductService showCaseProductService){ 
  _showCaseProductService=showCaseProductService; 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpPost("deleteshowcaseproduct")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> DeleteShowCaseProduct ([FromBody]DeleteShowCaseProduct request) { 
- 
  var result = await _showCaseProductService.DeleteShowCaseProduct(request); 
- 
  if(result.Success) 
  return Ok(result.Success); 
  else 
  return BadRequest(result.Message); 
- 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpPost("insertproductshowcase")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> InsertProductShowcase ([FromBody]ShowCaseProduct showCaseProduct) { 
- 
  var result = await _showCaseProductService.InsertProductShowcase(showCaseProduct); 
- 
  if(result.Success) 
  return Ok(result.Success); 
  else 
  return BadRequest(result.Message); 
- 
  } 
- 
  } 
  }

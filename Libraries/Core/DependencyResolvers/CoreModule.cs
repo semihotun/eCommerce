@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-
 namespace Core.DependencyResolvers
 {
     public class CoreModule : ICoreModule
@@ -35,7 +34,6 @@ namespace Core.DependencyResolvers
             serviceCollection.AddTransient<IMailService, MailManager>();
             serviceCollection.AddTransient<FileLogger>();
             serviceCollection.AddTransient<MsSqlLogger>();
-
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
             var assembliesFilter = assemblies.Where(
                  x => x.ManifestModule.Name == "Business.dll" ||
@@ -51,14 +49,12 @@ namespace Core.DependencyResolvers
                    (x.Name.ToLowerInvariant().Contains("service") || x.Name.ToLowerInvariant().Contains("dal")) &&
                    (x.FullName.Contains("Business.Services") || x.FullName.Contains("DataAccess.DALs.EntitiyFramework"))
             ));
-
             foreach (var item in assemblyClass)
             {
                 var classInterface = assemblyInterFace.Where(x => x.Name == "I" + item.Name).FirstOrDefault();
                 if(classInterface != null)
                      serviceCollection.TryAdd(ServiceDescriptor.Transient(classInterface, item));
             }
-
         }
     }
 }

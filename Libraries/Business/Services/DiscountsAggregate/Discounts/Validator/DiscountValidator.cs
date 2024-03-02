@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.DiscountsAggregate;
 using FluentValidation;
-
 namespace Business.Services.DiscountsAggregate.Discounts.Validator
 {
-
     public class CreateDiscountValidator : AbstractValidator<Discount>
     {
         public CreateDiscountValidator()
@@ -19,7 +17,6 @@ namespace Business.Services.DiscountsAggregate.Discounts.Validator
             RuleFor(x => x.DiscountLimitationId).NotEmpty();
             RuleFor(x => x.LimitationTimes).NotEmpty();
             RuleFor(x => x.AppliedToSubCategories).NotEmpty();
-
         }
     }
     public class UpdateDiscountValidator : AbstractValidator<Discount>
@@ -37,7 +34,6 @@ namespace Business.Services.DiscountsAggregate.Discounts.Validator
             RuleFor(x => x.DiscountLimitationId).NotEmpty();
             RuleFor(x => x.LimitationTimes).NotEmpty();
             RuleFor(x => x.AppliedToSubCategories).NotEmpty();
-
         }
     }
 }

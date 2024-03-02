@@ -16,10 +16,8 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.ProductAggregate.ProductAttributeCombinations
 {
-
     public class ProductAttributeCombinationService : IProductAttributeCombinationService
     {
         #region Field
@@ -36,7 +34,6 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
         }
         #endregion
         #region Product attribute combinations
-
         //AdminProduct/ProductEdit/4
         //<Attributes><ProductAttribute ID = "16"> Burası Mapping İd
         //               <ProductAttributeValue>    
@@ -57,7 +54,6 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
         {
             if (request.ProductId == 0)
                 return new ErrorResult();
-
             List<ProductAttributeCombination> datas = new List<ProductAttributeCombination>();
             foreach (var item in request.Data)
             {
@@ -72,17 +68,14 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
                     xml += "</ProductAttribute >";
                 }
                 xml += "</Attributes>";
-
                 ProductAttributeCombination model = new ProductAttributeCombination();
                 model.ProductId = request.ProductId;
                 model.AttributesXml = xml;
                 _productAttributeCombinationRepository.Add(model);
             }
-
             await _productAttributeCombinationRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductAttributeCombinationService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
@@ -91,29 +84,22 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
         {
             if (request.Id == 0)
                 return new ErrorResult();
-
             var deletedData = _productAttributeCombinationRepository.GetById(request.Id);
             _productAttributeCombinationRepository.Delete(deletedData);
             await _productAttributeCombinationRepository.SaveChangesAsync();
-
             return new SuccessResult();
         }
-
         [CacheAspect]
         public async Task<IDataResult<IPagedList<ProductAttributeCombination>>> GetAllProductAttributeCombinations(GetAllProductAttributeCombinations request)
         {
             var query = from pac in _productAttributeCombinationRepository.Query()
                         where pac.ProductId == request.ProductId
                         select pac;
-
             if (request.Orderbytext != null)
                 query = query.OrderBy(request.Orderbytext);
-
             var data = await query.ToPagedListAsync(request.PageIndex, request.PageSize);
-
             return new SuccessDataResult<IPagedList<ProductAttributeCombination>>(data);
         }
-
         [CacheAspect]
         public async Task<IDataResult<List<string>>> GetProductCombinationXml(GetProductCombinationXml request)
         {
@@ -121,36 +107,27 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
                         orderby c.Id
                         where c.ProductId == request.ProductId
                         select c.AttributesXml;
-
             var data = await query.ToListAsync();
-
             return new SuccessDataResult<List<string>>();
         }
-
         [CacheAspect]
         public async Task<IDataResult<ProductAttributeCombination>> GetProductAttributeCombinationById(GetProductAttributeCombinationById request)
         {
             var data = await _productAttributeCombinationRepository
                 .GetAsync(x => x.Id == request.ProductAttributeCombinationId);
-
             return new SuccessDataResult<ProductAttributeCombination>(data);
         }
-
         [CacheAspect]
         public async Task<IDataResult<ProductAttributeCombination>> GetProductAttributeCombinationBySku(GetProductAttributeCombinationBySku request)
         {
             var sku = request.Sku.Trim();
-
             var query = from pac in _productAttributeCombinationRepository.Query()
                         orderby pac.Id
                         where pac.Sku == sku
                         select pac;
-
             var data = await query.ToListAsync();
-
             return new SuccessDataResult<ProductAttributeCombination>(data.FirstOrDefault());
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductAttributeCombinationService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
@@ -159,12 +136,10 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
         {
             if (combination == null)
                 return new ErrorResult();
-
             _productAttributeCombinationRepository.Add(combination);
             await _productAttributeCombinationRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductAttributeCombinationService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
@@ -179,8 +154,6 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
             await _productAttributeCombinationRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         #endregion
-
     }
 }

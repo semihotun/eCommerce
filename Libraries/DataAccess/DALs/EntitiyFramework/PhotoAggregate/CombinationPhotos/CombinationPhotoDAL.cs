@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos
 {
     public class CombinationPhotoDAL : EfEntityRepositoryBase<CombinationPhoto, eCommerceContext>, ICombinationPhotoDAL
@@ -17,11 +16,9 @@ namespace DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos
         public CombinationPhotoDAL(eCommerceContext context) : base(context)
         {
         }
-        
         [CacheAspect]
         public async Task<IDataResult<List<CombinationPhotoDTO>>> GetAllCombinationPhotosDTO(GetAllCombinationPhotosDTO request)
         {
-
             var query = from cp in Context.CombinationPhoto
                         join pac in Context.ProductAttributeCombination on cp.CombinationId equals pac.Id
                         join p in Context.ProductPhoto on cp.PhotoId equals p.Id
@@ -32,10 +29,7 @@ namespace DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos
                             PhotoId = cp.PhotoId,
                             Id = cp.Id,
                         };
-
             return new SuccessDataResult<List<CombinationPhotoDTO>>(await query.ToListAsync());
         }
     }
-
-
 }

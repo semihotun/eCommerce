@@ -10,15 +10,12 @@ using DataAccess.DALs.EntitiyFramework.DiscountsAggregate.Discounts;
 using Entities.Concrete.DiscountsAggregate;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.DiscountsAggregate.Discounts
 {
     public class DiscountService : IDiscountService
     {
-
         private readonly IDiscountDAL _discountRepository;
         private readonly IMapper _mapper;
-
         public DiscountService(
             IDiscountDAL discountRepository,
             IMapper mapper
@@ -32,12 +29,9 @@ namespace Business.Services.DiscountsAggregate.Discounts
         {
             if (request.Id == 0)
                 return new ErrorDataResult<Discount>();
-
             var data = await _discountRepository.GetAsync(x => x.Id == request.Id);
-
             return new SuccessDataResult<Discount>(data);
         }
-
         [CacheRemoveAspect("IDiscountService.Get,IDiscountDAL.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
@@ -45,12 +39,10 @@ namespace Business.Services.DiscountsAggregate.Discounts
         {
             if (discount == null)
                 return new ErrorResult();
-
             _discountRepository.Add(discount);
             await _discountRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [CacheRemoveAspect("IDiscountService.Get,IDiscountDAL.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
@@ -58,22 +50,17 @@ namespace Business.Services.DiscountsAggregate.Discounts
         {
             if (discount == null)
                 return new ErrorResult();
-
             _discountRepository.Delete(discount);
             await _discountRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [CacheAspect]
         public async Task<IDataResult<IPagedList<Discount>>> GetAllList(GetAllList request)
         {
             var query = _discountRepository.Query();
-
             var data = await query.ToPagedListAsync(request.PageIndex, request.PageSize);
-
             return new SuccessDataResult<IPagedList<Discount>>(data);
         }
-
         [CacheRemoveAspect("IDiscountService.Get,IDiscountDAL.Get")]
         [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
@@ -81,15 +68,11 @@ namespace Business.Services.DiscountsAggregate.Discounts
         {
             if (discount == null)
                 return new ErrorResult();
-
             var data = await _discountRepository.GetAsync(x => x.Id == discount.Id);
             data = _mapper.Map(discount, data);
-
             _discountRepository.Update(data);
             await _discountRepository.SaveChangesAsync();
-
             return new SuccessResult();
         }
-
     }
 }

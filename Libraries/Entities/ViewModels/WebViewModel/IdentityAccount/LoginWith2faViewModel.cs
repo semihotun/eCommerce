@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace Entities.ViewModels.WebViewModel.IdentityAccount
 {
     public class LoginWith2faViewModel
@@ -13,10 +12,8 @@ namespace Entities.ViewModels.WebViewModel.IdentityAccount
         [DataType(DataType.Text)]
         [Display(Name = "Authenticator code")]
         public string TwoFactorCode { get; set; }
-
         [Display(Name = "Remember this machine")]
         public bool RememberMachine { get; set; }
-
         public bool RememberMe { get; set; }
     }
 }

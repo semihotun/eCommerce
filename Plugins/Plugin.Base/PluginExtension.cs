@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
-
 namespace Plugin.Base
 {
     public static class PluginExtension
@@ -33,18 +32,13 @@ namespace Plugin.Base
             }
             mvcBuilder.AddControllersAsServices();
         }
-
         public static IEnumerable<Assembly> GetPluginAssemblies()
         {
             var result = Directory.EnumerateFiles(Directory.GetCurrentDirectory(), "Plugin.*.dll", SearchOption.AllDirectories)
                 .Where(x => !x.Contains("Plugin.Base.dll"))
                 .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath);
-
-
             return result;
-
         }
-
         public static void AddPluginStaticFileProvier(this IApplicationBuilder app, IEnumerable<Assembly> pluginAssemblies)
         {
             var plugin = pluginAssemblies.Where(x => x.ManifestModule.Name.Contains("Views") == false);
@@ -60,7 +54,6 @@ namespace Plugin.Base
                 }
                 catch (System.Exception)
                 {
-
                     var solutionPath = new DirectoryInfo(Directory.GetCurrentDirectory());
                     option.FileProvider = new PhysicalFileProvider(solutionPath + "\\Plugins\\" + pluginFolderName + "\\wwwroot");
                 }
@@ -68,9 +61,7 @@ namespace Plugin.Base
                 option.RequestPath = "/" + pluginName;
                 staticOptions.Add(option);
             }
-
             app.UseStaticFiles();
-
             foreach (var option in staticOptions)
             {
                 app.UseStaticFiles(option);

@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.ProductAggregate;
 using FluentValidation;
-
 namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues.Validator
 {
-
     public class CreatePredefinedProductAttributeValueValidator : AbstractValidator<PredefinedProductAttributeValue>
     {
         public CreatePredefinedProductAttributeValueValidator()
@@ -15,7 +13,6 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues.Va
             RuleFor(x => x.Cost).NotEmpty();
             RuleFor(x => x.IsPreSelected).NotEmpty();
             RuleFor(x => x.DisplayOrder).NotEmpty();
-
         }
     }
     public class UpdatePredefinedProductAttributeValueValidator : AbstractValidator<PredefinedProductAttributeValue>
@@ -29,7 +26,6 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues.Va
             RuleFor(x => x.Cost).NotEmpty();
             RuleFor(x => x.IsPreSelected).NotEmpty();
             RuleFor(x => x.DisplayOrder).NotEmpty();
-
         }
     }
 }

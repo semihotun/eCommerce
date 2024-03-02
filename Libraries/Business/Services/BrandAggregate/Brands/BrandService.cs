@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.BrandAggregate.Brands
 {
     public class BrandService : IBrandService
@@ -30,8 +29,6 @@ namespace Business.Services.BrandAggregate.Brands
             _mapper = mapper;
         }
         #endregion
-
-
         #region Method
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IBrandService.Get","IBrandDAL.Get")]
@@ -40,31 +37,23 @@ namespace Business.Services.BrandAggregate.Brands
         {
             _brandRepository.Add(model);
             await _brandRepository.SaveChangesAsync();
-
             return new SuccessResult();
         }
-
         [CacheAspect]
         public async Task<IDataResult<IPagedList<Brand>>> GetBrandList(GetBrandList request)
         {
-
             var result = _brandRepository.Query();
-
             if (request.BrandName != null)
                 result = result.Where(x => x.BrandName == request.BrandName);
-
             var data = await result.ToPagedListAsync(request.PageIndex, request.PageSize);
-
             return new SuccessDataResult<IPagedList<Brand>>(data);
         }
         [CacheAspect]
         public async Task<IDataResult<Brand>> GetBrand(GetBrand request)
         {
             var data = await _brandRepository.GetAsync(x => x.Id == request.BrandId);
-
             return new SuccessDataResult<Brand>(data);
         }
-
         [CacheRemoveAspect("IBrandService.Get", "IBrandDAL.Get")]
         [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
@@ -74,7 +63,6 @@ namespace Business.Services.BrandAggregate.Brands
             await _brandRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IBrandService.Get", "IBrandDAL.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
@@ -82,13 +70,10 @@ namespace Business.Services.BrandAggregate.Brands
         {
             var data = await _brandRepository.GetAsync(x => x.Id == brand.Id);
             data = _mapper.Map(brand, data);
-
             _brandRepository.Update(data);
             await _brandRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
-
         [CacheAspect]
         public async Task<IDataResult<IEnumerable<SelectListItem>>> GetBrandDropdown(GetBrandDropdown request)
         {
@@ -104,7 +89,5 @@ namespace Business.Services.BrandAggregate.Brands
             return new SuccessDataResult<IEnumerable<SelectListItem>>(data);
         }
         #endregion
-
-
     }
 }

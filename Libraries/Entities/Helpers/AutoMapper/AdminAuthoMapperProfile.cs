@@ -16,7 +16,6 @@ using Entities.Concrete.SpeficationAggregate;
 using Entities.DTO;
 using Entities.Concrete.BrandAggregate;
 using Entities.Concrete.PhotoAggregate;
-
 namespace Entities.Helpers.AutoMapper
 {
     public class AdminAuthoMapperProfile : Profile
@@ -43,9 +42,7 @@ namespace Entities.Helpers.AutoMapper
             CreateMap<ProductAttribute, ProductAttribute>().ForMember(x => x.Id, mo => mo.Ignore());
             CreateMap<ProductAttributeValue, ProductAttributeValue>().ForMember(x => x.Id, mo => mo.Ignore());
             CreateMap<Category, Category>().ForMember(x => x.Id, mo => mo.Ignore());
-
             CreateMap<ShowCaseDTO, ShowCase>();
-
             CreateMap<Product, ProductDataTableJson>().ReverseMap();
             CreateMap<MappingAttrModel, MappingAttrXml>().ReverseMap();
             CreateMap<SliderCreateOrUpdateVM, Slider>().ReverseMap();

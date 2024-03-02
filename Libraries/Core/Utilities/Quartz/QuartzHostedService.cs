@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-
 namespace Core.Utilities.Quartz
 {
     public class QuartzHostedService : IHostedService
@@ -13,7 +12,6 @@ namespace Core.Utilities.Quartz
         private readonly ISchedulerFactory _schedulerFactory;
         private readonly IJobFactory _jobFactory;
         private readonly IEnumerable<JobModel> _myJob;
-
         public QuartzHostedService(ISchedulerFactory schedulerFactory, IJobFactory jobFactory, IEnumerable<JobModel> myJob)
         {
             _schedulerFactory = schedulerFactory;
@@ -21,7 +19,6 @@ namespace Core.Utilities.Quartz
             _myJob = myJob;
         }
         public IScheduler Scheduler { get; set; }
-
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             // Zamanlayıcı
@@ -36,12 +33,10 @@ namespace Core.Utilities.Quartz
             }
             await Scheduler.Start();
         }
-
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             await Scheduler?.Shutdown(cancellationToken);
         }
-
         private static IJobDetail CreateJob(JobModel myJob)
         {
             var type = myJob.Type;
@@ -56,6 +51,5 @@ namespace Core.Utilities.Quartz
                 .WithIdentity($"{myJob.Type.FullName}")
                 .WithDescription(myJob.Expression).Build();
         }
-
     }
 }

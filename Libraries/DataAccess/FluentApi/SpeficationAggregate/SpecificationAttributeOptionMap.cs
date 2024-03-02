@@ -13,7 +13,6 @@ namespace DataAccess.FluentApi.SpeficationAggregate
             builder.HasIndex(x => x.SpecificationAttributeId);
             builder.HasKey(x => x.Id);
             builder.Property(t => t.Id).UseIdentityColumn();
-
         }
     }
 }

@@ -21,14 +21,12 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes
         #region Field
         IProductSpecificationAttributeDAL _productSpecificationAttributeRepository;
         #endregion
-
         #region Ctor
         public ProductSpecificationAttributeService(IProductSpecificationAttributeDAL productSpecificationAttributeRepository)
         {
             _productSpecificationAttributeRepository = productSpecificationAttributeRepository;
         }
         #endregion
-
         #region Method
         [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
@@ -38,45 +36,31 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes
             var data = (await GetProductSpecificationAttributeById(new GetProductSpecificationAttributeById(request.Id))).Data;
             _productSpecificationAttributeRepository.Delete(data);
             await _productSpecificationAttributeRepository.SaveChangesAsync();
-
             return new SuccessResult();
-
         }
-
         [CacheAspect]
         public async Task<IDataResult<IPagedList<ProductSpecificationAttribute>>> GetProductSpecificationAttributes(
             GetProductSpecificationAttributes request)
         {
-
             var query = _productSpecificationAttributeRepository.Query();
             if (request.ProductId > 0)
                 query = query.Where(psa => psa.ProductId == request.ProductId);
-
             if (request.SpecificationAttributeOptionId > 0)
                 query = query.Where(psa => psa.SpecificationAttributeOptionId == request.SpecificationAttributeOptionId);
-
             if (request.AllowFiltering.HasValue)
                 query = query.Where(psa => psa.AllowFiltering == request.AllowFiltering.Value);
-
             if (request.ShowOnProductPage.HasValue)
                 query = query.Where(psa => psa.ShowOnProductPage == request.ShowOnProductPage.Value);
-
-
             query = query.OrderBy(psa => psa.DisplayOrder).ThenBy(psa => psa.Id);
-
             var data = await query.ToPagedListAsync(request.PageIndex, request.PageSize);
-
             return new SuccessDataResult<IPagedList<ProductSpecificationAttribute>>(data);
         }
-
         [CacheAspect]
         public async Task<IDataResult<ProductSpecificationAttribute>> GetProductSpecificationAttributeById(GetProductSpecificationAttributeById request)
         {
             var data = await _productSpecificationAttributeRepository.GetAsync(x => x.Id == request.productSpecificationAttributeId);
-
             return new SuccessDataResult<ProductSpecificationAttribute>(data);
         }
-
         [ValidationAspect(typeof(CreateProductSpecificationAttributeValidator))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductShipmentInfoService.Get")]
@@ -85,12 +69,10 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes
         {
             if (productSpecificationAttribute == null)
                 return new ErrorResult();
-
             _productSpecificationAttributeRepository.Add(productSpecificationAttribute);
             await _productSpecificationAttributeRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductShipmentInfoService.Get")]
         [LogAspect(typeof(MsSqlLogger))]
@@ -98,7 +80,6 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes
         {
             if (productSpecificationAttribute == null)
                 return new ErrorResult();
-
             _productSpecificationAttributeRepository.Update(productSpecificationAttribute);
             await _productSpecificationAttributeRepository.SaveChangesAsync();
             return new SuccessResult();
@@ -111,14 +92,9 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes
                 query = query.Where(psa => psa.ProductId == request.ProductId);
             if (request.SpecificationAttributeOptionId > 0)
                 query = query.Where(psa => psa.SpecificationAttributeOptionId == request.SpecificationAttributeOptionId);
-
             var data = await query.CountAsync();
-
             return new SuccessDataResult<int>(query.Count());
         }
-
-
-
         #endregion
     }
 }

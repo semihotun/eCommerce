@@ -19,20 +19,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.SpeficationAggregate.SpecificationAttributes
 {
     public class SpecificationAttributeService : ISpecificationAttributeService
     {
         #region Fields
-
         private readonly IProductSpecificationAttributeService _productSpecificationAttributeService;
         private readonly ISpecificationAttributeDAL _specificationAttributeRepository;
         private readonly ISpecificationAttributeOptionDAL _specificationAttributeOptionRepository;
         private readonly ICategorySpeficationService _categorySpeficationService;
         private readonly IMapper _mapper;
         #endregion
-
         #region Ctor
         public SpecificationAttributeService(
             IProductSpecificationAttributeService productSpecificationAttributeService,
@@ -46,17 +43,12 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes
             _categorySpeficationService = categorySpeficationService;
             _mapper = mapper;
         }
-
         #endregion
-
         #region Methods
-
         [CacheAspect]
         public async Task<IDataResult<SpecificationAttribute>> GetSpecificationAttributeById(GetSpecificationAttributeById request)
         {
-
             var data = await _specificationAttributeRepository.GetAsync(x => x.Id == request.SpecificationAttributeId);
-
             return new SuccessDataResult<SpecificationAttribute>(data);
         }
         [CacheAspect]
@@ -64,13 +56,10 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes
         {
             if (request.SpecificationAttributeIds == null || request.SpecificationAttributeIds.Length == 0)
                 return new ErrorDataResult<IList<SpecificationAttribute>>();
-
             var query = from p in _specificationAttributeRepository.Query()
                         where request.SpecificationAttributeIds.Contains(p.Id)
                         select p;
-
             var data = await query.ToListAsync();
-
             return new SuccessDataResult<List<SpecificationAttribute>>(data);
         }
         [CacheAspect]
@@ -79,13 +68,9 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes
             var query = from sa in _specificationAttributeRepository.Query()
                         orderby sa.Id
                         select sa;
-
             var data = await query.ToPagedListAsync(request.PageIndex, request.PageSize);
-
             return new SuccessDataResult<IPagedList<SpecificationAttribute>>(data);
         }
-
-
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("ISpecificationAttributeService.Get", 
@@ -94,13 +79,10 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes
         {
             if (specificationAttribute == null)
                 throw new ArgumentNullException(nameof(specificationAttribute));
-
             _specificationAttributeRepository.Delete(specificationAttribute);
             await _specificationAttributeRepository.SaveChangesAsync();
-
             return new SuccessResult();
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("ISpecificationAttributeService.Get",
@@ -109,14 +91,10 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes
         {
             if (specificationAttribute == null)
                 throw new ArgumentNullException(nameof(specificationAttribute));
-
             _specificationAttributeRepository.Add(specificationAttribute);
             await _specificationAttributeRepository.SaveChangesAsync();
-
             return new SuccessResult();
-
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("ISpecificationAttributeService.Get",
@@ -125,45 +103,34 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes
         {
             if (specificationAttribute == null)
                 throw new ArgumentNullException(nameof(specificationAttribute));
-
             var updateData = await _specificationAttributeRepository.GetAsync(x => x.Id == specificationAttribute.Id);
             updateData = _mapper.Map(specificationAttribute, updateData);
             _specificationAttributeRepository.Update(updateData);
             await _specificationAttributeRepository.SaveChangesAsync();
-
             return new SuccessResult();
-
         }
         [CacheAspect]
         public async Task<IDataResult<List<SpecificationAttribute>>> GetCatalogSpefication(GetCatalogSpefication request)
         {
             var query = await _categorySpeficationService.GetAllCategorySpefication(new GetAllCategorySpefication(request.CategoryId));
-
             var specificationAttributes = new List<SpecificationAttribute>();
-
             foreach (var item in query.Data)
             {
                 SpecificationAttribute specificationAttribute = new SpecificationAttribute();
                 //specificationAttribute.Name = item.SpecificationAttribute.Name;
                 //specificationAttribute.Id = item.SpecificationAttribute.Id;
-
                 //var productSpeci = _productSpecificationAttributeService.GetProductSpecificationAttributes(allowFiltering: true,
                 //    specificationAttributeName: item.SpecificationAttribute.Name
                 //    ).Data.Select(x => x.SpecificationAttributeOption.Name).Distinct();
-
                 //specificationAttribute.SpecificationAttributeOption =
                 //  productSpeci.Select(x => new SpecificationAttributeOption
                 //  {
                 //      Name = x
                 //  }).ToList();
-
                 specificationAttributes.Add(specificationAttribute);
             }
-
             return new SuccessDataResult<List<SpecificationAttribute>>();
-
         }
-
         [CacheAspect]
         public async Task<IDataResult<IEnumerable<SelectListItem>>> GetProductSpeficationAttributeDropdwon(GetProductSpeficationAttributeDropdwon request)
         {
@@ -175,12 +142,9 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes
                             Selected = s.Id == request.SelectedId ? true : false
                         };
             var data = await query.ToListAsync();
-
             data.Insert(0, new SelectListItem("Seçiniz", "0", request.SelectedId == 0));
-
             return new SuccessDataResult<IEnumerable<SelectListItem>>(data);
         }
-
         #endregion
     }
 }

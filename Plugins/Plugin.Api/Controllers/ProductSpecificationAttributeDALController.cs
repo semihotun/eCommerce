@@ -15,39 +15,28 @@ using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecificationAttr
  [ApiController] 
  public class ProductSpecificationAttributeDALController : ControllerBase{ 
  private readonly IProductSpecificationAttributeDAL _productSpecificationAttributeDAL; 
- 
  public ProductSpecificationAttributeDALController(IProductSpecificationAttributeDAL productSpecificationAttributeDAL){ 
  _productSpecificationAttributeDAL=productSpecificationAttributeDAL; 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpPost("productspecattrlist")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> ProductSpecAttrList ([FromBody]ProductSpecAttrList request) { 
- 
  var result = await _productSpecificationAttributeDAL.ProductSpecAttrList(request); 
- 
  if(result.Success) 
  return Ok(result.Data); 
  else 
  return BadRequest(result.Message); 
- 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpGet("getproductspeficationattr")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> GetProductSpeficationAttr ([FromQuery]GetProductSpeficationAttr request) { 
- 
  var result = await _productSpecificationAttributeDAL.GetProductSpeficationAttr(request); 
- 
  if(result.Success) 
  return Ok(result.Data); 
  else 
  return BadRequest(result.Message); 
  } 
- 
  } 
  }

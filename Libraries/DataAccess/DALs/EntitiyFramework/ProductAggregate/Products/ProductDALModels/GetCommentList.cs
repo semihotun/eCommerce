@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
-
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels
 {
     public class GetCommentListDTO
@@ -13,7 +12,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALM
         public int PageSize { get; set; }
         public string OrderByText { get; set; }
         public bool IsApproved { get; set; }
-   
         public GetCommentListDTO(int productId, int pageIndex, int pageSize,
             string orderByText = null,bool isApproved = true)
         {
@@ -23,7 +21,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALM
             OrderByText = orderByText;
             IsApproved = isApproved;
         }
-
         public GetCommentListDTO()
         {
         }

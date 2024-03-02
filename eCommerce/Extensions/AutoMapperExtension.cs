@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace eCommerce.Extensions
 {
     public static class AutoMapperExtension
@@ -19,8 +18,6 @@ namespace eCommerce.Extensions
             });
             IMapper mapper = AutoMapperConfig.Get().CreateMapper();
             services.AddSingleton(mapper);
-            
         }
-
     }
 }

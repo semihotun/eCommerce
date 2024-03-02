@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.ShowcaseAggregate.ShowCaseProducts.ShowCaseProductServiceModel
 {
     public class DeleteShowCaseProduct
@@ -10,11 +9,9 @@ namespace Business.Services.ShowcaseAggregate.ShowCaseProducts.ShowCaseProductSe
         {
             Id = ıd;
         }
-
         public DeleteShowCaseProduct()
         {
         }
-
         public int Id { get; set; }
     }
 }

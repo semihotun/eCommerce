@@ -16,69 +16,48 @@ using Business.Services.DiscountsAggregate.DiscountUsageHistorys.DiscountUsageHi
  [ApiController] 
  public class DiscountUsageHistoryServiceController : ControllerBase{ 
  private readonly IDiscountUsageHistoryService _discountUsageHistoryService; 
- 
  public DiscountUsageHistoryServiceController(IDiscountUsageHistoryService discountUsageHistoryService){ 
  _discountUsageHistoryService=discountUsageHistoryService; 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpPost("adddiscountusagehistory")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> AddDiscountUsageHistory ([FromBody]DiscountUsageHistory discountUsageHistory) { 
- 
  var result = await _discountUsageHistoryService.AddDiscountUsageHistory(discountUsageHistory); 
- 
  if(result.Success) 
  return Ok(result.Success); 
  else 
  return BadRequest(result.Message); 
- 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpPost("deletediscountusagehistory")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> DeleteDiscountUsageHistory ([FromBody]DiscountUsageHistory discountUsageHistory) { 
- 
  var result = await _discountUsageHistoryService.DeleteDiscountUsageHistory(discountUsageHistory); 
- 
  if(result.Success) 
  return Ok(result.Success); 
  else 
  return BadRequest(result.Message); 
- 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpGet("getalldiscountusagehistory")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> GetAllDiscountUsageHistory ([FromQuery]GetAllDiscountUsageHistory request) { 
- 
  var result = await _discountUsageHistoryService.GetAllDiscountUsageHistory(request); 
- 
  if(result.Success) 
  return Ok(result.Data); 
  else 
  return BadRequest(result.Message); 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpPost("updatediscountusagehistory")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> UpdateDiscountUsageHistory ([FromBody]DiscountUsageHistory discountUsageHistory) { 
- 
  var result = await _discountUsageHistoryService.UpdateDiscountUsageHistory(discountUsageHistory); 
- 
  if(result.Success) 
  return Ok(result.Success); 
  else 
  return BadRequest(result.Message); 
- 
  } 
- 
  } 
  }

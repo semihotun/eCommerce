@@ -15,25 +15,18 @@ using DataAccess.DALs.EntitiyFramework.DiscountsAggregate.Discounts.DiscountDALM
  [ApiController] 
  public class DiscountDALController : ControllerBase{ 
  private readonly IDiscountDAL _discountDAL; 
- 
  public DiscountDALController(IDiscountDAL discountDAL){ 
  _discountDAL=discountDAL; 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpPost("getdatatablelist")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> GetDataTableList ([FromBody]GetDataTableList request) { 
- 
  var result = await _discountDAL.GetDataTableList(request); 
- 
  if(result.Success) 
  return Ok(result.Data); 
  else 
  return BadRequest(result.Message); 
- 
  } 
- 
  } 
  }

@@ -3,7 +3,6 @@ using Entities.Concrete.ProductAggregate;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Entities.DTO.Product
 {
     public class CatalogProduct
@@ -18,10 +17,6 @@ namespace Entities.DTO.Product
         public ProductAttributeCombination ProductAttributeCombination { get; set; }
         public ProductStock ProductStockModel { get; set; }
         public ProductPhoto ProductPhotoModel { get; set; }
-        
         public bool SpeficationIn { get; set; }
     }
 }
-
-
-

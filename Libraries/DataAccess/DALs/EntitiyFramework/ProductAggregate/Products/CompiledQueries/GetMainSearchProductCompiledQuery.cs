@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.CompiledQueries
 {
     public static class GetMainSearchProductCompiledQuery
@@ -22,5 +21,4 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.CompiledQue
                }).Skip(1).Take(PageSize)
               );
     }
-
 }

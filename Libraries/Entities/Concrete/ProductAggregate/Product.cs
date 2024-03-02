@@ -3,7 +3,6 @@ namespace Entities.Concrete.ProductAggregate
     using eCommerce.Core.Entities;
     using System;
     using System.Collections.Generic;
-
     public class Product : BaseEntity
     {
         public string ProductName { get; set; }
@@ -19,11 +18,4 @@ namespace Entities.Concrete.ProductAggregate
         public int ProductStockTypeId { get; set; }
         public string ProductNameUpper { get; set; }
     }
-
-
-
-
-
-
-
 }

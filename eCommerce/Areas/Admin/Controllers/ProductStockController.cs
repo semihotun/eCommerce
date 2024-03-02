@@ -9,7 +9,6 @@ using Entities.ViewModels.AdminViewModel.AdminProduct;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
-
 namespace eCommerce.Areas.Admin.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
@@ -19,7 +18,6 @@ namespace eCommerce.Areas.Admin.Controllers
     {
         private readonly IProductStockDAL _productStockDal;
         private readonly IProductStockService _productStockService;
-
         public ProductStockController(IProductStockDAL productStockDal, IProductStockService productStockService)
         {
             _productStockDal = productStockDal;
@@ -29,7 +27,6 @@ namespace eCommerce.Areas.Admin.Controllers
         {
             var query = await _productStockDal.GetAllProductStockDto(
                 new GetAllProductStockDto(productStockFilter.ProductId, param));
-
             return ToDataTableJson(query, param);
         }
         public async Task<IActionResult> ProductStockAdd(ProductStockCreateOrUpdateVM productStock)
@@ -37,13 +34,11 @@ namespace eCommerce.Areas.Admin.Controllers
             var data = productStock.MapTo<ProductStock>();
             ResponseAlert(await _productStockService.AddProductStock(data));
             productStock.Id = data.Id;
-
             return Json(productStock, new JsonSerializerSettings());
         }
         public async Task<IActionResult> ProductStockDelete(int id)
         {
             ResponseAlert(await _productStockService.DeleteProductStock(new DeleteProductStock(id)));
-
             return Json(true, new JsonSerializerSettings());
         }
     }

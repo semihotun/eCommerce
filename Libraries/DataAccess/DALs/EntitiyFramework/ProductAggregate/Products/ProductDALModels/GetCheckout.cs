@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels
 {
     public  class GetCheckout
@@ -11,12 +10,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALM
         {
             Basket = basket;
         }
-
         public GetCheckout()
         {
         }
-
         public List<Basket> Basket { get; set; }
-      
     }
 }

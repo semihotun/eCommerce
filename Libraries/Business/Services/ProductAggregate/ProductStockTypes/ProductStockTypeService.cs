@@ -9,26 +9,18 @@ using Core.Utilities.Results;
 using Business.Services.ProductAggregate.ProductStockTypes.ProductStockTypeServiceModel;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStockTypes;
 using Core.Aspects.Autofac.Caching;
-
 namespace Business.Services.ProductAggregate.ProductStockTypes
 {
     public class ProductStockTypeService : IProductStockTypeService
     {
-
         #region Field
-
         private readonly IProductStockTypeDAL _productStockTypeDal;
-
         #endregion
-
         #region Ctor
-
         public ProductStockTypeService(IProductStockTypeDAL productStockTypeDal)
         {
             _productStockTypeDal = productStockTypeDal;
         }
-
-
         #endregion
         #region Method
         [CacheAspect]
@@ -43,12 +35,8 @@ namespace Business.Services.ProductAggregate.ProductStockTypes
                         };
             var result = await query.ToListAsync();
             result.Insert(0, new SelectListItem("Seçiniz", "0", request.SelectedId == 0));
-
             return new SuccessDataResult<IEnumerable<SelectListItem>>(result);
         }
-
-
         #endregion
     }
-
 }

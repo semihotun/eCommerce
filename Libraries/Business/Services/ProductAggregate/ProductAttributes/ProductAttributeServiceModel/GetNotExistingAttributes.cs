@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.ProductAggregate.ProductAttributes.ProductAttributeServiceModel
 {
     public class GetNotExistingAttributes
@@ -10,11 +9,9 @@ namespace Business.Services.ProductAggregate.ProductAttributes.ProductAttributeS
         {
             AttributeId = attributeId;
         }
-
         public GetNotExistingAttributes()
         {
         }
-
         public int[] AttributeId { get; set; }
     }
 }

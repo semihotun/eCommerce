@@ -15,5 +15,4 @@ namespace DataAccess.FluentApi.ProductAggregate
             builder.Property(t => t.Id).UseIdentityColumn();
         }
     }
-
 }

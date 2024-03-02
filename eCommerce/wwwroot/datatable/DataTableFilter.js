@@ -1,5 +1,4 @@
-﻿
-function AddDataTableFilterOptionHtml(thisdata) {
+﻿function AddDataTableFilterOptionHtml(thisdata) {
     $("#DataTableFilterDropdown").change(function (e) {
         $(this).parent().find("input").val($(this).val());
     })
@@ -39,13 +38,9 @@ function AddDataTableFilterOptionHtml(thisdata) {
                          </div>`);
                 break;
         }
-
     }
 }
-
-
 function AddDataTableFilter(DataTableVeriable) {
-
     var dataTableId = "#" + DataTableVeriable.context[0].sTableId;
     $(dataTableId + ' thead tr').clone(true, true).appendTo(dataTableId + ' thead');
     $(dataTableId + ' thead tr:eq(1) th').each(function (i) {

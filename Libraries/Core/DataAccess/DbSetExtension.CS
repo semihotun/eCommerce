@@ -5,7 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-
 namespace Core.DataAccess
 {
     public static class DbSetExtension
@@ -14,10 +13,8 @@ namespace Core.DataAccess
         {
             var context = dbSet.GetContext();
             var ids = context.Model.FindEntityType(typeof(T)).FindPrimaryKey().Properties.Select(x => x.Name);
-
             var t = typeof(T);
             List<PropertyInfo> keyFields = new List<PropertyInfo>();
-
             foreach (var propt in t.GetProperties())
             {
                 var keyAttr = ids.Contains(propt.Name);
@@ -45,7 +42,6 @@ namespace Core.DataAccess
             }
             dbSet.Add(data);
         }
-
         public static void AddOrUpdate<T>(this DbSet<T> dbSet, Expression<Func<T, object>> key, T data) where T : class
         {
             var context = dbSet.GetContext();
@@ -88,7 +84,6 @@ namespace Core.DataAccess
             dbSet.Add(data);
         }
     }
-
     public static class HackyDbSetGetContextTrick
     {
         public static DbContext GetContext<TEntity>(this DbSet<TEntity> dbSet)

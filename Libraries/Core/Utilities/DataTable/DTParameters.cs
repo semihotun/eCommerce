@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using static Core.Utilities.Infrastructure.Filter.FilterHelper;
-
 namespace Core.Utilities.DataTable
 {
     public class DTParameters
@@ -13,7 +12,6 @@ namespace Core.Utilities.DataTable
         public int Start
         {           get; set;
         }
-
         public int Length { get; set; }
         public DTSearch Search { get; set; }
         public string SortOrder
@@ -35,7 +33,6 @@ namespace Core.Utilities.DataTable
             {
                 PageIndex = value;
             }
-
         }
         public int PageSize
         {
@@ -48,11 +45,7 @@ namespace Core.Utilities.DataTable
                 PageIndex = value;
             }
         }
-
-
     }
-
-
     public class DTColumn
     {
         public string Data { get; set; }
@@ -61,7 +54,6 @@ namespace Core.Utilities.DataTable
         public bool Orderable { get; set; }
         public DTSearch Search { get; set; }
     }
-
     public class DTOrder
     {
         public int Column { get; set; }
@@ -75,7 +67,6 @@ namespace Core.Utilities.DataTable
     public class DTSearch
     {
         public string Value { get; set; }
-
         public bool Regex { get; set; }
     }
 }

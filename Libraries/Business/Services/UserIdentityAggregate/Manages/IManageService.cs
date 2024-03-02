@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Business.Services.UserIdentityAggregate.Manages
 {
     public interface IManageService

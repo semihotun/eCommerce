@@ -1,27 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Semih\\source\\repos\\eCommerce\\eCommerce\\eCommerce.csproj": {}
+    "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\eCommerce\\eCommerce.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Semih\\source\\repos\\eCommerce\\eCommerce\\eCommerce.csproj": {
+    "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\eCommerce\\eCommerce.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Semih\\source\\repos\\eCommerce\\eCommerce\\eCommerce.csproj",
+        "projectUniqueName": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\eCommerce\\eCommerce.csproj",
         "projectName": "eCommerce",
-        "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\eCommerce\\eCommerce.csproj",
-        "packagesPath": "C:\\Users\\Semih\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\eCommerce\\obj\\",
+        "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\eCommerce\\eCommerce.csproj",
+        "packagesPath": "C:\\Users\\semih\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\eCommerce\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Semih\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\semih\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -34,20 +28,20 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Business\\Business.csproj": {
-                "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Business\\Business.csproj"
+              "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Business\\Business.csproj": {
+                "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Business\\Business.csproj"
               },
-              "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Core\\Core.csproj"
+              "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Core\\Core.csproj": {
+                "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Core\\Core.csproj"
               },
-              "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\DataAccess\\DataAccess.csproj"
+              "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\DataAccess\\DataAccess.csproj"
               },
-              "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Entities\\Entities.csproj": {
-                "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Entities\\Entities.csproj"
+              "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Entities\\Entities.csproj": {
+                "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Entities\\Entities.csproj"
               },
-              "C:\\Users\\Semih\\source\\repos\\eCommerce\\Plugins\\Plugin.Base\\Plugin.Base.csproj": {
-                "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Plugins\\Plugin.Base\\Plugin.Base.csproj"
+              "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Plugins\\Plugin.Base\\Plugin.Base.csproj": {
+                "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Plugins\\Plugin.Base\\Plugin.Base.csproj"
               }
             }
           }
@@ -153,7 +147,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -165,28 +160,22 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Business\\Business.csproj": {
+    "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Business\\Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Business\\Business.csproj",
+        "projectUniqueName": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Business\\Business.csproj",
         "projectName": "Business",
-        "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Business\\Business.csproj",
-        "packagesPath": "C:\\Users\\Semih\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Business\\obj\\",
+        "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Business\\Business.csproj",
+        "packagesPath": "C:\\Users\\semih\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Business\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Semih\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\semih\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -199,11 +188,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\DataAccess\\DataAccess.csproj"
+              "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\DataAccess\\DataAccess.csproj"
               },
-              "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Entities\\Entities.csproj": {
-                "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Entities\\Entities.csproj"
+              "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Entities\\Entities.csproj": {
+                "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Entities\\Entities.csproj"
               }
             }
           }
@@ -253,7 +242,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -262,28 +252,22 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Core\\Core.csproj": {
+    "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Core\\Core.csproj",
-        "packagesPath": "C:\\Users\\Semih\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Core\\obj\\",
+        "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Core\\Core.csproj",
+        "packagesPath": "C:\\Users\\semih\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Core\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Semih\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\semih\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -411,7 +395,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -420,28 +405,22 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\DataAccess\\DataAccess.csproj": {
+    "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\DataAccess\\DataAccess.csproj",
+        "projectUniqueName": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\DataAccess\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\DataAccess\\DataAccess.csproj",
-        "packagesPath": "C:\\Users\\Semih\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\DataAccess\\obj\\",
+        "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\DataAccess\\DataAccess.csproj",
+        "packagesPath": "C:\\Users\\semih\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\DataAccess\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Semih\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\semih\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -454,11 +433,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Core\\Core.csproj"
+              "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Core\\Core.csproj": {
+                "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Core\\Core.csproj"
               },
-              "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Entities\\Entities.csproj": {
-                "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Entities\\Entities.csproj"
+              "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Entities\\Entities.csproj": {
+                "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Entities\\Entities.csproj"
               }
             }
           }
@@ -508,7 +487,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -517,28 +497,22 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Entities\\Entities.csproj": {
+    "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Entities\\Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Entities\\Entities.csproj",
+        "projectUniqueName": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Entities\\Entities.csproj",
         "projectName": "Entities",
-        "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Entities\\Entities.csproj",
-        "packagesPath": "C:\\Users\\Semih\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Entities\\obj\\",
+        "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Entities\\Entities.csproj",
+        "packagesPath": "C:\\Users\\semih\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Entities\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Semih\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\semih\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -551,8 +525,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Libraries\\Core\\Core.csproj"
+              "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Core\\Core.csproj": {
+                "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Libraries\\Core\\Core.csproj"
               }
             }
           }
@@ -596,7 +570,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -605,28 +580,22 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Semih\\source\\repos\\eCommerce\\Plugins\\Plugin.Base\\Plugin.Base.csproj": {
+    "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Plugins\\Plugin.Base\\Plugin.Base.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Plugins\\Plugin.Base\\Plugin.Base.csproj",
+        "projectUniqueName": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Plugins\\Plugin.Base\\Plugin.Base.csproj",
         "projectName": "Plugin.Base",
-        "projectPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Plugins\\Plugin.Base\\Plugin.Base.csproj",
-        "packagesPath": "C:\\Users\\Semih\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Semih\\source\\repos\\eCommerce\\Plugins\\Plugin.Base\\obj\\",
+        "projectPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Plugins\\Plugin.Base\\Plugin.Base.csproj",
+        "packagesPath": "C:\\Users\\semih\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\semih\\OneDrive\\Masaüstü\\eCommerce\\Plugins\\Plugin.Base\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Semih\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\semih\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -674,7 +643,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -683,7 +653,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

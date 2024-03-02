@@ -1,11 +1,7 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "BrandList";
     Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
 }
-
-
-
 <div class="content">
     <div class="row">
         <div class="col-md-12">
@@ -19,17 +15,12 @@
                         </div>
                 </div>
                 <div class="card-body">
-
-
-
                     <form method="post" id="BrandFilterForm" action="/Admin/Brand/BrandList">
                         <br />
                         <div class="form-group col-md-6 row">
                             <span class = "control-label col-md-2 ">Marka </span>
-
                             <div class="col-md-6 ">
                                <input type="text" id="BrandName" class = " form-control" />
-
                             </div>
                         </div>
                         <div class="form-group">
@@ -37,19 +28,10 @@
                                 <input type="submit" value="Ara" class="btn btn-default" />
                             </div>
                         </div>
-                        
-                      
-
                     </form>
-
-
-
                     @Html.Partial("BrandDatatable")
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 namespace Entities.ViewModels.WebViewModel.Home
 {
     public class SearchVM

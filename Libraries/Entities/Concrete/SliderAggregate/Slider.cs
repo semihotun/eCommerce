@@ -6,11 +6,8 @@ namespace Entities.Concrete.SliderAggregate
     public class Slider : BaseEntity
     {
         public string SliderImage { get; set; }
-
         public string SliderHeading { get; set; }
-
         public string SliderText { get; set; }
-
         public string SliderLink { get; set; }
     }
 }

@@ -1,16 +1,11 @@
 ﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
-
 @{
     ViewData["Title"] = "_ProductSpeficationCreate";
     Layout = null;
 }
-
-
-
 @using (Html.BeginForm("ProductSpeficationCreate", "ProductSpecificationAttribute", FormMethod.Post, new { id = "ProductSpeficationCreate" }))
 {
     <div class="d-flex flex-wrap mb-5">
-
         <div class="form-group col-md-12 row">
             <h2>Ürün Özelliği Ekle</h2>
             @Html.HiddenFor(x => x.ProductSpecificationAttribute.ProductId)
@@ -19,14 +14,12 @@
         </div>
         <div class="form-group col-md-6 row">
             @Html.LabelFor(x => x.ProductSpecificationAttribute.AttributeTypeId, "Özellik Tipi", new { @class = "control-label col-md-2" })
-
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.ProductSpecificationAttribute.AttributeTypeId, Model.SpeficationAttributeSelectList, new { @class = " form-control col-md-8  " })
             </div>
         </div>
         <div class="form-group col-md-6 row">
             @Html.LabelFor(x => x.ProductSpecificationAttribute.SpecificationAttributeOptionId, "Özellik seçeneği", new { @class = "control-label col-md-2" })
-
             <div class="col-md-10">
                 <select class="form-control col-md-8" name="ProductSpecificationAttribute.SpecificationAttributeOptionId" id="SpecificationAttributeOptionId" disabled>
                     <option>Bir Özellik Seçiniz</option>
@@ -35,16 +28,12 @@
         </div>
         <div class="form-group col-md-6 row">
             @Html.LabelFor(x => x.ProductSpecificationAttribute.DisplayOrder, "Sıra", new { @class = "control-label col-md-2 " })
-
             <div class="col-md-10 ">
                 @Html.TextBoxFor(model => model.ProductSpecificationAttribute.DisplayOrder, new { @class = " form-control  col-md-8 " })
-
             </div>
         </div>
         <div class="form-group col-md-6">
-
             @Html.LabelFor(x => x.ProductSpecificationAttribute.AllowFiltering, "Filitrede Gözüksünmü?", new { @class = "control-label col-md-2 " })
-
             <div class="col-md-10">
                 @Html.CheckBoxFor(model => model.ProductSpecificationAttribute.AllowFiltering, new { @class = "formelement" })
             </div>
@@ -62,6 +51,3 @@
         </div>
     </div>
 }
-
-
-

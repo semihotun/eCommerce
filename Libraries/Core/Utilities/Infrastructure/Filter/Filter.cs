@@ -1,5 +1,4 @@
 ﻿using System;
-
 namespace Core.Utilities.Infrastructure.Filter
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
@@ -17,5 +16,4 @@ namespace Core.Utilities.Infrastructure.Filter
             this.filters = filters;
         }
     }
-
 }

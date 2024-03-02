@@ -1,5 +1,4 @@
 ﻿@model Entities.ViewModels.AdminViewModel.CategoryTree.AddNode
-
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
@@ -16,16 +15,13 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
-
                 <div class="col-md-12 d-flex">
-
                     <div class="col-md-6 row">
                         <div class="input-group align-items-center justify-content-sm-between">
                             <span>Parent Node</span>
                             <span class="input-group-addon">
                                 @Html.RadioButtonFor(model => model.NodeTypeRbtn, "Pn", new { @class = "rbtnnodetype" })
                             </span>
-
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -39,31 +35,24 @@
                     <br />
                     @Html.ValidationMessageFor(m => m.NodeTypeRbtn, "", new { @class = "alert-error" })
                 </div>
-
                 <div class="clearfix">
                 </div>
                 <div class="col-md-12">
                     <div class="petenddiv hidden">
                         @Html.Label("Hangi sınıfa ait")
                         @Html.DropDownList("ParentName", new SelectList(ViewBag.plist, "Id", "CategoryName"), "--select--", new { @class = "form-control" })
-
                         @Html.ValidationMessageFor(m => m.ParentName, "", new { @class = "alert-error" })
                     </div>
                 </div>
-
                 <div class="clearfix">
                 </div>
-
                 <div class="col-md-12">
                     <div>
                         @Html.Label("Kategori ismi")
                         @Html.TextBoxFor(model => model.NodeName, new { @class = "form-control" })
-
                         @Html.ValidationMessageFor(model => model.NodeName, "", new { @class = "alert-error" })
                     </div>
-
                 </div>
-
                 <div class="clearfix">
                 </div>
                 <br />
@@ -73,23 +62,14 @@
                         <div class="pull-left">
                             <input type="submit" id="savenode" value="Kaydet" class="btn btn-primary" />
                         </div>
-
                         <div class="pull-right">
                             <input type="button" id="closePopOver" value="İptal" class="btn btn-primary" />
                         </div>
                     </div>
                 </div>
-
-
                 <div class="clearfix">
                 </div>
-
-
             }
-
         </div>
     </div>
 </div>
-
-
-

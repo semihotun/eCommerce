@@ -12,11 +12,8 @@ namespace DataAccess.FluentApi.PhotoAggregate
         {
             builder.HasIndex(x => x.CombinationId);
             builder.HasIndex(x => x.PhotoId);
-
-
             builder.HasKey(x => x.Id);
             builder.Property(t => t.Id).UseIdentityColumn();
-
         }
     }
 }

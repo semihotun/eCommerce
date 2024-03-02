@@ -10,7 +10,6 @@ namespace eCommerce.Controllers
 {
     public class BaseController : Controller
     {
-
         [NonAction]
         protected IActionResult ToDataTableJson<T>(IDataResult<IPagedList<T>> data, DataTablesParam param)
         {
@@ -33,21 +32,16 @@ namespace eCommerce.Controllers
                 data = data.Data,
             }, new JsonSerializerSettings());
         }
-
         protected void Alert(string message, NotificationType notificationType,string title)
         {
             var msg = "swal(\"" + title + "\",\"" + message + "\",\"" + notificationType.ToString().ToLower() + "\")";
-
             TempData["notification"] = msg;
-
         }
-
         protected enum NotificationType
         {
             error,
             success,
         };
-
         protected void ResponseAlert(IResult result)
         {
             if (result.Success)
@@ -68,11 +62,9 @@ namespace eCommerce.Controllers
             else
             {
                 var eror = string.Join(",", result.Errors.Select(x => x.Description));
-
                 Alert(eror, NotificationType.error,"İşlem Başarısız");
             }
         }
-
         protected void ResponseDataAlert<T>(IDataResult<T> result, out IDataResult<T> outResult)
         {
             outResult = result;
@@ -81,10 +73,5 @@ namespace eCommerce.Controllers
                 Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : "İşlem Başarısız", NotificationType.error, "İşlem Başarısız");
             }
         }
-
-
-
-
-
     }
 }

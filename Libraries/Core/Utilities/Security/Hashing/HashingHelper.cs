@@ -1,6 +1,5 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-
 namespace Core.Utilities.Security.Hashing
 {
     public static class HashingHelper
@@ -13,7 +12,6 @@ namespace Core.Utilities.Security.Hashing
                 passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
         }
-
         public static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512(passwordSalt))
@@ -27,7 +25,6 @@ namespace Core.Utilities.Security.Hashing
                     }
                 }
             }
-
             return true;
         }
     }

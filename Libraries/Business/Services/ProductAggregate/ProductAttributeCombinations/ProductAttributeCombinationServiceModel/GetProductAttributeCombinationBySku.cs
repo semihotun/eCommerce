@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.ProductAggregate.ProductAttributeCombinations.ProductAttributeCombinationServiceModel
 {
     public class GetProductAttributeCombinationBySku
@@ -10,11 +9,9 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Produc
         {
             Sku = sku;
         }
-
         public GetProductAttributeCombinationBySku()
         {
         }
-
         public string Sku { get; set; }
     }
 }

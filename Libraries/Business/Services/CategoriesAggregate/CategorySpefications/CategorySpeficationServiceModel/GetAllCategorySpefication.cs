@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.CategoriesAggregate.CategorySpefications.CategorySpeficationServiceModel
 {
     public class GetAllCategorySpefication
@@ -10,11 +9,9 @@ namespace Business.Services.CategoriesAggregate.CategorySpefications.CategorySpe
         {
             CategoryId = categoryId;
         }
-
         public GetAllCategorySpefication()
         {
         }
-
         public int CategoryId { get; set; }
     }
 }

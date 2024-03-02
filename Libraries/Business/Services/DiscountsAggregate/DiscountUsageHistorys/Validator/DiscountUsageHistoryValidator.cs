@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.DiscountsAggregate;
 using FluentValidation;
-
 namespace Business.Services.DiscountsAggregate.DiscountUsageHistorys.Validator
 {
-
     public class CreateDiscountUsageHistoryValidator : AbstractValidator<DiscountUsageHistory>
     {
         public CreateDiscountUsageHistoryValidator()
@@ -11,7 +9,6 @@ namespace Business.Services.DiscountsAggregate.DiscountUsageHistorys.Validator
             RuleFor(x => x.DiscountId).NotEmpty();
             RuleFor(x => x.OrderId).NotEmpty();
             RuleFor(x => x.CreatedOnUtc).NotEmpty();
-
         }
     }
     public class UpdateDiscountUsageHistoryValidator : AbstractValidator<DiscountUsageHistory>
@@ -21,7 +18,6 @@ namespace Business.Services.DiscountsAggregate.DiscountUsageHistorys.Validator
             RuleFor(x => x.DiscountId).NotEmpty();
             RuleFor(x => x.OrderId).NotEmpty();
             RuleFor(x => x.CreatedOnUtc).NotEmpty();
-
         }
     }
 }

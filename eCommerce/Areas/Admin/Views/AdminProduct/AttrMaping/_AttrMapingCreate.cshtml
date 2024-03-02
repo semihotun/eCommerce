@@ -1,6 +1,4 @@
 ﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
-
-
 <table class="table tablesorter" id="AttrMapingCreateTable">
     <thead>
         <tr>
@@ -12,7 +10,6 @@
     </thead>
     <tbody>
         @*@Html.HiddenFor(x=>x.ProductAttributeMappingModel.ProductId)*@
-
         <tr>
             <td>
                 @Html.DropDownList("ProductAttributeId", Model.ProductAttributeSelectlist, new { @class = "form-control" })
@@ -27,9 +24,7 @@
                 <input type="button" class="btn btn-default" id="mappingAdd" value="Kaydet" />
             </td>
         </tr>
-
     </tbody>
-
 </table>
 <style>
     .vertical-absolute-left-center {
@@ -38,7 +33,6 @@
         position: absolute;
         transform: translateY(-50%);
     }
-
     .vertical-absolute-right-center {
         top: 50%;
         right: 0%;
@@ -46,6 +40,3 @@
         transform: translateY(-50%);
     }
 </style>
-
-
-

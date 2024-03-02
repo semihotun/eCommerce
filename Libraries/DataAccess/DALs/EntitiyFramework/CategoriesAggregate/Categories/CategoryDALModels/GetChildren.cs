@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories.CategoryDALModels
 {
     public class GetChildren
@@ -12,13 +11,10 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories.Catego
             HdList = hdList;
             ParentId = parentId;
         }
-
         public GetChildren()
         {
         }
-
         public IList<Category> HdList { get; set; }
         public int ParentId { get; set; }
-       
     }
 }

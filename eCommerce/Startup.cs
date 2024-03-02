@@ -28,7 +28,6 @@ using System.Text.Json.Serialization;
 using Business.Extension;
 using Utilities.Cookie;
 using Microsoft.AspNetCore.Identity.UI.Services;
-
 #endregion
 namespace eCommerce
 {
@@ -40,15 +39,10 @@ namespace eCommerce
             Configuration = configuration;
             CurrentEnvironment = env;
         }
-
-
         [Obsolete]
         private Microsoft.AspNetCore.Hosting.IHostingEnvironment CurrentEnvironment { get; set; }
-
         public IConfiguration Configuration { get; }
-
         public IEnumerable<Assembly> PluginAssembly { get; set; }
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
@@ -62,54 +56,42 @@ namespace eCommerce
             services.AddDependencyResolvers(new ICoreModule[] { new CoreModule() });
             services.AutoMapperSettings();
             services.AddHttpContextAccessor();
-
             //TempData
             services.AddMemoryCache();
             services.AddSession();
-
             //Identity  
             services.AddIdentitySettings(Configuration, JwtBearerDefaults.AuthenticationScheme);
             services.AddUserIdentitySettings(Configuration);
-
             //Jobs
             services.UseQuartz();
             services.AddJobList();
-
             //PluginSetting
             ApiGenerator.GenerateApi();
             var pluginAssemblies = PluginExtension.GetPluginAssemblies();
             PluginExtension.RegisterMvc(services, pluginAssemblies);
             PluginExtension.SetupEmbeddedViewsForPlugins(services, pluginAssemblies);      
             PluginAssembly = pluginAssemblies;
-
             services.ConfigureApplicationCookie(CurrentEnvironment);
             services.AddRazorPages().AddNewtonsoftJson();
             services.AddMvc(options =>
             {
                 options.Filters.AddService<ValidationFilter>();
             }).AddFluentValidation();
-
-          
             services.AddControllers()
              .AddJsonOptions(options =>
              {
                  options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                  options.JsonSerializerOptions.IgnoreNullValues = true;
              });
-
         }
-
         public void ConfigureContainer(ContainerBuilder builder)
         {
             //Plugin Autofac Modullerini inject ettiðim Kýsým
             var pluginAssemblies = PluginAssembly;
             builder.RegisterAssemblyModules(pluginAssemblies.ToArray());
-
             //Projenin AutoFacModule'ü
             builder.RegisterModule(new AutofacBusinessModule());
         }
-
-
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -135,7 +117,6 @@ namespace eCommerce
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseCors("AllowOrigin");
             app.UseHttpsRedirection();
@@ -147,26 +128,17 @@ namespace eCommerce
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-
                 endpoints.MapControllerRoute(
                    name: "areas",
                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
                 endpoints.MapControllerRoute(
                    name: "Plugin",
                    pattern: "{plugin:exists}/{controller=Home}/{action=Index}/{id?}");
-
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
             });
-
-
             app.AddPluginStaticFileProvier(PluginAssembly);
             ServiceTool.ServiceProvider = app.ApplicationServices;
         }
-
-
-
-
     }
 }

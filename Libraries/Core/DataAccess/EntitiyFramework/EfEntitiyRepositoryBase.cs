@@ -8,8 +8,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-
-
 namespace eCommerce.Core.DataAccess.EntitiyFramework
 {
     public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity> 
@@ -17,17 +15,14 @@ namespace eCommerce.Core.DataAccess.EntitiyFramework
         IEntity where TContext : DbContext  
     {
         protected readonly TContext Context;
-
         public EfEntityRepositoryBase(TContext context)
         {
             Context = context;
         }
-
         public TEntity GetById(int Id)
         {
             return Context.Set<TEntity>().Find(Id);
         }
-
         public TEntity Add(TEntity entity)
         {
             return Context.Add(entity).Entity;
@@ -36,13 +31,11 @@ namespace eCommerce.Core.DataAccess.EntitiyFramework
         {
              Context.AddRange(entity);
         }
-
         public TEntity Update(TEntity entity)
         {
             Context.Update(entity);
             return entity;
         }
-
         public void Delete(TEntity entity)
         {
             Context.Remove(entity);
@@ -51,22 +44,18 @@ namespace eCommerce.Core.DataAccess.EntitiyFramework
         {
             Context.RemoveRange(entity);
         }
-
         public TEntity Get(Expression<Func<TEntity, bool>> expression)
         {
             return Context.Set<TEntity>().FirstOrDefault(expression);
         }
-
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression)
         {
             return await Context.Set<TEntity>().FirstOrDefaultAsync(expression);
         }
-
         public IEnumerable<TEntity> GetList(Expression<Func<TEntity, bool>> expression = null)
         {
             return expression == null ? Context.Set<TEntity>().AsNoTracking() : Context.Set<TEntity>().Where(expression).AsNoTracking();
         }
-
         public async Task<IEnumerable<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> expression = null)
         {
             return expression == null ? await Context.Set<TEntity>().ToListAsync() :
@@ -76,23 +65,18 @@ namespace eCommerce.Core.DataAccess.EntitiyFramework
         {
             return Context.SaveChanges();
         }
-
-
         public Task<int> SaveChangesAsync()
         {
             return Context.SaveChangesAsync();
         }
-
         public IQueryable<TEntity> Query()
         {
             return Context.Set<TEntity>();
         }
-
         public Task<int> Execute(FormattableString interpolatedQueryString)
         {
             return Context.Database.ExecuteSqlInterpolatedAsync(interpolatedQueryString);
         }
-
         public TResult InTransaction<TResult>(Func<TResult> action, Action successAction = null, Action<Exception> exceptionAction = null)
         {
             var result = default(TResult);
@@ -120,7 +104,6 @@ namespace eCommerce.Core.DataAccess.EntitiyFramework
                         }
                     }
                 }
-
                 successAction?.Invoke();
             }
             catch (Exception ex)
@@ -132,7 +115,6 @@ namespace eCommerce.Core.DataAccess.EntitiyFramework
             }
             return result;
         }
-
         public async Task<int> GetCountAsync(Expression<Func<TEntity, bool>> expression = null)
         {
             if (expression == null)
@@ -140,7 +122,6 @@ namespace eCommerce.Core.DataAccess.EntitiyFramework
             else
                 return await Context.Set<TEntity>().CountAsync(expression);
         }
-
         public int GetCount(Expression<Func<TEntity, bool>> expression = null)
         {
             if (expression == null)
@@ -148,7 +129,5 @@ namespace eCommerce.Core.DataAccess.EntitiyFramework
             else
                 return Context.Set<TEntity>().Count(expression);
         }
-
     }
-
 }

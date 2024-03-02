@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-
 namespace Core.Utilities.Infrastructure.Filter
 {
     public enum FilterOperators
@@ -15,5 +14,4 @@ namespace Core.Utilities.Infrastructure.Filter
         [Description("x sayısından küçük")]
         LessThan = 6,
     }
-
 }

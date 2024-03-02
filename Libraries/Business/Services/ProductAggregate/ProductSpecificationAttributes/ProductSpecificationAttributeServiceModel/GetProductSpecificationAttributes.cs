@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.ProductAggregate.ProductSpecificationAttributes.ProductSpecificationAttributeServiceModel
 {
     public class GetProductSpecificationAttributes
@@ -13,7 +12,6 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes.Prod
         public bool? ShowOnProductPage { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
-
         public GetProductSpecificationAttributes(int productId = 0,
             string specificationAttributeName = null,
             int specificationAttributeOptionId = 0,
@@ -30,7 +28,6 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes.Prod
             PageIndex = pageIndex;
             PageSize = pageSize;
         }
-
         public GetProductSpecificationAttributes()
         {
         }

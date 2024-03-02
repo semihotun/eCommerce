@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
-
 namespace Business.Services.UserIdentityAggregate.Manages.ManageServiceModels
 {
     public class GenerateRecoveryCodes
@@ -10,12 +9,10 @@ namespace Business.Services.UserIdentityAggregate.Manages.ManageServiceModels
         public GenerateRecoveryCodes()
         {
         }
-
         public GenerateRecoveryCodes(ClaimsPrincipal user)
         {
             User = user;
         }
-
         public ClaimsPrincipal User { get; set; }
     }
 }

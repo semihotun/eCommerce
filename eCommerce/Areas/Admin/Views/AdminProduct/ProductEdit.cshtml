@@ -3,33 +3,21 @@
     ViewBag.Title = "ProductEdit";
     Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
 }
-
-
-
-
 <div class="content">
     <div class="row">
         <div class="col-md-12">
-
             <div class="card ">
                 <div class="d-flex">
-
                     <div class="card-header col-md-10">
                         <div class="col-md-4" style="float:left;">
                             <h1 class="card-title" style="margin-top: 8px;">
-
                                 Ürün Bilgisi
-
                             </h1>
                         </div>
                     </div>
-
                 </div><br /><br />
-
                 <div class="card-body">
-
                     <div style="display:flex">
-
                         <div class="col-md-2" style="float:right;">
                             <br />
                             <ul class="nav" style="display:block;" id="mainProductTap">
@@ -40,11 +28,9 @@
                                 <li class="tapli"><a data-toggle="tab" href="#tap5" class="tab tap5">Ürün Özellik</a></li>
                                 <li class="tapli"><a data-toggle="tab" href="#tap6" class="tab tap6">Ürün Stok</a></li>
                                 <li class="tapli"><a data-toggle="tab" href="#tap7" class="tab tap7">Ürün Kargo Bilgisi</a></li>
-
                             </ul>
                         </div>
                         <div class="tab-content col-md-10" style="padding-left: 10px;">
-
                             <div id="tap1" class="tab-pane active ">
                                 @using (Html.BeginForm("ProductEdit", "AdminProduct", FormMethod.Post, new { enctype = "multipart/form-data", @id = "ProductInfoCreateOrUpdate" }))
                                 {
@@ -52,147 +38,99 @@
                                     @Html.HiddenFor(x => x.Tap, new { @class = "tabsaklayici" })
                                     @Html.HiddenFor(x => x.CreatedOnUtc)
                                     @Html.HiddenFor(model => model.Id, new { @class = " form-control  " })
-
                                     <div style="display: flex; flex-wrap: wrap;">
-
-
                                         <div class="form-group col-md-12 row">
                                             @Html.LabelFor(x => x.ProductShow, "Ürün Gösterilsinmi?", new { @class = "control-label col-md-2 " })
-
                                             <div class="col-md-10">
                                                 @Html.CheckBoxFor(model => model.ProductShow, new { @class = "formelement" })
                                             </div>
                                         </div>
-
                                         <div class="form-group col-md-12 row">
                                             @Html.LabelFor(x => x.ProductStockTypeId, "Ürün Stok Tipi", new { @class = "control-label col-md-2 " })
-
                                             <div class="col-md-10">
                                                 @Html.DropDownListFor(model => model.ProductStockTypeId, Model.ProductStockTypeSelectList, new { @class = "form-control col-md-8" })
                                             </div>
                                         </div>
-
                                         <div class="form-group col-md-12 row">
                                             @Html.LabelFor(x => x.ProductName, "Ürün İsmi", new { @class = "control-label col-md-2 " })
-
                                             <div class="col-md-10 ">
                                                 @Html.TextBoxFor(model => model.ProductName, new { @class = " form-control  col-md-8 " })
-
                                             </div>
                                         </div>
-
                                         <div class="form-group col-md-12 row">
                                             @Html.LabelFor(x => x.BrandId, "Ürün Markası", new { @class = "control-label col-md-2" })
-
                                             <div class="col-md-10">
                                                 @Html.DropDownListFor(model => model.BrandId, Model.BrandSelectListItems, new { @class = " form-control col-md-8  " })
-
                                             </div>
                                         </div>
-
                                         <div class="form-group col-md-12 row">
                                             @Html.LabelFor(x => x.CategoryId, "Ürün Kategorisi", new { @class = "control-label col-md-2" })
-
                                             <div class="col-md-10">
                                                 @Html.DropDownListFor(model => model.CategoryId, Model.CategorySelectListItems, new { @class = " form-control col-md-8  " })
-
                                             </div>
                                         </div>
-
                                         <div class="form-group col-md-12 row">
                                             @Html.LabelFor(x => x.Id, "Sku =", new { @class = "control-label col-md-2 " })
-
                                             <div class="col-md-10">
                                                 @Html.TextBoxFor(model => model.Sku, new { @class = "form-control  col-md-8" })
                                             </div>
                                         </div>
-
                                         <div class="form-group col-md-12 row">
-
                                             @Html.LabelFor(x => x.Id, "Gtin =", new { @class = "control-label col-md-2 " })
-
                                             <div class="col-md-10">
                                                 @Html.TextBoxFor(model => model.Gtin, new { @class = "form-control  col-md-8" })
                                             </div>
                                         </div>
-
                                         <div class="form-group col-md-12 row">
                                             @Html.LabelFor(x => x.CategoryId, "Ürün Açıklaması", new { @class = "control-label col-md-2" })
-
                                             <div class="col-md-10">
-
                                                 <div class="col-md-8 p-0">
                                                     <textarea id="ProductContent" name="ProductContent">@Html.Raw(@Model.ProductContent)</textarea>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div>
                                             <input type="submit" value="Kaydet" class="btn btn-outline-default" />
                                         </div>
-
                                     </div>
                                     <div class="clearfix"></div><br />
                                 }
                             </div>
-
                             <div id="tap4" class="tab-pane">
                                 @Html.Partial("ProductSeo/_ProductSeo", Model)
                             </div>
-
                             <div id="tap2" class="tab-pane">
                                 <br />
                                 @Html.Partial("AttrMaping/AttrMapping", Model)
-
                                 @Html.Partial("AttrCombination/AttrCombination", Model)
-
-
                             </div>
-
                             <div id="tap3" class="tab-pane">
                                 <div class="col-md-12">
                                     @Html.Partial("ProductPhoto/ProductPhoto", Model)
                                 </div>
                             </div>
-
                             <div id="tap5" class="tab-pane">
                                 <div class="col-md-12">
                                     @Html.Partial("ProductSpefication/ProductSpefication", Model)
                                 </div>
                             </div>
-
                             <div id="tap6" class="tab-pane">
                                 <div class="col-md-12">
                                     @Html.Partial("StockPrice/ProductStockPrice", Model)
                                 </div>
-
                             </div>
-
                             <div id="tap7" class="tab-pane">
                                 <div class="col-md-12">
                                     @Html.Partial("ProductShipment/ProductShipment", Model)
                                 </div>
-
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
 <style>
     .tapDisabled {
         color: currentColor;
@@ -201,10 +139,8 @@
         text-decoration: none;
     }
 </style>
-
 <script>
     $(document).ready(function () {
-
         if ($("#Id").val() == 0) {
             $("#mainProductTap li:not(:first-child) a").each(function (index) {
                 $(this).prop('disabled', true);
@@ -217,7 +153,6 @@
                 $(this).removeClass("tapDisabled");
             });
         }
-
         $("#ProductInfoCreateOrUpdate").submit(function (e) {
             e.preventDefault();
             var data = $(this).serialize();
@@ -230,7 +165,6 @@
                     const url = new URL(window.location);
                     url.searchParams.set('Id', data.Id);
                     window.history.pushState({}, '', url);
-
                     allTapliEnabled();
                     swal("İşlem Başarılı", "", "success");
                 },
@@ -271,14 +205,6 @@
         });
     });
 </script>
-
-
-
-
-
-
-
-
 <script>
     tinymce.init({
         selector: 'textarea#ProductContent',
@@ -305,12 +231,10 @@
             if (meta.filetype === 'file') {
                 callback('https://www.google.com/logos/google.jpg', { text: 'My text' });
             }
-
             /* Provide image and alt text for the image dialog */
             if (meta.filetype === 'image') {
                 callback('https://www.google.com/logos/google.jpg', { alt: 'My alt text' });
             }
-
             /* Provide alternative source and posted for the media dialog */
             if (meta.filetype === 'media') {
                 callback('movie.mp4', { source2: 'alt.ogg', poster: 'https://www.google.com/logos/google.jpg' });

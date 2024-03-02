@@ -3,7 +3,6 @@ using X.PagedList.Web.Common;
 using System;
 using IHtmlHelper = Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper;
 using Core.Utilities.Nuget.X.PagedList.Web.Common;
-
 namespace X.PagedList.Mvc.Core
 {
     ///<summary>
@@ -24,7 +23,6 @@ namespace X.PagedList.Mvc.Core
         {
             return PagedListPager(html, list, generatePageUrl, new PagedListRenderOptions());
         }
-
         ///<summary>
         ///	Displays a configurable paging control for instances of PagedList.
         ///</summary>
@@ -40,10 +38,8 @@ namespace X.PagedList.Mvc.Core
         {
             var htmlHelper = new HtmlHelper(new TagBuilderFactory());
             var htmlString = htmlHelper.PagedListPager(list, generatePageUrl, options);
-
             return new HtmlString(htmlString);
         }
-
         ///<summary>
         /// Displays a configurable "Go To Page:" form for instances of PagedList.
         ///</summary>
@@ -55,7 +51,6 @@ namespace X.PagedList.Mvc.Core
         {
             return PagedListGoToPageForm(html, list, formAction, "page");
         }
-
         ///<summary>
         /// Displays a configurable "Go To Page:" form for instances of PagedList.
         ///</summary>
@@ -71,7 +66,6 @@ namespace X.PagedList.Mvc.Core
         {
             return PagedListGoToPageForm(html, list, formAction, new GoToFormRenderOptions(inputFieldName));
         }
-
         ///<summary>
         /// Displays a configurable "Go To Page:" form for instances of PagedList.
         ///</summary>
@@ -87,7 +81,6 @@ namespace X.PagedList.Mvc.Core
         {
             var htmlHelper = new HtmlHelper(new TagBuilderFactory());
             var htmlString = htmlHelper.PagedListGoToPageForm(list, formAction, options);
-
             return new HtmlString(htmlString);
         }
     }

@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-
 namespace Core.Utilities.Security.Jwt
 {
     public class JwtHelper : ITokenHelper
@@ -21,9 +20,7 @@ namespace Core.Utilities.Security.Jwt
         {
             Configuration = configuration;
             _tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
-
         }
-
         public string DecodeToken(string input)
         {
             var handler = new JwtSecurityTokenHandler();
@@ -31,7 +28,6 @@ namespace Core.Utilities.Security.Jwt
                 input = input.Substring("Bearer ".Length);
             return handler.ReadJwtToken(input).ToString();
         }
-
         public AccessToken CreateToken(AdminUser user)
         {
             _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
@@ -40,7 +36,6 @@ namespace Core.Utilities.Security.Jwt
             var jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials);
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
             var token = jwtSecurityTokenHandler.WriteToken(jwt);
-
             return new AccessToken
             {
                 Token = token,
@@ -51,12 +46,10 @@ namespace Core.Utilities.Security.Jwt
                 })
             };
         }
-
         public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, AdminUser user,
                 SigningCredentials signingCredentials)
         {
             var jwt = new JwtSecurityToken(
-                 
                     issuer: tokenOptions.Issuer,
                     audience: tokenOptions.Audience,
                     expires: _accessTokenExpiration,
@@ -66,7 +59,6 @@ namespace Core.Utilities.Security.Jwt
             );
             return jwt;
         }
-
         private IEnumerable<Claim> SetClaims(AdminUser user)
         {
             var claims = new List<Claim>();
@@ -74,10 +66,7 @@ namespace Core.Utilities.Security.Jwt
             claims.AddEmail(user.Email);
             claims.AddName($"{user.FirstName} {user.LastName}");
             //claims.AddRoles(operationClaims.Select(c => c.Name).ToArray());
-
-
             return claims;
         }
-
     }
 }

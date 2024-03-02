@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
 {
     public class CategoryDAL : EfEntityRepositoryBase<Category, eCommerceContext>, ICategoryDAL
@@ -34,14 +33,12 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
             }
             return new SuccessDataResult<List<CategoryDTO>>(result);
         }
-
         [CacheAspect]
         public async Task<IDataResult<List<CategoryDTO>>> GetAllCategoryTreeList()
         {
             var query = from c in Context.Category select c;
             var queryList = await query.ToListAsync();
             var result = (await CategoriesForTreeList(new CategoriesForTreeList(queryList.ToList()))).Data;
-
             return new SuccessDataResult<List<CategoryDTO>>(result);
         }
         [CacheAspect]
@@ -58,11 +55,9 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
                             Category = c,
                             CategorySpeficationList = csg
                         };
-
             var data = await query.FirstOrDefaultAsync();
             return new SuccessDataResult<CategorySpeficationDTO>(data);
         }
-
         [CacheAspect]
         public async Task<IDataResult<CategorySpeficationOptionDTO>> GetCategorySpeficationOptionDTO(GetCategorySpeficationOptionDTO request)
         {
@@ -74,7 +69,6 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
                                   let speficationOptionGroup = (from speficationOption in Context.SpecificationAttributeOption
                                                                where speficationOption.SpecificationAttributeId == s.Id
                                                                select speficationOption).AsEnumerable()
-
                                   select new CategorySpeficationOptionDTO.SpecificationAttribute
                                   {
                                       Name = s.Name,
@@ -85,18 +79,13 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
                         {
                             CategorySpeficationList = csg
                         };
-
-
             var data = await query.FirstOrDefaultAsync();
             return new SuccessDataResult<CategorySpeficationOptionDTO>(data);
         }
-
-
         [CacheAspect]
         public async Task<IDataResult<IList<HierarchyViewModel>>> GetHierarchy()
         {
             var hdList = await Context.Category.ToListAsync();
-
             var records = hdList.Where(l => l.ParentCategoryId == null)
                 .Select(l => new HierarchyViewModel
                 {
@@ -105,7 +94,6 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
                     perentId = l.ParentCategoryId,
                     children = GetChildren(new GetChildren(hdList, l.Id))
                 }).ToList();
-
             return new SuccessDataResult<List<HierarchyViewModel>>(records);
         }
         [CacheAspect]
@@ -120,11 +108,5 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
                     children = GetChildren(new GetChildren(request.HdList, l.Id))
                 }).ToList();
         }
-
-
-
-
-
-
     }
 }

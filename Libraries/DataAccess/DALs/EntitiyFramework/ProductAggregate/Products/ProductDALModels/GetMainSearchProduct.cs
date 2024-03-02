@@ -9,7 +9,6 @@
             PageSize = pageSize;
             SearchProductName = searchProductName;
         }
-
         public GetMainSearchProduct()
         {
         }

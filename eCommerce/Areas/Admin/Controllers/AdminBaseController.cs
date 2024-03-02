@@ -5,12 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Threading;
 using X.PagedList;
-
 namespace eCommerce.Areas.Admin.Controllers
 {
     public class AdminBaseController : Controller
     {
-
         [NonAction]
         protected IActionResult ToDataTableJson<T>(IDataResult<IPagedList<T>> data,DataTablesParam param)
         {
@@ -33,14 +31,11 @@ namespace eCommerce.Areas.Admin.Controllers
                 data = data.Data,
             }, new JsonSerializerSettings());
         }
-
         protected void Alert(string message, NotificationType notificationType)
         {
             var msg = "toastr." + notificationType.ToString().ToLower() + "('" + message + "','" + notificationType + "')" + "";
             TempData["notification"] = msg;
-
         }
-
         protected enum NotificationType
         {
             error,
@@ -48,7 +43,6 @@ namespace eCommerce.Areas.Admin.Controllers
             warning,
             info
         };
-
         protected void ResponseAlert(IResult result)
         {
             if(result.Success)
@@ -60,7 +54,6 @@ namespace eCommerce.Areas.Admin.Controllers
                 Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : "İşlem Başarısız", NotificationType.error);
             }
         }
-
         protected void QueryAlert(IResult result)
         {
             if (!result.Success) { 
@@ -79,9 +72,5 @@ namespace eCommerce.Areas.Admin.Controllers
         {
             base.Dispose(disposing);
         }
-
-
-
-
     }
 }

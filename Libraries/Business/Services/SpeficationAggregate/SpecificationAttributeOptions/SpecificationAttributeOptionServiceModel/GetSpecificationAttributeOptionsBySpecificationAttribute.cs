@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions.SpecificationAttributeOptionServiceModel
 {
     public class GetSpecificationAttributeOptionsBySpecificationAttribute
@@ -18,14 +17,11 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions.S
             PageIndex = 1;
             PageSize = 10;
         }
-
         public GetSpecificationAttributeOptionsBySpecificationAttribute()
         {
         }
-
         public int SpecificationAttributeId { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
-
     }
 }

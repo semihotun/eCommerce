@@ -3,7 +3,6 @@ using Core.Utilities.Results;
 using Entities.Concrete.DiscountsAggregate;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.DiscountsAggregate.DiscountProducts
 {
     public interface IDiscountProductService

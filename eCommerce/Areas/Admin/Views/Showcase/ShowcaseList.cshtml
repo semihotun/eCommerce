@@ -1,12 +1,9 @@
 ﻿@using Entities.DTO.ShowCase
 @model IList<Entities.Concrete.ShowcaseAggregate.ShowCase>
-
 @{
     ViewBag.Title = "ShowcaseList";
     Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
 }
-
-
 <div class="content">
     <div class="row">
         <div class="col-md-12">
@@ -20,8 +17,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-                
-                  
                     <div class="table-responsive">
                         <table class="table tablesorter">
                             <tr>
@@ -35,10 +30,8 @@
                                     Sıralama
                                 </th>
                                 <th>
-
                                 </th>
                             </tr>
-
                             @foreach (var item in Model)
                             {
                                 <tr>
@@ -53,16 +46,13 @@
                                     </td>
                                     <td>
                                         @Html.ActionLink("Düzenle", "ShowcaseEdit", new {Id = item.Id },new { @class = "btn btn-outline-default" }) |
-
                                         <button onclick="DeleteFunction(@item.Id)" id="@item.Id" class="btn btn-outline-danger">Sil</button>
                                     </td>
                                 </tr>
                             }
-
                         </table>
                         <script>
                             function DeleteFunction(id) {
-
                                 console.log(id);
                                 $.ajax({
                                     type: "post",
@@ -74,20 +64,12 @@
                                     error: function (result) {
                                         pushalert("Kayıt Silinemedi","Danger");
                                     }
-
-
                                 });
                             }
-
                         </script>
-
-
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-

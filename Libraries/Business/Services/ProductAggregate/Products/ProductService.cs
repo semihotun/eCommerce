@@ -24,8 +24,6 @@ namespace Business.Services.ProductAggregate.Products
         private readonly IProductPhotoDAL _productPhotoRepository;
         private readonly IProductSpecificationAttributeDAL _productSpecificationAttributeRepository;
         private readonly ISpecificationAttributeOptionDAL _specificationAttributeOptionRepository;
-
-
         public ProductService(
          IProductDAL productRepository,
          IProductPhotoDAL productPhotoRepository,
@@ -43,12 +41,9 @@ namespace Business.Services.ProductAggregate.Products
         {
             if (request.Id == 0)
                 return new ErrorDataResult<Product>();
-
             var data = await _productRepository.GetAsync(x => x.Id == request.Id);
-
             return new SuccessDataResult<Product>(data);
         }
-
         [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductService.Get",
@@ -57,10 +52,8 @@ namespace Business.Services.ProductAggregate.Products
         {
             if (request.Id == 0)
                 return new ErrorResult();
-
             var deletedData = await _productRepository.GetAsync(x => x.Id == request.Id);
             _productRepository.Delete(deletedData);
-
             return new SuccessResult();
         }
         [LogAspect(typeof(MsSqlLogger))]
@@ -73,13 +66,10 @@ namespace Business.Services.ProductAggregate.Products
             product.ProductNameUpper = product.ProductName.ToUpper();
             if (product == null)
                 return new ErrorResult();
-
             _productRepository.Add(product);
             await _productRepository.SaveChangesAsync();
-
             return new SuccessResult();
         }
-
         [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductService.Get",
@@ -91,11 +81,8 @@ namespace Business.Services.ProductAggregate.Products
             var data = query.MapTo<Product>(product);
             _productRepository.Update(query);
             await _productRepository.SaveChangesAsync();
-
             return new SuccessResult();
         }
-
-
         [CacheAspect]
         public async Task<IDataResult<IPagedList<Product>>> GetProductsBySpecificationAttributeId(
             GetProductsBySpecificationAttributeId request)
@@ -106,11 +93,8 @@ namespace Business.Services.ProductAggregate.Products
                         where spao.SpecificationAttributeId == request.SpecificationAttributeId
                         orderby product.ProductName
                         select product;
-
             var data = await query.ToPagedListAsync(request.PageIndex, request.PageSize);
-
             return new SuccessDataResult<IPagedList<Product>>(data);
         }
-
     }
 }

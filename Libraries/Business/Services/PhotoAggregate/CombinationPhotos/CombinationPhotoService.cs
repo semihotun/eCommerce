@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace Business.Services.PhotoAggregate.CombinationPhotos
 {
     public class CombinationPhotoService : ICombinationPhotoService
@@ -30,23 +29,18 @@ namespace Business.Services.PhotoAggregate.CombinationPhotos
             _productPhotoService = productPhotoService;
         }
         #endregion
-
         [CacheAspect]
         public async Task<IDataResult<List<CombinationPhoto>>> GetAllCombinationPhotos(GetAllCombinationPhotos request)
         {
             var query = _combinationPhotoRepository.Query();
-
             var data = await query.ToListAsync();
-
             return new SuccessDataResult<List<CombinationPhoto>>(data);
         }
-
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("ICombinationPhotoService.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
         public async Task<IResult> InsertCombinationPhotos(InsertCombinationPhotos request)
         {
-
             var combinationData = new List<string>();
             if (request.Combinations != null)
             {
@@ -69,10 +63,8 @@ namespace Business.Services.PhotoAggregate.CombinationPhotos
                     _combinationPhotoRepository.Delete(control);
                 }
             }
-
             await _combinationPhotoRepository.SaveChangesAsync();
             return new SuccessResult();
-
         }
     }
 }

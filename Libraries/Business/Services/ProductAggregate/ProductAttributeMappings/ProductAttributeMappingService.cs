@@ -13,7 +13,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.ProductAggregate.ProductAttributeMappings
 {
     public class ProductAttributeMappingService : IProductAttributeMappingService
@@ -30,9 +29,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings
             _productAttributeValueRepository = productAttributeValueRepository;
         }
         #endregion
-
         #region Method
-
         [CacheAspect]
         public async Task<IDataResult<IPagedList<ProductAttributeMapping>>> GetAllProductAttributeMapping(GetAllProductAttributeMapping request)
         {
@@ -40,12 +37,9 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings
                         orderby pam.DisplayOrder, pam.Id
                         where pam.ProductId == request.ProductId
                         select pam;
-
             var data = await query.ToPagedListAsync(request.Param.PageIndex, request.Param.PageSize);
-
             return new SuccessDataResult<IPagedList<ProductAttributeMapping>>(data);
         }
-
         [CacheRemoveAspect("IProductAttributeMappingService.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
@@ -53,10 +47,8 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings
         {
             if (request.Id == 0)
                 return new ErrorResult();
-
             var data = await _productAttributeValueRepository.
                 GetListAsync(x => x.ProductAttributeMappingId == request.Id);
-
             if (data.Count() != 0)
             {
                 foreach (var item in data)
@@ -66,15 +58,11 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings
                 }
             }
             await _productAttributeValueRepository.SaveChangesAsync();
-
             var mappingData = await _productAttributeMappingRepository.GetAsync(x => x.Id == request.Id);
             _productAttributeMappingRepository.Delete(mappingData);
             await _productAttributeMappingRepository.SaveChangesAsync();
-
-
             return new SuccessResult();
         }
-
         [CacheAspect]
         public async Task<IDataResult<IList<ProductAttributeMapping>>> GetProductAttributeMappingsByProductId(GetProductAttributeMappingsByProductId request)
         {
@@ -82,35 +70,27 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings
                         orderby pam.DisplayOrder, pam.Id
                         where pam.ProductId == request.ProductId
                         select pam;
-
             var data = await query.ToListAsync();
-
             return new SuccessDataResult<List<ProductAttributeMapping>>(data);
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductAttributeMappingService.Get")]
         public async Task<IDataResult<ProductAttributeMapping>> GetProductAttributeMappingById(GetProductAttributeMappingById request)
         {
             var data = await _productAttributeMappingRepository.GetAsync(x => x.Id == request.ProductAttributeMappingId);
-
             return new SuccessDataResult<ProductAttributeMapping>(data);
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductAttributeMappingService.Get")]
         public async Task<IResult> InsertProductAttributeMapping(ProductAttributeMapping productAttributeMapping)
         {
-
             if (productAttributeMapping == null)
                 return new ErrorResult();
-
             _productAttributeMappingRepository.Add(productAttributeMapping);
             await _productAttributeMappingRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductAttributeMappingService.Get")]
@@ -118,12 +98,10 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings
         {
             if (productAttributeMapping == null)
                 return new ErrorResult();
-
             _productAttributeMappingRepository.Update(productAttributeMapping);
             await _productAttributeMappingRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         #endregion
     }
 }

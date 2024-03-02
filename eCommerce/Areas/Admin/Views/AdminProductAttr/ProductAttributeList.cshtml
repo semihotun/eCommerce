@@ -1,13 +1,8 @@
 ﻿@model Entities.Concrete.ProductAggregate.ProductAttribute
-
-
 @{
     ViewBag.Title = "ShowcaseCreate";
     Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
 }
-
-
-
 <div class="content">
     <div class="row">
         <div class="col-md-12">
@@ -23,13 +18,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-
-
                     <div class="table-responsive">
-
                         <div class="table-responsive ps ps--active-x">
-
-
                             <table id="ProductAttrList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
@@ -43,17 +33,13 @@
                                 </tbody>
                             </table>
                         </div>
-
-
                         <script>
                             var ProductListTableo;
                             var BindProductList = function (response) {
                                 if ($.fn.DataTable.isDataTable("#ProductAttrList")) {
                                     ProductListTableo.draw();
-
                                 }
                                 else {
-
                                     ProductListTableo = $("#ProductAttrList").DataTable({
                                         "sAjaxSource": "/Admin/AdminProductAttr/ProductAttributeListJson",
                                         "bServerSide": true,
@@ -61,7 +47,6 @@
                                         "bSearchable": true,
                                         "bLengthChange": false,
                                         "searching": false,
-
                                         "columns": [
                                             { "data": "Id", "name": "Id", "autoWidth": true },
                                             { "data": "Description", "name": "Description", "autoWidth": true },
@@ -73,37 +58,24 @@
                                                         "<a href='/Admin/AdminProductAttr/AttrDelete?Id=" + row.Id + "' ><i class='fa fa-trash-o datatablesil ' style='font-size:20px;' ></i></a>";
                                                 }, "orderable": false
                                             },
-
-
                                         ],
                                         oLanguage: {
                                             oPaginate: {
                                                 sPrevious: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
                                                 sNext: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
-
                                             }
                                         }
-
                                     });
-
                                 }
-
                             }
-
-
                             var FilterRecord = function () {
                                 BindProductList();
                             }
                             $(document).ready(function () {
                                 BindProductList();
-
                             });
                         </script>
-
-
-
                     </div>
-
                 </div>
             </div>
         </div>

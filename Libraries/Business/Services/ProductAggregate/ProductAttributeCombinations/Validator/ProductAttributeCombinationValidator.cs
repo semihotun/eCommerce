@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.ProductAggregate;
 using FluentValidation;
-
 namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Validator
 {
-
     public class CreateProductAttributeCombinationValidator : AbstractValidator<ProductAttributeCombination>
     {
         public CreateProductAttributeCombinationValidator()
@@ -13,7 +11,6 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Valida
             RuleFor(x => x.Gtin).NotEmpty();
             RuleFor(x => x.Sku).NotEmpty();
             RuleFor(x => x.ManufacturerPartNumber).NotEmpty();
-
         }
     }
     public class UpdateProductAttributeCombinationValidator : AbstractValidator<ProductAttributeCombination>
@@ -25,7 +22,6 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Valida
             RuleFor(x => x.Gtin).NotEmpty();
             RuleFor(x => x.Sku).NotEmpty();
             RuleFor(x => x.ManufacturerPartNumber).NotEmpty();
-
         }
     }
 }

@@ -3,8 +3,6 @@ using Core.Utilities.Results;
 using Entities.Concrete.CategoriesAggregate;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
-
 namespace Business.Services.CategoriesAggregate.CategorySpefications
 {
     public interface ICategorySpeficationService

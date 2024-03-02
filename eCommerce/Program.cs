@@ -6,7 +6,6 @@ using DataAccess.ContextSeed.eCommerceContextSeed;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
 namespace eCommerce
 {
     public class Program
@@ -14,7 +13,6 @@ namespace eCommerce
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-
             host.MigrateDbContext<eCommerceContext>((context, services,created) =>
             {            
                 if(created)
@@ -24,10 +22,8 @@ namespace eCommerce
                     dbContextSeeder.SeedAsync(context, logger).Wait();
                 }
             });
-
             host.Run();
         }
-
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())

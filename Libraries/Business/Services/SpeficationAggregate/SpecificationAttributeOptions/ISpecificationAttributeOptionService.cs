@@ -4,7 +4,6 @@ using Entities.Concrete.SpeficationAggregate;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions
 {
     public interface ISpecificationAttributeOptionService

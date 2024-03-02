@@ -14,7 +14,6 @@ using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Utilities.Constants;
 using X.PagedList;
-
 namespace Business.Services.PhotoAggregate.ProductPhotos
 {
     public class ProductPhotoService : IProductPhotoService
@@ -29,27 +28,21 @@ namespace Business.Services.PhotoAggregate.ProductPhotos
         }
         #endregion
         #region Method
-
         [CacheAspect]
         public async Task<IDataResult<ProductPhoto>> GetProductPhotoById(GetProductPhotoById request)
         {
             var data = await _productPhotoRepository.GetAsync(x => x.Id == request.PhotoId);
-
             return new SuccessDataResult<ProductPhoto>(data);
         }
         [CacheAspect]
         public async Task<IDataResult<IPagedList<ProductPhoto>>> GetProductPhoto(GetProductPhoto request)
         {
             var query = _productPhotoRepository.Query().Where(x => x.ProductId == request.Id);
-
             if (request.OrderByText != null)
                 query = query.OrderBy(request.OrderByText);
-
             var data = await query.ToPagedListAsync(request.PageIndex, request.PageSize);
-
             return new SuccessDataResult<IPagedList<ProductPhoto>>(data);
         }
-
         [CacheRemoveAspect("IProductPhotoService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
             "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
         [LogAspect(typeof(MsSqlLogger))]
@@ -58,12 +51,10 @@ namespace Business.Services.PhotoAggregate.ProductPhotos
         {
             if (product == null)
                 return new ErrorResult();
-
             _productPhotoRepository.Add(product);
             await _productPhotoRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [CacheRemoveAspect("IProductPhotoService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
          "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
         [LogAspect(typeof(MsSqlLogger))]
@@ -72,7 +63,6 @@ namespace Business.Services.PhotoAggregate.ProductPhotos
         {
             if (request.ProductPhotos == null)
                 return new ErrorResult();
-
             var newProductPhotoList = new List<ProductPhoto>();
             foreach (var item in request.ProductPhotos)
             {
@@ -83,12 +73,9 @@ namespace Business.Services.PhotoAggregate.ProductPhotos
                 newProductPhotoList.Add(resim);
             }
             _productPhotoRepository.AddRange(newProductPhotoList);
-
             await _productPhotoRepository.SaveChangesAsync();
-
             return new SuccessResult();
         }
-
         [CacheRemoveAspect("IProductPhotoService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
          "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
         [LogAspect(typeof(MsSqlLogger))]
@@ -97,12 +84,10 @@ namespace Business.Services.PhotoAggregate.ProductPhotos
         {
             if (request.Id == 0)
                 return new ErrorResult();
-
             _productPhotoRepository.Delete(_productPhotoRepository.GetById(request.Id));
             await _productPhotoRepository.SaveChangesAsync();
             return new SuccessResult();
         }
         #endregion
-
     }
 }

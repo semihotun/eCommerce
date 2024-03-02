@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 namespace Plugin.Base
 {
     public interface IPlugin

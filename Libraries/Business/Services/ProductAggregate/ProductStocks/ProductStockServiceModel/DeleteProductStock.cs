@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.ProductAggregate.ProductStocks.ProductStockServiceModel
 {
     public class DeleteProductStock
@@ -10,11 +9,9 @@ namespace Business.Services.ProductAggregate.ProductStocks.ProductStockServiceMo
         {
             Id = ıd;
         }
-
         public DeleteProductStock()
         {
         }
-
         public int Id { get; set; }
     }
 }

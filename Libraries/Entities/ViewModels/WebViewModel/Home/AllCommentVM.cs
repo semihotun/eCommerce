@@ -4,7 +4,6 @@ using Entities.DTO.Product;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Entities.ViewModels.WebViewModel.Home
 {
     public class AllCommentVM
@@ -14,6 +13,5 @@ namespace Entities.ViewModels.WebViewModel.Home
         public int PageSize { get; set; }
         public virtual MyUser Users { get; set; }
         public Product Product { get; set; }
-
     }
 }

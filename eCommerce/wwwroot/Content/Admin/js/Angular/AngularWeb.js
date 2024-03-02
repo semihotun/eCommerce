@@ -1,6 +1,4 @@
-﻿
-var app = angular.module("myApp", []);
-
+﻿var app = angular.module("myApp", []);
 //Global Function
 app.run(function ($rootScope, $http, $window) {
     $rootScope.BasketSize = 0;
@@ -16,25 +14,15 @@ app.run(function ($rootScope, $http, $window) {
         });
     };
 });
-
 app.controller("Catalog", function ($scope, $http, $window) {
-
     $scope.CurrentDate = new Date().toLocaleDateString().toString();
-
     $scope.BrandData = [];
-
     $scope.Sortingenum = 0;
-
     $scope.CatalogFilterData = [];
-
     $scope.BrandIdFilterList = [];
-
     $scope.CatalogFilterIdList = [];
-
     $scope.CatId = 0;
-
     $scope.pageNum = 0;
-
     $scope.BrandFilter = function (data) {
         if (data.checked === true) {
             $scope.BrandIdFilterList.push(data.BrandId);
@@ -47,9 +35,7 @@ app.controller("Catalog", function ($scope, $http, $window) {
         }
         $scope.GetAllData($scope.CatId, $scope.pageNum);
     }
-
     $scope.SpeficationFilter = function (data) {
-
         var model = {
             SpecificationAttributeId: data.SpecificationAttributeId,
             SpeficationAttributeOptionId: data.Id
@@ -65,12 +51,10 @@ app.controller("Catalog", function ($scope, $http, $window) {
         }
         $scope.GetAllData($scope.CatId, $scope.pageNum);
     }
-
     $scope.GetAllData = function (CatId, pageNum) {
         $scope.CatId = CatId;
         $scope.pageNum = pageNum; 
         $('.loadingbody').css("display", "flex").delay(10).fadeIn("slow");
-
         $http({
             method: "get",
             url: "../Catalog/GetCatalogProduct",
@@ -88,15 +72,12 @@ app.controller("Catalog", function ($scope, $http, $window) {
             $scope.ProductData = response.data.Productlist;
             if ($scope.BrandData.length === 0)
                 $scope.BrandData = response.data.BrandList;
-
             $scope.PaggingTemplate(response.data.ProductCount, pageNum);
-
         }, function () {
             alert("Hata");
         });
         $('.loadingbody').css("display", "none").delay(10).fadeOut('slow');
     };
-
     $scope.GetAllBrandFilter = function (CatId, pageNum) {
         $http({
             method: "get",
@@ -105,15 +86,12 @@ app.controller("Catalog", function ($scope, $http, $window) {
                 categoryId: CatId,
             }
         }).then(function (response) {
-
             if ($scope.BrandData.length === 0)
                 $scope.BrandData = response.data;
-
         }, function () {
             alert("Hata");
         });
     }
-
     $scope.GetAllCategoryFilter = function (CatId) {
         $http({
             url: "../Catalog/GetAllCategoryFilter",
@@ -129,21 +107,17 @@ app.controller("Catalog", function ($scope, $http, $window) {
             alert("Hata");
         });
     };
-
     $scope.PaggingTemplate = function (totalPage, currentPage) {
         $scope.showForwardBtn = true;
         $scope.TotalPages = totalPage;
         $scope.CurrentPage = currentPage;
         $scope.PageNumberArray = Array();
-
         var countIncr = 1;
-
         if (currentPage === 2) {
             currentPage = currentPage - 1;
         } else if (currentPage > 2) {
             currentPage = currentPage - 2;
         }
-
         for (var i = currentPage; i <= totalPage; i++) {
             $scope.PageNumberArray[0] = currentPage;
             if (totalPage !== currentPage && $scope.PageNumberArray[countIncr - 1] !== totalPage) {
@@ -161,15 +135,10 @@ app.controller("Catalog", function ($scope, $http, $window) {
         if (totalPage === currentPage) {
             $scope.showForwardBtn = false;
         }
-
-
     };
 });
-
 app.controller("ProductDetail", function ($scope, $http, $window) {
-
     $scope.AnotherProductList = [];
-
     $scope.AnotherProduct = function () {
         $http({
             url: "../ProductDetail/GetAnotherProduct",
@@ -182,11 +151,8 @@ app.controller("ProductDetail", function ($scope, $http, $window) {
                 alert("hata");
         });
     }
-
 });
-
 app.controller("Basket", function ($scope, $http, $rootScope,$window) {
-
     //$scope.BasketSize = 0;
     //$scope.Basket = function (BasketSize) {
     //    $scope.BasketSize = BasketSize;
@@ -201,7 +167,6 @@ app.controller("Basket", function ($scope, $http, $rootScope,$window) {
     //    });
     //};
     $scope.Basketadded = function (productId, combinationId, productPiece, productStockPiece) {
-
         if (productStockPiece > productPiece) {
             $http({
                 url: "/Home/BasketAdded",
@@ -214,7 +179,6 @@ app.controller("Basket", function ($scope, $http, $rootScope,$window) {
             }).then(function (response) {
                 swal("Başarılı", "Ürününüz Sepete Eklendi", "success");
                 $rootScope.BasketGlobalFunction();
-
             }, function () {
                 swal("Hata", "Ürün Eklerken bir hata" + productStockPiece, "error");
             }
@@ -223,13 +187,9 @@ app.controller("Basket", function ($scope, $http, $rootScope,$window) {
         else {
             swal("Hata", "Ekleyebileceğin maximum adet" + productStockPiece, "error");
         }
-
     };
-
 });
-
 app.controller("CheckOut", function ($scope, $http, $rootScope, $window) {
-
     $scope.GetCheckout = function () {
         $http({
             url: "/Home/GetCheckout",
@@ -276,14 +236,12 @@ app.controller("CheckOut", function ($scope, $http, $rootScope, $window) {
         $('.loadingbody').css("display", "none").delay(10).fadeOut('slow');
     };
 });
-
 app.filter("groupBy", ["$parse", "$filter", function ($parse, $filter) {
     return function (array, groupByField) {
         var result = [];
         var prev_item = null;
         var groupKey = false;
         var filteredData = $filter('orderBy')(array, groupByField);
-
         for (var i = 0; i < filteredData.length; i++) {
             groupKey = false;
             if (prev_item !== null) {
@@ -304,9 +262,3 @@ app.filter("groupBy", ["$parse", "$filter", function ($parse, $filter) {
         return result;
     };
 }]);
-
-
-
-
-
-

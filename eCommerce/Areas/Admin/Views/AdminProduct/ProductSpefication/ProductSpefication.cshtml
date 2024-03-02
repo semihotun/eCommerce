@@ -4,15 +4,8 @@
     ViewData["Title"] = "ProductSpeficationCreate";
     Layout = null;
 }
-
-
 @Html.Partial("ProductSpefication/_ProductSpeficationCreate", Model)
 @Html.Partial("ProductSpefication/_ProductSpeficationDataTable", Model)
-
-
-
-
-
 <script>
     var ProductSpeficationTable;
     var BindProductListSpefication = function (response) {
@@ -64,9 +57,7 @@
                     "url": "/datatablelanguage.json"
                 }
             });
-
         }
-
     }
     var FilterRecord = function () {
         BindProductListSpefication();
@@ -74,7 +65,6 @@
     $(document).ready(function () {
         FilterRecord();
     });
-
     function ProductSpeficationDelete(id) {
         $.ajax({
             url: "/Admin/ProductSpecificationAttribute/ProductSpeficationDelete?id=" + id,
@@ -85,10 +75,8 @@
                 $("a[onClick='ProductSpeficationDelete(" + id + ")']").parent().parent().remove();
                 swal("işlem başarılı", "", "success");
             }
-
         });
     }
-
     var OptionGetir = function (AttrTypeId) {
         $("#SpecificationAttributeOptionId").prop("disabled", true);
         $.ajax({
@@ -97,7 +85,6 @@
             dataType: "json",
             success: function (sonuc) {
                 $("#SpecificationAttributeOptionId option").remove();
-
                 if (sonuc.length > 0) {
                     $("#SpecificationAttributeOptionId").prop("disabled", false);
                     $.each(sonuc, function (index, item) {
@@ -108,30 +95,23 @@
                     $.each(sonuc, function (index, item) {
                         var optionhtml = '<option value="' + item.Id + '">' + item.Name + '</option>';
                         $("#SpecificationAttributeOptionId").append(optionhtml);
-
                     });
                 }
             }
         });
     };
-
     $("select[name='ProductSpecificationAttribute.AttributeTypeId']").on("change", function () {
         var AttrTypeId = $(this).val();
         OptionGetir(AttrTypeId);
     });
-
     $("#ProductSpeficationCreate").submit(function (event) {
         event.preventDefault();
         $('input[name="ProductSpecificationAttribute.ProductId"]').val($("#Id").val());
-
         $('input[name="ProductSpecificationAttribute.SpeficationAtributeTypeName"]')
             .val($('select[name="ProductSpecificationAttribute.AttributeTypeId"] option:selected').text());
-
         $('input[name="ProductSpecificationAttribute.SpecificationAttributeOptionName"]')
             .val($('select[name="ProductSpecificationAttribute.SpecificationAttributeOptionId"] option:selected').text());
-
         var data = $("#ProductSpeficationCreate").serialize();
-
         $.ajax({
             type: "Post",
             url: "/Admin/ProductSpecificationAttribute/ProductSpeficationCreate?" + data,

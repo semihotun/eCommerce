@@ -6,10 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-
 namespace eCommerce.Controllers
 {
-
     public class AdminLogin : AdminBaseController
     {
         private IAdminAuthService _adminAuthService;
@@ -19,9 +17,7 @@ namespace eCommerce.Controllers
             _adminAuthService = adminAuthService;
             _adminService = adminService;
         }
-
         public IActionResult Login() => View();
-
         [HttpPost]
         public async Task<ActionResult> Login(UserForLoginDto userForLoginDto)
         {
@@ -34,10 +30,8 @@ namespace eCommerce.Controllers
                 Response.Cookies.Append("UserToken", result.Data.Token, cookieOptions);
                 return Redirect("/Admin/AdminProduct/ProductList");
             }
-
             return View();
         }
-
         public async Task<IActionResult> Register()
         {
             if ((await _adminService.GetAdminCount()).Data == 0)
@@ -50,7 +44,6 @@ namespace eCommerce.Controllers
                 return View();
             }
         }
-
         [HttpPost]
         public async Task<ActionResult> Register(UserForRegisterDto adminUser)
         {
@@ -70,20 +63,12 @@ namespace eCommerce.Controllers
             {
                 Alert("Daha önceden Admin Kayıdı yapıldı", NotificationType.error);
             }
-
             return View();
         }
-
-
         public async Task<ActionResult> LogOut()
         {
             Response.Cookies.Delete("UserToken");
-
             return RedirectToAction("Index","Home");
         }
-
-
     }
-
-
 }

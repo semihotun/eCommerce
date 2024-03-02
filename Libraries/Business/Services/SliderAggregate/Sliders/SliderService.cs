@@ -11,7 +11,6 @@ using Entities.Concrete.SliderAggregate;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 namespace Business.Services.SliderAggregate.Sliders
 {
     public class SliderService : ISliderService
@@ -23,7 +22,6 @@ namespace Business.Services.SliderAggregate.Sliders
             _sliderRepository = sliderRepository;
             _mapper = mapper;
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("ISliderService.Get")]
         [LogAspect(typeof(MsSqlLogger))]
@@ -31,12 +29,10 @@ namespace Business.Services.SliderAggregate.Sliders
         {
             if (request.Id == 0)
                 return new ErrorResult();
-
             _sliderRepository.Delete(_sliderRepository.GetById(request.Id));
             await _sliderRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [CacheAspect]
         public async Task<IDataResult<IList<Slider>>> GetAllSlider()
         {
@@ -44,15 +40,12 @@ namespace Business.Services.SliderAggregate.Sliders
             var data = await query.ToListAsync();
             return new SuccessDataResult<List<Slider>>(data);
         }
-
         [CacheAspect]
         public async Task<IDataResult<Slider>> GetSlider(GetSlider request)
         {
             var data = await _sliderRepository.GetAsync(x => x.Id == request.Id);
-
             return new SuccessDataResult<Slider>(data);
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("ISliderService.Get")]
         [LogAspect(typeof(MsSqlLogger))]
@@ -60,12 +53,10 @@ namespace Business.Services.SliderAggregate.Sliders
         {
             if (slider == null)
                 return new ErrorResult();
-
             _sliderRepository.Add(slider);
             await _sliderRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("ISliderService.Get")]
         [LogAspect(typeof(MsSqlLogger))]
@@ -73,14 +64,11 @@ namespace Business.Services.SliderAggregate.Sliders
         {
             if (slider == null)
                 return new ErrorResult();
-
             var getSlider = await _sliderRepository.GetAsync(x => x.Id == slider.Id);
             getSlider = _mapper.Map(slider, getSlider);
             _sliderRepository.Update(getSlider);
-
             await _sliderRepository.SaveChangesAsync();
             return new SuccessResult();
-
         }
     }
 }

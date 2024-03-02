@@ -15,7 +15,6 @@ using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowCaseProducts;
 using Entities.Concrete.ShowcaseAggregate;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-
 namespace Business.Services.ShowcaseAggregate.ShowCaseProducts
 {
     public class ShowCaseProductService : IShowCaseProductService
@@ -33,7 +32,6 @@ namespace Business.Services.ShowcaseAggregate.ShowCaseProducts
         }
         #endregion
         #region Method
-
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IShowCaseProductService.Get", 
@@ -42,15 +40,11 @@ namespace Business.Services.ShowcaseAggregate.ShowCaseProducts
         {
             if (request.Id == 0)
                 return new ErrorResult();
-
             var data = await _showCaseProductRepository.GetAsync(x => x.Id == request.Id);
             _showCaseProductRepository.Delete(data);
             await _showCaseProductRepository.SaveChangesAsync();
-
             return new SuccessResult();
-
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IShowCaseProductService.Get",
@@ -59,14 +53,10 @@ namespace Business.Services.ShowcaseAggregate.ShowCaseProducts
         {
             if (showCaseProduct == null)
                 return new ErrorResult();
-
             _showCaseProductRepository.Add(showCaseProduct);
             await _showCaseProductRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
-
         #endregion
-
     }
 }

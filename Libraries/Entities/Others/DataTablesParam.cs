@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace Entities.Others
 {
     public class DataTablesParam
@@ -13,13 +12,9 @@ namespace Entities.Others
         public string sSearch { get; set; }
         public int iSortingCols { get; set; }
         public int sEcho { get; set; }
-
         public int iSortCol_0 { get; set; }
         public string sSortDir_0 { get; set; }
-
         public string sColumns { get; set; }
-
-
         public int PageIndex {
             get {
                 int pageNo = 1;
@@ -42,12 +37,9 @@ namespace Entities.Others
                 ColumnListArray = value;
             }
         }
-
-
         public string SortedColumnName {
             get {
                 var data = ColumnListArray[iSortCol_0];
-
                 return data;
             }
             set {
@@ -64,7 +56,6 @@ namespace Entities.Others
             }
             set { PageSize = value; }
         }
-
         public string ColumnOrder
         {
             get {
@@ -75,8 +66,5 @@ namespace Entities.Others
                 ColumnOrder = value;
             }
         }
-       
-
-
     }
 }

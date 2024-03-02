@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Core.Utilities.Results
 {
     public class ValidationError
@@ -11,9 +10,7 @@ namespace Core.Utilities.Results
             Key = key;
             Message = message;
         }
-
         public string Key { get; set; }
         public string Message { get; set; }
     }
-
 }

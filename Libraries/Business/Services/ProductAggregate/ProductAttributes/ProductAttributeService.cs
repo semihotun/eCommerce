@@ -16,16 +16,12 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.ProductAggregate.ProductAttributes
 {
     public class ProductAttributeService : IProductAttributeService
     {
-
-
         private readonly IProductAttributeDAL _productAttributeRepository;
         private readonly IMapper _mapper;
-
         public ProductAttributeService(
             IProductAttributeDAL productAttributeRepository,
             IMapper mapper
@@ -34,9 +30,7 @@ namespace Business.Services.ProductAggregate.ProductAttributes
             _productAttributeRepository = productAttributeRepository;
             _mapper = mapper;
         }
-
         #region Methods
-
         [LogAspect(typeof(MsSqlLogger))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductAttributeService.Get")]
@@ -44,43 +38,32 @@ namespace Business.Services.ProductAggregate.ProductAttributes
         {
             if (productAttribute == null)
                 return new ErrorResult();
-
             _productAttributeRepository.Delete(productAttribute);
             await _productAttributeRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [CacheAspect]
         public async Task<IDataResult<IPagedList<ProductAttribute>>> GetAllProductAttributes(GetAllProductAttributes request)
         {
-
             var query = from pa in _productAttributeRepository.Query()
                         select pa;
-
             if (request.Name != null)
                 query = query.Where(x => x.Name == request.Name);
-
             var data = await query.ToPagedListAsync(request.PageIndex, request.PageSize);
-
             return new SuccessDataResult<IPagedList<ProductAttribute>>(data);
-
         }
         [CacheAspect]
         public async Task<IDataResult<IList<ProductAttribute>>> GetAllProductAttribute()
         {
             var query = await _productAttributeRepository.Query().ToListAsync();
-
             return new SuccessDataResult<List<ProductAttribute>>(query);
         }
-
         [CacheAspect]
         public async Task<IDataResult<ProductAttribute>> GetProductAttributeById(GetProductAttributeById request)
         {
             var data = await _productAttributeRepository.GetAsync(x => x.Id == request.ProductAttributeId);
-
             return new SuccessDataResult<ProductAttribute>(data);
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductAttributeService.Get")]
         [LogAspect(typeof(MsSqlLogger))]
@@ -88,12 +71,10 @@ namespace Business.Services.ProductAggregate.ProductAttributes
         {
             if (productAttribute == null)
                 return new ErrorResult();
-
             _productAttributeRepository.Add(productAttribute);
             await _productAttributeRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductAttributeService.Get")]
         [LogAspect(typeof(MsSqlLogger))]
@@ -101,14 +82,12 @@ namespace Business.Services.ProductAggregate.ProductAttributes
         {
             if (productAttribute == null)
                 return new ErrorResult();
-
             var data = await _productAttributeRepository.GetAsync(x => x.Id == productAttribute.Id);
             data = _mapper.Map(productAttribute, data);
             _productAttributeRepository.Update(data);
             await _productAttributeRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [CacheAspect]
         public async Task<IDataResult<int[]>> GetNotExistingAttributes(GetNotExistingAttributes request)
         {
@@ -116,7 +95,6 @@ namespace Business.Services.ProductAggregate.ProductAttributes
             var queryFilter = request.AttributeId.Distinct().ToArray();
             var filter = await query.Select(a => a.Id).Where(m => queryFilter.Contains(m)).ToListAsync();
             var data = queryFilter.Except(filter).ToArray();
-
             return new SuccessDataResult<int[]>(data);
         }
         [CacheAspect]
@@ -132,9 +110,6 @@ namespace Business.Services.ProductAggregate.ProductAttributes
             var data = await query.ToListAsync();
             return new SuccessDataResult<IEnumerable<SelectListItem>>(data);
         }
-
-
         #endregion
-
     }
 }

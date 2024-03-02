@@ -2,7 +2,6 @@
 using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-
 namespace eCommerce.Components
 {
     public class CategoryMenu : ViewComponent
@@ -17,11 +16,7 @@ namespace eCommerce.Components
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var data = (await _categoryDAL.GetAllCategoryTreeList()).Data;
-
             return View("CategoryMenu", data);
         }
     }
-
-
-
 }

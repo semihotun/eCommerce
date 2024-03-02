@@ -1,13 +1,10 @@
 ﻿namespace X.PagedList
 {
-  
 	public class PagedListMetaData : IPagedList
 	{
-
 		protected PagedListMetaData()
 		{
 		}
-
 		public PagedListMetaData(IPagedList pagedList)
 		{
 			PageCount = pagedList.PageCount;
@@ -21,9 +18,7 @@
 			FirstItemOnPage = pagedList.FirstItemOnPage;
 			LastItemOnPage = pagedList.LastItemOnPage;
 		}
-
 		#region IPagedList Members
-
 		public int PageCount { get; protected set; }
         public int TotalItemCount { get; protected set; }
         public int PageNumber { get; protected set; }
@@ -34,7 +29,6 @@
         public bool IsLastPage { get; protected set; }
         public int FirstItemOnPage { get; protected set; }
         public int LastItemOnPage { get; protected set; }
-
 		#endregion
 	}
 }

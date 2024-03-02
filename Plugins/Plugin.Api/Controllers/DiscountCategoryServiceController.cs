@@ -16,54 +16,38 @@ using Business.Services.DiscountsAggregate.DiscountCategorys.DiscountCategorySer
  [ApiController] 
  public class DiscountCategoryServiceController : ControllerBase{ 
  private readonly IDiscountCategoryService _discountCategoryService; 
- 
  public DiscountCategoryServiceController(IDiscountCategoryService discountCategoryService){ 
  _discountCategoryService=discountCategoryService; 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpPost("deletediscountcategory")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> DeleteDiscountCategory ([FromBody]DiscountCategory discountCategory) { 
- 
  var result = await _discountCategoryService.DeleteDiscountCategory(discountCategory); 
- 
  if(result.Success) 
  return Ok(result.Success); 
  else 
  return BadRequest(result.Message); 
- 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpGet("getalldiscountcategory")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> GetAllDiscountCategory ([FromQuery]GetAllDiscountCategory request) { 
- 
  var result = await _discountCategoryService.GetAllDiscountCategory(request); 
- 
  if(result.Success) 
  return Ok(result.Data); 
  else 
  return BadRequest(result.Message); 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpPost("adddiscountcategory")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> AddDiscountCategory ([FromBody]DiscountCategory discountCategory) { 
- 
  var result = await _discountCategoryService.AddDiscountCategory(discountCategory); 
- 
  if(result.Success) 
  return Ok(result.Success); 
  else 
  return BadRequest(result.Message); 
- 
  } 
- 
  } 
  }

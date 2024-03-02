@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using Entities.Concrete.ProductAggregate;
-
 namespace Entities.DTO.ProductMapping
 {
     public class ProductDetailMappingJson
@@ -11,5 +10,4 @@ namespace Entities.DTO.ProductMapping
         public string TextPrompt { get; set; }
         public IEnumerable<ProductAttributeValue> ProductAttributeValueList { get; set; }
     }
-
 }

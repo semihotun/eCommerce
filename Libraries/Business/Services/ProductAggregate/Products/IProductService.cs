@@ -3,7 +3,6 @@ using Core.Utilities.Results;
 using Entities.Concrete.ProductAggregate;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.ProductAggregate.Products
 {
     public interface IProductService
@@ -13,6 +12,5 @@ namespace Business.Services.ProductAggregate.Products
         Task<IResult> DeleteProduct(DeleteProduct request);
         Task<IDataResult<Product>> GetProduct(GetProduct request);
         Task<IDataResult<IPagedList<Product>>> GetProductsBySpecificationAttributeId(GetProductsBySpecificationAttributeId request);
-
     }
 }

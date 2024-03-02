@@ -8,7 +8,6 @@ using Business.Services.ProductAggregate.ProductAttributeMappings.ProductAttribu
 using Core.Utilities.Nuget.X.PagedList;
 using X.PagedList;
 using Entities.Concrete.ProductAggregate;
-
 namespace Business.Services.ProductAggregate.ProductAttributeMappings
 {
     public interface IProductAttributeMappingService
@@ -19,6 +18,5 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings
         Task<IResult> InsertProductAttributeMapping(ProductAttributeMapping productAttributeMapping);
         Task<IResult> UpdateProductAttributeMapping(ProductAttributeMapping productAttributeMapping);
         Task<IDataResult<IPagedList<ProductAttributeMapping>>> GetAllProductAttributeMapping(GetAllProductAttributeMapping request);
-
     }
 }

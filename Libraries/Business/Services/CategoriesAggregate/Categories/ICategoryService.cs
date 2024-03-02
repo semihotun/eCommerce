@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using X.PagedList;
 using Business.Services.CategoriesAggregate.Categories.CategoryServiceModel;
 using Entities.Concrete.CategoriesAggregate;
-
 namespace Business.Services.CategoriesAggregate.Categories
 {
     public interface ICategoryService
@@ -22,6 +21,5 @@ namespace Business.Services.CategoriesAggregate.Categories
         Task<IDataResult<IEnumerable<SelectListItem>>> GetCategoryDropdown(GetCategoryDropdown request);
         Task<IResult> ChangeNodePosition(ChangeNodePosition request);
         Task<IResult> DeleteNodes(DeleteNodes request);
-
     }
 }

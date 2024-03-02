@@ -5,7 +5,6 @@ using Entities.Others;
 using Entities.ViewModels.AdminViewModel.AdminProduct;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.ProductAggregate.ProductStocks
 {
     public interface IProductStockService

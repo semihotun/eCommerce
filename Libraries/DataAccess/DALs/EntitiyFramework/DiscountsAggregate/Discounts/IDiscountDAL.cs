@@ -4,7 +4,6 @@ using eCommerce.Core.DataAccess;
 using Entities.Concrete.DiscountsAggregate;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace DataAccess.DALs.EntitiyFramework.DiscountsAggregate.Discounts
 {
     public interface IDiscountDAL : IEntityRepository<Discount>

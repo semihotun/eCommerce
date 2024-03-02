@@ -3,19 +3,12 @@
     ViewBag.Title = "ProductDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-
-
-
-
 <!-- BREADCRUMB -->
 <div id="breadcrumb">
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="#">Anasayfa</a></li>
             <li><a href="/Catalog/Catalog?id=@Model.ProductInfo.CategoryModel.CategoryInfo.Id">@Model.ProductInfo.CategoryModel.CategoryInfo.CategoryName</a></li>
-
             <li class="active">@Model.ProductInfo.ProductModel.ProductName</li>
         </ul>
     </div>
@@ -29,7 +22,6 @@
         <div class="row">
             <!--  Product Details -->
             <div class="product product-details clearfix">
-
                 <div class="col-md-6">
                     <div id="product-main-view">
                         @foreach (var item in Model.ProductInfo.ProductPhotoList)
@@ -48,22 +40,18 @@
                         }
                     </div>
                 </div>
-
                 <div class="col-md-6">
                     <div class="product-body">
                         <div class="product-label">
-
                             @if (@Model.ProductInfo.ProductModel.CreatedOnUtc.AddDays(7) > DateTime.Now)
                             {
                                 <span>Yeni Ürün</span>
                             }
-
                             @*<span class="sale">-20%</span>*@
                         </div>
                         <h1 class="product-name">
                             @Model.ProductInfo.ProductModel.ProductName
                         </h1>    <br />
-
                         @if (Model.ProductInfo.ProductStock != null)
                         {
                             <div style="display:flex;">
@@ -76,16 +64,12 @@
                             @if (Model.ProductInfo.ProductStock.ProductStockPiece != null)
                             {
                                 <p>Stokda sadece @Model.ProductInfo.ProductStock.ProductStockPiece adet kaldı </p>
-
                             }
                             else
                             {
                                 <p>Stokda Ürün bulunmamakta </p>
                             }
-
-
                         }
-
                         <div id="AttrOption">
                             <div>
                                 <div class="product-options">
@@ -108,9 +92,7 @@
                                 </div>
                             </div>
                         </div>
-
                         <div ng-controller="Basket">
-
                             @if (@Model.ProductInfo.ProductStock != null)
                             {
                                 <input type="number" ng-model="addProductPiece" style="padding: 7px 8px; width: 50px;" />
@@ -121,18 +103,14 @@
                                 <h3 class="text-danger">Stok Bitti</h3>
                             }
                         </div>
-
                     </div>
-
                 </div>
             </div>
-
             <div class="col-md-12">
                 <div class="product-tab">
                     <ul class="tab-nav">
                         <li class="active"><a data-toggle="tab" href="#tab1">Açıklama</a></li>
                         <li><a data-toggle="tab" href="#tab3">Özellikler</a></li>
-
                         <li><a data-toggle="tab" href="#tab2">Yorumlar (@Model.ProductInfo.CommentList.Count())</a></li>
                     </ul>
                     <div class="tab-content">
@@ -142,11 +120,9 @@
                             </p>
                         </div>
                         <div id="tab2" class="tab-pane fade in">
-
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="product-reviews">
-
                                         @foreach (var item in Model.ProductInfo.CommentList)
                                         {
                                             <div class="single-review">
@@ -174,7 +150,6 @@
                                                     </p>
                                                 </div>
                                             </div><br /><br />
-
                                         }
                                         @if (Model.ProductInfo.CommentList.Count() > 0)
                                         {
@@ -188,7 +163,6 @@
                                         {
                                             <b class="text-danger font-weight-bold">Henüz hiç yorum yapılmamış</b>
                                         }
-
                                     </div>
                                 </div>
                                 @using (Html.BeginForm("CommentAdded", "Comment", FormMethod.Post))
@@ -200,7 +174,6 @@
                                             @if (User.Identity.IsAuthenticated)
                                             {
                                                 @Html.HiddenFor(x => x.ProductInfo.ProductModel.Id)
-
                                                 <input type="hidden" name="CommentModel.Productid" value="@Model.ProductInfo.ProductModel.Id" />
                                                 <input type="hidden" name="combinationId" value="@Model.CombinationId" />
                                                 <div class="form-group">
@@ -221,7 +194,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <button class="primary-btn">Kaydet</button>
                                             }
                                             else
@@ -230,8 +202,6 @@
                                             }
                                         </div>
                                     </div>
-
-
                                 }
                             </div>
                         </div>
@@ -256,8 +226,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
             <!-- /Product Details -->
         </div>
@@ -265,7 +233,6 @@
     </div>
     <!-- /container -->
 </div>
-
 <!-- /section -->
 <!-- section -->
 <div class="section">
@@ -280,7 +247,6 @@
                 </div>
             </div>
             <!-- section title -->
-
             <div ng-controller="ProductDetail" ng-init="AnotherProduct()">
                 <div ng-repeat="item in AnotherProductList">
                     <div class="col-md-3 col-sm-6 col-xs-6">
@@ -288,22 +254,18 @@
                             <div class="product-thumb">
                                 <a href="/ProductDetail/ProductDetail?productId={{item.Id}}"><button class="main-btn quick-view"><i class="fa fa-search-plus"></i>İncele</button></a>
                                 <div ng-if="item.ProductPhotoList.length != 0">
-
                                     <img src="{{item.ProductPhotoList[0].ProductPhotoName}}" alt="" width="100%" height="300">
                                 </div>
                             </div>
                             <div class="product-body">
                                 <h2 class="product-name"><a href="#">{{item.ProductName}}</a></h2>
                                 <div ng-if="item.ProductStock != null">
-
                                     <h3 class="product-price">
                                         {{item.ProductStock.ProductPrice}}
                                         <del class="product-old-price">{{item.ProductStock.ProductPrice}}</del>
                                     </h3>
-
                                 </div>
                                 <div class="product-btns">
-
                                     <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                                     <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Sepete Ekle</button>
                                 </div>
@@ -312,8 +274,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
         <!-- /row -->
     </div>
@@ -331,11 +291,9 @@
     }
     $(document).ready(function () {
         $(".attr").prop("disabled", true);
-
         $.each(@Json.Serialize(Model.EnabledList), function (index, value) {
             $("#"+value).prop("disabled", false);
         });
-
         var selectedCom =@Json.Serialize(Model.SelectedCombination);
         if (selectedCom != null) {
             $.each(@Json.Serialize(Model.SelectedCombination?.AttributesXmlList), function (index, value) {
@@ -343,9 +301,5 @@
                 $("#" + value.attributeId).prop("checked", true);
             });
         }
-
-
-
-
     })
 </script>

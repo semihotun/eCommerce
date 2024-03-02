@@ -7,7 +7,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security;
-
 namespace Core.Utilities.Identity
 {
     public class AuthorizeControl : ActionFilterAttribute
@@ -22,13 +21,10 @@ namespace Core.Utilities.Identity
             }
             _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
         }
-
-  
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var roleClaims = _httpContextAccessor?.HttpContext?.User?.Claims;
             var isLogin = filterContext.HttpContext.Request.Cookies["UserToken"];
-
             if (isLogin != null || roleClaims?.Count() > 0)
             {
                 base.OnActionExecuting(filterContext);
@@ -37,8 +33,6 @@ namespace Core.Utilities.Identity
             {
                 throw new SecurityException("AuthorizationsDenied");
             }
-
         }
-
     }
 }

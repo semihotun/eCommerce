@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-
     public class Comment : BaseEntity
     {
         public string CommentTitle { get; set; }
@@ -12,8 +11,5 @@
         public bool IsApproved { get; set; }
         public DateTime CreatedOnUtc { get; set; }
         public int Rating { get; set; }
-
     }
-
-
 }

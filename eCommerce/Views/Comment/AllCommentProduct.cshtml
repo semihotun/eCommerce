@@ -4,9 +4,6 @@
     ViewBag.Title = "ProductDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-
 <!-- BREADCRUMB -->
 <div id="breadcrumb">
     <div class="container">
@@ -16,7 +13,6 @@
     </div>
 </div>
 <!-- /BREADCRUMB -->
-
 <div class="container">
     <div class="col-md-12 ">
         <div class="product-reviews">
@@ -27,17 +23,12 @@
                 </h3><br />
                 <div class="single-review" style="display:flex;border:1px solid #efecec;padding:20px;border-radius:10px;">
                     <div class="col-md-3">
-
                         <img src="@Model.ProductCommentDTO.ProductPhoto.ProductPhotoName"
                              width="225" height="225" />
-
                     </div>
-
-
                     <div class="single-review col-md-8" style="padding:20px;font-size:14px;padding-top:30px;">
                         <div class="review-heading">
                             @{var groupByComment = Model.ProductCommentDTO.CommentList.GroupBy(x => x.Rating); }
-
                             @for (int i = 1; i <=5; i++)
                             {
                                 <div class="col-md-12" style="display:flex">
@@ -65,7 +56,6 @@
                                 }
                         </div>
                         </div>
-
                         <div class="ortalama col-md-2 text-center" style="border:1px solid #FFB656;
                         padding:20px;box-sizing:border-box;border-radius:8px;height: 225px;
                         padding-top:50px;">
@@ -86,13 +76,8 @@
                             <br />
                             <h2 class="" style="font-weight:100;margin:30px;color:#7f807e;">@Model.ProductCommentDTO.Averagecount</h2>
                         </div>
-
-
                     </div>
-
                 }
-
-
             <div style="padding:20px;border-radius:10px;border:1px solid #efecec;">
                 @foreach (var item in Model.ProductCommentDTO.CommentList)
                 {
@@ -124,21 +109,13 @@
                             </p>
                         </div>
                     </div><br /><br />
-
                 }
             </div>
             @Html.PagedListPager(Model.ProductCommentDTO.CommentList, pageindex => Url.Action("AllCommentProduct", "Comment",
            new { pageindex = pageindex }))
-
-
-
-
         </div>
     </div>
 </div>
-
-
-
 <style>
     .progress-bar {
         background-color: #ffb656;

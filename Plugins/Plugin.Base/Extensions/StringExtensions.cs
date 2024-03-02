@@ -6,7 +6,5 @@
         {
             return text ?? string.Empty;
         }
- 
- 
     }
 }

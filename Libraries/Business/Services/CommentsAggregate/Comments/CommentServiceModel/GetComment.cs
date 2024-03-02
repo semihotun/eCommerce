@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.CommentsAggregate.Comments.CommentServiceModel
 {
     public class GetComment
@@ -10,11 +9,9 @@ namespace Business.Services.CommentsAggregate.Comments.CommentServiceModel
         {
             CommentId = commentId;
         }
-
         public GetComment()
         {
         }
-
         public int CommentId { get; set; }
     }
 }

@@ -9,14 +9,11 @@ using Entities.DTO.ProductMapping;
 using Entities.DTO.ShowCase;
 using Entities.ViewModels.AdminViewModel.AdminProduct;
 using BaseEntity = Entities.Concrete.BaseEntity;
-
 namespace Entities.DTO.Product
 {
     public class ProductDetailDTO
     {
         public Concrete.ProductAggregate.Product ProductModel { get; set; }
-
-
         #region Brand
         public Brand BrandModel { get; set; }
         public class Brand
@@ -24,24 +21,18 @@ namespace Entities.DTO.Product
             public Concrete.BrandAggregate.Brand BrandInfo { get; set; }
             public IEnumerable<DiscountBrand> DiscountBrandList { get; set; }
         }
-
         #endregion
-
         #region Category
         public Category CategoryModel { get; set; }
         public class Category
         {
             public Concrete.CategoriesAggregate.Category CategoryInfo { get; set; }
             public IEnumerable<DiscountCategory> DiscountBrandList { get; set; }
-
         }
         #endregion
-
         #region ProductPhoto
         public IEnumerable<ProductPhoto> ProductPhotoList { get; set; }
-
         #endregion
-
         #region Comment
         public class CommentInfo
         {
@@ -60,7 +51,6 @@ namespace Entities.DTO.Product
         }
         public IEnumerable<Comment> CommentList { get; set; }
         #endregion
-
         #region Mapping
         public IEnumerable<ProductAttributeMapping> ProductAttributeMappingList { get; set; }
         public class ProductAttributeMapping
@@ -72,16 +62,11 @@ namespace Entities.DTO.Product
             public int AttributeControlTypeId { get; set; }
             public int DisplayOrder { get; set; }
             public IEnumerable<ProductAttributeValue> ProductAttributeValueList { get; set; }
-
         }
-
         #endregion
-
         #region ProductAttributeCombination 
-
         public IEnumerable<ProductAttributeCombination> ProductAttributeCombinationList { get; set; }
         public  class ProductAttributeCombination {
-
             public ProductStock ProductStockModel { get; set; }
             public int Id { get; set; }
             public string AttributesXml { get; set; }
@@ -90,7 +75,6 @@ namespace Entities.DTO.Product
             public string ManufacturerPartNumber { get; set; }           
         }
         #endregion
-
         public IEnumerable<ProductSpecificationAttributeDTO> ProductSpecificationAttributeList { get; set; }
         public IEnumerable<ShowCaseProductDTO.Product> AnotherProductList { get; set; }
         public ProductStock ProductStock { get; set; }

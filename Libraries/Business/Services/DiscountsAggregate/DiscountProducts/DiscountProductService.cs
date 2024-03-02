@@ -10,7 +10,6 @@ using Entities.Concrete.DiscountsAggregate;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.DiscountsAggregate.DiscountProducts
 {
     public class DiscountProductService : IDiscountProductService
@@ -18,14 +17,12 @@ namespace Business.Services.DiscountsAggregate.DiscountProducts
         #region Field
         private readonly DiscountProductDAL _discountProductRepository;
         #endregion
-
         #region Ctor
         public DiscountProductService(DiscountProductDAL discountProductRepository)
         {
             _discountProductRepository = discountProductRepository;
         }
         #endregion
-
         #region Method
         [CacheRemoveAspect("IDiscountProductService.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
@@ -34,13 +31,10 @@ namespace Business.Services.DiscountsAggregate.DiscountProducts
         {
             if (discountProduct == null)
                 return new ErrorResult();
-
             _discountProductRepository.Delete(discountProduct);
             await _discountProductRepository.SaveChangesAsync();
-
             return new SuccessResult();
         }
-
         [CacheRemoveAspect("IDiscountProductService.Get")]
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
@@ -48,24 +42,18 @@ namespace Business.Services.DiscountsAggregate.DiscountProducts
         {
             if (discountProduct == null)
                 return new ErrorResult();
-
             _discountProductRepository.Add(discountProduct);
             await _discountProductRepository.SaveChangesAsync();
-
             return new SuccessResult();
         }
-
         [CacheAspect]
         public async Task<IDataResult<IPagedList<DiscountProduct>>> GetAllDiscountProduct(
              GetAllDiscountProduct request)
         {
             var query = _discountProductRepository.Query();
-
             if (request.DiscountId != 0)
                 query = query.Where(x => x.DiscountId == request.DiscountId);
-
             var data = await query.ToPagedListAsync(request.Pageindex, request.Pagesize);
-
             return new SuccessDataResult<IPagedList<DiscountProduct>>(data);
         }
         #endregion

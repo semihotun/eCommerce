@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.CategoriesAggregate.Categories.CategoryServiceModel
 {
     public class ChangeNodePosition
@@ -11,11 +10,9 @@ namespace Business.Services.CategoriesAggregate.Categories.CategoryServiceModel
             Id = ıd;
             ParentId = parentId;
         }
-
         public ChangeNodePosition()
         {
         }
-
         public int Id { get; set; }
         public int? ParentId { get; set; }
     }

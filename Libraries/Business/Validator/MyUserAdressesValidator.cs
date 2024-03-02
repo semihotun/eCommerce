@@ -1,16 +1,13 @@
 ﻿using Entities.Concrete.AdressAggregate;
 using FluentValidation;
-
 namespace Business.Validator
 {
-
     public class CreateMyUserAdressesValidator : AbstractValidator<MyUserAdresses>
     {
         public CreateMyUserAdressesValidator()
         {
             RuleFor(x => x.AddressId).NotEmpty();
             RuleFor(x => x.UserId).NotEmpty();
-
         }
     }
     public class UpdateMyUserAdressesValidator : AbstractValidator<MyUserAdresses>
@@ -19,7 +16,6 @@ namespace Business.Validator
         {
             RuleFor(x => x.AddressId).NotEmpty();
             RuleFor(x => x.UserId).NotEmpty();
-
         }
     }
 }

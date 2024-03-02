@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-
 namespace Entities.ViewModels.WebViewModel.IdentityManage
 {
     public class EnableAuthenticatorViewModel
@@ -15,10 +14,8 @@ namespace Entities.ViewModels.WebViewModel.IdentityManage
         [DataType(DataType.Text)]
         [Display(Name = "Verification Code")]
         public string Code { get; set; }
-
         [BindNever]
         public string SharedKey { get; set; }
-
         [BindNever]
         public string AuthenticatorUri { get; set; }
     }

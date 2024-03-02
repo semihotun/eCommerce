@@ -1,68 +1,45 @@
 ﻿@model Entities.ViewModels.AdminViewModel.Showcase.ShowCaseCreateOrUpdateVM
-
 <div class="table-responsive">
-
-
-
-
-
-
     @using (Html.BeginForm("ShowcaseEdit", "ShowCase", FormMethod.Get, new { Tap = "tap3", Id = "ProductListForm" }))
     {
-
         <input type="hidden" name="Tap" value="tab3" class="tabsaklayici" />
         <div style="display:flex;flex-wrap:wrap;">
             <div class="form-group col-md-6 row">
-
                 <input type="hidden" name="id" value="@Model.ShowCaseDto.Id" />
                 @Html.LabelFor(x => x.ProductModel.Id, "Id", new { @class = "control-label col-md-2 " })
-
                 <div class="col-md-10 ">
                     @Html.TextBoxFor(model => model.ProductModel.Id, new { @class = " form-control  " })
-
                 </div>
             </div>
             <br />
             <div class="form-group col-md-6 row">
                 @Html.LabelFor(x => x.ProductModel.ProductName, "Ürün İsmi", new { @class = "control-label col-md-2 " })
-
                 <div class="col-md-10 ">
                     @Html.TextBoxFor(model => model.ProductModel.ProductName, new { @class = " form-control " })
-
                 </div>
             </div>
             <br />
             <div class="form-group col-md-6 row">
                 @Html.LabelFor(x => x.ProductModel.BrandId, "Marka", new { @class = "control-label col-md-2 " })
-
                 <div class="col-md-10 ">
                     @Html.DropDownListFor(model => model.ProductModel.BrandId,Model.BrandSelectListItems, new { @class = " form-control  " })
-
                 </div>
             </div>
             <br />
             <div class="form-group col-md-6 row">
                 @Html.LabelFor(x => x.ProductModel.CategoryId, "Kategori", new { @class = "control-label col-md-2 " })
-
                 <div class="col-md-10 ">
                     @Html.DropDownListFor(model => model.ProductModel.CategoryId, Model.CategorySelectListItems, new { @class = " form-control  " })
-
                 </div>
             </div>
             <br />    <br />    <br />
             <div class="form-group col-md-12 row">
-
                 <button type="submit" class="btn  btnsearch btn-default " onclick="BindProductList();">Ara</button>&nbsp;&nbsp;
                 <button type="reset" class="btn btn-dark">Sıfırla</button>
             </div>
         </div>
     }
-
-
-
     <div class="table-responsive ps ps--active-x">
-
-
         <table id="ProductList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
             <thead>
                 <tr>
@@ -77,14 +54,11 @@
             </tbody>
         </table>
     </div>
-
-
     <script>
         var ProductListTableo;
         var BindProductList = function (response) {
             if ($.fn.DataTable.isDataTable("#ProductList")) {
                 ProductListTableo.draw();
-
             }
             else {
                 ProductListTableo = $("#ProductList").DataTable({
@@ -125,20 +99,13 @@
                                         "url": "/datatablelanguage.json"
                                     }
                                 });
-
-             
-
             }
-
         }
-
-
         var FilterRecord = function () {
             BindProductList();
         }
         $(document).ready(function () {
             BindProductList();
-
         });
         $("#ProductListForm").submit(function (event) {
             event.preventDefault();
@@ -146,7 +113,4 @@
             BindProductList();
         });
     </script>
-
-
-
 </div>

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
-
 namespace Business.Services.UserIdentityAggregate.Manages.ManageServiceModels
 {
     public class ChangePassword
@@ -13,13 +12,10 @@ namespace Business.Services.UserIdentityAggregate.Manages.ManageServiceModels
             this.Model = model;
             User = user;
         }
-
         public ChangePassword()
         {
         }
-
         public ChangePasswordViewModel Model { get; set; }
         public ClaimsPrincipal User { get; set; }
-
     }
 }

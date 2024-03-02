@@ -82,7 +82,6 @@ table.dataTable .form-control::-moz-placeholder {
     color: #888ea8;
     font-size: 0.875rem;
 }
-
 div.dataTables_wrapper div.dataTables_info {
   padding-top: 0.85em;
   white-space: nowrap;
@@ -163,11 +162,9 @@ table.dataTable thead .sorting_asc_disabled:before,
 table.dataTable thead .sorting_desc_disabled:after {
   opacity: 0;
 }
-
 div.dataTables_scrollHead table.dataTable {
   margin-bottom: 0 !important;
 }
-
 div.dataTables_scrollBody table {
   border-top: none;
   margin-top: 0 !important;
@@ -182,7 +179,6 @@ div.dataTables_scrollBody table tbody tr:first-child th,
 div.dataTables_scrollBody table tbody tr:first-child td {
   border-top: none;
 }
-
 div.dataTables_scrollFoot > .dataTables_scrollFootInner {
   box-sizing: content-box;
 }
@@ -190,7 +186,6 @@ div.dataTables_scrollFoot > .dataTables_scrollFootInner > table {
   margin-top: 0 !important;
   border-top: none;
 }
-
 @media screen and (max-width: 767px) {
   div.dataTables_wrapper div.dataTables_length,
   div.dataTables_wrapper div.dataTables_filter,

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-
 namespace Core.Utilities.Security.Jwt
 {
     public class AccessToken : IAccessToken
@@ -10,7 +9,6 @@ namespace Core.Utilities.Security.Jwt
         public string Token { get; set; }
         public DateTime Expiration { get; set; } 
     }
-
     public class ClaimTypeValue
     {
         public string ClaimType { get; set; }

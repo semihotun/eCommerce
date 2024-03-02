@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace eCommerce.Areas.Admin.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
@@ -24,7 +23,6 @@ namespace eCommerce.Areas.Admin.Controllers
         private readonly IProductSpecificationAttributeDAL _productSpecificationAttributeDAL;
         private readonly ISpecificationAttributeOptionService _specificationAttributeOptionService;
         private readonly IProductSpecificationAttributeService _productSpecificationAttributeService;
-
         public ProductSpecificationAttributeController(
             IProductSpecificationAttributeDAL productSpecificationAttributeDAL,
             ISpecificationAttributeOptionService specificationAttributeOptionService, 
@@ -35,12 +33,10 @@ namespace eCommerce.Areas.Admin.Controllers
             _specificationAttributeOptionService = specificationAttributeOptionService;
             _productSpecificationAttributeService = productSpecificationAttributeService;
         }
-
         public async Task<IActionResult> ProductSpeficationJson(ProductVM model, DataTablesParam param)
         {
             var query = await _productSpecificationAttributeDAL.ProductSpecAttrList(
                 new ProductSpecAttrList(model.Id, param));
-
             return ToDataTableJson(query, param);
         }
         public async Task<IActionResult> ProductSpeficationCreate(ProductSpecificationAttribute productSpecificationAttribute)
@@ -48,28 +44,22 @@ namespace eCommerce.Areas.Admin.Controllers
             var data = productSpecificationAttribute.MapTo<ProductSpecificationAttribute>();
             ResponseAlert(await _productSpecificationAttributeService.InsertProductSpecificationAttribute(data));
             productSpecificationAttribute.Id = data.Id;
-
             return Json(productSpecificationAttribute, new JsonSerializerSettings() { });
         }
-
         public async Task<IActionResult> GetSpeficationOptionById(int speficationAttrId = 0)
         {
             var data = await _specificationAttributeOptionService.GetSpecificationAttributeOptionsBySpecificationAttribute(
                new GetSpecificationAttributeOptionsBySpecificationAttribute(speficationAttrId));
-
             var result = data.Data.Select(x => new SpecificationAttributeOption
             {
                 Id = x.Id,
                 Name = x.Name
             });
-
             return Json(result, new JsonSerializerSettings());
         }
-
         public async Task<IActionResult> ProductSpeficationDelete(int id)
         {
             ResponseAlert(await _productSpecificationAttributeService.DeleteProductSpecificationAttribute(new DeleteProductSpecificationAttribute(id)));
-
             return Json(id, new JsonSerializerSettings());
         }
     }

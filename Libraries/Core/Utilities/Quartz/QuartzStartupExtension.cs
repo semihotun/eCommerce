@@ -2,7 +2,6 @@
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
-
 namespace Core.Utilities.Quartz
 {
     public static class QuartzStartupExtension

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.SliderAggregate.Sliders.SliderServiceModel
 {
     public class DeleteSlider
@@ -10,11 +9,9 @@ namespace Business.Services.SliderAggregate.Sliders.SliderServiceModel
         {
             Id = id;
         }
-
         public DeleteSlider()
         {
         }
-
         public int Id { get; set; }
     }
 }

@@ -15,24 +15,18 @@ using Business.Services.ProductAggregate.ProductStockTypes.ProductStockTypeServi
  [ApiController] 
  public class ProductStockTypeServiceController : ControllerBase{ 
  private readonly IProductStockTypeService _productStockTypeService; 
- 
  public ProductStockTypeServiceController(IProductStockTypeService productStockTypeService){ 
  _productStockTypeService=productStockTypeService; 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpGet("getallproductstocktype")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> GetAllProductStockType ([FromQuery]GetAllProductStockType request) { 
- 
  var result = await _productStockTypeService.GetAllProductStockType(request); 
- 
  if(result.Success) 
  return Ok(result.Data); 
  else 
  return BadRequest(result.Message); 
  } 
- 
  } 
  }

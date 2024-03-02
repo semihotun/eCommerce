@@ -15,25 +15,18 @@ using DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments.CommentDALMode
  [ApiController] 
  public class CommentDALController : ControllerBase{ 
  private readonly ICommentDAL _commentDAL; 
- 
  public CommentDALController(ICommentDAL commentDAL){ 
  _commentDAL=commentDAL; 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpPost("getcommentdatatable")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> GetCommentDataTable ([FromBody]GetCommentDataTable request) { 
- 
  var result = await _commentDAL.GetCommentDataTable(request); 
- 
  if(result.Success) 
  return Ok(result.Data); 
  else 
  return BadRequest(result.Message); 
- 
  } 
- 
  } 
  }

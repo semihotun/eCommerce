@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Core.Utilities.Swagger
 {
     public static class SwaggerServiceCollectionExtension
@@ -20,7 +19,6 @@ namespace Core.Utilities.Swagger
                     Title = "eCommerce",
                     Description = "eCommerce",
                 });
-
                 c.OperationFilter<AddAuthHeaderOperationFilter>();
                 c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
                 {

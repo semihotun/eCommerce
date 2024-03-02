@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.ProductAggregate.ProductAttributes.ProductAttributeServiceModel
 {
     public class GetProductAttributeById
@@ -10,11 +9,9 @@ namespace Business.Services.ProductAggregate.ProductAttributes.ProductAttributeS
         {
             ProductAttributeId = productAttributeId;
         }
-
         public GetProductAttributeById()
         {
         }
-
         public int ProductAttributeId { get; set; }
     }
 }

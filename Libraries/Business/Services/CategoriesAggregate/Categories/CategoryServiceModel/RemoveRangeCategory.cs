@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.CategoriesAggregate.Categories.CategoryServiceModel
 {
     public class RemoveRangeCategory
@@ -10,11 +9,9 @@ namespace Business.Services.CategoriesAggregate.Categories.CategoryServiceModel
         {
             Id = ıd;
         }
-
         public RemoveRangeCategory()
         {
         }
-
         public int Id { get; set; }
     }
 }

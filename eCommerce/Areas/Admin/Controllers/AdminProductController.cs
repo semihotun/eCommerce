@@ -37,8 +37,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 #endregion
-
-
 namespace eCommerce.Areas.Admin.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
@@ -61,10 +59,7 @@ namespace eCommerce.Areas.Admin.Controllers
         private readonly IBrandService _brandService;
         private readonly IProductAttributeCombinationDAL _productAttributeCombinationDal;
         private readonly IProductStockTypeService _productStockTypeService;
-
-
         #endregion
-
         #region ctor
         public AdminProductController(IProductService productService,
          IProductAttributeService productAttributeService,
@@ -94,10 +89,8 @@ namespace eCommerce.Areas.Admin.Controllers
             _brandService = brandService;
             _productAttributeCombinationDal = productAttributeCombinationDal;
             _productStockTypeService = productStockTypeService;
-
         }
         #endregion
-
         #region Utilities
         [NonAction]
         public async Task ProductEditFillSelectList(ProductVM model)
@@ -109,8 +102,6 @@ namespace eCommerce.Areas.Admin.Controllers
             var speficationAttributeSelectListTask = _specificationAttributeService.GetProductSpeficationAttributeDropdwon(new GetProductSpeficationAttributeDropdwon());
             var combinationSelectListTask = _productAttributeCombinationDal.ProductAttributeCombinationDropDown
                 (new ProductAttributeCombinationDropDown(model.Id));
-     
-
             await Task.WhenAll(
             categorySelectListItemsTask,
             brandSelectListItemsTask,
@@ -127,16 +118,10 @@ namespace eCommerce.Areas.Admin.Controllers
                model.CombinationSelectList = combinationSelectListTask.Result.Data;
                model.ProductStockTypeSelectList = productStockTypeSelectListTask.Result.Data;
            });
-
-
         }
-
         #endregion
-
         #region Method
-
         #region Product-Create-List-Update
-
         public async Task<IActionResult> ProductInfoCreateOrUpdate(ProductVM model)
         {
             var data = model.MapTo<Product>();
@@ -144,16 +129,13 @@ namespace eCommerce.Areas.Admin.Controllers
                 ResponseAlert(await _productService.AddProduct(data));
             else
                 ResponseAlert(await _productService.UpdateProduct(data));
-
             return Json(data, new JsonSerializerSettings());
         }
         public async Task<IActionResult> ProductList(int page = 1, int pageSize = 5)
         {
             var model = new ProductListVM();
-
             var brandSelectListItemsTask = _brandService.GetBrandDropdown(new GetBrandDropdown());
             var categorySelectListItems = _categoryService.GetCategoryDropdown(new GetCategoryDropdown());
-
             await Task.WhenAll(
                 brandSelectListItemsTask, 
                 categorySelectListItems).ContinueWith((t) =>
@@ -161,15 +143,12 @@ namespace eCommerce.Areas.Admin.Controllers
                 model.BrandSelectListItems = brandSelectListItemsTask.Result.Data;
                 model.CategorySelectListItems = categorySelectListItems.Result.Data;
             });
-
-
             return View(model);
         }
         public async Task<IActionResult> ProductListJson(ProductDataTableFilter model, DTParameters param)
         {
             var result = await _productDAL.GetProductDataTableList(
                 new GetProductDataTableList(model, param));
-
             return ToDataTableJson(result, param);
         }
         public async Task<IActionResult> ProductDelete(int Id)
@@ -194,25 +173,18 @@ namespace eCommerce.Areas.Admin.Controllers
             {
                 model.ProductAttributeMappingList = mappingListTask.Result.Data.ToList();
             });
-
             return View(model);
         }
-
         #endregion
-
         #region Combination
-
         public async Task<IActionResult> AttrCombination(int productId, DataTablesParam param)
         {
             var combination = await _productAttributeCombinationDal.ProductAttributeCombinationDataTable(
                 new ProductAttributeCombinationDataTable(productId, param));
-
             return ToDataTableJson(combination, param);
-
         }
         public async Task<IActionResult> AttrCombinationDetail(int combinationId)
         {
-
             var combinations = await _productAttributeCombinationService.GetProductAttributeCombinationById(
                 new GetProductAttributeCombinationById(combinationId));
             var data = _mapper.Map<ProductAttributeCombination, ProductAttributeCombinationVM>(combinations.Data);
@@ -224,9 +196,7 @@ namespace eCommerce.Areas.Admin.Controllers
         {
             var combinations = model.MapTo<ProductAttributeCombination>();
             ResponseAlert(await _productAttributeCombinationService.UpdateProductAttributeCombination(combinations));
-
             model.AttributesXml = (await _productAttributeFormatter.XmlString(model.AttributesXml));
-
             return View(model);
         }
         public async Task<IActionResult> AttrCombinationDelete(int Id, int Productid)
@@ -234,7 +204,6 @@ namespace eCommerce.Areas.Admin.Controllers
             var Combination = _productAttributeCombinationService.GetProductAttributeCombinationById(new GetProductAttributeCombinationById(Id));
             ResponseAlert(await _productAttributeCombinationService.DeleteProductAttributeCombination(new DeleteProductAttributeCombination(Id)));
             return Json(true, new JsonSerializerSettings());
-
         }
         public async Task<IActionResult> AttrCombinationinsert(int ProductId)
         {
@@ -257,14 +226,9 @@ namespace eCommerce.Areas.Admin.Controllers
             var permutation = new AttributeHelper().Permutations(Data);
             ResponseAlert(await _productAttributeCombinationService.InsertPermutationCombination(
                 new InsertPermutationCombination(permutation, ProductId)));
-
             return RedirectToAction("ProductEdit", "AdminProduct", new { id = ProductId, Tap = "tap2" });
         }
-
         #endregion
-
-
         #endregion
-
     }
 }

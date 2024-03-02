@@ -13,10 +13,8 @@ using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeFormatte
 using DataAccess.Context;
 using Entities.Concrete.ProductAggregate;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStocks.ProductStockDALModels;
-
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStocks
 {
-
     public class ProductStockDAL : EfEntityRepositoryBase<ProductStock, eCommerceContext>, IProductStockDAL
     {
         private readonly IProductAttributeFormatter _productAttributeFormatter;
@@ -24,15 +22,12 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStocks
         {
             _productAttributeFormatter = productAttributeFormatter;
         }
-
         public async Task<IDataResult<IPagedList<ProductStockDto>>> GetAllProductStockDto(GetAllProductStockDto request)
         {
             var query = from ps in Context.ProductStock
                         join p in Context.Product on ps.ProductId equals p.Id
-
                         join pac in Context.ProductAttributeCombination on ps.CombinationId equals pac.Id into paclj
                         from pacljg in paclj.DefaultIfEmpty()
-
                         where ps.ProductId == request.ProductId
                         select new ProductStockDto
                         {
@@ -52,7 +47,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStocks
                                 : p.ProductName
                         };
             var result = await query.ToPagedListAsync(request.Param.PageIndex, request.Param.PageSize);
-
             return new SuccessDataResult<IPagedList<ProductStockDto>>(result);
         }
     }

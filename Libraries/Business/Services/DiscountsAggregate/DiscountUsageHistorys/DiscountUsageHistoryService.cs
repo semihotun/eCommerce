@@ -10,7 +10,6 @@ using Entities.Concrete.DiscountsAggregate;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.DiscountsAggregate.DiscountUsageHistorys
 {
     public class DiscountUsageHistoryService : IDiscountUsageHistoryService
@@ -32,13 +31,10 @@ namespace Business.Services.DiscountsAggregate.DiscountUsageHistorys
         {
             if (discountUsageHistory == null)
                 return new ErrorResult();
-
             _discountUsageHistoryRepository.Add(discountUsageHistory);
             await _discountUsageHistoryRepository.SaveChangesAsync();
-
             return new SuccessResult();
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IDiscountUsageHistoryService.Get,IDiscountUsageHistoryDAL.Get")]
         [LogAspect(typeof(MsSqlLogger))]
@@ -46,26 +42,20 @@ namespace Business.Services.DiscountsAggregate.DiscountUsageHistorys
         {
             if (discountUsageHistory == null)
                 return new ErrorResult();
-
             _discountUsageHistoryRepository.Delete(discountUsageHistory);
             await _discountUsageHistoryRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [CacheAspect]
         public async Task<IDataResult<IPagedList<DiscountUsageHistory>>> GetAllDiscountUsageHistory(
             GetAllDiscountUsageHistory request)
         {
             var query = _discountUsageHistoryRepository.Query();
-
             if (request.DiscountId != 0)
                 query = query.Where(x => x.DiscountId == request.DiscountId);
-
             var data = await query.ToPagedListAsync(request.Pageindex, request.Pagesize);
-
             return new SuccessDataResult<IPagedList<DiscountUsageHistory>>(data);
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IDiscountUsageHistoryService.Get,IDiscountUsageHistoryDAL.Get")]
         [LogAspect(typeof(MsSqlLogger))]
@@ -73,10 +63,8 @@ namespace Business.Services.DiscountsAggregate.DiscountUsageHistorys
         {
             if (discountUsageHistory == null)
                 return new ErrorResult();
-
             _discountUsageHistoryRepository.Update(discountUsageHistory);
             await _discountUsageHistoryRepository.SaveChangesAsync();
-
             return new SuccessResult();
         }
         #endregion

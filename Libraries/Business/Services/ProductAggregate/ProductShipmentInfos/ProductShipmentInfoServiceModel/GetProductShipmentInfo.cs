@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.ProductAggregate.ProductShipmentInfos.ProductShipmentInfoServiceModel
 {
     public class GetProductShipmentInfo
@@ -10,11 +9,9 @@ namespace Business.Services.ProductAggregate.ProductShipmentInfos.ProductShipmen
         {
             ProductId = productId;
         }
-
         public GetProductShipmentInfo()
         {
         }
-
         public int ProductId { get; set; }
     }
 }

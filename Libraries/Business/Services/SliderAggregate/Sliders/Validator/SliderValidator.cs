@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.SliderAggregate;
 using FluentValidation;
-
 namespace Business.Services.SliderAggregate.Sliders.Validator
 {
-
     public class CreateSliderValidator : AbstractValidator<Slider>
     {
         public CreateSliderValidator()
@@ -12,7 +10,6 @@ namespace Business.Services.SliderAggregate.Sliders.Validator
             RuleFor(x => x.SliderHeading).NotEmpty();
             RuleFor(x => x.SliderText).NotEmpty();
             RuleFor(x => x.SliderLink).NotEmpty();
-
         }
     }
     public class UpdateSliderValidator : AbstractValidator<Slider>
@@ -23,7 +20,6 @@ namespace Business.Services.SliderAggregate.Sliders.Validator
             RuleFor(x => x.SliderHeading).NotEmpty();
             RuleFor(x => x.SliderText).NotEmpty();
             RuleFor(x => x.SliderLink).NotEmpty();
-
         }
     }
 }

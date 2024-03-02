@@ -1,13 +1,6 @@
 ﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
-
-
-
 @Html.Partial("StockPrice/_ProductStockCreate", Model)
-
 @Html.Partial("StockPrice/_ProductStockPriceDataTable", Model)
-
-
-
 <script>
     var ProductStockPriceTable;
     var BindProductList = function (response) {
@@ -39,7 +32,6 @@
             });
         }
     }
-  
     $(document).ready(function () {
         var FilterRecord = function () {
             BindProductList();
@@ -51,7 +43,6 @@
         $('#ProductStockPriceList').DataTable().destroy();
         BindProductList();
     });
-
     $("#ProductStockCreateForm").submit(function (e) {
         e.preventDefault();
         $('input[name="ProductStock.ProductId"]').val($("#Id").val());
@@ -86,6 +77,5 @@
                 swal("İşlem Başarısız", "", "error");
             }
         });
-
     }
 </script>

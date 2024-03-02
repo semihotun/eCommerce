@@ -4,8 +4,6 @@ $('#parallax').parallax({
 	scalarX: 10,
 	 frictionY: .1
 });
-
-
 particlesJS("particles-js", {
   "particles": {
     "number": {

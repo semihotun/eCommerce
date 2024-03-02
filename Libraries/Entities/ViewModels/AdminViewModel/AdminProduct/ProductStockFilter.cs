@@ -2,14 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Entities.ViewModels.AdminViewModel.AdminProduct
 {
     public class ProductStockFilter : IFilterable
     {
         [Filter(FilterOperators.GreaterThan)]
         public double? ProductPrice { get; set; }
-
         [Filter(FilterOperators.GreaterThan)]
         public double? ProductDiscount { get; set; }
         [Filter(FilterOperators.GreaterThan)]

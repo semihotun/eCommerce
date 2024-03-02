@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.ShowcaseAggregate.ShowcaseServices
 {
     public interface IShowcaseService
@@ -16,6 +15,5 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseServices
         Task<IResult> InsertShowcase(ShowCase showCase);
         Task<IResult> DeleteShowCase(DeleteShowCase request);
         Task<IResult> UpdateShowcase(ShowCase showCase);
-
     }
 }

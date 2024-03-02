@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.OrderAggregate;
 using FluentValidation;
-
 namespace Business.Validator
 {
-
     public class CreateOrderNoteValidator : AbstractValidator<OrderNote>
     {
         public CreateOrderNoteValidator()
@@ -13,7 +11,6 @@ namespace Business.Validator
             RuleFor(x => x.DownloadId).NotEmpty();
             RuleFor(x => x.DisplayToCustomer).NotEmpty();
             RuleFor(x => x.CreatedOnUtc).NotEmpty();
-
         }
     }
     public class UpdateOrderNoteValidator : AbstractValidator<OrderNote>
@@ -25,7 +22,6 @@ namespace Business.Validator
             RuleFor(x => x.DownloadId).NotEmpty();
             RuleFor(x => x.DisplayToCustomer).NotEmpty();
             RuleFor(x => x.CreatedOnUtc).NotEmpty();
-
         }
     }
 }

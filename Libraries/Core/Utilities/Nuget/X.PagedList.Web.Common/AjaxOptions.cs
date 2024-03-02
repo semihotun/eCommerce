@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 namespace X.PagedList.Web.Common
 {
     public class AjaxOptions
@@ -13,55 +12,44 @@ namespace X.PagedList.Web.Common
                 new HtmlAttribute {Key = "data-ajax-update", Value = "#" + UpdateTargetId},
                 new HtmlAttribute {Key = "data-ajax", Value = "true"}
             };
-
             if (!string.IsNullOrEmpty(Confirm))
             {
                 attrs.Add(new HtmlAttribute { Key = "data-ajax-confirm", Value = Confirm });
             }
-
             if (!string.IsNullOrEmpty(LoadingElementId))
             {
                 attrs.Add(new HtmlAttribute { Key = "data-ajax-loading", Value = LoadingElementId });
             }
-
             if (LoadingElementDuration > 0)
             {
                 attrs.Add(new HtmlAttribute { Key = "data-ajax-loading-duration", Value = LoadingElementDuration });
             }
-
             if (!string.IsNullOrEmpty(OnBegin))
             {
                 attrs.Add(new HtmlAttribute { Key = "data-ajax-begin", Value = OnBegin });
             }
-
             if (!string.IsNullOrEmpty(OnComplete))
             {
                 attrs.Add(new HtmlAttribute { Key = "data-ajax-complete", Value = OnComplete });
             }
-
             if (!string.IsNullOrEmpty(OnFailure))
             {
                 attrs.Add(new HtmlAttribute { Key = "data-ajax-failure", Value = OnFailure });
             }
-
             if (!string.IsNullOrEmpty(OnSuccess))
             {
                 attrs.Add(new HtmlAttribute { Key = "data-ajax-success", Value = OnSuccess });
             }
-
             if (!string.IsNullOrEmpty(Url))
             {
                 attrs.Add(new HtmlAttribute { Key = "data-ajax-url", Value = Url });
             }
-
             if (AllowCache)
             {
                 attrs.Add(new HtmlAttribute { Key = "data-ajax-cache", Value = "true" });
             }
-
             return attrs;
         }
-
         public string HttpMethod { get; set; }
         public InsertionMode InsertionMode { get; set; }
         public string UpdateTargetId { get; set; }
@@ -75,12 +63,10 @@ namespace X.PagedList.Web.Common
         public string Url { get; set; }
         public bool AllowCache { get; set; }
     }
-
     public enum InsertionMode
     {
         Replace
     }
-
     public class HtmlAttribute
     {
         public string Key { get; set; }

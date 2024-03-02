@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecificationAttributes
 {
     public class ProductSpecificationAttributeDAL : EfEntityRepositoryBase<ProductSpecificationAttribute, eCommerceContext>, IProductSpecificationAttributeDAL
@@ -17,7 +16,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecification
         public ProductSpecificationAttributeDAL(eCommerceContext context) : base(context)
         {
         }
-
         public async Task<IDataResult<IPagedList<ProductSpecificationAttributeDTO>>> ProductSpecAttrList(
           ProductSpecAttrList request)
         {
@@ -35,12 +33,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecification
                             DisplayOrder = psa.DisplayOrder,
                             SpeficationAtributeTypeName = sa.Name
                         };
-
             var result = await query.ToPagedListAsync(request.Param.PageIndex, request.Param.PageSize);
-
             return new SuccessDataResult<IPagedList<ProductSpecificationAttributeDTO>>(result);
         }
-
         public async Task<IDataResult<ProductSpecificationAttributeDTO>> GetProductSpeficationAttr(
           GetProductSpeficationAttr request)
         {
@@ -57,11 +52,8 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecification
                             DisplayOrder = psa.DisplayOrder,
                             SpeficationAtributeTypeName = sa.Name
                         };
-
             var result = await query.FirstOrDefaultAsync();
-
             return new SuccessDataResult<ProductSpecificationAttributeDTO>(result);
         }
     }
-
 }

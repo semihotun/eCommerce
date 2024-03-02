@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Entities.Concrete.ProductAggregate
 {
     public class ProductStock : BaseEntity
@@ -13,7 +12,6 @@ namespace Entities.Concrete.ProductAggregate
         public int NotifyAdminForQuantityBelow { get; set; }
         public DateTime CreateTime { get; set; }
         public int ProductId { get; set; }
-
         public int CombinationId { get; set; }
     }
 }

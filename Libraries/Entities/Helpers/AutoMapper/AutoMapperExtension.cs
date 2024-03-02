@@ -7,7 +7,6 @@ using System.Text;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using eCommerce.Core.Entities;
-
 namespace Entities.Helpers.AutoMapper
 {
     public static class AutoMapperExtension
@@ -20,10 +19,8 @@ namespace Entities.Helpers.AutoMapper
         )
         {
             var data = source.ProjectTo<TDestination>(AutoMapperConfig.Get(), null , membersToExpand);
-
             return data;
         }
-
         public static T MapTo <T> (this object src)
         {
             IMapper mapper = new Mapper(AutoMapperConfig.Get());
@@ -32,18 +29,13 @@ namespace Entities.Helpers.AutoMapper
         public static TDest MapTo<T,TDest>(this T src, TDest data)
         {
             IMapper mapper = new Mapper(AutoMapperConfig.Get());
-
             return  mapper.Map<T, TDest>(src,data);
         }
-
         public static T MapTo<T>(this T src, T data )
         {
             IMapper mapper = new Mapper(AutoMapperConfig.Get());
             return mapper.Map<T, T>(data, src);
         }
-
-
-
         //public static TTarget MapTo<TSource, TTarget>(this TSource aSource, TTarget aTarget)
         //{
         //    const BindingFlags flags = BindingFlags.Public |

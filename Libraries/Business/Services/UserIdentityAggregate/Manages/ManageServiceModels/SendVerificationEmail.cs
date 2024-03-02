@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Business.Services.UserIdentityAggregate.Manages.ManageServiceModels
 {
     public class SendVerificationEmail
@@ -16,11 +15,9 @@ namespace Business.Services.UserIdentityAggregate.Manages.ManageServiceModels
         public ClaimsPrincipal User { get; set; }
         public IUrlHelper Url { get; set; }
         public string Request { get; set; }
-
         public SendVerificationEmail()
         {
         }
-
         public SendVerificationEmail(ClaimsPrincipal user, IUrlHelper url, string request)
         {
             User = user;

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.CategoriesAggregate.Categories.CategoryServiceModel
 {
     public class GetCategoryDropdown
@@ -12,9 +11,7 @@ namespace Business.Services.CategoriesAggregate.Categories.CategoryServiceModel
         }
         public GetCategoryDropdown()
         {
-
         }
-
         public int? SelectedId { get; set; }
     }
 }

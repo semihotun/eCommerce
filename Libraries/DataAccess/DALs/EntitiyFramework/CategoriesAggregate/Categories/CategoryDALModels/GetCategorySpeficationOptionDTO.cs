@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories.CategoryDALModels
 {
     public class GetCategorySpeficationOptionDTO
@@ -10,11 +9,9 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories.Catego
         {
             CategoryId = categoryId;
         }
-
         public GetCategorySpeficationOptionDTO()
         {
         }
-
         public int CategoryId { get; set; }
     }
 }

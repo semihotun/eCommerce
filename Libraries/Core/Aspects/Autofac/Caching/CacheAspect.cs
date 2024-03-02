@@ -7,20 +7,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
-
 namespace Core.Aspects.Autofac.Caching
 {
     public class CacheAspect : MethodInterception
     {
         private readonly int _duration;
         private readonly ICacheManager _cacheManager;
-
         public CacheAspect(int duration = 60)
         {
             _duration = duration;
             _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
         }
-
         public override void Intercept(IInvocation invocation)
         {
             if(invocation.Arguments.Count() > 0)
@@ -48,8 +45,6 @@ namespace Core.Aspects.Autofac.Caching
                 _cacheManager.Add(methodName, invocation.ReturnValue, _duration);
             }
         }
-
-
         string BuildKey(object[] args)
         {
             var sb = new StringBuilder();
@@ -57,7 +52,6 @@ namespace Core.Aspects.Autofac.Caching
             {
                 var paramValues = arg.GetType().GetProperties().Select(p => p.GetValue(arg)?.ToString() ?? string.Empty);
                 sb.Append(string.Join('_', paramValues));
-
             }
             return sb.ToString();
         }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 namespace Core.CrossCuttingConcerns.Logging
 {
 	public class LogDetail

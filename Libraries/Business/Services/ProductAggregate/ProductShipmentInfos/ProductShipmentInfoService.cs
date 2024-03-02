@@ -9,14 +9,12 @@ using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductShipmentInfos;
 using Entities.Concrete.ProductAggregate;
 using Entities.Helpers.AutoMapper;
 using System.Threading.Tasks;
-
 namespace Business.Services.ProductAggregate.ProductShipmentInfos
 {
     public class ProductShipmentInfoService : IProductShipmentInfoService
     {
         #region Field
         private readonly IProductShipmentInfoDAL _productShipmentInfoDAL;
-
         #endregion
         #region Ctor
         public ProductShipmentInfoService(IProductShipmentInfoDAL productShipmentInfoDAL)
@@ -28,7 +26,6 @@ namespace Business.Services.ProductAggregate.ProductShipmentInfos
         public async Task<IDataResult<ProductShipmentInfo>> GetProductShipmentInfo(GetProductShipmentInfo request)
         {
             var query = await _productShipmentInfoDAL.GetAsync(x => x.ProductId == request.ProductId);
-
             return new SuccessDataResult<ProductShipmentInfo>(query);
         }
         [LogAspect(typeof(MsSqlLogger))]
@@ -38,7 +35,6 @@ namespace Business.Services.ProductAggregate.ProductShipmentInfos
         {
             _productShipmentInfoDAL.Add(productShipmentInfo);
             await _productShipmentInfoDAL.SaveChangesAsync();
-
             return new SuccessResult();
         }
         [LogAspect(typeof(MsSqlLogger))]
@@ -50,7 +46,6 @@ namespace Business.Services.ProductAggregate.ProductShipmentInfos
             var data = query.MapTo<ProductShipmentInfo>(productShipmentInfo);
             _productShipmentInfoDAL.Update(data);
             await _productShipmentInfoDAL.SaveChangesAsync();
-
             return new SuccessResult();
         }
         [LogAspect(typeof(MsSqlLogger))]
@@ -62,10 +57,7 @@ namespace Business.Services.ProductAggregate.ProductShipmentInfos
                 await AddProductShipmentInfo(productShipmentInfo);
             else
                 await UpdateProductShipmentInfo(productShipmentInfo);
-
             return new SuccessResult();
         }
-
-
     }
 }

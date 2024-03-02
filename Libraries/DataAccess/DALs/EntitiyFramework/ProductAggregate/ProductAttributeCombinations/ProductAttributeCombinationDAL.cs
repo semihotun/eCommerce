@@ -17,7 +17,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
 using X.PagedList;
-
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeCombinations
 {
     public class ProductAttributeCombinationDAL : EfEntityRepositoryBase<ProductAttributeCombination, eCommerceContext>, IProductAttributeCombinationDAL
@@ -28,12 +27,10 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeComb
         {
             _productAttributeMappingDAL = productAttributeMappingDal;
         }
-
         public async Task<IDataResult<IEnumerable<SelectListItem>>> ProductAttributeCombinationDropDown(ProductAttributeCombinationDropDown request)
         {
             var combinations = await Context.ProductAttributeCombination.Where(x => x.ProductId == request.ProductId)
                 .MapTo<ProductAttributeCombinationVM>().ToListAsync();
-
             var combinationSelectListItems = new List<SelectListItem>();
             combinationSelectListItems.Add(new SelectListItem()
             {
@@ -43,7 +40,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeComb
             });
             foreach (var productCombination in combinations)
             {
-
                 string xmlResult = "";
                 var xmlDoc = new XmlDocument();
                 xmlDoc.LoadXml(productCombination.AttributesXml);
@@ -53,11 +49,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeComb
                     var mappingId = Convert.ToInt32(Mapping.Attributes["ID"].InnerText);
                     var data = await _productAttributeMappingDAL.GetMappingProductAttributeList
                         (new GetMappingProductAttributeList(mappingId));
-
                     var mappingValue = data.Data.TextPrompt;
                     xmlResult = xmlResult + "" + mappingValue + " ";
                     XmlNodeList attrValueList = Mapping.SelectNodes("ProductAttributeValue");
-
                     foreach (XmlNode attrValue in attrValueList)
                     {
                         var attributeId = Convert.ToInt32(attrValue["Value"].InnerText);
@@ -71,21 +65,16 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeComb
                     Value = productCombination.Id.ToString(),
                     Selected = false
                 });
-
             }
             return new SuccessDataResult<IEnumerable<SelectListItem>>(combinationSelectListItems);
-
         }
-
         public async Task<IDataResult<IPagedList<ProductAttributeCombinationVM>>> ProductAttributeCombinationDataTable(ProductAttributeCombinationDataTable  request)
         {
             var combinations = await Context.ProductAttributeCombination.Where(x => x.ProductId == request.ProductId)
                 .MapTo<ProductAttributeCombinationVM>().ToListAsync();
-
             var productAttrCombinationList = new List<ProductAttributeCombinationVM>();
             foreach (var productCombination in combinations)
             {
-
                 string xmlResult = "";
                 var xmlDoc = new XmlDocument();
                 xmlDoc.LoadXml(productCombination.AttributesXml);
@@ -95,11 +84,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeComb
                     var mappingId = Convert.ToInt32(Mapping.Attributes["ID"].InnerText);
                     var data = await _productAttributeMappingDAL.GetMappingProductAttributeList
                         (new GetMappingProductAttributeList(mappingId));
-
                     var mappingValue = data.Data.TextPrompt;
                     xmlResult = xmlResult + "<b>" + mappingValue + "</b> = ";
                     XmlNodeList attrValueList = Mapping.SelectNodes("ProductAttributeValue");
-
                     foreach (XmlNode attrValue in attrValueList)
                     {
                         var attributeId = Convert.ToInt32(attrValue["Value"].InnerText);
@@ -107,21 +94,16 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeComb
                         xmlResult = xmlResult + "" + attrVal.Name + "</br>";
                     }
                 }
-
                 productCombination.AttributesXml = xmlResult;
                 productAttrCombinationList.Add(productCombination);
-
             }
-
             var result = productAttrCombinationList.ToPagedList(request.Param.PageIndex, request.Param.PageSize);
             return new SuccessDataResult<IPagedList<ProductAttributeCombinationVM>>(result);
         }
-
         public async Task<IDataResult<IList<ProductAttributeCombinationVM>>> ProductCombinationMappingAttrXml(ProductCombinationMappingAttrXml request)
         {
             var combinations = await Context.ProductAttributeCombination.Where(x => x.ProductId == request.ProductId)
                 .MapTo<ProductAttributeCombinationVM>().ToListAsync();
-
             var productAttrCombinationList = new List<ProductAttributeCombinationVM>();
             foreach (var productCombination in combinations)
             {
@@ -136,7 +118,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeComb
                     var mappingId = Convert.ToInt32(Mapping.Attributes["ID"].InnerText);
                     var data = await _productAttributeMappingDAL.GetMappingProductAttributeList
                         (new GetMappingProductAttributeList(mappingId));
-
                     var mappingValue = data.Data.TextPrompt;
                     XmlNodeList attrValueList = Mapping.SelectNodes("ProductAttributeValue");
                     foreach (XmlNode attrValue in attrValueList)
@@ -144,7 +125,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeComb
                         attributeId = Convert.ToInt32(attrValue["Value"].InnerText);
                         attrVal = data.Data.ProductAttributeList.FirstOrDefault(x => x.Id == attributeId).Name;
                     }
-
                     mappingAttr.Add(new MappingAttrXml()
                     {
                         MappingName = mappingValue,
@@ -153,12 +133,10 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeComb
                         AttributeId = attributeId
                     });
                 }
-
                 productCombination.AttributesXmlList = mappingAttr;
                 productAttrCombinationList.Add(productCombination);
             }
             return new SuccessDataResult<IList<ProductAttributeCombinationVM>>(productAttrCombinationList);
         }
-
     }
 }

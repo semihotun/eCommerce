@@ -4,12 +4,10 @@ using eCommerce.Core.DataAccess;
 using Entities.Concrete.CommentsAggregate;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments
 {
     public interface ICommentDAL : IEntityRepository<Comment>
     {
-
         Task<IDataResult<IPagedList<Comment>>> GetCommentDataTable(GetCommentDataTable request);
     }
 }

@@ -16,83 +16,58 @@ using Entities.Concrete.SliderAggregate;
  [ApiController] 
  public class SliderServiceController : ControllerBase{ 
  private readonly ISliderService _sliderService; 
- 
  public SliderServiceController(ISliderService sliderService){ 
  _sliderService=sliderService; 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpPost("deleteslider")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> DeleteSlider ([FromBody]DeleteSlider request) { 
- 
  var result = await _sliderService.DeleteSlider(request); 
- 
  if(result.Success) 
  return Ok(result.Success); 
  else 
  return BadRequest(result.Message); 
- 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpGet("getallslider")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> GetAllSlider () { 
- 
  var result = await _sliderService.GetAllSlider(); 
- 
  if(result.Success) 
  return Ok(result.Data); 
  else 
  return BadRequest(result.Message); 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpGet("getslider")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> GetSlider ([FromQuery]GetSlider request) { 
- 
  var result = await _sliderService.GetSlider(request); 
- 
  if(result.Success) 
  return Ok(result.Data); 
  else 
  return BadRequest(result.Message); 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpPost("insertslider")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> InsertSlider ([FromBody]Slider slider) { 
- 
  var result = await _sliderService.InsertSlider(slider); 
- 
  if(result.Success) 
  return Ok(result.Success); 
  else 
  return BadRequest(result.Message); 
- 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpPost("updateslider")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> UpdateSlider ([FromBody]Slider slider) { 
- 
  var result = await _sliderService.UpdateSlider(slider); 
- 
  if(result.Success) 
  return Ok(result.Success); 
  else 
  return BadRequest(result.Message); 
- 
  } 
- 
  } 
  }

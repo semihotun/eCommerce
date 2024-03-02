@@ -1,14 +1,10 @@
 ﻿@using X.PagedList.Mvc.Core; <!--import to get HTML Helper-->
 @using X.PagedList;
 @model Entities.ViewModels.AdminViewModel.AdminProduct.ProductListVM
-
 @{
     ViewBag.Title = "ProductList";
     Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
 }
-
-
-
 <div class="content">
     <div class="row">
         <div class="col-md-12">
@@ -19,64 +15,48 @@
                     </div>
                     <div class="col-md-8" style="float:right;">
                         <div class="col-md-3" style="float:right;"><a type="submit" class="btn btn-outline-default pd10-50" style="text-align:center;" href="/Admin/AdminProduct/ProductEdit?Id=0">Ekle</a></div>
-
                     </div>
                 </div>
                 <div class="card-body">
                     <br />
                     <div class="col-md-12">
                         <form id="ProductListForm" class="TableFilterForm">
-
                             <div style="display:flex;flex-wrap:wrap;">
                                 <div class="form-group col-md-6 row">
                                     @Html.LabelFor(x => x.Id, "Id", new { @class = "control-label col-md-2 " })
-
                                     <div class="col-md-10 ">
                                         @Html.TextBoxFor(model => model.Id, new { @class = " form-control", Type = "number", min = "0" })
-
                                     </div>
                                 </div>
                                 <br />
                                 <div class="form-group col-md-6 row">
                                     @Html.LabelFor(x => x.ProductName, "Ürün İsmi", new { @class = "control-label col-md-2 " })
-
                                     <div class="col-md-10 ">
                                         @Html.TextBoxFor(model => model.ProductName, new { @class = " form-control " })
-
                                     </div>
                                 </div>
                                 <br />
                                 <div class="form-group col-md-6 row">
                                     @Html.LabelFor(x => x.BrandId, "Marka", new { @class = "control-label col-md-2 " })
-
                                     <div class="col-md-10 ">
                                         @Html.DropDownListFor(model => model.BrandId, Model.BrandSelectListItems, new { @class = " form-control  " })
-
                                     </div>
                                 </div>
                                 <br />
                                 <div class="form-group col-md-6 row">
                                     @Html.LabelFor(x => x.CategoryId, "Kategori", new { @class = "control-label col-md-2 " })
-
                                     <div class="col-md-10 ">
                                         @Html.DropDownListFor(model => model.CategoryId, Model.CategorySelectListItems, new { @class = " form-control  " })
-
                                     </div>
                                 </div>
                                 <br />    <br />    <br />
                                 <div class="form-group col-md-12 row">
-
                                     <button type="submit" class="btn btnsearch btn-default " onclick="BindProductList();">Ara</button>&nbsp;&nbsp;
                                     <button type="reset" class="btn btn-dark">Sıfırla</button>
-
                                 </div>
                             </div>
                         </form>
-
-
                     </div>
-
-
                     <div class="table-responsive ps ps--active-x">
                         <table id="ProductList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
                             <thead>
@@ -91,15 +71,12 @@
                             <tbody>
                             </tbody>
                         </table>
-
                     </div>
-
                     <script>
                         let ProductListTableo;
                         let BindProductList = function (response) {
                             if ($.fn.DataTable.isDataTable("#ProductList")) {
                                 ProductListTableo.draw();
-
                             }
                             else {
                                 ProductListTableo = $("#ProductList").DataTable({
@@ -139,17 +116,13 @@
                                     }
                                 });
                             }
-
                         }
-
                         $(document).ready(function () {
                             BindProductList();
                             AddDataTableFilter(ProductListTableo);
-
                             let productid = $("#Id").val();
                             $('#ProductList tbody').on('click', '.ProductListDelete', function () {
                                 let combinationid = $(this).attr('Id');
-
                                 $.ajax({
                                     type: 'GET',
                                     dataType: 'json',
@@ -163,29 +136,16 @@
                                         toastr.warning("Veri Silerken hata");
                                     },
                                 });
-
-
                             });
-
-
                         });
                         $("#ProductListForm").submit(function (event) {
                             event.preventDefault();
                             $('#ProductList').DataTable().destroy();
                             BindProductList();
                         });
-
                     </script>
-
-
-
-
-
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-
-

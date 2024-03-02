@@ -10,17 +10,13 @@ using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStocks;
 using Entities.Concrete.ProductAggregate;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.ProductAggregate.ProductStocks
 {
     public class ProductStockService : IProductStockService
     {
         #region Field
-
         private readonly IProductStockDAL _productStockDal;
-
         #endregion
-
         #region Ctor
         public ProductStockService(IProductStockDAL productStockDal)
         {
@@ -32,10 +28,8 @@ namespace Business.Services.ProductAggregate.ProductStocks
         {
             var query = _productStockDal.Query().ApplyFilter(request.ProductStockFilter);
             var result = await query.ToPagedListAsync(request.Param.PageIndex, request.Param.PageSize);
-
             return new SuccessDataResult<IPagedList<ProductStock>>(result);
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductStockService.Get", 
@@ -44,10 +38,8 @@ namespace Business.Services.ProductAggregate.ProductStocks
         {
             _productStockDal.Add(productStock);
             await _productStockDal.SaveChangesAsync();
-
             return new SuccessResult();
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductStockService.Get", "IShowcaseDAL.GetShowCaseDto", 
@@ -57,9 +49,7 @@ namespace Business.Services.ProductAggregate.ProductStocks
             var productStock = await _productStockDal.GetAsync(x => x.Id == request.Id);
             _productStockDal.Delete(productStock);
             await _productStockDal.SaveChangesAsync();
-
             return new SuccessResult();
         }
-
     }
 }

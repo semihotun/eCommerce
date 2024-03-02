@@ -15,25 +15,18 @@ using DataAccess.DALs.EntitiyFramework.BrandAggregate.Brands.BrandDALModels;
  [ApiController] 
  public class BrandDALController : ControllerBase{ 
  private readonly IBrandDAL _brandDAL; 
- 
  public BrandDALController(IBrandDAL brandDAL){ 
  _brandDAL=brandDAL; 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpPost("getbranddatatable")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> GetBrandDataTable ([FromBody]GetBrandDataTable request) { 
- 
  var result = await _brandDAL.GetBrandDataTable(request); 
- 
  if(result.Success) 
  return Ok(result.Data); 
  else 
  return BadRequest(result.Message); 
- 
  } 
- 
  } 
  }

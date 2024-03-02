@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 namespace DataAccess.DALs.EntitiyFramework.DiscountsAggregate.DiscountBrands
 {
     public class DiscountBrandDAL : EfEntityRepositoryBase<DiscountBrand, eCommerceContext>, IDiscountBrandDAL
@@ -14,6 +13,5 @@ namespace DataAccess.DALs.EntitiyFramework.DiscountsAggregate.DiscountBrands
         public DiscountBrandDAL(eCommerceContext context) : base(context)
         {
         }
-
     }
 }

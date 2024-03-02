@@ -1,7 +1,6 @@
 //using System;
 using eCommerce.Controllers;
 using Microsoft.AspNetCore.Mvc;
-
 namespace eCommerce.Extensions
 {
     public static class UrlHelperExtensions
@@ -14,7 +13,6 @@ namespace eCommerce.Extensions
                 values: new { userId, code },
                 protocol: scheme);
         }
-
         public static string ResetPasswordCallbackLink(this IUrlHelper urlHelper, string userId, string code, string scheme)
         {
             return urlHelper.Action(

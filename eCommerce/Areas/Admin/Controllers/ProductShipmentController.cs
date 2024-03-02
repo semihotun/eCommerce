@@ -4,7 +4,6 @@ using Entities.Concrete.ProductAggregate;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
-
 namespace eCommerce.Areas.Admin.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
@@ -20,14 +19,11 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<IActionResult> ProductShipmentInfoAddOrUpdate(ProductShipmentInfo productShipmentInfo)
         {
             var data = await _productShipmentInfoService.AddOrUpdateProductShipmentInfo(productShipmentInfo);
-
             return Json(productShipmentInfo, new JsonSerializerSettings());
         }
-
         public async Task<IActionResult> GetProductShipmentInfo(int productId)
         {
             var data = (await _productShipmentInfoService.GetProductShipmentInfo(new GetProductShipmentInfo(productId))).Data;
-
             return Json(data, new JsonSerializerSettings());
         }
     }

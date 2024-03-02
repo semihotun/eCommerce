@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 namespace Core.Utilities.Helper
 {
     public static class ModelStateHelper
@@ -21,7 +20,6 @@ namespace Core.Utilities.Helper
                     erroneousField.Errors.Select(error => new ValidationError(fieldKey, error.ErrorMessage));
                 result.AddRange(fieldErrors);
             }
-
             return result;
         }
     }

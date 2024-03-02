@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using Entities.Concrete.ProductAggregate;
-
 namespace Entities.DTO.Product
 {
     public class ProductDataTableJson
@@ -13,9 +12,7 @@ namespace Entities.DTO.Product
         public int CategoryId { get; set; }
         public string BrandName { get; set; }
         public string CategoryName { get; set; }
-
         public ProductAttributeCombination ProductAttributeCombination { get; set; }
-
         public IEnumerable<ProductStock> ProductStockList { get; set; }
     }
 }

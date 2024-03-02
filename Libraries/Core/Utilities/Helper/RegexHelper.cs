@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-
 namespace Core.Utilities.Helper
 {
     public static class RegexHelper 

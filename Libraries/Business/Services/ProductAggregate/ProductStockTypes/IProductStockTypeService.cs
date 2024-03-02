@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Business.Services.ProductAggregate.ProductStockTypes.ProductStockTypeServiceModel;
 using Core.Utilities.Results;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
 namespace Business.Services.ProductAggregate.ProductStockTypes
 {
     public interface IProductStockTypeService

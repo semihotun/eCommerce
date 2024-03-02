@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.ShowcaseAggregate.ShowcaseTypes.ShowcaseTypeServiceModel
 {
     public class GetAllShowCaseTypeSelectListItem
@@ -10,11 +9,9 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseTypes.ShowcaseTypeServiceM
         {
             SelectedId = selectedId;
         }
-
         public GetAllShowCaseTypeSelectListItem()
         {
         }
-
         public int? SelectedId { get; set; }
     }
 }

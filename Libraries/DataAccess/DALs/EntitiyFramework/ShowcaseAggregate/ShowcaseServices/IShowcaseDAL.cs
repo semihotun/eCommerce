@@ -5,7 +5,6 @@ using Entities.Concrete.ShowcaseAggregate;
 using Entities.DTO.ShowCase;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices
 {
     public interface IShowcaseDAL : IEntityRepository<ShowCase>

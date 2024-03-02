@@ -7,14 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Utilities.Constants;
-
 namespace Core.Utilities.Helper
 {
     public class PhotoHelper
     {
-
-    
-
         public class PhotoHelperModel
         {
             public string Path { get; set; }
@@ -33,7 +29,6 @@ namespace Core.Utilities.Helper
                 }
                 var photoModel = new PhotoHelperModel();
                 photoModel.Path = path + uniqueFileName;
-
                 return new SuccessDataResult<PhotoHelperModel>(photoModel);
             }
             catch(Exception ex)
@@ -55,10 +50,8 @@ namespace Core.Utilities.Helper
                 }
                 var photoModel = new PhotoHelperModel();
                 photoModel.Path = path + uniqueFileName;
-
                 if (deleted == true && deletePhotoUrl != null)
                     Delete(deletePhotoUrl);
-
                 return new SuccessDataResult<PhotoHelperModel>(photoModel);
             }
             catch (Exception ex)
@@ -66,7 +59,6 @@ namespace Core.Utilities.Helper
                 return new ErrorDataResult<PhotoHelperModel>(ex.ToString());
             }
         }
-
         public IResult Delete(string photoUrl)
         {
             try
@@ -78,7 +70,6 @@ namespace Core.Utilities.Helper
             {
                 return new ErrorResult(ex.ToString());
             }
-
         }
     }
 }

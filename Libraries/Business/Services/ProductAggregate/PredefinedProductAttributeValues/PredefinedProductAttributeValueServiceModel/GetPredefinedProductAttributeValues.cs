@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues.PredefinedProductAttributeValueServiceModel
 {
     public class GetPredefinedProductAttributeValues
@@ -10,11 +9,9 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues.Pr
         {
             ProductAttributeId = productAttributeId;
         }
-
         public GetPredefinedProductAttributeValues()
         {
         }
-
         public int ProductAttributeId { get; set; }
     }
 }

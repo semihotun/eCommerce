@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 namespace DataAccess.DALs.EntitiyFramework.OrderAggregate.Orders
 {
     public class OrderDAL : EfEntityRepositoryBase<Order, eCommerceContext>, IOrderDAL

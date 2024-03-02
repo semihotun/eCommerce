@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.ProductAggregate.ProductAttributeCombinations
 {
     public interface IProductAttributeCombinationService

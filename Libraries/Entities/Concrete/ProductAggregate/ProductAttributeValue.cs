@@ -2,8 +2,6 @@ namespace Entities.Concrete.ProductAggregate
 {
     using System;
     using System.Collections.Generic;
-
-
     public partial class ProductAttributeValue : BaseEntity
     {
         public int ProductAttributeMappingId { get; set; }
@@ -11,6 +9,5 @@ namespace Entities.Concrete.ProductAggregate
         public string ColorSquaresRgb { get; set; }
         public bool IsPreSelected { get; set; }
         public int DisplayOrder { get; set; }
-
     }
 }

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using X.PagedList;
-
 namespace Entities.ViewModels.WebViewModel.Home
 {
     public class CatalogVM
@@ -25,7 +24,6 @@ namespace Entities.ViewModels.WebViewModel.Home
         public IPagedList<CatalogProduct> Productlist { get; set; }
         public IList<Brand> BrandList { get; set; }
         public List<SpecificationAttribute> FilterListValue { get; set; }
-
         public class SelectFilterModel
         {
             public int SpecificationAttributeId { get; set; }

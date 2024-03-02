@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-
 namespace X.PagedList
 {
 	public class PagedList<T, TKey> : BasePagedList<T>
 	{
-
 		public PagedList(IQueryable<T> superset, Expression<Func<T, TKey>> keySelector, int pageNumber, int pageSize)
 			: base(pageNumber, pageSize, superset?.Count() ?? 0)
 		{
@@ -17,7 +15,6 @@ namespace X.PagedList
 				InitSubset(superset, keySelector.Compile(), pageNumber, pageSize);
 			}
 		}
-
 		public PagedList(IQueryable<T> superset, Func<T, TKey> keySelectorMethod, int pageNumber, int pageSize)
 			: base(pageNumber, pageSize, superset?.Count() ?? 0)
 		{
@@ -26,22 +23,17 @@ namespace X.PagedList
 				InitSubset(superset, keySelectorMethod, pageNumber, pageSize);
 			}
 		}
-
 		private void InitSubset(IEnumerable<T> superset, Func<T, TKey> keySelectorMethod, int pageNumber, int pageSize)
 		{
 			// add items to internal list
-
 			var items = pageNumber == 1
 				? superset.OrderBy(keySelectorMethod).Take(pageSize).ToList()
 				: superset.OrderBy(keySelectorMethod).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-
 			Subset.AddRange(items);
 		}
 	}
-
 	public class PagedList<T> : BasePagedList<T>
 	{
-
 		public PagedList(IQueryable<T> superset, int pageNumber, int pageSize)
 			: base(pageNumber, pageSize, superset?.Count() ?? 0)
 		{
@@ -69,7 +61,6 @@ namespace X.PagedList
 			IsLastPage = pagedList.IsLastPage;
 			FirstItemOnPage = pagedList.FirstItemOnPage;
 			LastItemOnPage = pagedList.LastItemOnPage;
-
 			Subset.AddRange(superset);
 		}
 	}

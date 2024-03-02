@@ -7,7 +7,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
-
 namespace Core.Library
 {
     public class MyUser : IdentityUser<int>
@@ -22,8 +21,6 @@ namespace Core.Library
     public class MyRole : IdentityRole<int> { }
     public class MyClaim : IdentityUserClaim<int> { }
     public class MyLogin : IdentityUserLogin<int> { }
-
     public class MyRoleClaim : IdentityRoleClaim<int> { }
     public class MyUserToken : IdentityUserToken<int> { }
-
 }

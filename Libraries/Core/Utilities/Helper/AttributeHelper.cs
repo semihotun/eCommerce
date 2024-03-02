@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
 namespace Core.Utilities.Helper
 {
     public class AttributeHelper
     {
         public List<List<int>> Permutations(List<List<int>> arrays)
         {
-
             List<List<int>> res = new List<List<int>>();
             res.Add(new List<int>());
             foreach (var list in arrays)
@@ -29,6 +27,4 @@ namespace Core.Utilities.Helper
             return res;
         }
     }
-
-
 }

@@ -1,5 +1,4 @@
 ﻿#region using
-
 using Autofac;
 using Autofac.Extras.DynamicProxy;
 using Business.Services.BrandAggregate.Brands;
@@ -59,28 +58,21 @@ using System.Linq;
 using System.Reflection;
 using Module = Autofac.Module;
 #endregion
-
 namespace Business.DependencyResolvers
 {
     public class AutofacBusinessModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-
             builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
             builder.RegisterType<ProductAttributeFormatter>().As<IProductAttributeFormatter>();
             builder.RegisterType<ProductAttributeFormatter>().As<IProductAttributeFormatter>();
-            
-
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
                 .EnableInterfaceInterceptors(new ProxyGenerationOptions()
                 {
                     Selector = new AspectInterceptorSelector()
                 }).SingleInstance();
-
-
         }
     }
 }

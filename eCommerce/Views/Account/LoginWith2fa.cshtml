@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Two-factor authentication";
 }
-
 <br />
 <br />
 <div class="container">
@@ -37,7 +36,6 @@
         Kimlik doğrulayıcı cihazınıza erişiminiz yok mu? Yapabilirsin
         <a asp-action="LoginWithRecoveryCode" asp-route-returnUrl="@ViewData["ReturnUrl"]">kurtarma kodu ile giriş yap</a>.
     </p>
-
     @section Scripts {
         @await Html.PartialAsync("_ValidationScriptsPartial")
     }

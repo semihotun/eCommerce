@@ -3,9 +3,6 @@
     ViewBag.Title = "SliderEdit";
     Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
 }
-
-
-
     <div class="content">
         <div class="row">
             <div class="col-md-12">
@@ -14,18 +11,14 @@
                         <div class="col-md-4" style="float:left;">
                             <h2 class="card-title">Slider Bilgisi</h2>
                         </div>
-
                     </div>
                     <div class="card-body">
                         @using (Html.BeginForm("SliderEdit", "AdminSlider", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             @Html.AntiForgeryToken()
-
                             <div class="form-horizontal">
-
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 @Html.HiddenFor(model => model.Id)
-
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.SliderImage, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
@@ -36,7 +29,6 @@
                                         @Html.ValidationMessageFor(model => model.SliderImage, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.SliderHeading, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
@@ -44,7 +36,6 @@
                                         @Html.ValidationMessageFor(model => model.SliderHeading, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.SliderText, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
@@ -52,7 +43,6 @@
                                         @Html.ValidationMessageFor(model => model.SliderText, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.SliderLink, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
@@ -60,7 +50,6 @@
                                         @Html.ValidationMessageFor(model => model.SliderLink, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-10">
                                         <input type="submit" value="Save" class="btn btn-default" />
@@ -68,10 +57,7 @@
                                 </div>
                             </div>
                         }
-
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -79,9 +65,7 @@
 <div>
     @Html.ActionLink("Geri Dön", "Index")
 </div>
-
 <script type="text/javascript">
-
             $("#Uploadfile").change(function(){//eğer file değişirse
                     var resim = document.getElementById("Uploadfile");//resime eriş
 					if (resim.files && resim.files[0]){//eğer dosya var ise

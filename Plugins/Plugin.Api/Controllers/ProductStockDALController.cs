@@ -15,24 +15,18 @@ using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStocks.ProductSto
  [ApiController] 
  public class ProductStockDALController : ControllerBase{ 
  private readonly IProductStockDAL _productStockDAL; 
- 
  public ProductStockDALController(IProductStockDAL productStockDAL){ 
  _productStockDAL=productStockDAL; 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpGet("getallproductstockdto")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> GetAllProductStockDto ([FromQuery]GetAllProductStockDto request) { 
- 
  var result = await _productStockDAL.GetAllProductStockDto(request); 
- 
  if(result.Success) 
  return Ok(result.Data); 
  else 
  return BadRequest(result.Message); 
  } 
- 
  } 
  }

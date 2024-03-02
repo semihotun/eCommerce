@@ -12,7 +12,6 @@ namespace DataAccess.FluentApi.OrderAggregate
         {
             builder.HasKey(x => x.Id);
             builder.Property(t => t.Id).UseIdentityColumn();
-
         }
     }
 }

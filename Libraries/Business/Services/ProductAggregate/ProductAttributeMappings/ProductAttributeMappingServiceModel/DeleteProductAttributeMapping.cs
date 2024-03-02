@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingServiceModel
 {
     public class DeleteProductAttributeMapping
@@ -10,11 +9,9 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings.ProductAtt
         {
             Id = ıd;
         }
-
         public DeleteProductAttributeMapping()
         {
         }
-
         public int Id { get; set; }
     }
 }

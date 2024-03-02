@@ -12,24 +12,19 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Core.Aspects.Autofac.Validation
 {
     public class ValidationAspect : MethodInterception
     {
         private Type _validatorType;
-
         public ValidationAspect(Type validatorType)
         {
             if (!typeof(IValidator).IsAssignableFrom(validatorType))
             {
                 throw new System.Exception("Bu bir doğrulama sınıfı değil");
             }
-
             _validatorType = validatorType;
         }
-
-
         public override async void Intercept(IInvocation invocation)
         {
             var _actionContextAccessor = ServiceTool.ServiceProvider.GetService(typeof(IActionContextAccessor)) as ActionContextAccessor;
@@ -37,18 +32,14 @@ namespace Core.Aspects.Autofac.Validation
             var entityType = _validatorType.BaseType.GetGenericArguments()[0];
             var entities = invocation.Arguments.Where(t => t.GetType() == entityType);
             var parameterValueList = _actionContextAccessor.ActionContext.HttpContext.Request.Query.Keys.ToList();
-
             foreach (var entity in entities)
             {
-
                 var context = new ValidationContext<object>(entity);
                 var result = validator.Validate(context);
-
                 if (result.IsValid == false)
                 {
                     foreach (var error in result.Errors)
                     {
-
                         foreach (var parameterDescriptor in ContextBody.ActionDescriptor.Parameters)
                         {
                             var propertyInfos = parameterDescriptor.ParameterType.GetProperties().Where(x => x.PropertyType == entityType);
@@ -63,7 +54,6 @@ namespace Core.Aspects.Autofac.Validation
                             }
                         }
                     }
-
                     base.SetIsSuccess(false);
                 }
             }
@@ -75,44 +65,11 @@ namespace Core.Aspects.Autofac.Validation
             {
                 invocation.ReturnValue = ErorResultAsync();
             }
-
         }
-
         private static async Task<IResult> ErorResultAsync()
         {
             var result = new ErrorResult();
             return result;
         }
-
-
-
-
-
-
-
-
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

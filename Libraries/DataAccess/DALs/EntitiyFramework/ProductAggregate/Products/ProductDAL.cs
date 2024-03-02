@@ -18,14 +18,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
 {
     public class ProductDAL : EfEntityRepositoryBase<Product, eCommerceContext>, IProductDAL
     {
-
         IProductAttributeFormatter _productAttributeFormatter;
-
         public ProductDAL(eCommerceContext context,
             IProductAttributeFormatter productAttributeFormatter) : base(context)
         {
@@ -37,15 +34,12 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
             var query = from p in Context.Product.ApplyFilter(request.ProductDataTableDTO)
                         join b in Context.Brand.ApplyFilter(request.ProductDataTableDTO.BrandModel) on p.BrandId equals b.Id
                         join c in Context.Category on p.CategoryId equals c.Id
-
                         join pac in Context.ProductAttributeCombination on p.Id equals pac.ProductId into paclj
                         from pacljf in paclj.DefaultIfEmpty()
-
                         let productStockGroup = (from ps in Context.ProductStock
                                                  orderby ps.CreateTime
                                                  where ps.ProductId == p.Id && (p.ProductStockTypeId == (int)ProductStockTypeEnum.VaryasyonUrun ? ps.CombinationId == pacljf.Id : ps.CombinationId == null)
                                                  select ps).AsEnumerable()
-
                         select new ProductDataTableJson
                         {
                             Id = p.Id,
@@ -56,11 +50,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                             ProductStockList = productStockGroup
                         };
             query = query.ApplyDataTableFilter(request.DataTablesParam);
-
             var result = await query.ToPagedListAsync(request.DataTablesParam.PageIndex, request.DataTablesParam.PageSize);
             return new SuccessDataResult<IPagedList<ProductDataTableJson>>(result);
         }
-
         //Brand,DiscountBrand,ProductAttributeMapping,ProductAttributeValue,ProductAttributeCombination,ProductStock,Category
         //ProductSpecificationAttribute,SpecificationAttributeOption,SpecificationAttribute,Comment,Users,ProductPhoto
         //CombinationPhoto,ProductStock
@@ -69,7 +61,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
             var data = await GetHomeProductDetailCQ.Get(Context, request.ProductId, request.CombinationId);
             return new SuccessDataResult<ProductDetailDTO>(data);
         }
-
         //Product,ProductPhoto,ProductStock
         public async Task<IDataResult<List<ShowCaseProductDTO.Product>>> GetAnotherProductList()
         {
@@ -92,10 +83,8 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                                           ProductStock = anotherProductStockGroup
                                       };
             var result = await anotherProductGroup.ToListAsync();
-
             return new SuccessDataResult<List<ShowCaseProductDTO.Product>>(result);
         }
-
         //Product,Brand,DiscountBrand,ProductAttributeCombination,Category,ProductPhoto,CombinationPhoto,ProductStock
         public async Task<IDataResult<Checkout>> GetCheckout(GetCheckout request)
         {
@@ -106,26 +95,20 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                 var query = from p in Context.Product
                             where p.Id == item.ProductId
                             join b in Context.Brand on p.BrandId equals b.Id
-
                             let dblg = (from dbl in Context.DiscountBrand
                                         where dbl.BrandId == p.BrandId
                                         select dbl).AsEnumerable()
-
                             join pac in Context.ProductAttributeCombination on p.Id equals pac.ProductId into paclj
                             from pacljf in paclj.DefaultIfEmpty()
                             where item.CombinationId != 0 ? pacljf.Id == item.CombinationId : true == true
-
                             join c in Context.Category on p.CategoryId equals c.Id
                             //let dclg = from dcl in Context.DiscountCategory where dcl.CategoryId == p.CategoryId select dcl
-
                             let pplg = (from ppl in Context.ProductPhoto.DefaultIfEmpty()
                                         where ppl.ProductId == p.Id
                                         join ppcp in Context.CombinationPhoto on ppl.Id equals ppcp.PhotoId into ppcplj
                                         from ppcpljg in ppcplj.DefaultIfEmpty()
                                         where pacljf != null ? ppcpljg.CombinationId == pacljf.Id : true == true
                                         select ppl).AsEnumerable()
-
-
                             let productStockGroup = (from ps in Context.ProductStock
                                                      orderby ps.CreateTime
                                                      where ps.ProductId == p.Id && ps.CombinationId == item.CombinationId &&
@@ -133,7 +116,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                                                                ? ps.ProductStockPiece > 0
                                                                : ps.ProductStockPiece != null)
                                                      select ps).First()
-
                             select new CheckoutProduct()
                             {
                                 ProductModel = p,
@@ -153,31 +135,25 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                                 ProductPiece = item.ProductPiece,
                                 ProductPieceTotalPrice = (double)(Convert.ToDouble(item.ProductPiece) * productStockGroup.ProductPrice)
                             };
-
                 var product = query.FirstOrDefaultAsync();
                 checkoutProduct.Add(product);
             }
-
             await Task.WhenAll(checkoutProduct.AsEnumerable()).ContinueWith((t) =>
             {
                 result.CheckoutProductList = checkoutProduct.Select(x => x.Result);
                 result.AllProductTotalPrice = result.CheckoutProductList.Select(x => x.ProductPieceTotalPrice).Sum();
             });
-
             return new SuccessDataResult<Checkout>(result);
         }
-
         //Product,Comment,ProductPhoto
         public async Task<IDataResult<ProductCommentDTO>> GetCommentListDTO(
            GetCommentListDTO request)
         {
             var result = from p in Context.Product
                          where p.Id == request.ProductId
-
                          let cg = (from c in Context.Comment
                                    where p.Id == c.Productid && c.IsApproved == request.IsApproved
                                    select c).AsEnumerable()
-
                          let ppg = (from pp in Context.ProductPhoto where p.Id == pp.ProductId select pp).FirstOrDefault()
                          select new ProductCommentDTO
                          {
@@ -186,11 +162,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                              ProductPhoto = ppg,
                              Averagecount = Math.Round(cg.Average(x => x.Rating), 2)
                          };
-
             var data = await result.FirstOrDefaultAsync();
             return new SuccessDataResult<ProductCommentDTO>(data);
         }
-
         //Product,Brand,Category,ProductAttributeCombination,ProductStock,ProductPhoto,CombinationPhoto,ProductSpecificationAttribute,
         public async Task<IDataResult<IPagedList<Entities.DTO.Product.CatalogProduct>>> GetCatalogProduct(CatalogVM catalog)
         {
@@ -215,14 +189,12 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                 }
             }
             var lamdaFinalExpression = Expression.Lambda<Func<ProductSpecificationAttribute, bool>>(filterfinalExpression, filterparameter);
-
             var query = from p in Context.Product
                         join b in Context.Brand on p.BrandId equals b.Id
                         join c in Context.Category on p.CategoryId equals c.Id
                         where p.CategoryId == catalog.Id
                         join pac in Context.ProductAttributeCombination on p.Id equals pac.ProductId into paclj
                         from pacljf in paclj.DefaultIfEmpty()
-
                         let productStockGroup = (from ps in Context.ProductStock.DefaultIfEmpty().Take(1)
                                                  orderby ps.CreateTime
                                                  where ps.ProductId == p.Id
@@ -231,19 +203,15 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                                                  ? ps.CombinationId == pacljf.Id
                                                  : true == true)
                                                  select ps).First()
-
                         let pplg = (from ppl in Context.ProductPhoto.DefaultIfEmpty()
                                     where ppl.ProductId == p.Id
                                     join ppcp in Context.CombinationPhoto on ppl.Id equals ppcp.PhotoId into ppcplj
                                     from ppcpljg in ppcplj.DefaultIfEmpty()
                                     where pacljf != null ? ppcpljg.CombinationId == pacljf.Id : true == true
                                     select ppl).First()
-
-
                         let psg = (from pse in Context.ProductSpecificationAttribute
                                    where pse.ProductId == p.Id
                                    select pse).Any(lamdaFinalExpression)
-
                         select new Entities.DTO.Product.CatalogProduct
                         {
                             Id = p.Id,
@@ -259,8 +227,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                             ProductPhotoModel = pplg,
                         };
             query = query.Where(x => x.SpeficationIn == true);
-
-
             if (catalog.SelectedBrand != null)
             {
                 var parameter = Expression.Parameter(typeof(Entities.DTO.Product.CatalogProduct), "x");
@@ -276,28 +242,17 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                 }
                 query = query.Where(Expression.Lambda<Func<Entities.DTO.Product.CatalogProduct, bool>>(finalExpression, parameter));
             }
-
             //if (catalog.MinPrice != 0)
             //    query = query.Where(x => x.ProductStock.ProductPrice >= catalog.MinPrice);
-
             //if (catalog.MaxPrice != float.MaxValue)
             //    query = query.Where(x => x.ProductStock.ProductPrice <= catalog.MaxPrice);
-
             if (catalog.SortingId == 1)
                 query = query.OrderBy(x => x.ProductName);
-
             if (catalog.SortingId == 2)
                 query = query.OrderByDescending(x => x.ProductName);
-
-
             var result = await query.ToPagedListAsync(catalog.pageNumber, catalog.pageSize);
-
-
             return new SuccessDataResult<IPagedList<Entities.DTO.Product.CatalogProduct>>(result);
-
-
         }
-
         //
         public async Task<IDataResult<ProductDetailVM>> GetProductDetailVM(GetProductDetailVM request)
         {
@@ -305,20 +260,16 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
             model.ProductInfo = (await GetHomeProductDetail(new GetHomeProductDetail(request.ProductId, request.CombinationId))).Data;
             model.CombinationId = request.CombinationId;
             model.ProductId = request.ProductId;
-
             if (model.ProductInfo.ProductAttributeCombinationList.Count() > 0)
             {
                 var combinationList = _productAttributeFormatter.ListAttrXmltoString(
                         model.ProductInfo.ProductAttributeCombinationList,
                          model.ProductInfo.ProductAttributeMappingList);
-
                 model.AttrCombinationList = combinationList;
-
                 if (request.CombinationId == 0)
                     model.SelectedCombination = combinationList.First();
                 else
                     model.SelectedCombination = combinationList.Where(x => x.Id == request.CombinationId).First();
-
                 var enabledList = new List<int>();
                 if (combinationList.Select(x => x.AttributesXmlList).First().Count() > 1)//Kombinasyonu 1den fazla olan ürün
                 {
@@ -349,7 +300,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
             }
             return new SuccessDataResult<ProductDetailVM>(model);
         }
-
         public async Task<IDataResult<IEnumerable<ProductSearch>>> GetMainSearchProduct(GetMainSearchProduct request)
         {
             try
@@ -365,8 +315,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                 }
                 throw ex;
             }
-
         }
-
     }
 }

@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-
 namespace eCommerce.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
@@ -25,7 +24,6 @@ namespace eCommerce.Controllers
         private readonly RoleManager<MyRole> _roleManager;
         private readonly ILogger _logger;
         private readonly IMailService _mailService;
-
         public AccountController(
             UserManager<MyUser> userManager,
             SignInManager<MyUser> signInManager,
@@ -39,20 +37,16 @@ namespace eCommerce.Controllers
             _roleManager = roleManager;
             _mailService = mailService;
         }
-
         [TempData]
         public string ErrorMessage { get; set; }
-
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -63,7 +57,6 @@ namespace eCommerce.Controllers
             {
                 //Hesap kitlemeyi etkinleştirmek için lockoutOnFailure True Gönder
                 var user = await _userManager.FindByEmailAsync(model.Email);
-
                 var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
@@ -87,24 +80,19 @@ namespace eCommerce.Controllers
             }
             return View(model);
         }
-
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> LoginWith2fa(bool rememberMe, string returnUrl = null)
         {
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-
             if (user == null)
             {
                 throw new ApplicationException($"İki faktörlü kimlik doğrulama kullanıcısı yüklenemiyor.");
             }
-
             var model = new LoginWith2faViewModel { RememberMe = rememberMe };
             ViewData["ReturnUrl"] = returnUrl;
-
             return View(model);
         }
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -114,17 +102,13 @@ namespace eCommerce.Controllers
             {
                 return View(model);
             }
-
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
                 throw new ApplicationException($"Kimliğe sahip kullanıcı yüklenemiyor '{_userManager.GetUserId(User)}'.");
             }
-
             var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
-
             var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, model.RememberMachine);
-
             if (result.Succeeded)
             {
                 _logger.LogInformation("Kimliğe sahip kullanıcı {UserId} 2fa ile giriş yaptı.", user.Id);
@@ -142,7 +126,6 @@ namespace eCommerce.Controllers
                 return View();
             }
         }
-
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> LoginWithRecoveryCode(string returnUrl = null)
@@ -152,12 +135,9 @@ namespace eCommerce.Controllers
             {
                 throw new ApplicationException($"İki faktörlü kimlik doğrulama kullanıcısı yüklenemiyor.");
             }
-
             ViewData["ReturnUrl"] = returnUrl;
-
             return View();
         }
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -167,17 +147,13 @@ namespace eCommerce.Controllers
             {
                 return View(model);
             }
-
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
                 throw new ApplicationException($"İki faktörlü kimlik doğrulama kullanıcısı yüklenemiyor.");
             }
-
             var recoveryCode = model.RecoveryCode.Replace(" ", string.Empty);
-
             var result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
-
             if (result.Succeeded)
             {
                 _logger.LogInformation("Kimliğe sahip kullanıcı {UserId} kurtarma koduyla giriş yaptı.", user.Id);
@@ -195,14 +171,12 @@ namespace eCommerce.Controllers
                 return View();
             }
         }
-
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Lockout()
         {
             return View();
         }
-
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
@@ -210,7 +184,6 @@ namespace eCommerce.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -229,23 +202,19 @@ namespace eCommerce.Controllers
                 {
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
-
                     _mailService.Send(new EmailMessage()
                     {
                         Content = $"Hesabı onaylama linki <a href=\"{callbackUrl}\">Onaylama Linki</a>",
                         ToAddresses = new List<string>() { model.Email }
                     });
-
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("Kullanıcı şifre ile yeni bir hesap oluşturdu.");
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
             }
-
             return View(model);
         }
-
         [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
@@ -253,7 +222,6 @@ namespace eCommerce.Controllers
             _logger.LogInformation("Kullanıcı Çıkış yaptı.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -263,7 +231,6 @@ namespace eCommerce.Controllers
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
         }
-
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
@@ -278,7 +245,6 @@ namespace eCommerce.Controllers
             {
                 return RedirectToAction(nameof(Login));
             }
-
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
             if (result.Succeeded)
             {
@@ -297,7 +263,6 @@ namespace eCommerce.Controllers
                 return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
             }
         }
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -324,11 +289,9 @@ namespace eCommerce.Controllers
                 }
                 AddErrors(result);
             }
-
             ViewData["ReturnUrl"] = returnUrl;
             return View(nameof(ExternalLogin), model);
         }
-
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
@@ -345,14 +308,12 @@ namespace eCommerce.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
-
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
             return View();
         }
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -365,29 +326,23 @@ namespace eCommerce.Controllers
                 {
                     return RedirectToAction(nameof(ForgotPasswordConfirmation));
                 }
-
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.ResetPasswordCallbackLink(user.Id.ToString(), code, Request.Scheme);
-
                 _mailService.Send(new EmailMessage()
                 {
                     Content=$"Şifreyi sıfırlamak için ilgili linke tıklayın <a href=\"{callbackUrl}\">Sıfırlama Linki</a>",
                     ToAddresses=new List<string>(){model.Email}
                 });
-
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
-
             return View(model);
         }
-
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
         {
             return View();
         }
-
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)
@@ -399,7 +354,6 @@ namespace eCommerce.Controllers
             var model = new ResetPasswordViewModel { Code = code };
             return View(model);
         }
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -422,23 +376,18 @@ namespace eCommerce.Controllers
             AddErrors(result);
             return View();
         }
-
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ResetPasswordConfirmation()
         {
             return View();
         }
-
-
         [HttpGet]
         public IActionResult AccessDenied()
         {
             return View();
         }
-
         #region Helpers
-
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
@@ -446,7 +395,6 @@ namespace eCommerce.Controllers
                 ModelState.AddModelError(string.Empty, error.Description);
             }
         }
-
         private IActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
@@ -458,11 +406,6 @@ namespace eCommerce.Controllers
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
         }
-
         #endregion
-
-
-
-
     }
 }

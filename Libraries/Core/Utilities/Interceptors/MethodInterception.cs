@@ -3,12 +3,10 @@ using Core.Utilities.Results;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
-
 namespace Core.Utilities.Interceptors
 {
     public abstract class MethodInterception : MethodInterceptionBaseAttribute
     {
-
         //invocation :  business method
         protected bool IsSuccess { get; set; } = true;
         protected virtual void SetIsSuccess(bool isSuccess)
@@ -38,7 +36,5 @@ namespace Core.Utilities.Interceptors
             }
             OnAfter(invocation);
         }
-
     }
-
 }

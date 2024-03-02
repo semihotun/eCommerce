@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Core.Utilities.Razor
 {
     public static class TempDataExtensions
@@ -17,7 +16,6 @@ namespace Core.Utilities.Razor
             tempData.TryGetValue(key, out object o);
             return o == null ? null : JsonConvert.DeserializeObject<T>((string)o);
         }
-
         public static string Get(this ITempDataDictionary tempData, string key)
         {
             tempData.TryGetValue(key, out object o);

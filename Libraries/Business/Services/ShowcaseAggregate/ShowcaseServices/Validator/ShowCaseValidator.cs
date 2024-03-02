@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.ShowcaseAggregate;
 using FluentValidation;
-
 namespace Business.Services.ShowcaseAggregate.ShowcaseServices.Validator
 {
-
     public class CreateShowCaseValidator : AbstractValidator<ShowCase>
     {
         public CreateShowCaseValidator()
@@ -12,7 +10,6 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseServices.Validator
             RuleFor(x => x.ShowCaseTitle).NotEmpty();
             RuleFor(x => x.ShowCaseType).NotEmpty();
             RuleFor(x => x.ShowCaseText).NotEmpty();
-
         }
     }
     public class UpdateShowCaseValidator : AbstractValidator<ShowCase>
@@ -23,7 +20,6 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseServices.Validator
             RuleFor(x => x.ShowCaseTitle).NotEmpty();
             RuleFor(x => x.ShowCaseType).NotEmpty();
             RuleFor(x => x.ShowCaseText).NotEmpty();
-
         }
     }
 }

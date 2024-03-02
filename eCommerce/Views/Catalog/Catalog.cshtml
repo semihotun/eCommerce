@@ -3,8 +3,6 @@
     ViewBag.Title = "Catalog";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
 <!-- BREADCRUMB -->
 <div id="breadcrumb">
     <div class="container-fluid home-container">
@@ -15,13 +13,8 @@
     </div>
 </div>
 <!-- /BREADCRUMB -->
-
-
 <div >
-
     <div ng-controller="Catalog">
-
-
         <!-- section -->
         <div class="section">
             <!-- container -->
@@ -38,7 +31,6 @@
                             </button>
                             <div class="collapse collapsehome in" id="collapseExamplebrand">
                                 <div class="card card-body" ng-init="GetAllBrandFilter(@Model.CategoryId)">
-
                                     <ul ng-repeat="Brand in BrandData">
                                         <li class="filter-list">
                                             <input class="pixel-radio" type="checkbox" ng-model="Brand.checked"
@@ -49,7 +41,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="aside">
                             <button class="aside-title btncollapsecatalog" type="button" data-toggle="collapse"
                                     data-target="#collapseExampleprice" aria-expanded="false"
@@ -67,7 +58,6 @@
                                         <input type="text" placeholder="En Çok" class="form-control" ng-true-value="9999999"
                                                name="maxPrice" ng-model="maxPrice" />
                                     </div>&nbsp;
-
                                     <div class="search">
                                         <input type="button" value="Ara"
                                                class="pricesearch btn btn-default"
@@ -76,8 +66,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <div ng-init="GetAllCategoryFilter(@Model.CategoryId)">
                             <div ng-repeat="Filter in CatalogFilterData ">
                                 <div class="aside">
@@ -87,7 +75,6 @@
                                                 <i style="float:right;" class="fa fa-arrow-down"></i>
                                     </button>
                                     <div class="filter-list collapse in collapsehome {{Filter.Name}}">
-
                                         <div class="sidebar-categories"
                                              ng-repeat="Option in Filter.SpecificationAttributeOptionList">
                                             <div class="main-categories">
@@ -99,15 +86,10 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-
-
                     </div>
                     <!-- /ASIDE -->
                     <!-- MAIN -->
@@ -129,10 +111,8 @@
                                                                     = "GetAllData(" + @Model.CategoryId + ",1)",
                                                                         @class = "input"
                                                                     })
-
                                 </div>
                             </div>
-
                         </div>
                         <!-- /store top filter -->
                         <!-- STORE -->
@@ -144,16 +124,13 @@
                                 </div>
                                 <div ng-repeat="product in ProductData" class="col-md-4 col-sm-6 col-xs-6">
                                     <div class="product product-single">
-
                                         <div class="product-thumb">
                                             <div class="product-label">
-                                          
                                                 <span ng-if="product.CreatedOnUtc == CurrentDate">Yeni</span>
                                                 <span class="sale"
                                                       ng-if="product.ProductDiscount > 0">-{{(((product.ProductPrice-product.ProductDiscount)-product.ProductPrice)/product.ProductPrice)*-100  | number:0}}%</span>
                                             </div>
                                             <button class="main-btn quick-view">
-
                                                 <i class="fa fa-search-plus"></i><a href="~/ProductDetail/ProductDetail?productid={{product.Id}}&combinationId={{product.ProductAttributeCombination.Id}}">Ürünü İncele</a>
                                             </button>
                                             <img src="{{product.ProductPhotoModel != null ? product.ProductPhotoModel.ProductPhotoName : null }}" width="253"
@@ -169,14 +146,10 @@
                                                         TL
                                                     </del>
                                                 </h3>
-
                                                 <h2 class="product-name"><a href="#">{{product.ProductName}}</a></h2>
                                             </div>
                                         </div>
                                     </div>
-
-
-
                                 </div>
                                 <!-- /row -->
                             </div>
@@ -212,8 +185,6 @@
             <!-- /section -->
         </div>
     </div>
-
-
     <script type="text/javascript">
         $(".card-product__browsebtn").hide();
         $(".catalogcard").mouseover(function () {

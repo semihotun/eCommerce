@@ -1,12 +1,8 @@
 ﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
-
-
 @{Html.RenderPartial("AttrMaping/_AttrMapingCreate", Model);}
 @{Html.RenderPartial("AttrMaping/_AttrMapingList", Model);}
-
 <script>
     function MappingtableAdd(item) {
-
         $("#accordion").append(`
                      <div class="card p-0 m-0 border border-secondary" id="${"Mappingcard" + item.Id}">
                         <div class="card-header p-0 d-flex position-relative" id="${"collapseHeading" + item.Id}">
@@ -48,16 +44,13 @@
             `
         );
     }
-
     $("#mappingAdd").click(function () {
-
         var productMapping = {
             ProductAttributeId: TryInt($("select[name='ProductAttributeId']").val()),
             TextPrompt: TryString($("input[name='ProductAttributeMappingModel.TextPrompt']").val()),
             DisplayOrder: TryInt($("input[name='ProductAttributeMappingModel.DisplayOrder']").val()),
             ProductId: TryInt($("input[name='Id']").val())
         };
-
         $.ajax({
             url: "/Admin/ProductAttributeMapping/AddProductAttirubeMapping",
             type: "POST",
@@ -76,9 +69,7 @@
                 console.log("Hata");
             }
         });
-
     });
-
     function GetMappingAttribute(id) {
         $("#MappingTable" + id + " tbody").html("");
         $.ajax({
@@ -95,7 +86,6 @@
             }
         });
     }
-
     function AttrMapingDelete(id) {
         $.ajax({
             url: "/Admin/ProductAttributeMapping/AttrMapingDelete?id=" + id,
@@ -108,7 +98,6 @@
             }
         });
     }
-
     function DeleteAttributeValue(id) {
         $.ajax({
             url: "/Admin/ProductAttributeMapping/ProductAttributeValueDelete?AttributeValueid=" + id,
@@ -121,12 +110,10 @@
             }
         });
     }
-
     var ProductModel = {
         ProductAttributeValue: {
         }
     };
-
     function ChangeTextboxAttributeMappingId(id) {
         $("#productMappingAttributeValueModal").modal();
         $(':input', '#productMappingAttributeValueModal table tbody')
@@ -136,7 +123,6 @@
         $("input[name='ProductAttributeValue.ProductAttributeMappingId']").val(id);
         $("input[name='ProductAttributeValue.Id']").val(0);
     }
-
     function AddProductMappingAttributeValue() {
         ProductModel.ProductAttributeValue.Name = TryString($("input[name='ProductAttributeValue.Name']").val());
         ProductModel.ProductAttributeValue.Id = TryInt($("input[name='ProductAttributeValue.Id']").val());
@@ -149,7 +135,6 @@
         ProductModel.ProductAttributeValue.ProductAttributeMappingId = TryInt($("input[name='ProductAttributeValue.ProductAttributeMappingId']").val());
         ProductModel.ProductAttributeValue.Quantity = TryInt($("input[name='ProductAttributeValue.Quantity']").val());
         //productAttributeValues.push(productAttributeValue);
-
         //Create
         if (ProductModel.ProductAttributeValue.Id === 0) {
             console.log(JSON.stringify(ProductModel));
@@ -165,7 +150,6 @@
                     $('#productMappingAttributeValueModal').modal('toggle');
                 },
                 error: function (xhr, status, error) {
-                  
                 }
             });
         }
@@ -180,17 +164,13 @@
                 success: function (data) {
                     $("#AttibuteValue" + data.Id).remove();
                     AddProductMappingAttributeValueTable(data, data.ProductAttributeMappingId);
-                 
                     $('#productMappingAttributeValueModal').modal('toggle');
                 },
                 error: function (data) {
-
                 }
             });
         }
-
     }
-
     function EditFillAttributeValue(id) {
         $.ajax({
             type: "GET",
@@ -209,9 +189,7 @@
                 $("input[name='ProductAttributeValue.Id']").val(data.Id);
             }
         });
-
     }
-
     function AddProductMappingAttributeValueTable(item, mappingId) {
         $("#MappingTable" + mappingId + " tbody").append(
             `
@@ -224,8 +202,5 @@
                 </tr>
               `
         );
-
-
     }
-
 </script>

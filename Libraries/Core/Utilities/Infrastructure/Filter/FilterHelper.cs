@@ -7,8 +7,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-
-
 namespace Core.Utilities.Infrastructure.Filter
 {
     public static class FilterHelper
@@ -29,7 +27,6 @@ namespace Core.Utilities.Infrastructure.Filter
                     var member = Expression.Property(parameter, columnName);
                     var constantValue = propertyInfo.GetValue(filtermodel, null);
                     var constant = Expression.Constant(constantValue);
-
                     if (constantValue != null && !string.IsNullOrEmpty(constantValue.ToString()) && constantValue.ToString() != "0")
                     {
                         switch (attr.filters)
@@ -52,24 +49,20 @@ namespace Core.Utilities.Infrastructure.Filter
                             case FilterOperators.NotEquals:
                                 expression = Expression.NotEqual(member, constant);
                                 break;
-
                         }
                         finalExpression = Expression.AndAlso(finalExpression, expression);
                     }
-
                 }
                 catch { }
             }
             var data = contex.Where(Expression.Lambda<Func<T, bool>>(finalExpression, parameter));
             return data;
         }
-
         public class DataTableValueModel
         {
             public string Value { get; set; }
             public string FilterType { get; set; }
         }
-
         public static IQueryable<T> ApplyDataTableFilter<T>(this IQueryable<T> contex, DTParameters filtermodel)
         {
             Expression finalExpression = Expression.Constant(true);
@@ -89,7 +82,6 @@ namespace Core.Utilities.Infrastructure.Filter
                             var member = Expression.Property(parameter, item.Name);
                             object value = TypeDescriptor.GetConverter(member.Type).ConvertFromString(filterValue.Value);
                             var constant = Expression.Constant(value, member.Type);
-
                             switch (Int32.Parse(filterValue.FilterType))
                             {
                                 case (int)FilterOperators.Equals:
@@ -125,7 +117,6 @@ namespace Core.Utilities.Infrastructure.Filter
             }
             var data = contex.Where(Expression.Lambda<Func<T, bool>>(finalExpression, parameter));
             return data;
-
         }
     }
 }

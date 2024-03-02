@@ -10,7 +10,6 @@ using Business.Services.ShowcaseAggregate.ShowcaseTypes.ShowcaseTypeServiceModel
 using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseTypes;
 using Entities.Concrete.ShowcaseAggregate;
 using Core.Aspects.Autofac.Caching;
-
 namespace Business.Services.ShowcaseAggregate.ShowcaseTypes
 {
     public class ShowcaseTypeService : IShowcaseTypeService
@@ -18,22 +17,18 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseTypes
         #region Field
         private readonly IShowcaseTypeDAL _showcaseTypeDal;
         #endregion
-
         #region Ctor
         public ShowcaseTypeService(IShowcaseTypeDAL showcaseTypeDal)
         {
             _showcaseTypeDal = showcaseTypeDal;
         }
         #endregion
-
         #region  Method
-
         [CacheAspect]
         public async Task<IDataResult<IList<ShowCaseType>>> GetAllShowCaseType()
         {
             var query = _showcaseTypeDal.Query();
             var data = await query.ToListAsync();
-
             return new SuccessDataResult<IList<ShowCaseType>>(data);
         }
         [CacheAspect]
@@ -49,9 +44,6 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseTypes
             var data = await query.ToListAsync();
             return new SuccessDataResult<IEnumerable<SelectListItem>>(data);
         }
-
         #endregion
-
-
     }
 }

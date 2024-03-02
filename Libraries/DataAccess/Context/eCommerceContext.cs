@@ -17,20 +17,16 @@ using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
 using System;
 using System.Linq;
 using System.Reflection;
-
 namespace DataAccess.Context
 {
     public class eCommerceContext : CoreContext
     {
-       
         private DbContextOptions<eCommerceContext> dbContextOptions;
         protected static DbContextOptions<T> ChangeOptionsType<T>(DbContextOptions options) where T : DbContext
         {
             var sqlExt = options.Extensions.FirstOrDefault(e => e is SqlServerOptionsExtension);
-
             if (sqlExt == null)
                 throw new Exception("Failed to retrieve SQL connection string for base Context");
-
             return new DbContextOptionsBuilder<T>()
                         .Options;
         }
@@ -42,16 +38,13 @@ namespace DataAccess.Context
         {
             var sqlServerOptionsExtension = dbContextOptions.
                   FindExtension<SqlServerOptionsExtension>();
-
             var connectionString = sqlServerOptionsExtension.ConnectionString;
-          
             optionsBuilder.UseSqlServer(connectionString);               
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var assm = Assembly.GetExecutingAssembly();
             modelBuilder.ApplyConfigurationsFromAssembly(assm);
-
             base.OnModelCreating(modelBuilder);
         }
         #region DBSets
@@ -86,15 +79,6 @@ namespace DataAccess.Context
         public virtual DbSet<ShowCaseType> ShowCaseType { get; set; }
         public virtual DbSet<ProductStock> ProductStock { get; set; }
         public virtual DbSet<ProductStockType> ProductStockType { get; set; }
-
         #endregion
-
-      
-
     }
 }
-
-
-
-
-

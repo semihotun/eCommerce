@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-
 namespace Entities.ViewModels.AdminViewModel.Showcase
 {
     public class ShowCaseCreateOrUpdateVM:BaseEntity

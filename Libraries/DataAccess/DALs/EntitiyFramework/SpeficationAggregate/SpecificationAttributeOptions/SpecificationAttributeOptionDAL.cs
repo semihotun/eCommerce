@@ -6,7 +6,6 @@ using System.Text;
 using System.Linq;
 using DataAccess.Context;
 using Entities.Concrete.SpeficationAggregate;
-
 namespace DataAccess.DALs.EntitiyFramework.SpeficationAggregate.SpecificationAttributeOptions
 {
     public class SpecificationAttributeOptionDAL : EfEntityRepositoryBase<SpecificationAttributeOption, eCommerceContext>, ISpecificationAttributeOptionDAL

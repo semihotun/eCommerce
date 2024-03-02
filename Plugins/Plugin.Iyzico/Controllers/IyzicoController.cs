@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace Plugin.Iyzico.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
@@ -22,9 +21,7 @@ namespace Plugin.Iyzico.Controllers
             options.ApiKey = "sandbox-afXhZPW0MQlE4dCUUlHcEopnMBgXnAZI";
             options.SecretKey = "sandbox-wbwpzKIiplZxI3hh5ALI4FJyAcZKL6kq";
             options.BaseUrl = "https://sandbox-api.iyzipay.com";
-
             CreateCheckoutFormInitializeRequest request = new CreateCheckoutFormInitializeRequest();
-
             request.Locale = Locale.TR.ToString();
             request.ConversationId = "123456789";
             request.Price = "1";
@@ -33,7 +30,6 @@ namespace Plugin.Iyzico.Controllers
             request.BasketId = "B67832";
             request.PaymentGroup = PaymentGroup.LISTING.ToString();
             request.CallbackUrl = "https://www.merchant.com/callback";
-
             //Taksit Tutarı
             List<int> enabledInstallments = new List<int>();
             enabledInstallments.Add(2);
@@ -41,7 +37,6 @@ namespace Plugin.Iyzico.Controllers
             enabledInstallments.Add(6);
             enabledInstallments.Add(9);
             request.EnabledInstallments = enabledInstallments;
-
             Buyer buyer = new Buyer();
             buyer.Id = "BY789";
             buyer.Name = "John";
@@ -57,8 +52,6 @@ namespace Plugin.Iyzico.Controllers
             buyer.Country = "Turkey";
             buyer.ZipCode = "34732";
             request.Buyer = buyer;
-
-
             Iyzipay.Model.Address shippingAddress = new Iyzipay.Model.Address();
             shippingAddress.ContactName = "Jane Doe";
             shippingAddress.City = "Istanbul";
@@ -66,7 +59,6 @@ namespace Plugin.Iyzico.Controllers
             shippingAddress.Description = "Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1";
             shippingAddress.ZipCode = "34742";
             request.ShippingAddress = shippingAddress;
-
             Iyzipay.Model.Address billingAddress = new Iyzipay.Model.Address();
             billingAddress.ContactName = "Jane Doe";
             billingAddress.City = "Istanbul";
@@ -74,9 +66,7 @@ namespace Plugin.Iyzico.Controllers
             billingAddress.Description = "Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1";
             billingAddress.ZipCode = "34742";
             request.BillingAddress = billingAddress;
-
             List<BasketItem> basketItems = new List<BasketItem>();
-
             BasketItem firstBasketItem = new BasketItem();
             firstBasketItem.Id = "BI101";
             firstBasketItem.Name = "Binocular";
@@ -85,8 +75,6 @@ namespace Plugin.Iyzico.Controllers
             firstBasketItem.ItemType = BasketItemType.PHYSICAL.ToString();
             firstBasketItem.Price = "0.3";
             basketItems.Add(firstBasketItem);
-
-
             BasketItem secondBasketItem = new BasketItem();
             secondBasketItem.Id = "BI102";
             secondBasketItem.Name = "Game code";
@@ -95,7 +83,6 @@ namespace Plugin.Iyzico.Controllers
             secondBasketItem.ItemType = BasketItemType.VIRTUAL.ToString();
             secondBasketItem.Price = "0.5";
             basketItems.Add(secondBasketItem);
-
             BasketItem thirdBasketItem = new BasketItem();
             thirdBasketItem.Id = "BI103";
             thirdBasketItem.Name = "Usb";
@@ -104,14 +91,9 @@ namespace Plugin.Iyzico.Controllers
             thirdBasketItem.ItemType = BasketItemType.PHYSICAL.ToString();
             thirdBasketItem.Price = "0.2";
             basketItems.Add(thirdBasketItem);
-
-
             request.BasketItems = basketItems;
-
             CheckoutFormInitialize checkoutFormInitialize = CheckoutFormInitialize.Create(request, options);
-
             return View("~/Views/Iyzico/Index.cshtml", checkoutFormInitialize.CheckoutFormContent);
         }
-
     }
 }

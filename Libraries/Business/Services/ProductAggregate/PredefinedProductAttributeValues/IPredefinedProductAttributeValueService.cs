@@ -3,7 +3,6 @@ using Core.Utilities.Results;
 using Entities.Concrete.ProductAggregate;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues
 {
     public interface IPredefinedProductAttributeValueService
@@ -13,6 +12,5 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues
         Task<IDataResult<PredefinedProductAttributeValue>> GetPredefinedProductAttributeValueById(GetPredefinedProductAttributeValueById request);
         Task<IResult> InsertPredefinedProductAttributeValue(PredefinedProductAttributeValue ppav);
         Task<IResult> UpdatePredefinedProductAttributeValue(PredefinedProductAttributeValue ppav);
-
     }
 }

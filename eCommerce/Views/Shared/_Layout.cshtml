@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,10 +16,8 @@
     <script src="~/Content/Themes/js/nouislider.min.js"></script>
     <!-- Angular -->
     <script src="~/Content/Themes/js/angular.js"></script>
-
     <script src="https://vitalets.github.io/checklist-model/checklist-model.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.17/angular-filter.js"></script>
-
     <script src="~/Content/Admin/js/Angular/AngularWeb.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <!-- Bootstrap -->
@@ -37,11 +34,7 @@
     <link href="~/Content/Themes/css/style.css" rel="stylesheet" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="~/Content/Themes/css/Mycss.css" rel="stylesheet" />
-
-
-
 </head>
-
 <body ng-app="myApp">
     @if (@TempData["notification"] != null)
     {
@@ -49,7 +42,6 @@
     @Html.Raw(@TempData["notification"]);
         </script>
     }
-
     <!-- HEADER -->
     <header>
         <!-- top Header -->
@@ -86,7 +78,6 @@
         <div id="header">
             <div class="container-fluid home-container" >
                 <div class="pull-left">
-
                     <!-- Mobile nav toggle-->
                     <li class="nav-toggle">
                         <button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
@@ -95,41 +86,31 @@
                     <!-- Logo -->
                     <div class="header-logo">
                         <a class="logo" href="~/Home/">
-
                             <img src="~/Content/Themes/img/logo.png" />
                         </a>
                     </div>
                     <!-- /Logo -->
-
                 </div>
-
                 <!-- Search -->
                 <div class="header-search">
                     <form id="tfnewsearch">
-
                         <input type="text" id="txtSearch" class="tftextinput2 input search-input" name="q" size="21" maxlength="120" value="Detaylı ara?">
                         <button class="search-btn" id="srcButton"><i class="fa fa-search"></i></button>
                         <div class="divResult" id="searchDiv"></div>
-
                     </form>
                 </div>
                 <!-- /Search -->
                 <div class="headermobil-search">
                     <form id="tfnewsearch">
-
                         <input type="text" id="txtSearch" class="tftextinput2 input search-input" name="q" size="21" maxlength="120" value="Detaylı ara?">
                         <button class="search-btn" id="srcButton"><i class="fa fa-search"></i></button>
                         <div class="divResult" id="searchDiv"></div>
-
                     </form>
                 </div>
                 <div class="pull-right">
                     <ul class="header-btns">
                         <!-- Account -->
                         <li class="header-account dropdown default-dropdown">
-
-
-
                             @if (User.Identity.IsAuthenticated)
                             {
                                 <div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
@@ -138,20 +119,11 @@
                                     </div>
                                     <strong class="text-uppercase">Hesabım &nbsp;<i class="fa fa-caret-down"></i></strong>
                                 </div>
-
-
                                 <ul class="custom-menu">
-
-
-
-
-
                                     @await Html.PartialAsync("~/Views/Manage/_ManageNav.cshtml")
-
                                     <li class="nav-item">
                                         <a href="/Account/Logout" class="  text-dark">Çıkış Yap</a>
                                     </li>
-
                                 </ul>
                             }
                             else
@@ -160,7 +132,6 @@
                                     <div class="header-btns-icon">
                                         <i class="fa fa-user-o"> </i>
                                     </div>
-
                                 </div>
                                 <span style="padding-top:11px;display:block;font-weight:100;">
                                     <a href="~/Account/Login" class="text-uppercase">Giriş </a>
@@ -168,8 +139,6 @@
                                     <a href="~/Account/Register" class="text-uppercase">Kayıt</a>
                                 </span>
                             }
-
-
                         </li>
                         <!-- /Account -->
                         <!-- Cart -->
@@ -178,9 +147,7 @@
                                 <div class="header-btns-icon">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span class="qty">
-
                                         @Html.Partial("../Home/Basket")
-
                                     </span>
                                 </div>
                                 <strong class="text-uppercase" style="padding-top: 11px;
@@ -220,7 +187,6 @@
                         </div>*@
                         </li>
                         <!-- /Cart -->
-
                     </ul>
                 </div>
             </div>
@@ -232,12 +198,9 @@
     <!-- NAVIGATION -->
     <!-- NAVIGATION -->
     @await Component.InvokeAsync("CategoryMenu")
-
     <!-- /NAVIGATION -->
     <!-- /NAVIGATION -->
-
     @RenderBody();
-
     <!-- FOOTER -->
 <footer id="footer" class="section section-grey" style="margin-top: 150px;">
     <!-- container -->
@@ -247,9 +210,7 @@
             <!-- footer widget -->
             <div class="col-md-3 col-sm-6 col-xs-6">
                 <div class="footer">
-
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
-
                     <!-- footer social -->
                     <ul class="footer-social">
                         <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -276,9 +237,7 @@
                 </div>
             </div>
             <!-- /footer widget -->
-
             <div class="clearfix visible-sm visible-xs"></div>
-
             <!-- footer widget -->
             <div class="col-md-3 col-sm-6 col-xs-6">
                 <div class="footer">
@@ -325,11 +284,7 @@
 </footer>
     <!-- /FOOTER -->
     <!-- jQuery Plugins -->
-
-
     @RenderSection("Scripts", required: false)
-
-
     <div class="loadingbody">
         <div class="loading">
             <div class="loading__ring">
@@ -340,7 +295,6 @@
             </div>
         </div>
     </div>
-     
     <div class="jsloadingbody" style="display:none;">
         <div class="jsloading">
             <div class="jsloading__ring">
@@ -351,29 +305,14 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
 </body>
-
 </html>
-
-
-
 <script type="text/javascript">
-
-
     $(document).ready(function () {
-        
                 var searchboxID = "#txtSearch";
         $('#srcButton').click(function () {
             $(searchboxID).keyup();
                 });
-
         $(searchboxID).keyup(function (event) {
             if (event.keyCode != 13 && event.keyCode != 37 && event.keyCode != 39) {
             if ($.trim($(searchboxID).val()).length >= 2) {
@@ -394,17 +333,10 @@
             }
         }
         });
-
-
-
     });
-
-
     $("body:not(#searchDiv):not(input#txtSearch)").click(function (event) {
             $("#searchDiv").hide();
     });
-
-
     var delay = (function () {
         var timer = 0;
         return function (callback, ms) {
@@ -412,7 +344,6 @@
             timer = setTimeout(callback, ms);
         };
     })();
-
     $(function () {
         $("#txtSearch").click(function () {
             if ($("#txtSearch").val() == "Detaylı ara?") {
@@ -425,17 +356,9 @@
             }
         });
     });
-
     $(window).load(function () {
         $('.loadingbody').delay(200).fadeOut('slow', function () { });
     });
-
-
-
 </script>
-
-
-
-
 @*  Slickler *@
 <script src="~/Content/Themes/js/main.js"></script>

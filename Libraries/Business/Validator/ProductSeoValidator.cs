@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.ProductAggregate;
 using FluentValidation;
-
 namespace Business.Validator
 {
-
     public class CreateProductSeoValidator : AbstractValidator<ProductSeo>
     {
         public CreateProductSeoValidator()
@@ -12,7 +10,6 @@ namespace Business.Validator
             RuleFor(x => x.SeoContent).NotEmpty();
             RuleFor(x => x.SeoKey).NotEmpty();
             RuleFor(x => x.ProductId).NotEmpty();
-
         }
     }
     public class UpdateProductSeoValidator : AbstractValidator<ProductSeo>
@@ -23,7 +20,6 @@ namespace Business.Validator
             RuleFor(x => x.SeoContent).NotEmpty();
             RuleFor(x => x.SeoKey).NotEmpty();
             RuleFor(x => x.ProductId).NotEmpty();
-
         }
     }
 }

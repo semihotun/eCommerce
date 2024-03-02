@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using Polly;
 using System;
 using System.Data.SqlClient;
-
 namespace Core.Utilities.Migration
 {
     public static class HostExtension
@@ -19,7 +18,6 @@ namespace Core.Utilities.Migration
                 var sp = scope.ServiceProvider;
                 var logger = sp.GetRequiredService<ILogger<TContext>>();
                 var context = sp.GetService<TContext>();
-
                 try
                 {
                     var retry = Policy.Handle<SqlException>()
@@ -29,9 +27,7 @@ namespace Core.Utilities.Migration
                             TimeSpan.FromSeconds(5),
                             TimeSpan.FromSeconds(8),
                         });
-
                     retry.Execute(() => InvokeSeeder(seeder, context, sp,logger));
-    
                 }
                 catch (Exception)
                 {
@@ -40,7 +36,6 @@ namespace Core.Utilities.Migration
             }
             return host;
         }
-
         private static void InvokeSeeder<TContext>(Action<TContext, IServiceProvider,bool> seeder,
             TContext context,
             IServiceProvider services,
@@ -50,7 +45,6 @@ namespace Core.Utilities.Migration
         {
             var created=context.Database.EnsureCreated();
             context.Database.Migrate();
-
             logger.LogInformation("Migration Çalıştı");
             seeder(context, services, created);
         }

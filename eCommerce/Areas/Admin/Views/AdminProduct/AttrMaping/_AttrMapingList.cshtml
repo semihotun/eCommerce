@@ -1,27 +1,22 @@
 ﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
 <br />
-
-
 <div class="accordion" id="accordion">
     @if (Model.ProductAttributeMappingList! != null)
     {
         @foreach (var item in Model.ProductAttributeMappingList)
         {
-
             <div class="card p-0 m-0 border border-secondary"
                  @{var cardMappingId = "Mappingcard" + item.Id; }
                  id="@cardMappingId">
                 @{ var collapseHeadingId = "collapseHeading" + item.Id;}
                 <div class="card-header p-0 d-flex  position-relative" id="@collapseHeadingId">
                     @{ var mappingButtonId = "MappingButton" + item.Id;}
-
                     @{ var collapseIdHashtag = "#collapse" + item.Id;}
                     <button type="button" class="btn text-left w-100 p-4 btn-neutral d-flex" onclick="GetMappingAttribute(@item.Id)" id="@mappingButtonId"
                             data-toggle="collapse" data-target="@collapseIdHashtag" aria-expanded="False" aria-controls="collapseOne">
                         <span class="vertical-absolute-left-center ml-4">
                             @item.TextPrompt
                         </span>
-
                     </button>
                     <span class="h1 vertical-absolute-right-center mr-4">
                         <a href='@Url.Action("AttrAttributeValueList", "AdminProductAttr", new {ProductAttrMapingId = item.Id})' class="btn btn-outline-default">
@@ -49,27 +44,19 @@
                                 <input type="button" class="btn btn btn-outline-default mt-3 mb-3"
                                        value="Attribute Ekle"
                                        onclick="ChangeTextboxAttributeMappingId(@item.Id)" />
-
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
-
-
         }
     }
 </div>
-
-
-
 <div class="modal  bd-example-modal-xl mx-auto" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" id="productMappingAttributeValueModal">
     <div class=" modal-xl" style="margin: 5%;">
         <div class="modal-content" style="padding: 30px;">
             <form id="MappingAttributeCreate">
                 <table cellpadding="4" style="width: 90%;" class="mx-auto">
-
                     <tbody>
                         <tr>
                             <td><h3>Product Alt çapraz ürün özelliği ekle</h3></td>
@@ -119,23 +106,9 @@
                             <td> <input type="button" class="btn btn-default form-control col-md-5" value="Kaydet" id="register" style="color: white;" onclick="AddProductMappingAttributeValue()"></td>
                             <td></td>
                         </tr>
-
                     </tbody>
-
                 </table>
             </form>
         </div>
-
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-

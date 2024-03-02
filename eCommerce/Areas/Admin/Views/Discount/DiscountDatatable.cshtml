@@ -1,8 +1,4 @@
-﻿
-
-
-
-<br />
+﻿<br />
 <div class="table-responsive ps ps--active-x">
     <table id="DiscountList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
         <thead>
@@ -15,22 +11,14 @@
             </tr>
         </thead>
     </table>
-
 </div>
-
-
-
-
-
 <script>
     var Discountable;
     var BindDiscount = function (response) {
         if ($.fn.DataTable.isDataTable("#DiscountList")) {
             Discountable.draw();
-
         }
         else {
-
             Discountable = $("#DiscountList").DataTable({
                 "sAjaxSource": "/Admin/Discount/DiscountListJson" ,
                 "bServerSide": true,
@@ -50,26 +38,16 @@
                                 "<a href='/Admin/Discount/DiscountEdit?id=" + row.Id + "'><i class='fa fa-edit datatableduzenle' style='font-size:20px;'></i></a>";
                         }, "orderable": false
                     }
-
                 ], "language": {
                     "url": "/datatablelanguage.json"
                 }
-
             });
-
         }
-
     }
     var FilterRecord = function () {
         BindDiscount();
     }
     $(document).ready(function () {
         BindDiscount();
-
     });
-
 </script>
-
-
-
-

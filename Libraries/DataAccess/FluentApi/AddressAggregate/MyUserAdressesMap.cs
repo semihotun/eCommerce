@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace DataAccess.FluentApi.AddressAggregate
 {
     public class MyUserAdressesMap : IEntityTypeConfiguration<MyUserAdresses>
@@ -13,7 +12,6 @@ namespace DataAccess.FluentApi.AddressAggregate
         {
             builder.HasIndex(x => x.UserId);
             builder.HasIndex(x => x.AddressId);
-
             builder.HasKey(x => x.Id);
             builder.Property(t => t.Id).UseIdentityColumn();
         }

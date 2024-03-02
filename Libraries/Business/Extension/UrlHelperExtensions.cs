@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Extension
 {
     public static class UrlHelperExtensions
@@ -15,7 +14,6 @@ namespace Business.Extension
                 values: new { userId, code },
                 protocol: scheme);
         }
-
         public static string ResetPasswordCallbackLink(this IUrlHelper urlHelper, string userId, string code, string scheme)
         {
             return urlHelper.Action(

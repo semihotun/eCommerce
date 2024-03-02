@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.DiscountsAggregate.Discounts.DiscountServiceModel
 {
     public class GetAllList
@@ -14,10 +13,7 @@ namespace Business.Services.DiscountsAggregate.Discounts.DiscountServiceModel
         public GetAllList()
         {
         }
-
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
-
-       
     }
 }

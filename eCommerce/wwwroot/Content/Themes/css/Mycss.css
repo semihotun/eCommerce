@@ -1,8 +1,6 @@
-﻿
-.store-filter > .pagging > .pagination > li > .active {
+﻿.store-filter > .pagging > .pagination > li > .active {
     border: 1px solid #f8694a !important;
 }
-
 .store-filter > .pagging > .pagination > li > a {
     position: relative;
     float: left;
@@ -14,8 +12,6 @@
     background-color: #fff;
     border: 1px solid #ddd;
 }
-
-
 .pagination > li:last-child > a, .pagination li a, .pagination > li > span,
 .pagination > li:last-child > span,
 .pagination > li:first-child > a,
@@ -29,7 +25,6 @@
     border-radius: 50px;
     border: 1px solid #dadada;
 }
-
 .btncollapsecatalog {
     font-family: unset;
     letter-spacing: 2px;
@@ -229,19 +224,3 @@ input[type="radio"]:checked + label:before {
     animation: rotate 1s linear infinite;
     fill: rgba(0, 0, 0, 0.2);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

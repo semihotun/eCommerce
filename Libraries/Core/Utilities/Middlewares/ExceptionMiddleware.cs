@@ -10,7 +10,6 @@ using global::Serilog;
 using Serilog.Core;
 using System.IO;
 using Newtonsoft.Json;
-
 namespace Core.Utilities.Middlewares
 {
     public class ExceptionMiddleware
@@ -25,14 +24,12 @@ namespace Core.Utilities.Middlewares
             try
             {
                 await _next(httpContext);
-
             }
             catch (Exception e)
             {
                 await HandleExceptionAsync(httpContext, e);
             }
         }
-
         public class ErrorDetails
         {
             public int StatusCode { get; set; }
@@ -44,7 +41,6 @@ namespace Core.Utilities.Middlewares
             errorDetails.StatusCode = (int)HttpStatusCode.InternalServerError;
             httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
             if (e.GetType() == typeof(ValidationException))
             {
                 errorDetails.ErorDetail = e.Message;
@@ -79,5 +75,3 @@ namespace Core.Utilities.Middlewares
         }
     }
 }
-
-

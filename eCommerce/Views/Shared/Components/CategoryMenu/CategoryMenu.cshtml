@@ -1,7 +1,4 @@
 ﻿@model IList<Entities.DTO.Category.CategoryDTO>
-
-
-
 <div id="navigation">
     <!-- container -->
     <div class="container-fluid home-container" >
@@ -10,8 +7,6 @@
             <div class="category-nav show-on-click">
                 <span class="category-header">Tüm Kategoriler<i class="fa fa-list"></i></span>
                 <ul class="category-list">
-
-
                     @foreach (var item in Model)
                     {
                         if (item.SubCategory.Count() == 0)
@@ -20,14 +15,12 @@
                         }
                         else
                         {
-
                             <li class="dropdown side-dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                     @item.CategoryName <i class="fa fa-angle-right"></i>
                                 </a>
                                 <div class="custom-menu">
                                     <div class="custommenuflex">
-
                                         <div class="col-md-4">
                                             <a href="/Catalog/Catalog?id=@item.Id" class="col-md-12">
                                                 <b class="list-links-title" style="font-size:18px;">@item.CategoryName</b>
@@ -46,7 +39,6 @@
                                             {
                                                 <div class="col-md-4">
                                                     <a href="/Catalog/Catalog?id=@item4.Id" class="col-md-12">
-
                                                         @item4.CategoryName
                                                     </a>
                                                 </div>
@@ -57,10 +49,8 @@
                                 </div>
                             </li>
                         }
-
                     }
                 </ul>
-
             </div>
             <!-- /category nav -->
             <!-- menu nav -->

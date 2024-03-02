@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.CommentsAggregate;
 using FluentValidation;
-
 namespace Business.Services.CommentsAggregate.Comments.Validator
 {
-
     public class CreateCommentValidator : AbstractValidator<Comment>
     {
         public CreateCommentValidator()
@@ -15,7 +13,6 @@ namespace Business.Services.CommentsAggregate.Comments.Validator
             RuleFor(x => x.IsApproved).NotEmpty();
             RuleFor(x => x.CreatedOnUtc).NotEmpty();
             RuleFor(x => x.Rating).NotEmpty();
-
         }
     }
     public class UpdateCommentValidator : AbstractValidator<Comment>
@@ -29,7 +26,6 @@ namespace Business.Services.CommentsAggregate.Comments.Validator
             RuleFor(x => x.IsApproved).NotEmpty();
             RuleFor(x => x.CreatedOnUtc).NotEmpty();
             RuleFor(x => x.Rating).NotEmpty();
-
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
-
 namespace Core.Utilities.Helper
 {
     public static class StringHelpers
@@ -36,7 +35,6 @@ namespace Core.Utilities.Helper
             sonuc = sonuc.Replace("?", "-");
             sonuc = sonuc.Replace(";", "-");
             sonuc = sonuc.Replace("#", "-sharp");
-
             return sonuc;
         }
         public static string Capitilize(string text)
@@ -53,15 +51,12 @@ namespace Core.Utilities.Helper
             }
             return result.Trim();
         }
-
         public static string GetCode() => 
             Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "").ToLower(new CultureInfo("en-US", false));
-
         public static string FirstCharToLowerCase(this string str)
         {
             if (string.IsNullOrEmpty(str) || char.IsLower(str[0]))
                 return str;
-
             return char.ToLower(str[0]) + str.Substring(1);
         }
     }

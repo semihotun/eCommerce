@@ -2,12 +2,8 @@
 @{
     ViewData["Title"] = "AttrCombination";
 }
-
 @Html.Partial("AttrCombination/_AttrCombinationInsert", Model)
-
 @{Html.RenderPartial("AttrCombination/_AttrCombinationList", Model);}
-
-
 <script>
     var ProductCombinationTableo;
     var BindProductCombination = function (response) {
@@ -22,7 +18,6 @@
                 "bSearchable": true,
                 "bLengthChange": false,
                 "searching":false,
-
            "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": true ,"visible" :false},
                { "data": "AttributesXml", "name": "AttributesXml", "autoWidth": true },
@@ -45,7 +40,6 @@
     $(document).ready(function () {
         BindProductCombination();
         var productid = $("#Id").val();
-
         $('#productCombination tbody').on('click', '.ProductCombinationDelete', function () {
             var combinationid = $(this).attr('Id');
             $.ajax({
@@ -61,8 +55,6 @@
                     toastr.warning("Veri Bazi Resim gorsellerinde kullanildigi icin silinemedi");
                 },
             });
-
-
         });
     });
 </script>

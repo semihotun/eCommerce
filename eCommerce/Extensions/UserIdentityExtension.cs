@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-
 namespace eCommerce.StartUpSettings
 {
     public static class UserIdentityExtension
@@ -16,8 +15,6 @@ namespace eCommerce.StartUpSettings
              .AddEntityFrameworkStores<eCommerceContext>()
              .AddErrorDescriber<CustomIdentityErrorDescriber>()
              .AddDefaultTokenProviders();
-
-     
             services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromHours(3));
             services.Configure<IdentityOptions>(options =>
             {
@@ -40,8 +37,6 @@ namespace eCommerce.StartUpSettings
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
                 options.SlidingExpiration = true;
             });
-
-
             services.AddAuthentication();
             //.AddFacebook(x =>
             //{
@@ -53,13 +48,6 @@ namespace eCommerce.StartUpSettings
             //{
             //    x.ClientId = Configuration["GoogleClientId"];
             //    x.ClientSecret = Configuration["GoogleClientSecret"];
-
         }
-
-
-
-
-
     }
-
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices.ShowcaseDALModels
 {
     public class GetShowCaseDto
@@ -10,11 +9,9 @@ namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices.Sh
         {
             ShowCaseId = showCaseId;
         }
-
         public GetShowCaseDto()
         {
         }
-
         public int ShowCaseId { get; set; }
     }
 }

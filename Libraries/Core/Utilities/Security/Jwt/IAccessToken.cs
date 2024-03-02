@@ -1,5 +1,4 @@
 ﻿using System;
-
 namespace Core.Utilities.Security.Jwt
 {
     public interface IAccessToken

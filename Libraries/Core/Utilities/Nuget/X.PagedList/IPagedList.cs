@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 namespace X.PagedList
 {
 	/// <summary>
@@ -16,7 +15,6 @@ namespace X.PagedList
         int Count { get; }
         PagedListMetaData GetMetaData();
 	}
-
 	public interface IPagedList
 	{
         int PageCount { get; }

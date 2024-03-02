@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-
 namespace Core.Utilities.Filter
 {
     public class ValidationFilter : IActionFilter
@@ -19,7 +18,6 @@ namespace Core.Utilities.Filter
             ContextBody.ActionArguments = filterContext.ActionArguments;
             ContextBody.ActionDescriptor = filterContext.ActionDescriptor;
         }
-
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
             try
@@ -29,16 +27,13 @@ namespace Core.Utilities.Filter
                     && filterContext.HttpContext.Request.Method == HttpMethod.Post.Method)
                 {
                     var result = ((JsonResult)filterContext.Result).Value.GetType();
-
                     var controllerTempData = filterContext.Controller as Controller;
                     controllerTempData.TempData["notification"] = "";
-
                     if (!(result.Name == "DataTableNewVersionResult`1" || result.Name == "DataTableResult`1"))
                     {
                         var errors = ModelStateHelper.FindErrors(filterContext.ModelState).Where(e => !ignore.Contains(e.Key));
                         if (errors.Any())
                         {
-
                             var factory = filterContext.HttpContext.RequestServices.GetService(typeof(ITempDataDictionaryFactory)) as ITempDataDictionaryFactory;
                             var alerts = factory.GetTempData(filterContext.HttpContext);
                             var notificationTempData = alerts["notification"];
@@ -53,21 +48,14 @@ namespace Core.Utilities.Filter
                                     );
                             alerts.Clear();
                         }
-
                     }
                     else
                     {
                         controllerTempData.TempData["notification"] = "";
                     }
-
                 }
             }
             catch (System.Exception){ }
-
-
-
         }
-
-
     }
 }

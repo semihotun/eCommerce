@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.ProductAggregate.ProductAttributeValues
 {
     public class ProductAttributeValueService : IProductAttributeValueService
@@ -31,9 +30,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues
             _mapper = mapper;
         }
         #endregion
-
         #region Method
-
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductAttributeValueService.Get")]
         [LogAspect(typeof(MsSqlLogger))]
@@ -41,11 +38,9 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues
         {
             if (request.Id == 0)
                 return new ErrorResult();
-
             var deletedData = await _productAttributeValueRepository.GetAsync(x => x.Id == request.Id);
             _productAttributeValueRepository.Delete(deletedData);
             await _productAttributeValueRepository.SaveChangesAsync();
-
             return new SuccessResult();
         }
         [CacheAspect]
@@ -55,19 +50,15 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues
                         orderby pav.DisplayOrder, pav.Id
                         where pav.ProductAttributeMappingId == request.ProductAttributeMappingId
                         select pav;
-
             var data = await query.ToListAsync();
             return new SuccessDataResult<List<ProductAttributeValue>>(data);
-
         }
         [CacheAspect]
         public async Task<IDataResult<ProductAttributeValue>> GetProductAttributeValueById(GetProductAttributeValueById request)
         {
             var data = await _productAttributeValueRepository.GetAsync(x => x.Id == request.ProductAttributeValueId);
-
             return new SuccessDataResult<ProductAttributeValue>(data);
         }
-
         [ValidationAspect(typeof(CreateProductAttributeValueValidator))]
         [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductAttributeValueService.Get")]
@@ -76,12 +67,10 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues
         {
             if (productAttributeValue == null)
                 return new ErrorResult();
-
             _productAttributeValueRepository.Add(productAttributeValue);
             await _productAttributeValueRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductAttributeValueService.Get")]
@@ -89,18 +78,13 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues
         {
             if (productAttributeValue == null)
                 return new ErrorResult();
-
             if (productAttributeValue.Id == 0)
                 _productAttributeValueRepository.Add(productAttributeValue);
             else
                 _productAttributeValueRepository.Update(productAttributeValue);
-
             await _productAttributeValueRepository.SaveChangesAsync();
-
             return new SuccessResult();
-
         }
-
         [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductAttributeValueService.Get")]
@@ -110,13 +94,10 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues
                 return new ErrorResult();
             var data = await _productAttributeValueRepository.GetAsync(x => x.Id == productAttributeValue.Id);
             var mapData = _mapper.Map(productAttributeValue, data);
-
             _productAttributeValueRepository.Update(mapData);
-
             await _productAttributeValueRepository.SaveChangesAsync();
             return new SuccessResult();
         }
-
         #endregion
     }
 }

@@ -6,18 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace Business.Services.BasketAggregate.Baskets
 {
     public class BasketService : IBasketService
     {
         private readonly ICacheManager _cacheManager;
-
         public BasketService(ICacheManager cacheManager)
         {
             _cacheManager = cacheManager;
         }
-
         public async Task<IDataResult<List<Basket>>> GetBasket()
         {
             var data = _cacheManager.Get("Basket");
@@ -26,10 +23,8 @@ namespace Business.Services.BasketAggregate.Baskets
             {
                 result = JsonConvert.DeserializeObject<List<Basket>>((string)data);
             }
-
             return new SuccessDataResult<List<Basket>>(result);
         }
-
         public async Task<IResult> AddBasket(Basket basket)
         {
             var basketJson = new List<Basket>();
@@ -54,7 +49,6 @@ namespace Business.Services.BasketAggregate.Baskets
             }
             return new SuccessResult();
         }
-
         public async Task<IResult> DeleteBasketProduct(Basket basket)
         {
             var basketJson = new List<Basket>();
@@ -62,7 +56,6 @@ namespace Business.Services.BasketAggregate.Baskets
             if (basketData != null)
             {
                 basketJson = JsonConvert.DeserializeObject<List<Basket>>((string)basketData);
-
                 var includeProduct = basketJson.Where(x => x.ProductId != basket.ProductId && x.CombinationId != x.CombinationId);
                 if (includeProduct != null)
                 {
@@ -79,7 +72,6 @@ namespace Business.Services.BasketAggregate.Baskets
             {
                 return new ErrorResult("Sepet Boş");
             }
-
             return new SuccessResult();
         }
         public async Task<IResult> UpdateBasketProductPiece(Basket basket)
@@ -102,11 +94,7 @@ namespace Business.Services.BasketAggregate.Baskets
             {
                 _cacheManager.Remove("Basket");
             }
-
             return new SuccessResult();
         }
-
-
-
     }
 }

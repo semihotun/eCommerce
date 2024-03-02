@@ -1,14 +1,11 @@
 ﻿@using X.PagedList.Mvc.Core
 @using X.PagedList;
 @model Entities.ViewModels.AdminViewModel.Showcase.ShowCaseCreateOrUpdateVM
-
 @using (Html.BeginForm("ShowcaseProduct", "Showcase", FormMethod.Post))
 {
         @Html.HiddenFor(x=>x.Id)
         @Html.HiddenFor(x => x.ShowCaseDto.ShowCaseType, new { @class = "form-control" })
         @*@Html.EditorFor(model => model.ShowCaseText, new { @class = " form-control col-md-12" })*@
-
-
         <textarea id="ShowCaseText" name="ShowCaseDto.ShowCaseText">@Html.Raw(@Model.ShowCaseDto.ShowCaseText)</textarea>
         <script>
             tinymce.init({
@@ -33,12 +30,10 @@
                     if (meta.filetype === 'file') {
                         callback('https://www.google.com/logos/google.jpg', { text: 'My text' });
                     }
-
                     /* Provide image and alt text for the image dialog */
                     if (meta.filetype === 'image') {
                         callback('https://www.google.com/logos/google.jpg', { alt: 'My alt text' });
                     }
-
                     /* Provide alternative source and posted for the media dialog */
                     if (meta.filetype === 'media') {
                         callback('movie.mp4', { source2: 'alt.ogg', poster: 'https://www.google.com/logos/google.jpg' });
@@ -54,15 +49,7 @@
                 toolbar_mode: 'sliding',
                 contextmenu: "link image imagetools table",
             });
-
         </script>
-
         <br />
         <input type="submit" class="btn btn-default">
     }
-
-
-
-
-
-

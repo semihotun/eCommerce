@@ -15,24 +15,18 @@ using DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos.Combinat
  [ApiController] 
  public class CombinationPhotoDALController : ControllerBase{ 
  private readonly ICombinationPhotoDAL _combinationPhotoDAL; 
- 
  public CombinationPhotoDALController(ICombinationPhotoDAL combinationPhotoDAL){ 
  _combinationPhotoDAL=combinationPhotoDAL; 
  } 
- 
- 
  [Produces("application/json", "text/plain")] 
  [HttpGet("getallcombinationphotosdto")] 
  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))] 
  public async Task<IActionResult> GetAllCombinationPhotosDTO ([FromQuery]GetAllCombinationPhotosDTO request) { 
- 
  var result = await _combinationPhotoDAL.GetAllCombinationPhotosDTO(request); 
- 
  if(result.Success) 
  return Ok(result.Data); 
  else 
  return BadRequest(result.Message); 
  } 
- 
  } 
  }

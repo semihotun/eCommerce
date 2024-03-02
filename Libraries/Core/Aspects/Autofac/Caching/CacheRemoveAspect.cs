@@ -6,27 +6,23 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
-
 namespace Core.Aspects.Autofac.Caching
 {
     public class CacheRemoveAspect : MethodInterception
     {
         private string[] _pattern;
         private ICacheManager _cacheManager;
-
         public CacheRemoveAspect(params string[] pattern)
         {
             _pattern = pattern;
             _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
         }
-
         protected override void OnSuccess(IInvocation invocation)
         {
             foreach (var item in _pattern)
             {
                 _cacheManager.RemoveByPattern(item);
             }
-          
         }
     }
 }

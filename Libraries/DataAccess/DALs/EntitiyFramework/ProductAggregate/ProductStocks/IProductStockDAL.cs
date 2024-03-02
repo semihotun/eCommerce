@@ -9,7 +9,6 @@ using Entities.Concrete.ProductAggregate;
 using Entities.DTO.Product;
 using Entities.Others;
 using X.PagedList;
-
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStocks
 {
     public interface IProductStockDAL : IEntityRepository<ProductStock>

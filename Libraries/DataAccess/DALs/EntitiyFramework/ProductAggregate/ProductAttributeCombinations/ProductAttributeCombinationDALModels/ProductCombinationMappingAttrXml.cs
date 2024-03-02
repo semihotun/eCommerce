@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeCombinations.ProductAttributeCombinationDALModels
 {
     public class ProductCombinationMappingAttrXml
@@ -10,11 +9,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeComb
         {
             ProductId = productId;
         }
-
         public ProductCombinationMappingAttrXml()
         {
         }
-
         public int ProductId { get; set; }
     }
 }

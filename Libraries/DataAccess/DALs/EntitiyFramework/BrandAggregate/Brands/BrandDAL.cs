@@ -10,7 +10,6 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace DataAccess.DALs.EntitiyFramework.BrandAggregate.Brands
 {
     public class BrandDAL : EfEntityRepositoryBase<Brand, eCommerceContext>, IBrandDAL
@@ -24,10 +23,8 @@ namespace DataAccess.DALs.EntitiyFramework.BrandAggregate.Brands
             var query = from b in Context.Brand.ApplyFilter(request.Brand)
                         select b;
             query=query.ApplyDataTableFilter(request.DataTableParam);
-
             var data = await query.OrderBy(request.DataTableParam.SortOrder)
                 .ToPagedListAsync(request.DataTableParam.PageIndex, request.DataTableParam.PageSize);
-
             return new SuccessDataResult<IPagedList<Brand>>(data);
         }
     }

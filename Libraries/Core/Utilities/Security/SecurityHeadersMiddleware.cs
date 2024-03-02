@@ -3,19 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace Core.Utilities.Security
 {
-
     public class SecurityHeadersMiddleware
     {
         private readonly RequestDelegate next;
-
         public SecurityHeadersMiddleware(RequestDelegate next)
         {
             this.next = next;
         }
-
         public async Task Invoke(HttpContext httpContext)
         {
             //Sayfanın herhangi bir frame içerisinde çağırılmasını tamamiyle engellemek için kullanılır.
@@ -39,10 +35,7 @@ namespace Core.Utilities.Security
                                                                " geolocation 'none'; gyroscope 'none'; " +
                                                                "magnetometer 'none'; microphone 'none'; " +
                                                                "payment 'none'; usb 'none'");
-
-
             await next(httpContext);
         }
     }
-
 }

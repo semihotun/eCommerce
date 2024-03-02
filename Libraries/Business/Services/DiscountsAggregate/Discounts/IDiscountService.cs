@@ -3,7 +3,6 @@ using Core.Utilities.Results;
 using Entities.Concrete.DiscountsAggregate;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.DiscountsAggregate.Discounts
 {
     public interface IDiscountService
@@ -13,7 +12,5 @@ namespace Business.Services.DiscountsAggregate.Discounts
         Task<IResult> UpdateDiscount(Discount discount);
         Task<IResult> AddDiscount(Discount discount);
         Task<IResult> DeleteDiscount(Discount discount);
-
-
     }
 }

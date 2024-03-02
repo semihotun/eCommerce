@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace eCommerce.StartUpSettings
 {
     public static class DbContextExtension
@@ -26,7 +25,6 @@ namespace eCommerce.StartUpSettings
                 );
                 options.EnableSensitiveDataLogging();
             }, ServiceLifetime.Transient);
-
             services.AddDbContext<CoreContext>(options =>
             {
                 options.UseSqlServer(
@@ -39,11 +37,9 @@ namespace eCommerce.StartUpSettings
                  );
                 options.EnableSensitiveDataLogging();
             }, ServiceLifetime.Transient);
-
             var eCommerceContextOptionsBuilder = new DbContextOptionsBuilder<eCommerceContext>()
              .UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             using var ecommerceContext = new eCommerceContext(eCommerceContextOptionsBuilder.Options);
         }
-
     }
 }

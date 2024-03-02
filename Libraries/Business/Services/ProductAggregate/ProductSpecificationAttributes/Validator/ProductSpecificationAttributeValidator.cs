@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.ProductAggregate;
 using FluentValidation;
-
 namespace Business.Services.ProductAggregate.ProductSpecificationAttributes.Validator
 {
-
     public class CreateProductSpecificationAttributeValidator : AbstractValidator<ProductSpecificationAttribute>
     {
         public CreateProductSpecificationAttributeValidator()
@@ -20,7 +18,6 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes.Vali
             RuleFor(x => x.ProductId).NotEmpty();
             RuleFor(x => x.AttributeTypeId).NotEmpty();
             RuleFor(x => x.SpecificationAttributeOptionId).NotEmpty();
-
         }
     }
 }

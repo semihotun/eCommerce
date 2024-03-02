@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.ProductAggregate.ProductAttributeCombinations.ProductAttributeCombinationServiceModel
 {
     public class DeleteProductAttributeCombination
@@ -10,11 +9,9 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Produc
         {
             Id = ıd;
         }
-
         public DeleteProductAttributeCombination()
         {
         }
-
         public int Id { get; set; }
     }
 }

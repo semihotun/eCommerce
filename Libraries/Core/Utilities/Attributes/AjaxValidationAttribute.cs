@@ -6,7 +6,6 @@
 //using Microsoft.AspNetCore.Mvc;
 //using Microsoft.AspNetCore.Mvc.Filters;
 //using Microsoft.AspNetCore.Mvc.ModelBinding;
-
 //namespace Core.Utilities.Attribute
 //{
 //    public class AjaxValidationAttribute : ActionFilterAttribute
@@ -22,7 +21,6 @@
 //            get;
 //            set;
 //        }
-
 //        public override void OnActionExecuting(ActionExecutingContext filterContext)
 //        {
 //            // For AJAX requests only...
@@ -35,7 +33,6 @@
 //                    var properties = Ignore.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim());
 //                    ignore.UnionWith(properties);
 //                }
-
 //                // Convert model state errors to error objects and filter those that we're meant to ignore
 //                var errors = FindErrors(filterContext.Controller.ViewData.ModelState).Where(e => !ignore.Contains(e.Key));
 //                if (errors.Any())
@@ -54,7 +51,6 @@
 //            }
 //            base.OnActionExecuting(filterContext);
 //        }
-
 //        internal static IEnumerable<ValidationError> FindErrors(ModelStateDictionary modelState)
 //        {
 //            var result = new List<ValidationError>();
@@ -68,11 +64,9 @@
 //            return result;
 //        }
 //    }
-
 //    public static class ModelStateExtensions
 //    {
 //    }
-
 //    public class AjaxResponse<T>
 //    {
 //        private string _typeName;
@@ -80,16 +74,13 @@
 //        {
 //            Value = value;
 //        }
-
 //        public string TypeName
 //        {
 //            get { return _typeName ?? typeof(T).Name; }
 //            set { _typeName = value; }
 //        }
-
 //        public T Value { get; set; }
 //    }
-
 //    public class ValidationError
 //    {
 //        public ValidationError(string key, string message)
@@ -97,7 +88,6 @@
 //            Key = key;
 //            Message = message;
 //        }
-
 //        public string Key { get; set; }
 //        public string Message { get; set; }
 //    }

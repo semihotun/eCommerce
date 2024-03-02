@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Business.Services.SpeficationAggregate.SpecificationAttributes.SpecificationAttributeServiceModel
 {
     public class GetCatalogSpefication
@@ -10,11 +9,9 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes.Specifi
         {
             CategoryId = categoryId;
         }
-
         public GetCatalogSpefication()
         {
         }
-
         public int CategoryId { get; set; }
     }
 }

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices
 {
     public class ShowcaseDAL : EfEntityRepositoryBase<ShowCase, eCommerceContext>, IShowcaseDAL
@@ -25,9 +24,7 @@ namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices
                         let sp = (from scp in Context.ShowCaseProduct
                                  join p in Context.Product on scp.ProductId equals p.Id
                                  where scp.ShowCaseId == s.Id
-
                                  let ppg = (from pp in Context.ProductPhoto where p.Id == pp.ProductId select pp).AsEnumerable()
-
                                  let productStockGroup = (from ps in Context.ProductStock
                                                          orderby ps.CreateTime
                                                          where ps.ProductId == scp.Id && ps.CombinationId == scp.CombinationId &&
@@ -35,7 +32,6 @@ namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices
                                                                    ? ps.ProductStockPiece > 0
                                                                    : ps.ProductStockPiece != null)
                                                          select ps).First()
-
                                  select new ShowCaseProductDTO
                                  {
                                      Id = scp.Id,
@@ -60,12 +56,9 @@ namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices
                             ShowCaseText = s.ShowCaseText,
                             ShowCaseProductList = sp
                         };
-
             var result = await query.FirstOrDefaultAsync();
-
             return new SuccessDataResult<ShowCaseDTO>(result);
         }
-
         [CacheAspect]
         public async Task<IDataResult<IList<ShowCaseDTO>>> GetAllShowCaseDto()
         {
@@ -73,12 +66,9 @@ namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices
                         let sp = (from scp in Context.ShowCaseProduct
                                  where scp.ShowCaseId == s.Id
                                  join p in Context.Product on scp.ProductId equals p.Id
-
                                  join pac in Context.ProductAttributeCombination on scp.CombinationId equals pac.Id into apacj
                                  from apacjg in apacj.DefaultIfEmpty()
-
                                  let ppg = (from pp in Context.ProductPhoto where p.Id == pp.ProductId select pp).AsEnumerable()
-
                                  let productStockGroup = (from ps in Context.ProductStock
                                                          orderby ps.CreateTime
                                                          where ps.ProductId == scp.ProductId && ps.CombinationId == scp.CombinationId
@@ -110,12 +100,8 @@ namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices
                             ShowCaseText = s.ShowCaseText,
                             ShowCaseProductList = sp
                         };
-
             var result = await query.ToListAsync();
-
             return new SuccessDataResult<IList<ShowCaseDTO>>(result);
         }
-
-
     }
 }

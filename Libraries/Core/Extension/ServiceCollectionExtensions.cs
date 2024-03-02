@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Core.Extensions
 {
     public static class ServiceCollectionExtensions
@@ -15,7 +14,6 @@ namespace Core.Extensions
             {
                 module.Load(serviceCollection);
             }
-
             return ServiceTool.Create(serviceCollection);
         }
     }

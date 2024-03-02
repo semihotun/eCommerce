@@ -1,13 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @using Core.Library;
 @using Entities.ViewModels.WebViewModel.IdentityModel;
-
 @inject SignInManager<MyUser> SignInManager
 @{ var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any(); }
-
-
-
-
 <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a href="/Manage/Index">   @User.Identity.Name</a></li>
 <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a href="/Manage/ChangePassword">Şifre Düzenle</a></li>
 @if (hasExternalLogins)

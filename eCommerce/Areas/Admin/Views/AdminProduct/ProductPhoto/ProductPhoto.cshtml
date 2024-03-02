@@ -1,6 +1,5 @@
 ﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
 <br />
-
 <span></span>
 <div class="row">
     <form id="ProductPhotoInsertForm" class="col-md-12">
@@ -8,15 +7,9 @@
             <input type="file" multiple name="ResimDosya" id="ResimDosya" class="form-control" />
             <input type="submit" class="btn btn-outline-default ml-2" value="Ekle" id="ProductPhotoInsert" />
         </div>
-
     </form>
 </div>
-
-
-
 @{Html.RenderPartial("ProductPhoto/_ProductPhotoList", Model);}
-
-
 <script>
     var oTable;
     var BindDataTable = function (response) {
@@ -83,12 +76,10 @@
                     toastr.warning("Veri silerken hata");
                 },
             });
-
         });
         $('#ProductPhotoTable tbody').on('click', '.combinationbtn', function () {
             var photoid = $(this).attr('Id');
             $('#photoid').val(photoid);
-
             $("#combination").html(' ');
             $.ajax({
                 type: 'GET',
@@ -115,7 +106,6 @@
                             combinationdvalues = combinationdvalues + " " + value1.ValueName;
                         });
                         $("#combination").append(combinationdvalues + "<br>");
-
                     });
                     //Seçili checkboxlar GET
                     $.ajax({
@@ -136,7 +126,6 @@
                             });
                         },
                     });
-
                     //Checkbox değişim işlemleri
                     $(".combinationcheckbox").click(function () {
                         //Uncheck olduğunda
@@ -160,13 +149,11 @@
                                 notCheckedCombination.splice(notCheckIndex);
                         }
                     });
-
                 },
             });
         });
         $('#ProductPhotoCombinationModalSave').on('click', function () {
             var photoid = $('#photoid').val();
-
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -178,7 +165,6 @@
                 },
                 success: function (datas) {
                     toastr.success("Başrıyla Eklendi");
-
                 }
             });
         });
@@ -207,5 +193,4 @@
             });
         });
     });
-
 </script>

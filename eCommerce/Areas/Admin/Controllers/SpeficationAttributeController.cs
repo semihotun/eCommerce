@@ -8,7 +8,6 @@ using Entities.Others;
 using Entities.ViewModels.AdminViewModel.SpeficationAttribute;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-
 namespace eCommerce.Areas.Admin.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
@@ -17,16 +16,11 @@ namespace eCommerce.Areas.Admin.Controllers
     public class SpeficationAttributeController : AdminBaseController
     {
         #region Method
-
         private readonly ISpecificationAttributeService _specificationAttributeService;
         private readonly IMapper _mapper;
         private readonly ISpecificationAttributeOptionService _specificationAttributeOptionService;
-
-
         #endregion
-
         #region Ctor
-
         public SpeficationAttributeController(
             ISpecificationAttributeService specificationAttributeService,
             IMapper mapper, 
@@ -36,115 +30,83 @@ namespace eCommerce.Areas.Admin.Controllers
             _mapper = mapper;
             _specificationAttributeOptionService = specificationAttributeOptionService;
         }
-
-
         #endregion
-
         #region Method
-
         #region SpeficationAttribute
         public async Task<IActionResult> SpeficationAttributeListJson(SpecificationAttributeVM model, DataTablesParam param)
         {
             var query = await _specificationAttributeService.GetSpecificationAttributes(
                 new GetSpecificationAttributes(param.PageIndex,param.PageSize));
-
             return ToDataTableJson(query, param);
         }
         public async Task<IActionResult> SpeficationAttributeList()=> View(new SpecificationAttributeVM());
-
         [HttpPost]
         public async Task<IActionResult> SpeficationAttributeList(SpecificationAttributeVM model)=>View(model);
-
         public async Task<IActionResult> SpeficationAttributeCreate()=> View();
-
         [HttpPost]
         public async Task<IActionResult> SpeficationAttributeCreate(SpecificationAttributeVM model)
         {
             var data = _mapper.Map<SpecificationAttributeVM, SpecificationAttribute>(model);
             ResponseAlert(await _specificationAttributeService.InsertSpecificationAttribute(data));
-
             return RedirectToAction("SpeficationAttributeEdit", "SpeficationAttribute", new { Id = data.Id });
         }
-
         public async Task<IActionResult> SpeficationAttributeEdit(int id)
         {
             var query = await _specificationAttributeService.GetSpecificationAttributeById(new GetSpecificationAttributeById(id));
             var data = _mapper.Map<SpecificationAttribute, SpecificationAttributeVM>(query.Data);
-
             return View(data);
         }
-
         [HttpPost]
         public async Task<IActionResult> SpeficationAttributeEdit(SpecificationAttributeVM model)
         {
             var data = _mapper.Map<SpecificationAttributeVM, SpecificationAttribute>(model);
             ResponseAlert(await _specificationAttributeService.UpdateSpecificationAttribute(data));
-
             return RedirectToAction(nameof(SpeficationAttributeEdit),new{id= model.Id});
         }
-
         public async Task<IActionResult> SpeficationAttributeDelete(int id)
         {
             var spefication = await _specificationAttributeService.GetSpecificationAttributeById(new GetSpecificationAttributeById(id));
             ResponseAlert(await _specificationAttributeService.DeleteSpecificationAttribute(spefication.Data));
-
             return RedirectToAction("SpeficationAttributeList");
         }
-
         #endregion
-
         #region SpeficationAttributeOption
         public async Task<IActionResult> SpeficationAttributeOptionListJson(SpecificationAttributeOptionVM model, DataTablesParam param)
         {
             var query = await _specificationAttributeOptionService.GetSpecificationAttributeOptionsBySpecificationAttribute(
                 new GetSpecificationAttributeOptionsBySpecificationAttribute(model.SpecificationAttributeId,param.PageIndex, param.PageSize));
-    
-
             return ToDataTableJson(query,param);
         }
-
         public async Task<IActionResult> SpeficationAttributeOptionCreate() => View();
-
         [HttpPost]
         public async Task<IActionResult> SpeficationAttributeOptionCreate(SpecificationAttributeVM model)
         {         
             model.SpecificationAttributeOptionModel.SpecificationAttributeId = model.Id;
             ResponseAlert(await _specificationAttributeOptionService.InsertSpecificationAttributeOption(model.SpecificationAttributeOptionModel));
-
             return RedirectToAction("SpeficationAttributeEdit", "SpeficationAttribute", new { Id = model.Id });
         }
-
         [HttpGet]
         public async Task<IActionResult> SpeficationAttributeOptionEdit(int id) {
-
             var query = await _specificationAttributeOptionService.GetSpecificationAttributeOptionById(
                 new GetSpecificationAttributeOptionById(id));
-
             var data = _mapper.Map<SpecificationAttributeOption, SpecificationAttributeOptionVM>(query.Data);
-
             return View(data);
         }
-
         [HttpPost]
         public async Task<IActionResult> SpeficationAttributeOptionEdit(SpecificationAttributeOptionVM model)
         {
             var data = _mapper.Map<SpecificationAttributeOptionVM, SpecificationAttributeOption>(model);
             ResponseAlert(await _specificationAttributeOptionService.UpdateSpecificationAttributeOption(data));
-
             return RedirectToAction("SpeficationAttributeEdit", "SpeficationAttribute", new { Id = data.SpecificationAttributeId });
         }
         public async Task<IActionResult> SpeficationAttributeOptionDelete(int id)
         {
             var data = await _specificationAttributeOptionService.GetSpecificationAttributeOptionById(
                 new GetSpecificationAttributeOptionById(id));
-
             ResponseAlert(await _specificationAttributeOptionService.DeleteSpecificationAttributeOption(data.Data));
-
             return RedirectToAction("SpeficationAttributeEdit", "SpeficationAttribute", new { Id = data.Data.SpecificationAttributeId });
         }
-
         #endregion
-
         #endregion
     }
 }

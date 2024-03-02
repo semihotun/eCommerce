@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSeos
 {
     public class ProductSeoDAL : EfEntityRepositoryBase<ProductSeo, eCommerceContext>, IProductSeoDAL

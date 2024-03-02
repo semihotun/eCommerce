@@ -6,14 +6,12 @@ using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
-
 namespace Core.Library.Business.AdminAggregate.AdminAuths
 {
     public class AdminAuthService : IAdminAuthService
     {
         private IAdminService _adminService;
         private ITokenHelper _tokenHelper;
-
         public AdminAuthService(IAdminService userService, ITokenHelper tokenHelper)
         {
             _adminService = userService;
@@ -34,9 +32,7 @@ namespace Core.Library.Business.AdminAggregate.AdminAuths
                 Status = true
             };
             await _adminService.Add(user);
-
             var result = (await CreateAccessToken(user)).Data;
-
             return new SuccessDataResult<AccessToken>(result, "Kayıt oldu");
         }
         [ApiGenerateAllowAnonymous]
@@ -47,17 +43,13 @@ namespace Core.Library.Business.AdminAggregate.AdminAuths
             {
                 return new ErrorDataResult<AccessToken>("Kullanıcı bulunamadı");
             }
-
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
                 return new ErrorDataResult<AccessToken>("Parola hatası");
             }
-
             var result = (await CreateAccessToken(userToCheck)).Data;
-            
             return new SuccessDataResult<AccessToken>(result, "Başarılı giriş");
         }
-
         private async Task<IResult> UserExists(string email)
         {
             var data = (await _adminService.GetByMail(email)).Data;
@@ -67,14 +59,10 @@ namespace Core.Library.Business.AdminAggregate.AdminAuths
             }
             return new SuccessResult();
         }
-
         private async Task<IDataResult<AccessToken>> CreateAccessToken(AdminUser user)
         {         
             var accessToken = _tokenHelper.CreateToken(user);
-
             return new SuccessDataResult<AccessToken>(accessToken, "Token oluşturuldu");
         }
-
-
     }
 }

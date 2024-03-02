@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using X.PagedList;
-
 namespace Business.Services.BrandAggregate.Brands
 {
     public interface IBrandService
