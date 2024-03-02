@@ -1,20 +1,14 @@
-﻿using Core.Utilities.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using X.PagedList;
-using Core.Aspects.Autofac.Caching;
-using Core.Utilities.Interceptors;
-using Business.Services.ProductAggregate.Products;
+﻿using Business.Services.ProductAggregate.Products;
 using Business.Services.ShowcaseAggregate.ShowCaseProducts.ShowCaseProductServiceModel;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Utilities.Interceptors;
+using Core.Utilities.Results;
 using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowCaseProducts;
 using Entities.Concrete.ShowcaseAggregate;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using System.Threading.Tasks;
 namespace Business.Services.ShowcaseAggregate.ShowCaseProducts
 {
     public class ShowCaseProductService : IShowCaseProductService

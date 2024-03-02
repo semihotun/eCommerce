@@ -1,7 +1,4 @@
 ﻿using Core.Utilities.Infrastructure.Filter;
-using System;
-using System.Collections.Generic;
-using System.Text;
 namespace Entities.DTO.Brand
 {
     public class BrandDataTableFilter:IFilterable

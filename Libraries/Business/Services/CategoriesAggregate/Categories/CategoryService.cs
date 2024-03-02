@@ -10,8 +10,6 @@ using Entities.Concrete.CategoriesAggregate;
 using Entities.Helpers.AutoMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

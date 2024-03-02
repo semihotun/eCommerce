@@ -3,7 +3,6 @@ using Core.Utilities.Results;
 using Entities.Others;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Threading;
 using X.PagedList;
 namespace eCommerce.Areas.Admin.Controllers
 {

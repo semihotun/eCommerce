@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Utilities.Constants
+﻿namespace Utilities.Constants
 {
     public class PhotoUrl
     {

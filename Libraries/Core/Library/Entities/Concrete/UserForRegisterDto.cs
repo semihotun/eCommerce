@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Core.Library.Entities.Concrete
+﻿namespace Core.Library.Entities.Concrete
 {
     public class UserForRegisterDto 
     {

@@ -1,9 +1,6 @@
 ﻿using Core.Library;
 using Entities.Concrete.ProductAggregate;
 using Entities.DTO.Product;
-using System;
-using System.Collections.Generic;
-using System.Text;
 namespace Entities.ViewModels.WebViewModel.Home
 {
     public class AllCommentVM

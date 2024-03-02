@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Business.Services.PhotoAggregate.CombinationPhotos.CombinationPhotoServiceModel
+﻿namespace Business.Services.PhotoAggregate.CombinationPhotos.CombinationPhotoServiceModel
 {
     public class GetAllCombinationPhotos
     {

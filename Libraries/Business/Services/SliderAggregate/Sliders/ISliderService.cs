@@ -1,11 +1,8 @@
 ﻿using Business.Services.SliderAggregate.Sliders.SliderServiceModel;
 using Core.Utilities.Results;
 using Entities.Concrete.SliderAggregate;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace Business.Services.SliderAggregate.Sliders
 {
     public interface ISliderService

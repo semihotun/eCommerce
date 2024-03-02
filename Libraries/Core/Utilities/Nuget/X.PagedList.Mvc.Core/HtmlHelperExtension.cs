@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Html;
-using X.PagedList.Web.Common;
+﻿using Core.Utilities.Nuget.X.PagedList.Web.Common;
+using Microsoft.AspNetCore.Html;
 using System;
+using X.PagedList.Web.Common;
 using IHtmlHelper = Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper;
-using Core.Utilities.Nuget.X.PagedList.Web.Common;
 namespace X.PagedList.Mvc.Core
 {
     ///<summary>

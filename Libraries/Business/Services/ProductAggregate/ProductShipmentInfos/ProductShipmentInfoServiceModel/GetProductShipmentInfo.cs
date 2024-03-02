@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Business.Services.ProductAggregate.ProductShipmentInfos.ProductShipmentInfoServiceModel
+﻿namespace Business.Services.ProductAggregate.ProductShipmentInfos.ProductShipmentInfoServiceModel
 {
     public class GetProductShipmentInfo
     {

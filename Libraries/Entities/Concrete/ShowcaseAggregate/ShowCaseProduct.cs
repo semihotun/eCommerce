@@ -1,7 +1,5 @@
 namespace Entities.Concrete.ShowcaseAggregate
 {
-    using System;
-    using System.Collections.Generic;
     public class ShowCaseProduct : BaseEntity
     {
         public int ShowCaseId { get; set; }

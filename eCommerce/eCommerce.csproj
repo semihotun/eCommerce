@@ -38,7 +38,6 @@
     <ProjectReference Include="..\Libraries\Core\Core.csproj" />
     <ProjectReference Include="..\Libraries\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\Libraries\Entities\Entities.csproj" />
-    <ProjectReference Include="..\Libraries\SourceGenerator\SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\Plugins\Plugin.Base\Plugin.Base.csproj" />
   </ItemGroup>
   <ItemGroup>

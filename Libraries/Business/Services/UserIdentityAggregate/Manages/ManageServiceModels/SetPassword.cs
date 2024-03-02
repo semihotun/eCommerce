@@ -11,7 +11,7 @@ namespace Business.Services.UserIdentityAggregate.Manages.ManageServiceModels
         }
         public SetPassword(SetPasswordViewModel model, ClaimsPrincipal user)
         {
-            this.Model = model;
+            Model = model;
             User = user;
         }
     }

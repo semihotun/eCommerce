@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Library;
+﻿using Core.Library;
 using Entities.Concrete.DiscountsAggregate;
 using Entities.Concrete.PhotoAggregate;
 using Entities.Concrete.ProductAggregate;
-using Entities.DTO.ProductMapping;
 using Entities.DTO.ShowCase;
 using Entities.ViewModels.AdminViewModel.AdminProduct;
-using BaseEntity = Entities.Concrete.BaseEntity;
+using System;
+using System.Collections.Generic;
 namespace Entities.DTO.Product
 {
     public class ProductDetailDTO

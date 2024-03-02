@@ -1,7 +1,4 @@
 ﻿using Entities.Others;
-using System;
-using System.Collections.Generic;
-using System.Text;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStocks.ProductStockDALModels
 {
     public class GetAllProductStockDto

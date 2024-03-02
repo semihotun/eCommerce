@@ -1,10 +1,5 @@
-using eCommerce.Core.DataAccess;
-using eCommerce.Core.DataAccess.EntitiyFramework;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 using DataAccess.Context;
+using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.ShowcaseAggregate;
 namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowCaseProducts
 {

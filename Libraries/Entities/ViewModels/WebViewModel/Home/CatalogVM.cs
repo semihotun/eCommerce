@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.BrandAggregate;
 using Entities.Concrete.SpeficationAggregate;
 using Entities.DTO.Product;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using X.PagedList;
 namespace Entities.ViewModels.WebViewModel.Home
 {

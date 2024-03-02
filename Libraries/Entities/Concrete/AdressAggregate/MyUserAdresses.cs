@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Entities.Concrete.AdressAggregate
+﻿namespace Entities.Concrete.AdressAggregate
 {
     public class MyUserAdresses : BaseEntity
     {

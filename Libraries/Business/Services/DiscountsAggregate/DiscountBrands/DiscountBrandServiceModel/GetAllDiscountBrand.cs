@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Business.Services.DiscountsAggregate.DiscountBrands.DiscountBrandServiceModel
+﻿namespace Business.Services.DiscountsAggregate.DiscountBrands.DiscountBrandServiceModel
 {
     public class GetAllDiscountBrand
     {

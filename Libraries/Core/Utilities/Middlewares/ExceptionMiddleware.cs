@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using global::Serilog;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
+using System.IO;
 using System.Net;
 using System.Security;
 using System.Threading.Tasks;
-using global::Serilog;
-using Serilog.Core;
-using System.IO;
-using Newtonsoft.Json;
 namespace Core.Utilities.Middlewares
 {
     public class ExceptionMiddleware

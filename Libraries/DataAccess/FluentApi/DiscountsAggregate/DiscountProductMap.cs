@@ -1,9 +1,6 @@
 ﻿using Entities.Concrete.DiscountsAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 namespace DataAccess.FluentApi.DiscountsAggregate
 {
     public class DiscountProductMap : IEntityTypeConfiguration<DiscountProduct>

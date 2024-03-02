@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Business.Services.ShowcaseAggregate.ShowcaseTypes.ShowcaseTypeServiceModel;
+using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Results;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using Business.Services.ShowcaseAggregate.ShowcaseTypes.ShowcaseTypeServiceModel;
 using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseTypes;
 using Entities.Concrete.ShowcaseAggregate;
-using Core.Aspects.Autofac.Caching;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 namespace Business.Services.ShowcaseAggregate.ShowcaseTypes
 {
     public class ShowcaseTypeService : IShowcaseTypeService

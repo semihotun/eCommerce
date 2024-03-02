@@ -1,9 +1,4 @@
-﻿using Entities.Concrete.ProductAggregate;
-using Entities.Others;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
+﻿using Entities.Others;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecificationAttributes.ProductSpecificationAttributeDALModels
 {
     public class ProductSpecAttrList

@@ -1,11 +1,8 @@
 ﻿using Business.Services.ShowcaseAggregate.ShowcaseServices.ShowcaseServiceModel;
 using Core.Utilities.Results;
 using Entities.Concrete.ShowcaseAggregate;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace Business.Services.ShowcaseAggregate.ShowcaseServices
 {
     public interface IShowcaseService

@@ -24,8 +24,8 @@ namespace Business.Jobs.Quartz.CatalogAggregate
             var productsGroup = _productDAL.Query().GroupBy(x => new { x.BrandId, x.CategoryId })
             .Select(gcs => new
             {
-                BrandId = gcs.Key.BrandId,
-                CategoryId = gcs.Key.CategoryId
+                gcs.Key.BrandId,
+                gcs.Key.CategoryId
             });
             //Olmayan markaları Ekle
             var catalogList = new List<CatalogBrand>();
@@ -34,13 +34,15 @@ namespace Business.Jobs.Quartz.CatalogAggregate
                 var brand = _brandDal.Query().Where(x => x.Id == item.BrandId).FirstOrDefault();
                 var isAddedBrand = _catalogBrandDal.Query().Where(x => x.CategoryId == item.CategoryId)
                     .Any(x => x.BrandId == brand.Id);
-                if (!isAddedBrand && catalogList.Any(x => x.CategoryId == item.CategoryId && x.BrandId == brand.Id) == false)
+                if (!isAddedBrand && !catalogList.Any(x => x.CategoryId == item.CategoryId && x.BrandId == brand.Id))
+                {
                     catalogList.Add(new CatalogBrand
                     {
                         BrandName = brand.BrandName,
                         CategoryId = (int)item.CategoryId,
                         BrandId = brand.Id
                     });
+                }
             }
             _catalogBrandDal.AddRange(catalogList);
             _catalogBrandDal.SaveChanges();

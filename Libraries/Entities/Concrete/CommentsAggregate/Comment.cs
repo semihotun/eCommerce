@@ -1,7 +1,6 @@
 ﻿namespace Entities.Concrete.CommentsAggregate
 {
     using System;
-    using System.Collections.Generic;
     public class Comment : BaseEntity
     {
         public string CommentTitle { get; set; }

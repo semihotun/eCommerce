@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Utilities.Helper;
-using Entities.Concrete.PhotoAggregate;
+﻿using Entities.Concrete.PhotoAggregate;
 using X.PagedList;
 namespace Entities.DTO.Product
 {

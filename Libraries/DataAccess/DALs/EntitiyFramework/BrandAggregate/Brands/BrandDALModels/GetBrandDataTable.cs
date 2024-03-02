@@ -1,8 +1,5 @@
 ﻿using Core.Utilities.DataTable;
 using Entities.DTO.Brand;
-using System;
-using System.Collections.Generic;
-using System.Text;
 namespace DataAccess.DALs.EntitiyFramework.BrandAggregate.Brands.BrandDALModels
 {
     public class GetBrandDataTable

@@ -1,5 +1,4 @@
 ﻿using Core.Library;
-using Core.Library.Entities.Concrete;
 using Entities.Concrete.AdressAggregate;
 using Entities.Concrete.BrandAggregate;
 using Entities.Concrete.CategoriesAggregate;
@@ -10,9 +9,7 @@ using Entities.Concrete.ProductAggregate;
 using Entities.Concrete.ShowcaseAggregate;
 using Entities.Concrete.SliderAggregate;
 using Entities.Concrete.SpeficationAggregate;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
 using System;
 using System.Linq;

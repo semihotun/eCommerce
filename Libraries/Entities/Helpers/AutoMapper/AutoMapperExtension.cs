@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using eCommerce.Core.Entities;
 namespace Entities.Helpers.AutoMapper
 {
     public static class AutoMapperExtension

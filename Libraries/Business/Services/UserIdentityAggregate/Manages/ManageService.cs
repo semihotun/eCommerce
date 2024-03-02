@@ -1,18 +1,15 @@
 ﻿using Business.Extension;
+using Business.Services.UserIdentityAggregate.Manages.ManageServiceModels;
 using Core.Library;
 using Core.Utilities.Email;
 using Core.Utilities.Results;
 using Entities.ViewModels.WebViewModel.IdentityManage;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using System.Linq;
-using Microsoft.Extensions.Logging;
 using System.Text;
 using System.Text.Encodings.Web;
-using Business.Services.UserIdentityAggregate.Manages.ManageServiceModels;
+using System.Threading.Tasks;
 namespace Business.Services.UserIdentityAggregate.Manages
 {
     public class ManageService : IManageService

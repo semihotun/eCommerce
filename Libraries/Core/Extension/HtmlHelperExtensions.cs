@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Core.Extension
+﻿namespace Core.Extension
 {
     public static class HtmlHelperExtensions
     {

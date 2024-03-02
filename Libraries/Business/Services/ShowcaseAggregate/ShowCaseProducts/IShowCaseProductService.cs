@@ -1,9 +1,6 @@
 ﻿using Business.Services.ShowcaseAggregate.ShowCaseProducts.ShowCaseProductServiceModel;
 using Core.Utilities.Results;
 using Entities.Concrete.ShowcaseAggregate;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 namespace Business.Services.ShowcaseAggregate.ShowCaseProducts
 {

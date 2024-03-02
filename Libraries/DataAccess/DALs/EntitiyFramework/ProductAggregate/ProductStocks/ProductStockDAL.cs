@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Utilities.Results;
-using eCommerce.Core.DataAccess.EntitiyFramework;
-using System.Linq;
-using Entities.Others;
-using Microsoft.EntityFrameworkCore;
-using X.PagedList;
-using Entities.DTO.Product;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeFormatter;
+﻿using Core.Utilities.Results;
 using DataAccess.Context;
-using Entities.Concrete.ProductAggregate;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeFormatter;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStocks.ProductStockDALModels;
+using eCommerce.Core.DataAccess.EntitiyFramework;
+using Entities.Concrete.ProductAggregate;
+using Entities.DTO.Product;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using X.PagedList;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStocks
 {
     public class ProductStockDAL : EfEntityRepositoryBase<ProductStock, eCommerceContext>, IProductStockDAL

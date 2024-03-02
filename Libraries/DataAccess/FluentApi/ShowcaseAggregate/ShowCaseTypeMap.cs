@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Utilities.Migration;
+﻿using Core.Utilities.Migration;
 using Entities.Concrete.ShowcaseAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Collections.Generic;
 namespace DataAccess.FluentApi.ShowcaseAggregate
 {
     public class ShowCaseTypeMap : IEntityTypeConfiguration<ShowCaseType>, ISeed<ShowCaseType>

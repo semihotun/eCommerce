@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Business.Services.ProductAggregate.ProductAttributes.ProductAttributeServiceModel
+﻿namespace Business.Services.ProductAggregate.ProductAttributes.ProductAttributeServiceModel
 {
     public class GetAllProductAttributes
     {

@@ -1,14 +1,11 @@
 ﻿using DataAccess.Context;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels;
 using Entities.DTO;
 using Entities.DTO.Product;
 using Entities.Enum;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.CompiledQueries
 {

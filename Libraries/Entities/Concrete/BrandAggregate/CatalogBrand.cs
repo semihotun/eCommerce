@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Entities.Concrete.BrandAggregate
+﻿namespace Entities.Concrete.BrandAggregate
 {
     public class CatalogBrand : BaseEntity
     {

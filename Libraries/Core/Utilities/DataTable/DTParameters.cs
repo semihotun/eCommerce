@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using static Core.Utilities.Infrastructure.Filter.FilterHelper;
-namespace Core.Utilities.DataTable
+﻿namespace Core.Utilities.DataTable
 {
     public class DTParameters
     {

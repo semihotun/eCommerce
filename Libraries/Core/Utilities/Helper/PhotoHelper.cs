@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using Core.Utilities.Results;
-using Microsoft.AspNetCore.Hosting;
+﻿using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Utilities.Constants;
+using System;
+using System.IO;
 namespace Core.Utilities.Helper
 {
     public class PhotoHelper

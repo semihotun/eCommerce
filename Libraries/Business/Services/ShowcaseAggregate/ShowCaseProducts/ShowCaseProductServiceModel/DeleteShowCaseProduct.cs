@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Business.Services.ShowcaseAggregate.ShowCaseProducts.ShowCaseProductServiceModel
+﻿namespace Business.Services.ShowcaseAggregate.ShowCaseProducts.ShowCaseProductServiceModel
 {
     public class DeleteShowCaseProduct
     {

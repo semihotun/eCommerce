@@ -2,6 +2,29 @@
  <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
+ <ItemGroup>
+   <Compile Remove="Services\ProductAggregate\ProductLikes\CompiledQueries\**" />
+   <Compile Remove="Services\ProductAggregate\ProductLikes\ProductLikesModel\**" />
+   <Compile Remove="Services\ProductAggregate\ProductLikes\Validator\**" />
+   <Compile Remove="Services\ProductAggregate\ProductStockTypes\Validator\**" />
+   <Compile Remove="Services\ProductAggregate\Products\CompiledQueries\**" />
+   <Compile Remove="Services\SpeficationAggregate\SpecificationAttributes\Validator\**" />
+   <Compile Remove="Services\UserIdentityAggregate\Users\**" />
+   <EmbeddedResource Remove="Services\ProductAggregate\ProductLikes\CompiledQueries\**" />
+   <EmbeddedResource Remove="Services\ProductAggregate\ProductLikes\ProductLikesModel\**" />
+   <EmbeddedResource Remove="Services\ProductAggregate\ProductLikes\Validator\**" />
+   <EmbeddedResource Remove="Services\ProductAggregate\ProductStockTypes\Validator\**" />
+   <EmbeddedResource Remove="Services\ProductAggregate\Products\CompiledQueries\**" />
+   <EmbeddedResource Remove="Services\SpeficationAggregate\SpecificationAttributes\Validator\**" />
+   <EmbeddedResource Remove="Services\UserIdentityAggregate\Users\**" />
+   <None Remove="Services\ProductAggregate\ProductLikes\CompiledQueries\**" />
+   <None Remove="Services\ProductAggregate\ProductLikes\ProductLikesModel\**" />
+   <None Remove="Services\ProductAggregate\ProductLikes\Validator\**" />
+   <None Remove="Services\ProductAggregate\ProductStockTypes\Validator\**" />
+   <None Remove="Services\ProductAggregate\Products\CompiledQueries\**" />
+   <None Remove="Services\SpeficationAggregate\SpecificationAttributes\Validator\**" />
+   <None Remove="Services\UserIdentityAggregate\Users\**" />
+ </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Autofac" Version="6.1.0" />
 		<PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
@@ -14,14 +37,5 @@
 	<ItemGroup>
 		<ProjectReference Include="..\DataAccess\DataAccess.csproj" />
 		<ProjectReference Include="..\Entities\Entities.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-		<Folder Include="Services\ProductAggregate\ProductLikes\CompiledQueries\" />
-		<Folder Include="Services\ProductAggregate\ProductLikes\Validator\" />
-		<Folder Include="Services\ProductAggregate\ProductLikes\ProductLikesModel\" />
-		<Folder Include="Services\ProductAggregate\ProductStockTypes\Validator\" />
-		<Folder Include="Services\ProductAggregate\Products\CompiledQueries\" />
-		<Folder Include="Services\SpeficationAggregate\SpecificationAttributes\Validator\" />
-		<Folder Include="Services\UserIdentityAggregate\Users\" />
 	</ItemGroup>
 </Project>

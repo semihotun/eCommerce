@@ -8,7 +8,5 @@ namespace Core.Library.Business.AdminAggregate.AdminAuths
     {
         Task<IDataResult<AccessToken>> Register(UserForRegisterDto userForRegisterDto);
         Task<IDataResult<AccessToken>> Login(UserForLoginDto userForLoginDto);
-        //Task<IResult> UserExists(string email);
-        //Task<IDataResult<AccessToken>> CreateAccessToken(AdminUser user);
     }
 }

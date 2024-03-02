@@ -1,8 +1,6 @@
 ﻿using Entities.Concrete.ProductAggregate;
 using Entities.DTO;
-using System;
 using System.Collections.Generic;
-using System.Text;
 namespace Entities.ViewModels.AdminViewModel.AdminProduct
 {
     public class ProductAttributeCombinationVM

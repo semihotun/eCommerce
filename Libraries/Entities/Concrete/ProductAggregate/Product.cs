@@ -1,8 +1,6 @@
 namespace Entities.Concrete.ProductAggregate
 {
-    using eCommerce.Core.Entities;
     using System;
-    using System.Collections.Generic;
     public class Product : BaseEntity
     {
         public string ProductName { get; set; }

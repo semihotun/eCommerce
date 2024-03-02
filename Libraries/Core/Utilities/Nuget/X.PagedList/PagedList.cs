@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 namespace X.PagedList
 {
-	public class PagedList<T, TKey> : BasePagedList<T>
+    public class PagedList<T, TKey> : BasePagedList<T>
 	{
 		public PagedList(IQueryable<T> superset, Expression<Func<T, TKey>> keySelector, int pageNumber, int pageSize)
 			: base(pageNumber, pageSize, superset?.Count() ?? 0)

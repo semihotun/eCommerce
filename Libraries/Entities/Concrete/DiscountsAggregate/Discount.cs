@@ -1,7 +1,6 @@
 ﻿namespace Entities.Concrete.DiscountsAggregate
 {
     using System;
-    using System.Collections.Generic;
     public class Discount : BaseEntity
     {
         public string Name { get; set; }

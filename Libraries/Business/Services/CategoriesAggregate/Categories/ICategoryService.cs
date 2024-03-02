@@ -1,12 +1,9 @@
-﻿using Core.Utilities.Results;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using X.PagedList;
-using Business.Services.CategoriesAggregate.Categories.CategoryServiceModel;
+﻿using Business.Services.CategoriesAggregate.Categories.CategoryServiceModel;
+using Core.Utilities.Results;
 using Entities.Concrete.CategoriesAggregate;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 namespace Business.Services.CategoriesAggregate.Categories
 {
     public interface ICategoryService

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Entities.ViewModels.AdminViewModel.Showcase
+﻿namespace Entities.ViewModels.AdminViewModel.Showcase
 {
     public enum ShowcaseTapList
     {

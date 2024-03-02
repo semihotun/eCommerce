@@ -1,11 +1,7 @@
 ﻿using Castle.DynamicProxy;
-using Core.Library;
 using Core.Utilities.IoC;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Transactions;
 namespace Core.Utilities.Interceptors
 {
     public class TransactionAspect : MethodInterception

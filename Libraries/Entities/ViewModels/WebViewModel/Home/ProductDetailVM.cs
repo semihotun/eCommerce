@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.CommentsAggregate;
 using Entities.DTO.Product;
 using Entities.DTO.ProductAttributeCombinations;
-using System;
 using System.Collections.Generic;
-using System.Text;
 namespace Entities.ViewModels.WebViewModel.Home
 {
     public class ProductDetailVM

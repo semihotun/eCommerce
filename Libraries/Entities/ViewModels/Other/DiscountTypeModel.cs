@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Entities.ViewModels.Other
+﻿namespace Entities.ViewModels.Other
 {
     public enum DiscountTypeModel
     {

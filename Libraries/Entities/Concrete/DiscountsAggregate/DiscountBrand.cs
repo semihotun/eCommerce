@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Entities.Concrete.DiscountsAggregate
+﻿namespace Entities.Concrete.DiscountsAggregate
 {
     public class DiscountBrand : BaseEntity
     {

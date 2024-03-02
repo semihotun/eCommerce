@@ -1,7 +1,5 @@
 ﻿using Entities.Concrete.CategoriesAggregate;
-using System;
 using System.Collections.Generic;
-using System.Text;
 namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories.CategoryDALModels
 {
     public class GetChildren

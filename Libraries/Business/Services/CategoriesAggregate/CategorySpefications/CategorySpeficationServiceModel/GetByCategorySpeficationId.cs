@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Business.Services.CategoriesAggregate.CategorySpefications.CategorySpeficationServiceModel
+﻿namespace Business.Services.CategoriesAggregate.CategorySpefications.CategorySpeficationServiceModel
 {
     public class GetByCategorySpeficationId
     {

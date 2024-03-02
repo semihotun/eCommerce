@@ -1,5 +1,4 @@
 ﻿using Core.Extension;
-using Core.Extensions;
 using Core.Library.Entities.Concrete;
 using Core.Utilities.Security.Encyption;
 using Microsoft.Extensions.Configuration;

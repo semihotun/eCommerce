@@ -1,7 +1,5 @@
 namespace Entities.Concrete.ProductAggregate
 {
-    using System;
-    using System.Collections.Generic;
     public class ProductSeo : BaseEntity
     {
         public string SeoTitle { get; set; }

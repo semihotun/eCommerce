@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Entities.ViewModels.AdminViewModel.Comment
+﻿namespace Entities.ViewModels.AdminViewModel.Comment
 {
     public class CommentListVM
     {

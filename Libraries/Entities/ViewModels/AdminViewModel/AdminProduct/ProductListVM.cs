@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.BrandAggregate;
 using Entities.Concrete.CategoriesAggregate;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
-using System.Text;
 namespace Entities.ViewModels.AdminViewModel.AdminProduct
 {
     public class ProductListVM

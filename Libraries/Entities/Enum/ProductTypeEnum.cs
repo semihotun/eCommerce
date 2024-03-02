@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Entities.Enum
+﻿namespace Entities.Enum
 {
     public enum ProductStockTypeEnum
     {

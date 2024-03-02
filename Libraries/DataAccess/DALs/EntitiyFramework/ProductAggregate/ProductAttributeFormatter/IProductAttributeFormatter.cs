@@ -1,13 +1,8 @@
-﻿using Entities.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using X.PagedList;
-using Core.Utilities.Results;
+﻿using Entities.DTO;
 using Entities.DTO.Product;
 using Entities.DTO.ProductAttributeCombinations;
-using Entities.DTO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeFormatter
 {
     public interface IProductAttributeFormatter

@@ -2,10 +2,8 @@
 using Entities.Concrete.ProductAggregate;
 using Entities.DTO.ShowCase;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 namespace Entities.ViewModels.AdminViewModel.Showcase
 {
     public class ShowCaseCreateOrUpdateVM:BaseEntity

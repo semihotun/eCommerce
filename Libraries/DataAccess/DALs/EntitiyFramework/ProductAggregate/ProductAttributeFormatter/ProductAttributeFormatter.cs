@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings;
+﻿using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingDALModels;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeValues;
-using Entities.Concrete;
 using Entities.DTO;
 using Entities.DTO.Product;
 using Entities.DTO.ProductAttributeCombinations;
 using Entities.Helpers.AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Xml;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeFormatter
 {
     public class ProductAttributeFormatter : IProductAttributeFormatter

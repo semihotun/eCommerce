@@ -4,7 +4,6 @@ using Core.Utilities.Attributes;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.Jwt;
-using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 namespace Core.Library.Business.AdminAggregate.AdminAuths
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Entities.Concrete.SpeficationAggregate
+﻿namespace Entities.Concrete.SpeficationAggregate
 {
     public partial class SpecificationAttribute : BaseEntity
     {

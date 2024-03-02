@@ -1,13 +1,10 @@
-﻿using Core.DataAccess;
-using Core.Utilities.Interceptors;
-using eCommerce.Core.Entities;
+﻿using eCommerce.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 namespace eCommerce.Core.DataAccess.EntitiyFramework
 {
     public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity> 

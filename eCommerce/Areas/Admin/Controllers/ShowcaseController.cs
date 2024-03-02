@@ -3,7 +3,6 @@ using Business.Services.BrandAggregate.Brands;
 using Business.Services.BrandAggregate.Brands.BrandServiceModel;
 using Business.Services.CategoriesAggregate.Categories;
 using Business.Services.CategoriesAggregate.Categories.CategoryServiceModel;
-using Business.Services.ProductAggregate.Products;
 using Business.Services.ShowcaseAggregate.ShowCaseProducts;
 using Business.Services.ShowcaseAggregate.ShowCaseProducts.ShowCaseProductServiceModel;
 using Business.Services.ShowcaseAggregate.ShowcaseServices;

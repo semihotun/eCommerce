@@ -3,7 +3,6 @@ using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
-using Core.Utilities.Nuget.X.PagedList;
 using Core.Utilities.Results;
 using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.DiscountsAggregate.DiscountCategorys;

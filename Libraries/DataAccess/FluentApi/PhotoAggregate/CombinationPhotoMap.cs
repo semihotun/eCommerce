@@ -1,9 +1,6 @@
 ﻿using Entities.Concrete.PhotoAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 namespace DataAccess.FluentApi.PhotoAggregate
 {
     public class CombinationPhotoMap : IEntityTypeConfiguration<CombinationPhoto>

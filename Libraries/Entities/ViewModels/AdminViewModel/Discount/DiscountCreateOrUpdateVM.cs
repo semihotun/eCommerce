@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
-using System.Text;
 namespace Entities.ViewModels.AdminViewModel.Discount
 {
     public class DiscountCreateOrUpdateVM : BaseEntity

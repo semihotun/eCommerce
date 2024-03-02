@@ -1,8 +1,5 @@
 ﻿using Entities.DTO.Comment;
 using Entities.Others;
-using System;
-using System.Collections.Generic;
-using System.Text;
 namespace DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments.CommentDALModels
 {
     public class GetCommentDataTable

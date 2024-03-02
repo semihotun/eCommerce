@@ -1,7 +1,5 @@
 namespace Entities.Concrete.ShowcaseAggregate
 {
-    using System;
-    using System.Collections.Generic;
     public class ShowCase : BaseEntity
     {
         public int ShowCaseOrder { get; set; }

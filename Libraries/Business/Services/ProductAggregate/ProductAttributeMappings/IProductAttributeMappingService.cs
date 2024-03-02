@@ -1,13 +1,9 @@
-﻿using Core.Utilities.Results;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Entities.Others;
-using Business.Services.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingServiceModel;
-using Core.Utilities.Nuget.X.PagedList;
-using X.PagedList;
+﻿using Business.Services.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingServiceModel;
+using Core.Utilities.Results;
 using Entities.Concrete.ProductAggregate;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using X.PagedList;
 namespace Business.Services.ProductAggregate.ProductAttributeMappings
 {
     public interface IProductAttributeMappingService

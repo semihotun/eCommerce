@@ -3,6 +3,14 @@
 		<TargetFramework>net5.0</TargetFramework>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="DALs\EntitiyFramework\ProductAggregate\ProductLikes\CompiledQueries\**" />
+	  <Compile Remove="DALs\EntitiyFramework\ProductAggregate\ProductLikes\ProductLikesModels\**" />
+	  <EmbeddedResource Remove="DALs\EntitiyFramework\ProductAggregate\ProductLikes\CompiledQueries\**" />
+	  <EmbeddedResource Remove="DALs\EntitiyFramework\ProductAggregate\ProductLikes\ProductLikesModels\**" />
+	  <None Remove="DALs\EntitiyFramework\ProductAggregate\ProductLikes\CompiledQueries\**" />
+	  <None Remove="DALs\EntitiyFramework\ProductAggregate\ProductLikes\ProductLikesModels\**" />
+	</ItemGroup>
+	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="10.1.1" />
 		<PackageReference Include="AutoMapperPagedList" Version="0.6.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
@@ -14,9 +22,5 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Core\Core.csproj" />
 		<ProjectReference Include="..\Entities\Entities.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="DALs\EntitiyFramework\ProductAggregate\ProductLikes\CompiledQueries\" />
-	  <Folder Include="DALs\EntitiyFramework\ProductAggregate\ProductLikes\ProductLikesModels\" />
 	</ItemGroup>
 </Project>

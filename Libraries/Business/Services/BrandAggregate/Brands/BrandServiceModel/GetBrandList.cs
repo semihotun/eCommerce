@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Business.Services.BrandAggregate.Brands.BrandServiceModel
+﻿namespace Business.Services.BrandAggregate.Brands.BrandServiceModel
 {
     public class GetBrandList
     {
@@ -12,12 +9,5 @@ namespace Business.Services.BrandAggregate.Brands.BrandServiceModel
         public GetBrandList()
         {
         }
-        //public GetBrandList(string brandName = null, int pageIndex = 1, int pageSize = int.MaxValue, string orderByText = null)
-        //{
-        //    BrandName = brandName;
-        //    PageIndex = pageIndex;
-        //    PageSize = pageSize;
-        //    OrderByText = orderByText;
-        //}
     }
 }

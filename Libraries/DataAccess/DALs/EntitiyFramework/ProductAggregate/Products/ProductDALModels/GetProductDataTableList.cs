@@ -1,9 +1,5 @@
 ﻿using Core.Utilities.DataTable;
 using Entities.DTO.Product;
-using Entities.Others;
-using System;
-using System.Collections.Generic;
-using System.Text;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels
 {
     public class GetProductDataTableList

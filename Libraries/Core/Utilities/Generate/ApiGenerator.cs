@@ -1,6 +1,5 @@
 ﻿using Core.Utilities.Attributes;
 using Core.Utilities.Helper;
-using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.IO;

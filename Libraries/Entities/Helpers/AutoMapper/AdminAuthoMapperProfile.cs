@@ -1,21 +1,21 @@
-﻿using Entities.DTO.Product;
-using AutoMapper;
+﻿using AutoMapper;
+using Entities.Concrete.BrandAggregate;
+using Entities.Concrete.CategoriesAggregate;
+using Entities.Concrete.DiscountsAggregate;
+using Entities.Concrete.PhotoAggregate;
+using Entities.Concrete.ProductAggregate;
+using Entities.Concrete.ShowcaseAggregate;
+using Entities.Concrete.SliderAggregate;
+using Entities.Concrete.SpeficationAggregate;
+using Entities.DTO;
+using Entities.DTO.Product;
 using Entities.DTO.ShowCase;
+using Entities.Others;
+using Entities.ViewModels.AdminViewModel.AdminProduct;
 using Entities.ViewModels.AdminViewModel.AdminSlider;
 using Entities.ViewModels.AdminViewModel.Discount;
 using Entities.ViewModels.AdminViewModel.Showcase;
 using Entities.ViewModels.AdminViewModel.SpeficationAttribute;
-using Entities.ViewModels.AdminViewModel.AdminProduct;
-using Entities.Others;
-using Entities.Concrete.ProductAggregate;
-using Entities.Concrete.ShowcaseAggregate;
-using Entities.Concrete.DiscountsAggregate;
-using Entities.Concrete.CategoriesAggregate;
-using Entities.Concrete.SliderAggregate;
-using Entities.Concrete.SpeficationAggregate;
-using Entities.DTO;
-using Entities.Concrete.BrandAggregate;
-using Entities.Concrete.PhotoAggregate;
 namespace Entities.Helpers.AutoMapper
 {
     public class AdminAuthoMapperProfile : Profile

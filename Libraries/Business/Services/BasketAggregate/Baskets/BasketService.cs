@@ -35,7 +35,7 @@ namespace Business.Services.BasketAggregate.Baskets
                 _cacheManager.Remove("Basket");
             }
             var includeProduct = basketJson.Where(x => x.ProductId == basket.ProductId && x.CombinationId == x.CombinationId);
-            if (includeProduct.Count() == 0)
+            if (!includeProduct.Any())
             {
                 basketJson.Add(basket);
                 var data = JsonConvert.SerializeObject(basketJson);
@@ -43,7 +43,7 @@ namespace Business.Services.BasketAggregate.Baskets
             }
             else
             {
-                includeProduct.First().ProductPiece = includeProduct.First().ProductPiece + 1;
+                includeProduct.First().ProductPiece++;
                 var data = JsonConvert.SerializeObject(basketJson);
                 _cacheManager.Add("Basket", data, DateTime.Now.AddDays(7).Minute);
             }
@@ -87,7 +87,7 @@ namespace Business.Services.BasketAggregate.Baskets
             {
                 _cacheManager.Remove("Basket");
                 includeProduct.Add(basket);
-                var data = JsonConvert.SerializeObject(includeProduct);    
+                var data = JsonConvert.SerializeObject(includeProduct);
                 _cacheManager.Add("Basket", data, DateTime.Now.AddDays(7).Minute);
             }
             else

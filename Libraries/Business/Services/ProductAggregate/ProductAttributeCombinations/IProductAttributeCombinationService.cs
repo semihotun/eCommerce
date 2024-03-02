@@ -1,10 +1,7 @@
 ﻿using Business.Services.ProductAggregate.ProductAttributeCombinations.ProductAttributeCombinationServiceModel;
-using Core.Utilities.Nuget.X.PagedList;
 using Core.Utilities.Results;
 using Entities.Concrete.ProductAggregate;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using X.PagedList;
 namespace Business.Services.ProductAggregate.ProductAttributeCombinations

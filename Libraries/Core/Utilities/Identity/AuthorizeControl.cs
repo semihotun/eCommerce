@@ -1,10 +1,7 @@
-﻿using Core.Extension;
-using Core.Utilities.IoC;
+﻿using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security;
 namespace Core.Utilities.Identity

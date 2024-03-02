@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Business.Services.ProductAggregate.ProductStockTypes.ProductStockTypeServiceModel;
+using Core.Aspects.Autofac.Caching;
+using Core.Utilities.Results;
+using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStockTypes;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
-using Core.Utilities.Results;
-using Business.Services.ProductAggregate.ProductStockTypes.ProductStockTypeServiceModel;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStockTypes;
-using Core.Aspects.Autofac.Caching;
+using System.Threading.Tasks;
 namespace Business.Services.ProductAggregate.ProductStockTypes
 {
     public class ProductStockTypeService : IProductStockTypeService

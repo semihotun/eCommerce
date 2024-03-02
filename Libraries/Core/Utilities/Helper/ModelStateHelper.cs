@@ -1,9 +1,7 @@
 ﻿using Core.Utilities.Results;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 namespace Core.Utilities.Helper
 {
     public static class ModelStateHelper

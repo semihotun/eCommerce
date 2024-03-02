@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Core.Utilities.Results
+﻿namespace Core.Utilities.Results
 {
     public class AjaxResponse<T>
     {

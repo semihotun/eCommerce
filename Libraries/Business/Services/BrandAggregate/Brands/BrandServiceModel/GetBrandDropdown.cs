@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Business.Services.BrandAggregate.Brands.BrandServiceModel
+﻿namespace Business.Services.BrandAggregate.Brands.BrandServiceModel
 {
     public class GetBrandDropdown
     {

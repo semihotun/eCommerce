@@ -1,11 +1,7 @@
 ﻿using Entities.Concrete.ProductAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 namespace DataAccess.FluentApi.ProductAggregate
 {
     public class ProductMap : IEntityTypeConfiguration<Product>

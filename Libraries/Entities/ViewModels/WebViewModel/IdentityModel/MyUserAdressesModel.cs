@@ -1,8 +1,5 @@
-﻿using Entities.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Library;
+﻿using Core.Library;
+using Entities.Concrete;
 using Entities.Concrete.AdressAggregate;
 namespace Entities.ViewModels.WebViewModel.IdentityModel
 {

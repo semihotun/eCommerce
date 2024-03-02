@@ -1,9 +1,6 @@
 ﻿using Business.Services.ProductAggregate.ProductShipmentInfos.ProductShipmentInfoServiceModel;
 using Core.Utilities.Results;
 using Entities.Concrete.ProductAggregate;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 namespace Business.Services.ProductAggregate.ProductShipmentInfos
 {

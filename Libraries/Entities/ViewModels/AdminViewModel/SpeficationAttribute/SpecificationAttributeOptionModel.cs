@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete;
 using Entities.Concrete.ProductAggregate;
 using Entities.Concrete.SpeficationAggregate;
-using System;
 using System.Collections.Generic;
-using System.Text;
 namespace Entities.ViewModels.AdminViewModel.SpeficationAttribute
 {
     public partial class SpecificationAttributeOptionVM : BaseEntity

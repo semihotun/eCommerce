@@ -1,8 +1,5 @@
-﻿using System;
+﻿using Entities.Concrete.ProductAggregate;
 using System.Collections.Generic;
-using System.Security.AccessControl;
-using System.Text;
-using Entities.Concrete.ProductAggregate;
 namespace Entities.DTO.ProductMapping
 {
     public class MappingProductAttribute

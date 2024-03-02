@@ -1,6 +1,6 @@
 ﻿namespace X.PagedList
 {
-	public class PagedListMetaData : IPagedList
+    public class PagedListMetaData : IPagedList
 	{
 		protected PagedListMetaData()
 		{

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using X.PagedList;
+﻿using X.PagedList;
 namespace Core.Utilities.Results
 {
     public class DataTableResult<T>

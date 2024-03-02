@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Business.Services.ProductAggregate.ProductStockTypes.ProductStockTypeServiceModel
+﻿namespace Business.Services.ProductAggregate.ProductStockTypes.ProductStockTypeServiceModel
 {
     public class GetAllProductStockType
     {

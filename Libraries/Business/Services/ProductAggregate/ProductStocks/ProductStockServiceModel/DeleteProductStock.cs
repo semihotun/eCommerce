@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Business.Services.ProductAggregate.ProductStocks.ProductStockServiceModel
+﻿namespace Business.Services.ProductAggregate.ProductStocks.ProductStockServiceModel
 {
     public class DeleteProductStock
     {

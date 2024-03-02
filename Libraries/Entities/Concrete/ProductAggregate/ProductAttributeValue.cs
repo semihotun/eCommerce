@@ -1,7 +1,5 @@
 namespace Entities.Concrete.ProductAggregate
 {
-    using System;
-    using System.Collections.Generic;
     public partial class ProductAttributeValue : BaseEntity
     {
         public int ProductAttributeMappingId { get; set; }

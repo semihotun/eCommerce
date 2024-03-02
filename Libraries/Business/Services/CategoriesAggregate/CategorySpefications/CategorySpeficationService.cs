@@ -1,17 +1,16 @@
-﻿using Core.Utilities.Results;
+﻿using Business.Services.CategoriesAggregate.CategorySpefications.CategorySpeficationServiceModel;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Utilities.Interceptors;
+using Core.Utilities.Results;
+using DataAccess.Context;
+using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.CategorySpefications;
+using Entities.Concrete.CategoriesAggregate;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using X.PagedList;
-using Core.Aspects.Autofac.Caching;
-using Core.Utilities.Interceptors;
-using Business.Services.CategoriesAggregate.CategorySpefications.CategorySpeficationServiceModel;
-using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.CategorySpefications;
-using DataAccess.Context;
-using Entities.Concrete.CategoriesAggregate;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 namespace Business.Services.CategoriesAggregate.CategorySpefications
 {
     public class CategorySpeficationService : ICategorySpeficationService

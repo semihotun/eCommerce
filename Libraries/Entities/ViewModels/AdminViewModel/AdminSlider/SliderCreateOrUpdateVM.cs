@@ -1,8 +1,4 @@
-﻿using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.AspNetCore.Http;
 namespace Entities.ViewModels.AdminViewModel.AdminSlider
 {
     public partial class SliderCreateOrUpdateVM

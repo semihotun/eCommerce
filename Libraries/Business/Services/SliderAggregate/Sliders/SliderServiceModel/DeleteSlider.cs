@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Business.Services.SliderAggregate.Sliders.SliderServiceModel
+﻿namespace Business.Services.SliderAggregate.Sliders.SliderServiceModel
 {
     public class DeleteSlider
     {

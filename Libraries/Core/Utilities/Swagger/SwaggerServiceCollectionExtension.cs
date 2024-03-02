@@ -1,9 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 namespace Core.Utilities.Swagger
 {
     public static class SwaggerServiceCollectionExtension

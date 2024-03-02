@@ -1,9 +1,9 @@
 ﻿using X.PagedList.Web.Common;
 namespace X.PagedList.Mvc.Core.Fluent
 {
-    using System;
     using global::Core.Utilities.Nuget.X.PagedList.Web.Common;
     using Microsoft.AspNetCore.Html;
+    using System;
     public interface IHtmlPagerBuilder
     {
         IHtmlPagerBuilder Url(Func<int, string> builder);

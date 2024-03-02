@@ -1,7 +1,5 @@
 namespace Entities.Concrete.SliderAggregate
 {
-    using System;
-    using System.Collections.Generic;
     using Entities.Concrete;
     public class Slider : BaseEntity
     {

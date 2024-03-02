@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace Business.Services.DiscountsAggregate.DiscountUsageHistorys.DiscountUsageHistoryServiceModel
+﻿namespace Business.Services.DiscountsAggregate.DiscountUsageHistorys.DiscountUsageHistoryServiceModel
 {
     public class GetAllDiscountUsageHistory
     {

@@ -1,7 +1,4 @@
 ﻿using eCommerce.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 namespace Core.Library.Entities.Concrete
 {
     public class OperationClaim : IEntity

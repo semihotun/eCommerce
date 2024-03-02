@@ -1,9 +1,7 @@
 ﻿using Entities.Concrete.CategoriesAggregate;
 using Entities.Concrete.SliderAggregate;
 using Entities.DTO.ShowCase;
-using System;
 using System.Collections.Generic;
-using System.Text;
 namespace Entities.ViewModels.WebViewModel.Home
 {
     public class MainPageVM

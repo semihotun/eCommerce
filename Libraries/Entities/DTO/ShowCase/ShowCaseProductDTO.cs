@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Entities.Concrete.PhotoAggregate;
+﻿using Entities.Concrete.PhotoAggregate;
 using Entities.Concrete.ProductAggregate;
+using System;
+using System.Collections.Generic;
 namespace Entities.DTO.ShowCase
 {
     public class ShowCaseProductDTO 

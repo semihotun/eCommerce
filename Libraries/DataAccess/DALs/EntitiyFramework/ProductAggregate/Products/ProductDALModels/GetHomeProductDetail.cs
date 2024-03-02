@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels
+﻿namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels
 {
     public class GetHomeProductDetail
     {

@@ -7,7 +7,7 @@ using Serilog.Sinks.MSSqlServer;
 using System;
 namespace Core.CrossCuttingConcerns.Logging.Serilog.Loggers
 {
-	public class MsSqlLogger : LoggerServiceBase
+    public class MsSqlLogger : LoggerServiceBase
 	{
 		public MsSqlLogger()
 		{

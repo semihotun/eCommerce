@@ -1,12 +1,10 @@
 ﻿using Core.Utilities.DataTable;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 namespace Core.Utilities.Infrastructure.Filter
 {
     public static class FilterHelper

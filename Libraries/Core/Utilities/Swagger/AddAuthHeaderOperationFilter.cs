@@ -10,9 +10,6 @@ namespace Core.Utilities.Swagger
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            //var isAuthorized = (context.MethodInfo.DeclaringType.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any()
-            //              || context.MethodInfo.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any())
-            //              && !context.MethodInfo.GetCustomAttributes(true).OfType<AllowAnonymousAttribute>().Any(); // this excludes methods with AllowAnonymous attribute
             var isAuthorized = (context.MethodInfo.DeclaringType.GetCustomAttributes(true).OfType<AuthorizeControl>().Any() ||
                                 context.MethodInfo.GetCustomAttributes(true).OfType<AuthorizeControl>().Any())
                                 && !context.MethodInfo.GetCustomAttributes(true).OfType<AllowAnonymousAttribute>().Any();
@@ -28,7 +25,7 @@ namespace Core.Utilities.Swagger
             };
             operation.Security = new List<OpenApiSecurityRequirement>
             {
-                new OpenApiSecurityRequirement { [jwtbearerScheme] = new string[] { } }
+                new() { [jwtbearerScheme] = System.Array.Empty<string>() }
             };
         }
     }
