@@ -32,6 +32,7 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
+!Plugins/Plugin.Api/
 #Env File
 .env
 
