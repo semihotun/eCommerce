@@ -403,3 +403,11 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/.vs/eCommerce/v17/fileList.bin
+/Plugins/Plugin.Api
+/.vs
+/.vs
+/eCommerce/obj
+/eCommerce/wwwroot
+/.vs
+/.vs
