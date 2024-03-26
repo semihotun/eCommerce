@@ -1,14 +1,15 @@
-﻿using Business.Services.ProductAggregate.Products.ProductServiceModel;
+﻿using Business.Constants;
+using Business.Services.ProductAggregate.Products.ProductServiceModel;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
-using DataAccess.DALs.EntitiyFramework.PhotoAggregate.ProductPhotos;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecificationAttributes;
 using DataAccess.DALs.EntitiyFramework.SpeficationAggregate.SpecificationAttributeOptions;
+using DataAccess.UnitOfWork;
 using Entities.Concrete.ProductAggregate;
 using Entities.Helpers.AutoMapper;
 using System;
@@ -21,70 +22,74 @@ namespace Business.Services.ProductAggregate.Products
     public class ProductService : IProductService
     {
         private readonly IProductDAL _productRepository;
-        private readonly IProductPhotoDAL _productPhotoRepository;
         private readonly IProductSpecificationAttributeDAL _productSpecificationAttributeRepository;
         private readonly ISpecificationAttributeOptionDAL _specificationAttributeOptionRepository;
+        private readonly IUnitOfWork _unitOfWork;
         public ProductService(
          IProductDAL productRepository,
-         IProductPhotoDAL productPhotoRepository,
          IProductSpecificationAttributeDAL productSpecificationAttributeRepository,
-         ISpecificationAttributeOptionDAL specificationAttributeOptionRepository
-            )
+         ISpecificationAttributeOptionDAL specificationAttributeOptionRepository,
+         IUnitOfWork unitOfWork)
         {
             _productRepository = productRepository;
-            _productPhotoRepository = productPhotoRepository;
             _productSpecificationAttributeRepository = productSpecificationAttributeRepository;
             _specificationAttributeOptionRepository = specificationAttributeOptionRepository;
+            _unitOfWork = unitOfWork;
         }
         [CacheAspect]
-        public async Task<IDataResult<Product>> GetProduct(GetProduct request)
+        public async Task<Result<Product>> GetProduct(GetProduct request)
         {
-            if (request.Id == 0)
-                return new ErrorDataResult<Product>();
-            var data = await _productRepository.GetAsync(x => x.Id == request.Id);
-            return new SuccessDataResult<Product>(data);
+            return Result.SuccessDataResult(await _productRepository.GetAsync(x => x.Id == request.Id));
         }
         [LogAspect(typeof(MsSqlLogger))]
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductService.Get",
         "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
-        public async Task<IResult> DeleteProduct(DeleteProduct request)
+        public async Task<Result> DeleteProduct(DeleteProduct request)
         {
-            if (request.Id == 0)
-                return new ErrorResult();
-            var deletedData = await _productRepository.GetAsync(x => x.Id == request.Id);
-            _productRepository.Delete(deletedData);
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            {
+                _productRepository.Remove(await _productRepository.GetAsync(x => x.Id == request.Id));
+                return Result.SuccessResult();
+            });
         }
         [LogAspect(typeof(MsSqlLogger))]
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductService.Get",
         "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
-        public async Task<IResult> AddProduct(Product product)
+        public async Task<Result<Product>> AddProduct(Product product)
         {
-            product.CreatedOnUtc = DateTime.Now;
-            product.ProductNameUpper = product.ProductName.ToUpper();
-            if (product == null)
-                return new ErrorResult();
-            _productRepository.Add(product);
-            await _productRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                product.CreatedOnUtc = DateTime.Now;
+                product.ProductNameUpper = product.ProductName.ToUpper();
+                await _productRepository.AddAsync(product);
+                return Result.SuccessDataResult(product);
+            });
         }
         [LogAspect(typeof(MsSqlLogger))]
-        [TransactionAspect(typeof(eCommerceContext))]
+        [CacheRemoveAspect("IProductService.Get", "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
+        public async Task<Result<Product>> CreateOrUpdateProduct(Product product)
+        {
+            if (product.Id == 0)
+                return await AddProduct(product);
+            else
+                return await UpdateProduct(product);
+        }
+        [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductService.Get",
         "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
-        public async Task<IResult> UpdateProduct(Product product)
+        public async Task<Result<Product>> UpdateProduct(Product product)
         {
-            product.CreatedOnUtc = DateTime.Now;
-            var query = await _productRepository.GetAsync(x => x.Id == product.Id);
-            var data = query.MapTo<Product>(product);
-            _productRepository.Update(query);
-            await _productRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                product.CreatedOnUtc = DateTime.Now;
+                var query = await _productRepository.GetAsync(x => x.Id == product.Id);
+                var data = query.MapTo<Product>(product);
+                _productRepository.Update(query);
+                return Result.SuccessDataResult(product);
+            });
         }
         [CacheAspect]
-        public async Task<IDataResult<IPagedList<Product>>> GetProductsBySpecificationAttributeId(
+        public async Task<Result<IPagedList<Product>>> GetProductsBySpecificationAttributeId(
             GetProductsBySpecificationAttributeId request)
         {
             var query = from product in _productRepository.Query()
@@ -93,8 +98,7 @@ namespace Business.Services.ProductAggregate.Products
                         where spao.SpecificationAttributeId == request.SpecificationAttributeId
                         orderby product.ProductName
                         select product;
-            var data = await query.ToPagedListAsync(request.PageIndex, request.PageSize);
-            return new SuccessDataResult<IPagedList<Product>>(data);
+            return Result.SuccessDataResult(await query.ToPagedListAsync(request.PageIndex, request.PageSize));
         }
     }
 }

@@ -1,7 +1,8 @@
-﻿using Core.Library.Business.AdminAggregate.AdminAuths;
+﻿using Business.Constants;
+using Core.Library.Business.AdminAggregate.AdminAuths;
 using Core.Library.Business.AdminAggregate.AdminServices;
-using Core.Library.Entities.Concrete;
 using eCommerce.Areas.Admin.Controllers;
+using Entities.Concrete.AdminUserAggregate;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,8 +11,8 @@ namespace eCommerce.Controllers
 {
     public class AdminLogin : AdminBaseController
     {
-        private IAdminAuthService _adminAuthService;
-        private IAdminService _adminService;
+        private readonly IAdminAuthService _adminAuthService;
+        private readonly IAdminService _adminService;
         public AdminLogin(IAdminAuthService adminAuthService, IAdminService adminService)
         {
             _adminAuthService = adminAuthService;
@@ -19,14 +20,15 @@ namespace eCommerce.Controllers
         }
         public IActionResult Login() => View();
         [HttpPost]
-        public async Task<ActionResult> Login(UserForLoginDto userForLoginDto)
+        public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
             var result = await _adminAuthService.Login(userForLoginDto);
             if (result.Success)
             {
-                var basketCookie = Request.Cookies["UserToken"];
-                CookieOptions cookieOptions = new CookieOptions();
-                cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddDays(1));
+                CookieOptions cookieOptions = new()
+                {
+                    Expires = new DateTimeOffset(DateTime.Now.AddDays(1))
+                };
                 Response.Cookies.Append("UserToken", result.Data.Token, cookieOptions);
                 return Redirect("/Admin/AdminProduct/ProductList");
             }
@@ -40,35 +42,37 @@ namespace eCommerce.Controllers
             }
             else
             {
-                Alert("Daha önceden Admin Kayıdı yapıldı", NotificationType.error);
+                Alert(Messages.OperationFailed, NotificationType.error);
                 return View();
             }
         }
         [HttpPost]
-        public async Task<ActionResult> Register(UserForRegisterDto adminUser)
+        public async Task<IActionResult> Register(UserForRegisterDto adminUser)
         {
             if ((await _adminService.GetAdminCount()).Data == 0)
             {
-                var result = await _adminAuthService.Register(adminUser);        
-                if (result.Success)
+                var result = await _adminAuthService.Register(adminUser);
+                if (result.Success && result.Data != null)
                 {
-                    var basketCookie = Request.Cookies["UserToken"];
-                    CookieOptions cookieOptions = new CookieOptions();
-                    cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddDays(1));
+                    CookieOptions cookieOptions = new ()
+                    {
+                        Expires = new DateTimeOffset(DateTime.Now.AddDays(1))
+                    };
                     Response.Cookies.Append("UserToken", result.Data.Token, cookieOptions);
+                    Alert(Messages.OperationSuccessful, NotificationType.success);
                     return Redirect("/Admin/AdminProduct/ProductList");
                 }
             }
             else
             {
-                Alert("Daha önceden Admin Kayıdı yapıldı", NotificationType.error);
+                Alert(Messages.OperationFailed, NotificationType.error);
             }
             return View();
         }
-        public async Task<ActionResult> LogOut()
+        public async Task<IActionResult> LogOut()
         {
             Response.Cookies.Delete("UserToken");
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

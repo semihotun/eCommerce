@@ -7,10 +7,10 @@ namespace Business.Services.PhotoAggregate.ProductPhotos
 {
     public interface IProductPhotoService
     {
-        Task<IDataResult<ProductPhoto>> GetProductPhotoById(GetProductPhotoById request);
-        Task<IDataResult<IPagedList<ProductPhoto>>> GetProductPhoto(GetProductPhoto request);
-        Task<IResult> ProductPhotoInsert(ProductPhoto product);
-        Task<IResult> ProductPhotoDelete(ProductPhotoDelete request);
-        Task<IResult> AddRangeProductPhotoInsert(AddRangeProductPhotoInsert request);
+        Task<Result<ProductPhoto>> GetProductPhotoById(GetProductPhotoById request);
+        Task<Result<IPagedList<ProductPhoto>>> GetProductPhoto(GetProductPhoto request);
+        Task<Result> AddProductPhoto(ProductPhoto product);
+        Task<Result> DeleteProductPhoto(DeleteProductPhoto request);
+        Task<Result> AddRangeProductPhotoInsert(AddRangeProductPhotoInsert request);
     }
 }

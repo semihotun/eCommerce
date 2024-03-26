@@ -8,15 +8,15 @@ namespace Business.Services.CategoriesAggregate.Categories
 {
     public interface ICategoryService
     {
-        Task<IResult> DeleteCategory(DeleteCategory request);
-        Task<IDataResult<IList<Category>>> GetAllCategories();
-        Task<IDataResult<IList<Category>>> GetAllCategoriesByParentCategoryId(GetAllCategoriesByParentCategoryId request);
-        Task<IResult> RemoveRangeCategory(RemoveRangeCategory request);
-        Task<IDataResult<Category>> GetCategoryById(GetCategoryById request);
-        Task<IResult> InsertCategory(Category category);
-        Task<IResult> UpdateCategory(Category category);
-        Task<IDataResult<IEnumerable<SelectListItem>>> GetCategoryDropdown(GetCategoryDropdown request);
-        Task<IResult> ChangeNodePosition(ChangeNodePosition request);
-        Task<IResult> DeleteNodes(DeleteNodes request);
+        Task<Result> DeleteCategory(DeleteCategory request);
+        Task<Result<List<Category>>> GetAllCategories();
+        Task<Result<List<Category>>> GetAllCategoriesByParentCategoryId(GetAllCategoriesByParentCategoryId request);
+        Task<Result> RemoveRangeCategory(RemoveRangeCategory request);
+        Task<Result<Category>> GetCategoryById(GetCategoryById request);
+        Task<Result> InsertCategory(Category category);
+        Task<Result> UpdateCategory(Category category);
+        Task<Result<IEnumerable<SelectListItem>>> GetCategoryDropdown(GetCategoryDropdown request);
+        Task<Result> ChangeNodePosition(ChangeNodePosition request);
+        Task<Result> DeleteNodes(DeleteNodes request);
     }
 }

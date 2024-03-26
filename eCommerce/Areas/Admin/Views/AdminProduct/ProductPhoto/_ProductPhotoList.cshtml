@@ -2,15 +2,15 @@
 @using X.PagedList;
 @model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
 <br />
-<div class="table-responsive ps ps--active-x" id="ProductPhotoListTable">
-    <table id="ProductPhotoTable" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
+<div class="table-responsive ps ps--active-x" id="productPhotoListTable">
+    <table id="productPhotoTable" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>resim yolu</th>
-                <th>resim görseli</th>
-                <th>btn</th>
-                <th>btn</th>
+                <th>Resim yolu</th>
+                <th>Resim görseli</th>
+                <th> </th>
+                <th> </th>
             </tr>
         </thead>
     </table>
@@ -19,7 +19,7 @@
     <input type="hidden" name="photoid" id="photoid">
     @Html.HiddenFor(x => x.Id)
     <!-- Modal -->
-    <div class="modal fade" id="ProductPhotoTableModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="productPhotoTableModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="position:absolute;top:0px;">
                 <div class="modal-header">
@@ -34,7 +34,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">İptl Et</button>
-                    <button type="button" class="btn btn-default" id="ProductPhotoCombinationModalSave">Kaydet</button>
+                    <button type="button" class="btn btn-default" id="ProductPhotoCombinationModalSave" onclick="ProductPhotoCombinationModalSave()">Kaydet</button>
                 </div>
             </div>
         </div>

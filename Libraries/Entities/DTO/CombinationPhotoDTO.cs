@@ -1,7 +1,7 @@
 ﻿using Entities.Concrete;
 namespace Entities.DTO
 {
-    public  class CombinationPhotoDTO : BaseEntity
+    public class CombinationPhotoDTO : BaseEntity
     {
         #region Product Photo
         public int PhotoId { get; set; }

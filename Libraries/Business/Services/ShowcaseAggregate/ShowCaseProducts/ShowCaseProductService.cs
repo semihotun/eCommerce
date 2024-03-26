@@ -1,12 +1,10 @@
-﻿using Business.Services.ProductAggregate.Products;
-using Business.Services.ShowcaseAggregate.ShowCaseProducts.ShowCaseProductServiceModel;
+﻿using Business.Services.ShowcaseAggregate.ShowCaseProducts.ShowCaseProductServiceModel;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
-using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowCaseProducts;
+using DataAccess.UnitOfWork;
 using Entities.Concrete.ShowcaseAggregate;
 using System.Threading.Tasks;
 namespace Business.Services.ShowcaseAggregate.ShowCaseProducts
@@ -15,41 +13,37 @@ namespace Business.Services.ShowcaseAggregate.ShowCaseProducts
     {
         #region Field
         private readonly IShowCaseProductDAL _showCaseProductRepository;
-        private readonly IProductService _productService;
+        private readonly IUnitOfWork _unitOfWork;
         #endregion
         #region Ctor
-        public ShowCaseProductService(IShowCaseProductDAL showcaseproductRepository,
-            IProductService productService)
+        public ShowCaseProductService(IShowCaseProductDAL showcaseproductRepository, IUnitOfWork unitOfWork)
         {
             _showCaseProductRepository = showcaseproductRepository;
-            _productService = productService;
+            _unitOfWork = unitOfWork;
         }
         #endregion
         #region Method
-        [TransactionAspect(typeof(eCommerceContext))]
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IShowCaseProductService.Get", 
-        "IShowCaseDAL.GetShowCaseDto","IShowCaseProductService.GetAllShowCaseDto")]
-        public async Task<IResult> DeleteShowCaseProduct(DeleteShowCaseProduct request)
-        {
-            if (request.Id == 0)
-                return new ErrorResult();
-            var data = await _showCaseProductRepository.GetAsync(x => x.Id == request.Id);
-            _showCaseProductRepository.Delete(data);
-            await _showCaseProductRepository.SaveChangesAsync();
-            return new SuccessResult();
-        }
-        [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IShowCaseProductService.Get",
         "IShowCaseDAL.GetShowCaseDto", "IShowCaseProductService.GetAllShowCaseDto")]
-        public async Task<IResult> InsertProductShowcase(ShowCaseProduct showCaseProduct)
+        public async Task<Result> DeleteShowCaseProduct(DeleteShowCaseProduct request)
         {
-            if (showCaseProduct == null)
-                return new ErrorResult();
-            _showCaseProductRepository.Add(showCaseProduct);
-            await _showCaseProductRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                _showCaseProductRepository.Remove(await _showCaseProductRepository.GetAsync(x => x.Id == request.Id));
+                return Result.SuccessResult();
+            });
+        }
+        [LogAspect(typeof(MsSqlLogger))]
+        [CacheRemoveAspect("IShowCaseProductService.Get",
+        "IShowCaseDAL.GetShowCaseDto", "IShowCaseProductService.GetAllShowCaseDto")]
+        public async Task<Result> InsertProductShowcase(ShowCaseProduct showCaseProduct)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                await _showCaseProductRepository.AddAsync(showCaseProduct);
+                return Result.SuccessResult();
+            });
         }
         #endregion
     }

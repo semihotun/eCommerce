@@ -4,10 +4,9 @@ using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
-using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecificationAttributes;
+using DataAccess.UnitOfWork;
 using Entities.Concrete.ProductAggregate;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -19,27 +18,30 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes
     public class ProductSpecificationAttributeService : IProductSpecificationAttributeService
     {
         #region Field
-        IProductSpecificationAttributeDAL _productSpecificationAttributeRepository;
+        private readonly IProductSpecificationAttributeDAL _productSpecificationAttributeRepository;
+        private readonly IUnitOfWork _unitOfWork;
         #endregion
         #region Ctor
-        public ProductSpecificationAttributeService(IProductSpecificationAttributeDAL productSpecificationAttributeRepository)
+        public ProductSpecificationAttributeService(IProductSpecificationAttributeDAL productSpecificationAttributeRepository, IUnitOfWork unitOfWork)
         {
             _productSpecificationAttributeRepository = productSpecificationAttributeRepository;
+            _unitOfWork = unitOfWork;
         }
         #endregion
         #region Method
         [LogAspect(typeof(MsSqlLogger))]
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductShipmentInfoService.Get")]
-        public async Task<IResult> DeleteProductSpecificationAttribute(DeleteProductSpecificationAttribute request)
+        public async Task<Result> DeleteProductSpecificationAttribute(DeleteProductSpecificationAttribute request)
         {
-            var data = (await GetProductSpecificationAttributeById(new GetProductSpecificationAttributeById(request.Id))).Data;
-            _productSpecificationAttributeRepository.Delete(data);
-            await _productSpecificationAttributeRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            {
+                _productSpecificationAttributeRepository.Remove(
+                (await GetProductSpecificationAttributeById(new GetProductSpecificationAttributeById(request.Id))).Data);
+                return Result.SuccessResult();
+            });
         }
         [CacheAspect]
-        public async Task<IDataResult<IPagedList<ProductSpecificationAttribute>>> GetProductSpecificationAttributes(
+        public async Task<Result<IPagedList<ProductSpecificationAttribute>>> GetProductSpecificationAttributes(
             GetProductSpecificationAttributes request)
         {
             var query = _productSpecificationAttributeRepository.Query();
@@ -52,40 +54,38 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes
             if (request.ShowOnProductPage.HasValue)
                 query = query.Where(psa => psa.ShowOnProductPage == request.ShowOnProductPage.Value);
             query = query.OrderBy(psa => psa.DisplayOrder).ThenBy(psa => psa.Id);
-            var data = await query.ToPagedListAsync(request.PageIndex, request.PageSize);
-            return new SuccessDataResult<IPagedList<ProductSpecificationAttribute>>(data);
+            return Result.SuccessDataResult<IPagedList<ProductSpecificationAttribute>>(
+                await query.ToPagedListAsync(request.PageIndex, request.PageSize));
         }
         [CacheAspect]
-        public async Task<IDataResult<ProductSpecificationAttribute>> GetProductSpecificationAttributeById(GetProductSpecificationAttributeById request)
+        public async Task<Result<ProductSpecificationAttribute>> GetProductSpecificationAttributeById(GetProductSpecificationAttributeById request)
         {
-            var data = await _productSpecificationAttributeRepository.GetAsync(x => x.Id == request.productSpecificationAttributeId);
-            return new SuccessDataResult<ProductSpecificationAttribute>(data);
+            return Result.SuccessDataResult<ProductSpecificationAttribute>(
+                await _productSpecificationAttributeRepository.GetAsync(x => x.Id == request.ProductSpecificationAttributeId));
         }
         [ValidationAspect(typeof(CreateProductSpecificationAttributeValidator))]
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductShipmentInfoService.Get")]
         [LogAspect(typeof(MsSqlLogger))]
-        public async Task<IResult> InsertProductSpecificationAttribute(ProductSpecificationAttribute productSpecificationAttribute)
+        public async Task<Result> InsertProductSpecificationAttribute(ProductSpecificationAttribute productSpecificationAttribute)
         {
-            if (productSpecificationAttribute == null)
-                return new ErrorResult();
-            _productSpecificationAttributeRepository.Add(productSpecificationAttribute);
-            await _productSpecificationAttributeRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            {
+                await _productSpecificationAttributeRepository.AddAsync(productSpecificationAttribute);
+                return Result.SuccessResult();
+            });
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductShipmentInfoService.Get")]
         [LogAspect(typeof(MsSqlLogger))]
-        public async Task<IResult> UpdateProductSpecificationAttribute(ProductSpecificationAttribute productSpecificationAttribute)
+        public async Task<Result> UpdateProductSpecificationAttribute(ProductSpecificationAttribute productSpecificationAttribute)
         {
-            if (productSpecificationAttribute == null)
-                return new ErrorResult();
-            _productSpecificationAttributeRepository.Update(productSpecificationAttribute);
-            await _productSpecificationAttributeRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                _productSpecificationAttributeRepository.Update(productSpecificationAttribute);
+                return Result.SuccessResult();
+            });
         }
         [CacheAspect]
-        public async Task<IDataResult<int>> GetProductSpecificationAttributeCount(GetProductSpecificationAttributeCount request)
+        public async Task<Result<int>> GetProductSpecificationAttributeCount(GetProductSpecificationAttributeCount request)
         {
             var query = _productSpecificationAttributeRepository.Query();
             if (request.ProductId > 0)
@@ -93,7 +93,7 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes
             if (request.SpecificationAttributeOptionId > 0)
                 query = query.Where(psa => psa.SpecificationAttributeOptionId == request.SpecificationAttributeOptionId);
             var data = await query.CountAsync();
-            return new SuccessDataResult<int>(query.Count());
+            return Result.SuccessDataResult<int>(query.Count());
         }
         #endregion
     }

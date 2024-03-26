@@ -8,6 +8,6 @@ namespace DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments
 {
     public interface ICommentDAL : IEntityRepository<Comment>
     {
-        Task<IDataResult<IPagedList<Comment>>> GetCommentDataTable(GetCommentDataTable request);
+        Task<Result<IPagedList<Comment>>> GetCommentDataTable(GetCommentDataTable request);
     }
 }

@@ -1,18 +1,17 @@
-﻿using Core.Library;
-using Core.Utilities.Identity;
+﻿using Core.Utilities.Identity;
 using DataAccess.Context;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 namespace eCommerce.StartUpSettings
 {
     public static class UserIdentityExtension
     {
-        public static void AddUserIdentitySettings(this IServiceCollection services, IConfiguration configuration)
+        public static void AddUserIdentitySettings(this IServiceCollection services)
         {
             services.AddIdentity<MyUser, MyRole>()
-             .AddEntityFrameworkStores<eCommerceContext>()
+             .AddEntityFrameworkStores<ECommerceContext>()
              .AddErrorDescriber<CustomIdentityErrorDescriber>()
              .AddDefaultTokenProviders();
             services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromHours(3));
@@ -29,7 +28,7 @@ namespace eCommerce.StartUpSettings
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.User.AllowedUserNameCharacters =
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = false;              
+                options.User.RequireUniqueEmail = false;
             });
             services.ConfigureApplicationCookie(options =>
             {
@@ -42,7 +41,6 @@ namespace eCommerce.StartUpSettings
             //{
             //    x.AppId = Configuration["FacebookAppId"];
             //    x.AppSecret = Configuration["FacebookAppSecret"];
-            //    x.CallbackPath = new PathString("/User/Hata");
             //})
             //.AddGoogle(x =>
             //{

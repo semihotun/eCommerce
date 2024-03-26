@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Collections.Generic;
 namespace DataAccess.FluentApi.BrandAggregate
 {
-    public class BrandMap : IEntityTypeConfiguration<Brand>,ISeed<Brand>
+    public class BrandMap : IEntityTypeConfiguration<Brand>, ISeed<Brand>
     {
         public void Configure(EntityTypeBuilder<Brand> builder)
         {
@@ -14,12 +14,11 @@ namespace DataAccess.FluentApi.BrandAggregate
         }
         public List<Brand> GetSeedData()
         {
-            var data = new List<Brand>()
+            return new List<Brand>()
             {
-                new Brand(){ BrandName="Apple" },
-                new Brand(){ BrandName="Samsung" }
+                new(){ BrandName="Apple" },
+                new(){ BrandName="Samsung" }
             };
-            return data;
         }
     }
 }

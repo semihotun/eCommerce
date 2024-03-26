@@ -16,9 +16,9 @@ namespace DataAccess.FluentApi.ShowcaseAggregate
         {
             return new List<ShowCaseType>()
             {
-               new ShowCaseType(){ Type= "Ürün Slider" },
-               new ShowCaseType(){ Type= "8'li Ürün" },
-               new ShowCaseType(){ Type= "Yazı" }
+               new(){ Type= "Ürün Slider" },
+               new(){ Type= "8'li Ürün" },
+               new(){ Type= "Yazı" }
             };
         }
     }

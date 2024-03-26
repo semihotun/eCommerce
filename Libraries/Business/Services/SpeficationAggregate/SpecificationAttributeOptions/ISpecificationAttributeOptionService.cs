@@ -8,12 +8,12 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions
 {
     public interface ISpecificationAttributeOptionService
     {
-        Task<IDataResult<SpecificationAttributeOption>> GetSpecificationAttributeOptionById(GetSpecificationAttributeOptionById request);
-        Task<IDataResult<IList<SpecificationAttributeOption>>> GetSpecificationAttributeOptionsByIds(GetSpecificationAttributeOptionsByIds request);
-        Task<IDataResult<int[]>> GetNotExistingSpecificationAttributeOptions(GetNotExistingSpecificationAttributeOptions request);
-        Task<IDataResult<IPagedList<SpecificationAttributeOption>>> GetSpecificationAttributeOptionsBySpecificationAttribute(GetSpecificationAttributeOptionsBySpecificationAttribute request);
-        Task<IResult> DeleteSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption);
-        Task<IResult> InsertSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption);
-        Task<IResult> UpdateSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption);
+        Task<Result<SpecificationAttributeOption>> GetSpecificationAttributeOptionById(GetSpecificationAttributeOptionById request);
+        Task<Result<List<SpecificationAttributeOption>>> GetSpecificationAttributeOptionsByIds(GetSpecificationAttributeOptionsByIds request);
+        Task<Result<int[]>> GetNotExistingSpecificationAttributeOptions(GetNotExistingSpecificationAttributeOptions request);
+        Task<Result<IPagedList<SpecificationAttributeOption>>> GetSpecificationAttributeOptionsBySpecificationAttribute(GetSpecificationAttributeOptionsBySpecificationAttribute request);
+        Task<Result> DeleteSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption);
+        Task<Result> InsertSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption);
+        Task<Result> UpdateSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption);
     }
 }

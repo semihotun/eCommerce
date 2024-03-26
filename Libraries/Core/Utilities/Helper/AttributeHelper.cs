@@ -1,20 +1,22 @@
 ﻿using System.Collections.Generic;
 namespace Core.Utilities.Helper
 {
-    public class AttributeHelper
+    public static class AttributeHelper
     {
-        public List<List<int>> Permutations(List<List<int>> arrays)
+        public static List<List<int>> Permutations(List<List<int>> arrays)
         {
-            List<List<int>> res = new List<List<int>>();
-            res.Add(new List<int>());
+            List<List<int>> res = new()
+            {
+                new()
+            };
             foreach (var list in arrays)
             {
-                List<List<int>> newRes = new List<List<int>>();
+                List<List<int>> newRes = new();
                 foreach (var num in list)
                 {
                     foreach (var resItem in res)
                     {
-                        List<int> newResItem = new List<int>() { num };
+                        List<int> newResItem = new() { num };
                         newResItem.AddRange(resItem);
                         newRes.Add(newResItem);
                     }

@@ -6,7 +6,7 @@ namespace Business.Services.ShowcaseAggregate.ShowCaseProducts
 {
     public interface IShowCaseProductService
     {
-        Task<IResult> InsertProductShowcase(ShowCaseProduct showCaseProduct);
-        Task<IResult> DeleteShowCaseProduct(DeleteShowCaseProduct request);
+        Task<Result> InsertProductShowcase(ShowCaseProduct showCaseProduct);
+        Task<Result> DeleteShowCaseProduct(DeleteShowCaseProduct request);
     }
 }

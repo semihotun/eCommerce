@@ -11,13 +11,13 @@ using System.Linq;
 using System.Threading.Tasks;
 namespace DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos
 {
-    public class CombinationPhotoDAL : EfEntityRepositoryBase<CombinationPhoto, eCommerceContext>, ICombinationPhotoDAL
+    public class CombinationPhotoDAL : EfEntityRepositoryBase<CombinationPhoto, ECommerceContext>, ICombinationPhotoDAL
     {
-        public CombinationPhotoDAL(eCommerceContext context) : base(context)
+        public CombinationPhotoDAL(ECommerceContext context) : base(context)
         {
         }
         [CacheAspect]
-        public async Task<IDataResult<List<CombinationPhotoDTO>>> GetAllCombinationPhotosDTO(GetAllCombinationPhotosDTO request)
+        public async Task<Result<List<CombinationPhotoDTO>>> GetAllCombinationPhotosDTO(GetAllCombinationPhotosDTO request)
         {
             var query = from cp in Context.CombinationPhoto
                         join pac in Context.ProductAttributeCombination on cp.CombinationId equals pac.Id
@@ -29,7 +29,7 @@ namespace DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos
                             PhotoId = cp.PhotoId,
                             Id = cp.Id,
                         };
-            return new SuccessDataResult<List<CombinationPhotoDTO>>(await query.ToListAsync());
+            return Result.SuccessDataResult(await query.ToListAsync());
         }
     }
 }

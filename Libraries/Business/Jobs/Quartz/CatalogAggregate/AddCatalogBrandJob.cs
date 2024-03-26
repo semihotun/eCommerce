@@ -21,13 +21,11 @@ namespace Business.Jobs.Quartz.CatalogAggregate
         }
         public async Task Execute(IJobExecutionContext context)
         {
-            var productsGroup = _productDAL.Query().GroupBy(x => new { x.BrandId, x.CategoryId })
-            .Select(gcs => new
+            var productsGroup = _productDAL.Query().GroupBy(x => new { x.BrandId, x.CategoryId }).Select(gcs => new
             {
                 gcs.Key.BrandId,
                 gcs.Key.CategoryId
             });
-            //Olmayan markaları Ekle
             var catalogList = new List<CatalogBrand>();
             foreach (var item in productsGroup)
             {
@@ -44,8 +42,8 @@ namespace Business.Jobs.Quartz.CatalogAggregate
                     });
                 }
             }
-            _catalogBrandDal.AddRange(catalogList);
-            _catalogBrandDal.SaveChanges();
+            await _catalogBrandDal.AddRangeAsync(catalogList);
+            await Task.CompletedTask;
         }
     }
 }

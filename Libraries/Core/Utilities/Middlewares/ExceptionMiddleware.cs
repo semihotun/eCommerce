@@ -1,8 +1,10 @@
-﻿using global::Serilog;
+﻿using Core.Utilities.Exceptions;
+using Core.Utilities.Exceptions.ValidationException;
+using global::Serilog;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Security;
@@ -24,25 +26,29 @@ namespace Core.Utilities.Middlewares
             }
             catch (Exception e)
             {
-                await HandleExceptionAsync(httpContext, e);
+                await HandleApiExceptionAsync(httpContext, e);
             }
         }
-        public class ErrorDetails
+        private static async Task HandleApiExceptionAsync(HttpContext httpContext, Exception e)
         {
-            public int StatusCode { get; set; }
-            public string ErorDetail { get; set; }
-        }
-        private async Task HandleExceptionAsync(HttpContext httpContext, Exception e)
-        {
-            var errorDetails = new ErrorDetails();
-            errorDetails.StatusCode = (int)HttpStatusCode.InternalServerError;
+            var errorDetails = new ErrorDetails
+            {
+                StatusCode = (int)HttpStatusCode.InternalServerError
+            };
             httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            if (e.GetType() == typeof(ValidationException))
+            if (e.GetType().Name == nameof(CustomValidatonException))
             {
-                errorDetails.ErorDetail = e.Message;
-                errorDetails.StatusCode = (int)HttpStatusCode.BadRequest;
-                httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                var validationErorDetail = new ValidationErorDetail
+                {
+                    Message = JsonConvert.DeserializeObject<IEnumerable<ValidationData>>(e.Message),
+                    StatusCode = (int)HttpStatusCode.BadRequest,
+                    ErrorType = "ValidationException"
+                };
+                var customValidationObject = JsonConvert.SerializeObject(validationErorDetail);
+                Log.Error(customValidationObject);
+                await httpContext.Response.WriteAsync(customValidationObject);
+                return;
             }
             else if (e.GetType() == typeof(ApplicationException))
             {

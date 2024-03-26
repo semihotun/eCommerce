@@ -6,7 +6,8 @@
         public DTColumn[] Columns { get; set; }
         public DTOrder[] Order { get; set; }
         public int Start
-        {           get; set;
+        {
+            get; set;
         }
         public int Length { get; set; }
         public DTSearch Search { get; set; }
@@ -14,7 +15,7 @@
         {
             get
             {
-                return Columns != null && Order != null && Order.Length > 0
+                return Columns != null && Order?.Length > 0
                     ? (Columns[Order[0].Column].Data + (Order[0].Dir == DTOrderDir.DESC ? " " + Order[0].Dir : string.Empty))
                     : null;
             }
@@ -23,7 +24,7 @@
         {
             get
             {
-                return (Start/Length)+1;
+                return (Start / Length) + 1;
             }
             set
             {

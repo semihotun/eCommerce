@@ -1,12 +1,12 @@
-﻿using Business.Services.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingServiceModel;
+﻿using Business.Constants;
+using Business.Services.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingServiceModel;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
-using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeValues;
+using DataAccess.UnitOfWork;
 using Entities.Concrete.ProductAggregate;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -20,87 +20,78 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings
         #region Field
         private readonly IProductAttributeMappingDAL _productAttributeMappingRepository;
         private readonly IProductAttributeValueDAL _productAttributeValueRepository;
+        private readonly IUnitOfWork _unitOfWork;
         #endregion
         #region Ctor
         public ProductAttributeMappingService(IProductAttributeMappingDAL productAttributeMappingRepository,
-                                              IProductAttributeValueDAL productAttributeValueRepository)
+                                              IProductAttributeValueDAL productAttributeValueRepository,
+                                              IUnitOfWork unitOfWork)
         {
             _productAttributeMappingRepository = productAttributeMappingRepository;
             _productAttributeValueRepository = productAttributeValueRepository;
+            _unitOfWork = unitOfWork;
         }
         #endregion
         #region Method
         [CacheAspect]
-        public async Task<IDataResult<IPagedList<ProductAttributeMapping>>> GetAllProductAttributeMapping(GetAllProductAttributeMapping request)
+        public async Task<Result<IPagedList<ProductAttributeMapping>>> GetAllProductAttributeMapping(GetAllProductAttributeMapping request)
         {
-            var query = from pam in _productAttributeMappingRepository.Query()
-                        orderby pam.DisplayOrder, pam.Id
-                        where pam.ProductId == request.ProductId
-                        select pam;
-            var data = await query.ToPagedListAsync(request.Param.PageIndex, request.Param.PageSize);
-            return new SuccessDataResult<IPagedList<ProductAttributeMapping>>(data);
+            return Result.SuccessDataResult(
+                await (from pam in _productAttributeMappingRepository.Query()
+                       orderby pam.DisplayOrder, pam.Id
+                       where pam.ProductId == request.ProductId
+                       select pam).ToPagedListAsync(request.Param.PageIndex, request.Param.PageSize));
         }
         [CacheRemoveAspect("IProductAttributeMappingService.Get")]
-        [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
-        public async Task<IResult> DeleteProductAttributeMapping(DeleteProductAttributeMapping request)
+        public async Task<Result> DeleteProductAttributeMapping(DeleteProductAttributeMapping request)
         {
-            if (request.Id == 0)
-                return new ErrorResult();
-            var data = await _productAttributeValueRepository.
-                GetListAsync(x => x.ProductAttributeMappingId == request.Id);
-            if (data.Count() != 0)
+            return await _unitOfWork.BeginTransaction(async () =>
             {
-                foreach (var item in data)
+                var productAttributeValues = await _productAttributeValueRepository.GetListAsync(x => x.ProductAttributeMappingId == request.Id);
+                foreach (var item in productAttributeValues)
                 {
                     var productAttributeData = await _productAttributeValueRepository.GetAsync(x => x.Id == item.Id);
-                    _productAttributeValueRepository.Delete(productAttributeData);
+                    _productAttributeValueRepository.Remove(productAttributeData);
                 }
-            }
-            await _productAttributeValueRepository.SaveChangesAsync();
-            var mappingData = await _productAttributeMappingRepository.GetAsync(x => x.Id == request.Id);
-            _productAttributeMappingRepository.Delete(mappingData);
-            await _productAttributeMappingRepository.SaveChangesAsync();
-            return new SuccessResult();
+                _productAttributeMappingRepository.Remove(await _productAttributeMappingRepository.GetAsync(x => x.Id == request.Id));
+                return Result.SuccessResult();
+            });
         }
         [CacheAspect]
-        public async Task<IDataResult<IList<ProductAttributeMapping>>> GetProductAttributeMappingsByProductId(GetProductAttributeMappingsByProductId request)
+        public async Task<Result<List<ProductAttributeMapping>>> GetProductAttributeMappingsByProductId(GetProductAttributeMappingsByProductId request)
         {
             var query = from pam in _productAttributeMappingRepository.Query()
                         orderby pam.DisplayOrder, pam.Id
                         where pam.ProductId == request.ProductId
                         select pam;
-            var data = await query.ToListAsync();
-            return new SuccessDataResult<List<ProductAttributeMapping>>(data);
+            return Result.SuccessDataResult(await query.ToListAsync());
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductAttributeMappingService.Get")]
-        public async Task<IDataResult<ProductAttributeMapping>> GetProductAttributeMappingById(GetProductAttributeMappingById request)
+        public async Task<Result<ProductAttributeMapping>> GetProductAttributeMappingById(GetProductAttributeMappingById request)
         {
-            var data = await _productAttributeMappingRepository.GetAsync(x => x.Id == request.ProductAttributeMappingId);
-            return new SuccessDataResult<ProductAttributeMapping>(data);
+            return Result.SuccessDataResult(
+                await _productAttributeMappingRepository.GetAsync(x => x.Id == request.ProductAttributeMappingId));
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductAttributeMappingService.Get")]
-        public async Task<IResult> InsertProductAttributeMapping(ProductAttributeMapping productAttributeMapping)
+        public async Task<Result<ProductAttributeMapping>> InsertProductAttributeMapping(ProductAttributeMapping productAttributeMapping)
         {
-            if (productAttributeMapping == null)
-                return new ErrorResult();
-            _productAttributeMappingRepository.Add(productAttributeMapping);
-            await _productAttributeMappingRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                await _productAttributeMappingRepository.AddAsync(productAttributeMapping);
+                return Result.SuccessDataResult(productAttributeMapping);
+            });
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IProductAttributeMappingService.Get")]
-        public async Task<IResult> UpdateProductAttributeMapping(ProductAttributeMapping productAttributeMapping)
+        public async Task<Result> UpdateProductAttributeMapping(ProductAttributeMapping productAttributeMapping)
         {
-            if (productAttributeMapping == null)
-                return new ErrorResult();
-            _productAttributeMappingRepository.Update(productAttributeMapping);
-            await _productAttributeMappingRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                _productAttributeMappingRepository.Update(productAttributeMapping);
+                return Result.SuccessResult();
+            });
         }
         #endregion
     }

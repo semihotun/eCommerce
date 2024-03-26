@@ -3,10 +3,9 @@ using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Infrastructure.Filter;
-using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
-using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStocks;
+using DataAccess.UnitOfWork;
 using Entities.Concrete.ProductAggregate;
 using System.Threading.Tasks;
 using X.PagedList;
@@ -16,40 +15,44 @@ namespace Business.Services.ProductAggregate.ProductStocks
     {
         #region Field
         private readonly IProductStockDAL _productStockDal;
+        private readonly IUnitOfWork _unitOfWork;
         #endregion
         #region Ctor
-        public ProductStockService(IProductStockDAL productStockDal)
+        public ProductStockService(IProductStockDAL productStockDal, IUnitOfWork unitOfWork)
         {
             _productStockDal = productStockDal;
+            _unitOfWork = unitOfWork;
         }
         #endregion   
         [CacheAspect]
-        public async Task<IDataResult<IPagedList<ProductStock>>> GetAllProductStock(GetAllProductStock request)
+        public async Task<Result<IPagedList<ProductStock>>> GetAllProductStock(GetAllProductStock request)
         {
-            var query = _productStockDal.Query().ApplyFilter(request.ProductStockFilter);
-            var result = await query.ToPagedListAsync(request.Param.PageIndex, request.Param.PageSize);
-            return new SuccessDataResult<IPagedList<ProductStock>>(result);
+            return Result.SuccessDataResult(await _productStockDal
+                .Query()
+                .ApplyFilter(request.ProductStockFilter)
+                .ToPagedListAsync(request.Param.PageIndex, request.Param.PageSize));
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductStockService.Get", 
+        [CacheRemoveAspect("IProductStockService.Get",
         "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
-        public async Task<IResult> AddProductStock(ProductStock productStock)
+        public async Task<Result> AddProductStock(ProductStock productStock)
         {
-            _productStockDal.Add(productStock);
-            await _productStockDal.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            {
+                await _productStockDal.AddAsync(productStock);
+                return Result.SuccessResult();
+            });
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductStockService.Get", "IShowcaseDAL.GetShowCaseDto", 
+        [CacheRemoveAspect("IProductStockService.Get", "IShowcaseDAL.GetShowCaseDto",
         "IShowcaseDAL.GetAllShowCaseDto")]
-        public async Task<IResult> DeleteProductStock(DeleteProductStock request)
+        public async Task<Result> DeleteProductStock(DeleteProductStock request)
         {
-            var productStock = await _productStockDal.GetAsync(x => x.Id == request.Id);
-            _productStockDal.Delete(productStock);
-            await _productStockDal.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            {
+                _productStockDal.Remove(await _productStockDal.GetAsync(x => x.Id == request.Id));
+                return Result.SuccessResult();
+            });
         }
     }
 }

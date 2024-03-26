@@ -2,9 +2,9 @@
 {
     public class GetShowcase
     {
-        public GetShowcase(int ıd)
+        public GetShowcase(int id)
         {
-            Id = ıd;
+            Id = id;
         }
         public GetShowcase()
         {

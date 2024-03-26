@@ -31,8 +31,7 @@ namespace eCommerce.Areas.Admin.Controllers
         }
         public async Task<IActionResult> CommentListJson(CommentDataTableFilter model, DataTablesParam param)
         {
-            var query = await _commentDal.GetCommentDataTable(new GetCommentDataTable(model, param));
-            return ToDataTableJson(query,param);
+            return ToDataTableJson(await _commentDal.GetCommentDataTable(new GetCommentDataTable(model, param)), param);
         }
         [HttpGet]
         public IActionResult CommentList()
@@ -48,13 +47,11 @@ namespace eCommerce.Areas.Admin.Controllers
         }
         public async Task<IActionResult> CommentEdit(int id)
         {
-            var data = await _commentService.GetComment(new GetComment(id));
-            return View(data.Data);
+            return View((await _commentService.GetComment(new GetComment(id))).Data);
         }
         public async Task<IActionResult> CommentDelete(int id)
         {
-            var deleteData = await _commentService.GetComment(new GetComment(id));
-            ResponseAlert(await _commentService.DeleteComment(deleteData.Data));
+            ResponseAlert(await _commentService.DeleteComment((await _commentService.GetComment(new GetComment(id))).Data));
             return RedirectToAction("CommentList", "Comment");
         }
         public async Task<IActionResult> CommentApprove(int id)

@@ -7,10 +7,11 @@ namespace Business.Services.ProductAggregate.Products
 {
     public interface IProductService
     {
-        Task<IResult> AddProduct(Product product);
-        Task<IResult> UpdateProduct(Product product);
-        Task<IResult> DeleteProduct(DeleteProduct request);
-        Task<IDataResult<Product>> GetProduct(GetProduct request);
-        Task<IDataResult<IPagedList<Product>>> GetProductsBySpecificationAttributeId(GetProductsBySpecificationAttributeId request);
+        Task<Result<Product>> CreateOrUpdateProduct(Product product);
+        Task<Result<Product>> AddProduct(Product product);
+        Task<Result<Product>> UpdateProduct(Product product);
+        Task<Result> DeleteProduct(DeleteProduct request);
+        Task<Result<Product>> GetProduct(GetProduct request);
+        Task<Result<IPagedList<Product>>> GetProductsBySpecificationAttributeId(GetProductsBySpecificationAttributeId request);
     }
 }

@@ -2,7 +2,7 @@
 <div class="table-responsive">
     @using (Html.BeginForm("ShowcaseEdit", "ShowCase", FormMethod.Get, new { Tap = "tap3", Id = "ProductListForm" }))
     {
-        <input type="hidden" name="Tap" value="tab3" class="tabsaklayici" />
+        <input type="hidden" name="Tap" value="tab3" class="tabHiddenData" />
         <div style="display:flex;flex-wrap:wrap;">
             <div class="form-group col-md-6 row">
                 <input type="hidden" name="id" value="@Model.ShowCaseDto.Id" />

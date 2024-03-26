@@ -13,7 +13,7 @@ namespace Core.DataAccess
             var context = dbSet.GetContext();
             var ids = context.Model.FindEntityType(typeof(T)).FindPrimaryKey().Properties.Select(x => x.Name);
             var t = typeof(T);
-            List<PropertyInfo> keyFields = new List<PropertyInfo>();
+            List<PropertyInfo> keyFields = new();
             foreach (var propt in t.GetProperties())
             {
                 var keyAttr = ids.Contains(propt.Name);
@@ -22,7 +22,7 @@ namespace Core.DataAccess
                     keyFields.Add(propt);
                 }
             }
-            if (keyFields.Count <= 0)
+            if (keyFields.Count == 0)
             {
                 throw new Exception($"{t.FullName} does not have a KeyAttribute field. Unable to exec AddOrUpdate call.");
             }
@@ -47,11 +47,7 @@ namespace Core.DataAccess
             var ids = context.Model.FindEntityType(typeof(T)).FindPrimaryKey().Properties.Select(x => x.Name);
             var t = typeof(T);
             var keyObject = key.Compile()(data);
-            PropertyInfo[] keyFields = keyObject.GetType().GetProperties().Select(p => t.GetProperty(p.Name)).ToArray();
-            if (keyFields == null)
-            {
-                throw new Exception($"{t.FullName} does not have a KeyAttribute field. Unable to exec AddOrUpdate call.");
-            }
+            PropertyInfo[] keyFields = keyObject.GetType().GetProperties().Select(p => t.GetProperty(p.Name)).ToArray() ?? throw new Exception($"{t.FullName} does not have a KeyAttribute field. Unable to exec AddOrUpdate call.");
             var keyVals = keyFields.Select(p => p.GetValue(data));
             var entities = dbSet.AsNoTracking().ToList();
             int i = 0;
@@ -72,7 +68,7 @@ namespace Core.DataAccess
                         keyAttr.SetValue(data,
                             dbVal.GetType()
                                 .GetProperties()
-                                .FirstOrDefault(p => p.Name == keyAttr.Name)
+                                .FirstOrDefault(p => p.Name == keyAttr.Name)?
                                 .GetValue(dbVal));
                     }
                     context.Entry(dbVal).CurrentValues.SetValues(data);

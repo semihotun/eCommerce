@@ -3,9 +3,9 @@ using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.PhotoAggregate;
 namespace DataAccess.DALs.EntitiyFramework.PhotoAggregate.ProductPhotos
 {
-    public class ProductPhotoDAL : EfEntityRepositoryBase<ProductPhoto, eCommerceContext>, IProductPhotoDAL
+    public class ProductPhotoDAL : EfEntityRepositoryBase<ProductPhoto, ECommerceContext>, IProductPhotoDAL
     {
-        public ProductPhotoDAL(eCommerceContext context) : base(context)
+        public ProductPhotoDAL(ECommerceContext context) : base(context)
         {
         }
     }

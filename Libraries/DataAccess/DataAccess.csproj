@@ -1,22 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
 	</PropertyGroup>
-	<ItemGroup>
-	  <Compile Remove="DALs\EntitiyFramework\ProductAggregate\ProductLikes\CompiledQueries\**" />
-	  <Compile Remove="DALs\EntitiyFramework\ProductAggregate\ProductLikes\ProductLikesModels\**" />
-	  <EmbeddedResource Remove="DALs\EntitiyFramework\ProductAggregate\ProductLikes\CompiledQueries\**" />
-	  <EmbeddedResource Remove="DALs\EntitiyFramework\ProductAggregate\ProductLikes\ProductLikesModels\**" />
-	  <None Remove="DALs\EntitiyFramework\ProductAggregate\ProductLikes\CompiledQueries\**" />
-	  <None Remove="DALs\EntitiyFramework\ProductAggregate\ProductLikes\ProductLikesModels\**" />
-	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="10.1.1" />
 		<PackageReference Include="AutoMapperPagedList" Version="0.6.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.13" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.13" />
-		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.9" />
+		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.10" />
 		<PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
 	</ItemGroup>
 	<ItemGroup>

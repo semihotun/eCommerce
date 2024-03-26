@@ -1,4 +1,3 @@
-using System;
 namespace Plugin.Iyzico.Models
 {
     public class ErrorViewModel

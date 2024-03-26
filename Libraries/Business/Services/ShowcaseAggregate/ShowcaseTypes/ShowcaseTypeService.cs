@@ -23,24 +23,21 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseTypes
         #endregion
         #region  Method
         [CacheAspect]
-        public async Task<IDataResult<IList<ShowCaseType>>> GetAllShowCaseType()
+        public async Task<Result<IList<ShowCaseType>>> GetAllShowCaseType()
         {
-            var query = _showcaseTypeDal.Query();
-            var data = await query.ToListAsync();
-            return new SuccessDataResult<IList<ShowCaseType>>(data);
+            return Result.SuccessDataResult<IList<ShowCaseType>>(await _showcaseTypeDal.Query().ToListAsync());
         }
         [CacheAspect]
-        public async Task<IDataResult<IEnumerable<SelectListItem>>> GetAllShowCaseTypeSelectListItem(GetAllShowCaseTypeSelectListItem request)
+        public async Task<Result<IEnumerable<SelectListItem>>> GetAllShowCaseTypeSelectListItem(GetAllShowCaseTypeSelectListItem request)
         {
-            var query = from s in _showcaseTypeDal.Query()
-                        select new SelectListItem
-                        {
-                            Text = s.Type,
-                            Value = s.Id.ToString(),
-                            Selected = s.Id == request.SelectedId ? true : false
-                        };
-            var data = await query.ToListAsync();
-            return new SuccessDataResult<IEnumerable<SelectListItem>>(data);
+            var data = await (from s in _showcaseTypeDal.Query()
+                              select new SelectListItem
+                              {
+                                  Text = s.Type,
+                                  Value = s.Id.ToString(),
+                                  Selected = s.Id == request.SelectedId
+                              }).ToListAsync();
+            return Result.SuccessDataResult<IEnumerable<SelectListItem>>(data);
         }
         #endregion
     }

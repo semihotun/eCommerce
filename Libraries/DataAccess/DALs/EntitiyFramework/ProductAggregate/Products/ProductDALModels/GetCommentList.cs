@@ -8,7 +8,7 @@
         public string OrderByText { get; set; }
         public bool IsApproved { get; set; }
         public GetCommentListDTO(int productId, int pageIndex, int pageSize,
-            string orderByText = null,bool isApproved = true)
+            string orderByText = null, bool isApproved = true)
         {
             ProductId = productId;
             PageIndex = pageIndex;

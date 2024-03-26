@@ -7,6 +7,6 @@ namespace Business.Services.BrandAggregate.CatalogBrands
 {
     public interface ICatalogBrandService
     {
-        Task<IDataResult<IEnumerable<CatalogBrand>>> GetCatalogBrand(GetCatalogBrand request);
+        Task<Result<IEnumerable<CatalogBrand>>> GetCatalogBrand(GetCatalogBrand request);
     }
 }

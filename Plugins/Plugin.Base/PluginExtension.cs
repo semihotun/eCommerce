@@ -34,19 +34,18 @@ namespace Plugin.Base
         }
         public static IEnumerable<Assembly> GetPluginAssemblies()
         {
-            var result = Directory.EnumerateFiles(Directory.GetCurrentDirectory(), "Plugin.*.dll", SearchOption.AllDirectories)
+            return Directory.EnumerateFiles(Directory.GetCurrentDirectory(), "Plugin.*.dll", SearchOption.AllDirectories)
                 .Where(x => !x.Contains("Plugin.Base.dll"))
                 .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath);
-            return result;
         }
         public static void AddPluginStaticFileProvier(this IApplicationBuilder app, IEnumerable<Assembly> pluginAssemblies)
         {
-            var plugin = pluginAssemblies.Where(x => x.ManifestModule.Name.Contains("Views") == false);
+            var plugin = pluginAssemblies.Where(x => !x.ManifestModule.Name.Contains("Views"));
             var staticOptions = new List<StaticFileOptions>();
             foreach (var item in plugin)
             {
                 var pluginFolderName = item.ManifestModule.Name.Replace(".dll", "");
-                var option = new StaticFileOptions();     
+                var option = new StaticFileOptions();
                 try
                 {
                     var solutionPath = new DirectoryInfo(Directory.GetCurrentDirectory()).Parent;

@@ -19,7 +19,7 @@
                 <div class="card-body">
                     @using (Html.BeginForm("ShowcaseEdit", "Showcase", FormMethod.Post))
                     {
-                        @Html.HiddenFor(x => x.Tap, new { @class = "tabsaklayici" })
+                        @Html.HiddenFor(x => x.Tap, new { @class = "tabHiddenData" })
                         <div style="display:flex">
                             <div class="col-md-2" style="float:right;">
                                 <br />
@@ -120,9 +120,9 @@
 </div>
 <script>
     $(document).ready(function () {
-        var tappost = $(".tabsaklayici").val();
+        var tappost = $(".tabHiddenData").val();
         if (tappost == null || tappost == "") {
-            $(".tabsaklayici").val("tap1");
+            $(".tabHiddenData").val("tap1");
         }
         else {
             $(".tab-pane").removeClass("active");
@@ -136,12 +136,12 @@
             var tapid = tapid.replace("#", "");
             var selectedhead = $("." + tapid).text();
             $(".card-title").text(selectedhead);
-            $(".tabsaklayici").val(tapid);
+            $(".tabHiddenData").val(tapid);
             var selectedhead = $(this).text();
             $(".card-title").text(selectedhead);
-            var yol = $(this).attr("href");
-            var deger = yol.replace("#", "");
-            $("#tabsaklayici").val(deger);
+            var way = $(this).attr("href");
+            var deger = way.replace("#", "");
+            $("#tabHiddenData").val(deger);
         });
     });
 </script>

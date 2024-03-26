@@ -7,7 +7,7 @@ namespace Business.Services.PhotoAggregate.CombinationPhotos
 {
     public interface ICombinationPhotoService
     {
-        Task<IDataResult<List<CombinationPhoto>>> GetAllCombinationPhotos(GetAllCombinationPhotos request);
-        Task<IResult> InsertCombinationPhotos(InsertCombinationPhotos request);
+        Task<Result<List<CombinationPhoto>>> GetAllCombinationPhotos(GetAllCombinationPhotos request);
+        Task<Result> InsertCombinationPhotos(InsertCombinationPhotos request);
     }
 }

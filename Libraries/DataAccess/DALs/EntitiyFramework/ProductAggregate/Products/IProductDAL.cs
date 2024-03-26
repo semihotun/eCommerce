@@ -12,15 +12,15 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
 {
     public interface IProductDAL : IEntityRepository<Product>
     {
-        Task<IDataResult<ProductDetailDTO>> GetHomeProductDetail(GetHomeProductDetail request);
-        Task<IDataResult<IPagedList<ProductDataTableJson>>> GetProductDataTableList(
+        Task<Result<ProductDetailDTO>> GetHomeProductDetail(GetHomeProductDetail request);
+        Task<Result<IPagedList<ProductDataTableJson>>> GetProductDataTableList(
            GetProductDataTableList request);
-        Task<IDataResult<ProductCommentDTO>> GetCommentListDTO(
+        Task<Result<ProductCommentDTO>> GetCommentListDTO(
          GetCommentListDTO request);
-        Task<IDataResult<IPagedList<CatalogProduct>>> GetCatalogProduct(CatalogVM catalog);
-        Task<IDataResult<Checkout>> GetCheckout(GetCheckout request);
-        Task<IDataResult<List<ShowCaseProductDTO.Product>>> GetAnotherProductList();
-        Task<IDataResult<ProductDetailVM>> GetProductDetailVM(GetProductDetailVM request);
-        Task<IDataResult<IEnumerable<ProductSearch>>> GetMainSearchProduct(GetMainSearchProduct request);
+        Task<Result<IPagedList<CatalogProduct>>> GetCatalogProduct(CatalogVM catalog);
+        Task<Result<Checkout>> GetCheckout(GetCheckout request);
+        Task<Result<List<ShowCaseProductDTO.Product>>> GetAnotherProductList();
+        Task<Result<ProductDetailVM>> GetProductDetailVM(GetProductDetailVM request);
+        Task<Result<IEnumerable<ProductSearch>>> GetMainSearchProduct(GetMainSearchProduct request);
     }
 }

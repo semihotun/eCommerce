@@ -5,7 +5,8 @@ namespace Business.Extension
 {
     public static class JobStartUpExtension
     {
-        public static void AddJobList(this IServiceCollection services){
+        public static void AddJobList(this IServiceCollection services)
+        {
             services.AddQuartzSingleton<AddCatalogBrandJob>("0 0/1 * * * ? *");
         }
     }

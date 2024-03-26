@@ -7,6 +7,6 @@ namespace Business.Services.ProductAggregate.ProductStockTypes
 {
     public interface IProductStockTypeService
     {
-        Task<IDataResult<IEnumerable<SelectListItem>>> GetAllProductStockType(GetAllProductStockType request);
+        Task<Result<IEnumerable<SelectListItem>>> GetAllProductStockType(GetAllProductStockType request);
     }
 }

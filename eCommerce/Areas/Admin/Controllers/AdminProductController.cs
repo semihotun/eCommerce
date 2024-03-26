@@ -10,8 +10,6 @@ using Business.Services.ProductAggregate.ProductAttributeMappings;
 using Business.Services.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingServiceModel;
 using Business.Services.ProductAggregate.ProductAttributes;
 using Business.Services.ProductAggregate.ProductAttributes.ProductAttributeServiceModel;
-using Business.Services.ProductAggregate.ProductAttributeValues;
-using Business.Services.ProductAggregate.ProductAttributeValues.ProductAttributeValueServiceModel;
 using Business.Services.ProductAggregate.Products;
 using Business.Services.ProductAggregate.Products.ProductServiceModel;
 using Business.Services.ProductAggregate.ProductStockTypes;
@@ -19,7 +17,6 @@ using Business.Services.ProductAggregate.ProductStockTypes.ProductStockTypeServi
 using Business.Services.SpeficationAggregate.SpecificationAttributes;
 using Business.Services.SpeficationAggregate.SpecificationAttributes.SpecificationAttributeServiceModel;
 using Core.Utilities.DataTable;
-using Core.Utilities.Helper;
 using Core.Utilities.Identity;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeCombinations;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeCombinations.ProductAttributeCombinationDALModels;
@@ -33,7 +30,6 @@ using Entities.Others;
 using Entities.ViewModels.AdminViewModel.AdminProduct;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 #endregion
@@ -54,7 +50,6 @@ namespace eCommerce.Areas.Admin.Controllers
         private readonly ISpecificationAttributeService _specificationAttributeService;
         private readonly IProductAttributeCombinationService _productAttributeCombinationService;
         private readonly IProductAttributeMappingService _productAttributeMappingService;
-        private readonly IProductAttributeValueService _productAttributeValueService;
         private readonly IProductDAL _productDAL;
         private readonly IBrandService _brandService;
         private readonly IProductAttributeCombinationDAL _productAttributeCombinationDal;
@@ -69,7 +64,6 @@ namespace eCommerce.Areas.Admin.Controllers
          ISpecificationAttributeService specificationAttributeService,
          IProductAttributeCombinationService productAttributeCombinationService,
          IProductAttributeMappingService productAttributeMappingService,
-         IProductAttributeValueService productAttributeValueService,
          IProductDAL productDAL,
          IBrandService brandService,
          IProductAttributeCombinationDAL productAttributeCombinationDal,
@@ -84,73 +78,25 @@ namespace eCommerce.Areas.Admin.Controllers
             this._specificationAttributeService = specificationAttributeService;
             this._productAttributeCombinationService = productAttributeCombinationService;
             this._productAttributeMappingService = productAttributeMappingService;
-            this._productAttributeValueService = productAttributeValueService;
             this._productDAL = productDAL;
             _brandService = brandService;
             _productAttributeCombinationDal = productAttributeCombinationDal;
             _productStockTypeService = productStockTypeService;
         }
         #endregion
-        #region Utilities
-        [NonAction]
-        public async Task ProductEditFillSelectList(ProductVM model)
-        {
-            var productStockTypeSelectListTask = _productStockTypeService.GetAllProductStockType(new GetAllProductStockType(model.ProductStockTypeId));
-            var categorySelectListItemsTask = _categoryService.GetCategoryDropdown(new GetCategoryDropdown(model.CategoryId));
-            var brandSelectListItemsTask = _brandService.GetBrandDropdown(new GetBrandDropdown(model.BrandId));
-            var productAttributeSelectlistTask = _productAttributeService.GetProductAttributeDropdown(new GetProductAttributeDropdown());
-            var speficationAttributeSelectListTask = _specificationAttributeService.GetProductSpeficationAttributeDropdwon(new GetProductSpeficationAttributeDropdwon());
-            var combinationSelectListTask = _productAttributeCombinationDal.ProductAttributeCombinationDropDown
-                (new ProductAttributeCombinationDropDown(model.Id));
-            await Task.WhenAll(
-            categorySelectListItemsTask,
-            brandSelectListItemsTask,
-            productAttributeSelectlistTask,
-            speficationAttributeSelectListTask,
-            combinationSelectListTask, 
-            productStockTypeSelectListTask
-           ).ContinueWith((t) =>
-           {
-               model.CategorySelectListItems = categorySelectListItemsTask.Result.Data;
-               model.BrandSelectListItems = brandSelectListItemsTask.Result.Data;
-               model.ProductAttributeSelectlist = productAttributeSelectlistTask.Result.Data;
-               model.SpeficationAttributeSelectList = speficationAttributeSelectListTask.Result.Data;
-               model.CombinationSelectList = combinationSelectListTask.Result.Data;
-               model.ProductStockTypeSelectList = productStockTypeSelectListTask.Result.Data;
-           });
-        }
-        #endregion
         #region Method
         #region Product-Create-List-Update
-        public async Task<IActionResult> ProductInfoCreateOrUpdate(ProductVM model)
+        public async Task<IActionResult> ProductList()
         {
-            var data = model.MapTo<Product>();
-            if (model.Id == 0)
-                ResponseAlert(await _productService.AddProduct(data));
-            else
-                ResponseAlert(await _productService.UpdateProduct(data));
-            return Json(data, new JsonSerializerSettings());
-        }
-        public async Task<IActionResult> ProductList(int page = 1, int pageSize = 5)
-        {
-            var model = new ProductListVM();
-            var brandSelectListItemsTask = _brandService.GetBrandDropdown(new GetBrandDropdown());
-            var categorySelectListItems = _categoryService.GetCategoryDropdown(new GetCategoryDropdown());
-            await Task.WhenAll(
-                brandSelectListItemsTask, 
-                categorySelectListItems).ContinueWith((t) =>
+            return View(new ProductListVM
             {
-                model.BrandSelectListItems = brandSelectListItemsTask.Result.Data;
-                model.CategorySelectListItems = categorySelectListItems.Result.Data;
+                BrandSelectListItems = (await _brandService.GetBrandDropdown(new GetBrandDropdown())).Data,
+                CategorySelectListItems = (await _categoryService.GetCategoryDropdown(new GetCategoryDropdown())).Data
             });
-            return View(model);
         }
-        public async Task<IActionResult> ProductListJson(ProductDataTableFilter model, DTParameters param)
-        {
-            var result = await _productDAL.GetProductDataTableList(
-                new GetProductDataTableList(model, param));
-            return ToDataTableJson(result, param);
-        }
+        public async Task<IActionResult> ProductListJson(ProductDataTableFilter model, DTParameters param) =>
+             ToDataTableJson(await _productDAL.GetProductDataTableList(
+                new GetProductDataTableList(model, param)), param);
         public async Task<IActionResult> ProductDelete(int Id)
         {
             ResponseAlert(await _productService.DeleteProduct(new DeleteProduct(Id)));
@@ -165,24 +111,32 @@ namespace eCommerce.Areas.Admin.Controllers
                 var productTask = await _productService.GetProduct(new GetProduct(model.Id));
                 model = _mapper.Map<Product, ProductVM>(productTask.Data);
             }
-            //Sabit List
-            await ProductEditFillSelectList(model);
-            //ProductMapping
-            var mappingListTask = _productAttributeMappingService.GetProductAttributeMappingsByProductId(new GetProductAttributeMappingsByProductId(model.Id));
-            await Task.WhenAll(mappingListTask).ContinueWith((t) =>
-            {
-                model.ProductAttributeMappingList = mappingListTask.Result.Data.ToList();
-            });
+            var categoryTask = _categoryService.GetCategoryDropdown(new GetCategoryDropdown(model.CategoryId));
+            var brandTask = _brandService.GetBrandDropdown(new GetBrandDropdown(model.BrandId));
+            var productAttributeTask = _productAttributeService.GetProductAttributeDropdown(new GetProductAttributeDropdown());
+            var specificationAttributeTask = _specificationAttributeService.GetProductSpeficationAttributeDropdwon(new GetProductSpeficationAttributeDropdwon());
+            var productStockTypeTask = _productStockTypeService.GetAllProductStockType(new GetAllProductStockType(model.ProductStockTypeId));
+            var combinationTask = _productAttributeCombinationDal.ProductAttributeCombinationDropDown(new ProductAttributeCombinationDropDown(model.Id));
+            var attributeMappingTask = _productAttributeMappingService.GetProductAttributeMappingsByProductId(new GetProductAttributeMappingsByProductId(model.Id));
+
+            await Task.WhenAll(categoryTask, brandTask, productAttributeTask, specificationAttributeTask, productStockTypeTask, combinationTask, attributeMappingTask);
+
+            model.CategorySelectListItems = (await categoryTask).Data;
+            model.BrandSelectListItems = (await brandTask).Data;
+            model.ProductAttributeSelectlist = (await productAttributeTask).Data;
+            model.SpeficationAttributeSelectList = (await specificationAttributeTask).Data;
+            model.ProductStockTypeSelectList = (await productStockTypeTask).Data;
+            model.CombinationSelectList = (await combinationTask).Data;
+            model.ProductAttributeMappingList = (await attributeMappingTask).Data;
+
             return View(model);
         }
         #endregion
         #region Combination
-        public async Task<IActionResult> AttrCombination(int productId, DataTablesParam param)
-        {
-            var combination = await _productAttributeCombinationDal.ProductAttributeCombinationDataTable(
-                new ProductAttributeCombinationDataTable(productId, param));
-            return ToDataTableJson(combination, param);
-        }
+        public async Task<IActionResult> AttrCombination(int productId, DataTablesParam param) =>
+             ToDataTableJson(await _productAttributeCombinationDal.ProductAttributeCombinationDataTable(
+                new ProductAttributeCombinationDataTable(productId, param)), param);
+
         public async Task<IActionResult> AttrCombinationDetail(int combinationId)
         {
             var combinations = await _productAttributeCombinationService.GetProductAttributeCombinationById(
@@ -199,34 +153,11 @@ namespace eCommerce.Areas.Admin.Controllers
             model.AttributesXml = (await _productAttributeFormatter.XmlString(model.AttributesXml));
             return View(model);
         }
-        public async Task<IActionResult> AttrCombinationDelete(int Id, int Productid)
+        public async Task<IActionResult> AttrCombinationInsert(int productId)
         {
-            var Combination = _productAttributeCombinationService.GetProductAttributeCombinationById(new GetProductAttributeCombinationById(Id));
-            ResponseAlert(await _productAttributeCombinationService.DeleteProductAttributeCombination(new DeleteProductAttributeCombination(Id)));
-            return Json(true, new JsonSerializerSettings());
-        }
-        public async Task<IActionResult> AttrCombinationinsert(int ProductId)
-        {
-            List<List<int>> Data = new List<List<int>>();
-            var mappingTask = await _productAttributeMappingService.GetProductAttributeMappingsByProductId(new GetProductAttributeMappingsByProductId(ProductId));
-            foreach (var item in mappingTask.Data)
-            {
-                var smallData = new List<int>();
-                var attributes = await _productAttributeValueService.GetProductAttributeValues(new GetProductAttributeValues(item.Id));
-                if (attributes.Data.Any())
-                {
-                    foreach (var smallItem in attributes.Data)
-                    {
-                        smallData.Add(smallItem.Id);
-                    }
-                }
-                if (smallData.Count > 0)
-                    Data.Add(smallData);
-            }
-            var permutation = new AttributeHelper().Permutations(Data);
-            ResponseAlert(await _productAttributeCombinationService.InsertPermutationCombination(
-                new InsertPermutationCombination(permutation, ProductId)));
-            return RedirectToAction("ProductEdit", "AdminProduct", new { id = ProductId, Tap = "tap2" });
+            ResponseAlert(await _productAttributeCombinationService.AllInsertPermutationCombination(
+                new AllInsertPermutationCombination(productId)));
+            return RedirectToAction("ProductEdit", "AdminProduct", new { id = productId, Tap = "tap2" });
         }
         #endregion
         #endregion

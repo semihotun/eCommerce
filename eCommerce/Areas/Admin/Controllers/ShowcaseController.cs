@@ -33,10 +33,11 @@ namespace eCommerce.Areas.Admin.Controllers
         private readonly IShowcaseTypeService _showcaseTypeService;
         private readonly IShowcaseDAL _showcaseDal;
         private readonly IBrandService _brandService;
+        private readonly Dictionary<int, string> ShowCaseDictionary = ShowCaseTap.ShowCaseDictionary;
         #endregion
         #region constructer
         public ShowcaseController(IShowcaseService showcaseService, IMapper mapper
-            , ICategoryService categoryService,IShowCaseProductService showCaseProductService,
+            , ICategoryService categoryService, IShowCaseProductService showCaseProductService,
             IShowcaseTypeService showcaseTypeService, IShowcaseDAL showcaseDal, IBrandService brandService)
         {
             this._showcaseService = showcaseService;
@@ -48,27 +49,15 @@ namespace eCommerce.Areas.Admin.Controllers
             _brandService = brandService;
         }
         #endregion
-        #region Const
-        public static Dictionary<int, string> ShowCaseDictionary = new Dictionary<int, string>
-        {
-            { 1, "tap1" },
-            { 2, "tap2" },
-            { 3, "tap3" },
-            { 4, "tap4" },
-        };
-        #endregion
         #region Method
         public async Task<IActionResult> ShowcaseList()
         {
-            var showCaseTask = (await _showcaseService.GetAllShowcase()).Data;
-            return View(showCaseTask);
+            return View((await _showcaseService.GetAllShowcase()).Data);
         }
-        public async Task<IActionResult> ShowcaseCreate()
+        public async Task<IActionResult> ShowcaseCreate() => View(new ShowCaseCreateOrUpdateVM
         {
-            var model = new ShowCaseCreateOrUpdateVM();
-            model.ShowCaseTypeList = (await _showcaseTypeService.GetAllShowCaseTypeSelectListItem(new GetAllShowCaseTypeSelectListItem(model.ShowCaseType))).Data;
-            return View(model);
-        }
+            ShowCaseTypeList = (await _showcaseTypeService.GetAllShowCaseTypeSelectListItem(new GetAllShowCaseTypeSelectListItem(0))).Data
+        });
         [HttpPost]
         public async Task<IActionResult> ShowcaseCreate(ShowCaseCreateOrUpdateVM model)
         {
@@ -81,38 +70,27 @@ namespace eCommerce.Areas.Admin.Controllers
             ResponseAlert(await _showcaseService.DeleteShowCase(new DeleteShowCase(id)));
             return Json(true, new JsonSerializerSettings());
         }
-        public async Task<IActionResult> ShowcaseEdit(int id, string tap = null)
+        public async Task<IActionResult> ShowcaseEdit(int id, string? tap)
         {
-            var model = new ShowCaseCreateOrUpdateVM();
-            model.Tap = tap;
-            var BrandSelectListItemsTask = _brandService.GetBrandDropdown(new GetBrandDropdown());
-            var CategorySelectListItemsTask = _categoryService.GetCategoryDropdown(new GetCategoryDropdown());
-            model.ShowCaseDto = (await _showcaseDal.GetShowCaseDto(new GetShowCaseDto(id))).Data;
-            var ShowCaseTypeListTask = _showcaseTypeService.GetAllShowCaseTypeSelectListItem(new GetAllShowCaseTypeSelectListItem(model.ShowCaseDto.ShowCaseType));
-            await Task.WhenAll(BrandSelectListItemsTask, CategorySelectListItemsTask, ShowCaseTypeListTask).ContinueWith((t) =>
+            var model = new ShowCaseCreateOrUpdateVM
             {
-                model.BrandSelectListItems = BrandSelectListItemsTask.Result.Data;
-                model.CategorySelectListItems = CategorySelectListItemsTask.Result.Data;
-                model.ShowCaseTypeList = ShowCaseTypeListTask.Result.Data;
-            });
+                Tap = tap,
+                BrandSelectListItems = (await _brandService.GetBrandDropdown(new GetBrandDropdown())).Data,
+                CategorySelectListItems = (await _categoryService.GetCategoryDropdown(new GetCategoryDropdown())).Data,
+            };
+            model.ShowCaseTypeList = (await _showcaseTypeService.GetAllShowCaseTypeSelectListItem(new GetAllShowCaseTypeSelectListItem(model.ShowCaseDto.ShowCaseType))).Data;
             return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> ShowcaseEdit(ShowCaseCreateOrUpdateVM model)
         {
             var showCaseMap = _mapper.Map<ShowCaseDTO, ShowCase>(model.ShowCaseDto);
-            var brandSelectListItemsTask = _brandService.GetBrandDropdown(new GetBrandDropdown());
-            var categorySelectListItemsTask = _categoryService.GetCategoryDropdown(new GetCategoryDropdown());
             model.ShowCaseDto = (await _showcaseDal.GetShowCaseDto(new GetShowCaseDto(model.ShowCaseDto.Id))).Data;
-            var showCaseTypeListTask = _showcaseTypeService.GetAllShowCaseTypeSelectListItem(new GetAllShowCaseTypeSelectListItem(model.ShowCaseDto.ShowCaseType));
-            await Task.WhenAll(brandSelectListItemsTask, categorySelectListItemsTask, showCaseTypeListTask).ContinueWith((t) =>
-            {
-                model.BrandSelectListItems = brandSelectListItemsTask.Result.Data;
-                model.CategorySelectListItems = categorySelectListItemsTask.Result.Data;
-                model.ShowCaseTypeList = showCaseTypeListTask.Result.Data;
-            });
+            model.BrandSelectListItems = (await _brandService.GetBrandDropdown(new GetBrandDropdown())).Data;
+            model.CategorySelectListItems = (await _categoryService.GetCategoryDropdown(new GetCategoryDropdown())).Data;
+            model.ShowCaseTypeList = (await _showcaseTypeService.GetAllShowCaseTypeSelectListItem(new GetAllShowCaseTypeSelectListItem(model.ShowCaseDto.ShowCaseType))).Data;
             ResponseAlert(await _showcaseService.UpdateShowcase(showCaseMap));
-            return RedirectToAction("ShowcaseEdit", "ShowCase", new{ id = model.Id,});
+            return RedirectToAction("ShowcaseEdit", "ShowCase", new { id = model.Id, });
         }
         public async Task<IActionResult> ShowcaseAdded(ShowCaseProduct showCaseProduct)
         {

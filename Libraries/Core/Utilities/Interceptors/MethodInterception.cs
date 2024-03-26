@@ -1,10 +1,10 @@
 ﻿using Castle.DynamicProxy;
 using System;
+using System.Threading.Tasks;
 namespace Core.Utilities.Interceptors
 {
     public abstract class MethodInterception : MethodInterceptionBaseAttribute
     {
-        //invocation :  business method
         protected bool IsSuccess { get; set; } = true;
         protected virtual void SetIsSuccess(bool isSuccess)
         {
@@ -16,20 +16,26 @@ namespace Core.Utilities.Interceptors
         protected virtual void OnSuccess(IInvocation invocation) { }
         public override void Intercept(IInvocation invocation)
         {
+            var isSuccess = true;
             OnBefore(invocation);
             try
             {
                 invocation.Proceed();
+                var result = invocation.ReturnValue as Task;
+                result?.Wait();
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
-                IsSuccess = false;
+                isSuccess = false;
                 OnException(invocation, e);
                 throw;
             }
             finally
             {
-                OnSuccess(invocation);
+                if (isSuccess)
+                {
+                    OnSuccess(invocation);
+                }
             }
             OnAfter(invocation);
         }

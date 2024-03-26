@@ -2,6 +2,7 @@
 using Business.Services.UserIdentityAggregate.Manages.ManageServiceModels;
 using Core.Library;
 using Core.Utilities.Email;
+using Entities.Concrete;
 using Entities.ViewModels.WebViewModel.IdentityManage;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -22,7 +23,6 @@ namespace eCommerce.Controllers
         private readonly SignInManager<MyUser> _signInManager;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
-        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
         private readonly IMailService _mailService;
         private readonly IManageService _manageService;
@@ -149,12 +149,12 @@ namespace eCommerce.Controllers
             var info = await _signInManager.GetExternalLoginInfoAsync(user.Id.ToString());
             if (info == null)
             {
-                TempData["notification"]=$"Kimliğine sahip kullanıcı için harici giriş bilgileri yüklenirken beklenmeyen bir hata oluştu '{user.Id}'.";
+                TempData["notification"] = $"Kimliğine sahip kullanıcı için harici giriş bilgileri yüklenirken beklenmeyen bir hata oluştu '{user.Id}'.";
             }
             var result = await _userManager.AddLoginAsync(user, info);
             if (!result.Succeeded)
             {
-                TempData["notification"]=$"Kimliğine sahip kullanıcı için harici giriş eklenirken beklenmeyen bir hata oluştu '{user.Id}'.";
+                TempData["notification"] = $"Kimliğine sahip kullanıcı için harici giriş eklenirken beklenmeyen bir hata oluştu '{user.Id}'.";
             }
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);

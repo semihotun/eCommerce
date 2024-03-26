@@ -8,11 +8,11 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings
 {
     public interface IProductAttributeMappingService
     {
-        Task<IResult> DeleteProductAttributeMapping(DeleteProductAttributeMapping request);
-        Task<IDataResult<IList<ProductAttributeMapping>>> GetProductAttributeMappingsByProductId(GetProductAttributeMappingsByProductId request);
-        Task<IDataResult<ProductAttributeMapping>> GetProductAttributeMappingById(GetProductAttributeMappingById request);
-        Task<IResult> InsertProductAttributeMapping(ProductAttributeMapping productAttributeMapping);
-        Task<IResult> UpdateProductAttributeMapping(ProductAttributeMapping productAttributeMapping);
-        Task<IDataResult<IPagedList<ProductAttributeMapping>>> GetAllProductAttributeMapping(GetAllProductAttributeMapping request);
+        Task<Result> DeleteProductAttributeMapping(DeleteProductAttributeMapping request);
+        Task<Result<List<ProductAttributeMapping>>> GetProductAttributeMappingsByProductId(GetProductAttributeMappingsByProductId request);
+        Task<Result<ProductAttributeMapping>> GetProductAttributeMappingById(GetProductAttributeMappingById request);
+        Task<Result<ProductAttributeMapping>> InsertProductAttributeMapping(ProductAttributeMapping productAttributeMapping);
+        Task<Result> UpdateProductAttributeMapping(ProductAttributeMapping productAttributeMapping);
+        Task<Result<IPagedList<ProductAttributeMapping>>> GetAllProductAttributeMapping(GetAllProductAttributeMapping request);
     }
 }

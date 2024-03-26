@@ -1,5 +1,4 @@
 using Autofac.Extensions.DependencyInjection;
-using Core.Utilities.Generate;
 using Core.Utilities.Migration;
 using DataAccess.Context;
 using DataAccess.ContextSeed.eCommerceContextSeed;
@@ -13,13 +12,13 @@ namespace eCommerce
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            host.MigrateDbContext<eCommerceContext>((context, services,created) =>
-            {            
-                if(created)
+            host.MigrateDbContext<ECommerceContext>((context, services, created) =>
+            {
+                if (created)
                 {
-                    var logger = (ILogger<eCommerceContext>)services.GetService(typeof(ILogger<eCommerceContext>));
+                    var logger = (ILogger<ECommerceContext>)services.GetService(typeof(ILogger<ECommerceContext>));
                     var dbContextSeeder = new EcommerceContextSeed();
-                    dbContextSeeder.SeedAsync(context, logger).Wait();
+                    EcommerceContextSeed.SeedAsync(context, logger).Wait();
                 }
             });
             host.Run();

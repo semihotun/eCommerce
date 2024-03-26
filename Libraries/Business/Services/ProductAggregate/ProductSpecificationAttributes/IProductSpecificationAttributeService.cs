@@ -7,11 +7,11 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes
 {
     public interface IProductSpecificationAttributeService
     {
-        Task<IResult> DeleteProductSpecificationAttribute(DeleteProductSpecificationAttribute request);
-        Task<IDataResult<IPagedList<ProductSpecificationAttribute>>> GetProductSpecificationAttributes(GetProductSpecificationAttributes request);
-        Task<IDataResult<ProductSpecificationAttribute>> GetProductSpecificationAttributeById(GetProductSpecificationAttributeById request);
-        Task<IResult> InsertProductSpecificationAttribute(ProductSpecificationAttribute productSpecificationAttribute);
-        Task<IResult> UpdateProductSpecificationAttribute(ProductSpecificationAttribute productSpecificationAttribute);
-        Task<IDataResult<int>> GetProductSpecificationAttributeCount(GetProductSpecificationAttributeCount request);
+        Task<Result> DeleteProductSpecificationAttribute(DeleteProductSpecificationAttribute request);
+        Task<Result<IPagedList<ProductSpecificationAttribute>>> GetProductSpecificationAttributes(GetProductSpecificationAttributes request);
+        Task<Result<ProductSpecificationAttribute>> GetProductSpecificationAttributeById(GetProductSpecificationAttributeById request);
+        Task<Result> InsertProductSpecificationAttribute(ProductSpecificationAttribute productSpecificationAttribute);
+        Task<Result> UpdateProductSpecificationAttribute(ProductSpecificationAttribute productSpecificationAttribute);
+        Task<Result<int>> GetProductSpecificationAttributeCount(GetProductSpecificationAttributeCount request);
     }
 }

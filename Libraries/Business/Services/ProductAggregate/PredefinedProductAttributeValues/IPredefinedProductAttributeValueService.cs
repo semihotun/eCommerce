@@ -7,10 +7,10 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues
 {
     public interface IPredefinedProductAttributeValueService
     {
-        Task<IResult> DeletePredefinedProductAttributeValue(PredefinedProductAttributeValue ppav);
-        Task<IDataResult<IList<PredefinedProductAttributeValue>>> GetPredefinedProductAttributeValues(GetPredefinedProductAttributeValues request);
-        Task<IDataResult<PredefinedProductAttributeValue>> GetPredefinedProductAttributeValueById(GetPredefinedProductAttributeValueById request);
-        Task<IResult> InsertPredefinedProductAttributeValue(PredefinedProductAttributeValue ppav);
-        Task<IResult> UpdatePredefinedProductAttributeValue(PredefinedProductAttributeValue ppav);
+        Task<Result> DeletePredefinedProductAttributeValue(PredefinedProductAttributeValue ppav);
+        Task<Result<List<PredefinedProductAttributeValue>>> GetPredefinedProductAttributeValues(GetPredefinedProductAttributeValues request);
+        Task<Result<PredefinedProductAttributeValue>> GetPredefinedProductAttributeValueById(GetPredefinedProductAttributeValueById request);
+        Task<Result> InsertPredefinedProductAttributeValue(PredefinedProductAttributeValue ppav);
+        Task<Result> UpdatePredefinedProductAttributeValue(PredefinedProductAttributeValue ppav);
     }
 }

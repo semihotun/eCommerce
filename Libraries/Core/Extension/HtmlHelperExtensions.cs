@@ -2,7 +2,7 @@
 {
     public static class HtmlHelperExtensions
     {
-        public static string UppercaseFirst(string s)
+        public static string UppercaseFirst(this string s)
         {
             if (string.IsNullOrEmpty(s))
             {

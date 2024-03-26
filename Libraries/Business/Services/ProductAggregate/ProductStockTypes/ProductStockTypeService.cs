@@ -1,4 +1,5 @@
-﻿using Business.Services.ProductAggregate.ProductStockTypes.ProductStockTypeServiceModel;
+﻿using Business.Constants;
+using Business.Services.ProductAggregate.ProductStockTypes.ProductStockTypeServiceModel;
 using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Results;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStockTypes;
@@ -22,18 +23,18 @@ namespace Business.Services.ProductAggregate.ProductStockTypes
         #endregion
         #region Method
         [CacheAspect]
-        public async Task<IDataResult<IEnumerable<SelectListItem>>> GetAllProductStockType(GetAllProductStockType request)
+        public async Task<Result<IEnumerable<SelectListItem>>> GetAllProductStockType(GetAllProductStockType request)
         {
             var query = from pst in _productStockTypeDal.Query()
                         select new SelectListItem
                         {
                             Text = pst.Name,
                             Value = pst.Id.ToString(),
-                            Selected = pst.Id == request.SelectedId ? true : false
+                            Selected = pst.Id == request.SelectedId
                         };
             var result = await query.ToListAsync();
-            result.Insert(0, new SelectListItem("Seçiniz", "0", request.SelectedId == 0));
-            return new SuccessDataResult<IEnumerable<SelectListItem>>(result);
+            result.Insert(0, new SelectListItem(Messages.DropdownFirstItem, "0", request.SelectedId == 0));
+            return Result.SuccessDataResult<IEnumerable<SelectListItem>>(result);
         }
         #endregion
     }

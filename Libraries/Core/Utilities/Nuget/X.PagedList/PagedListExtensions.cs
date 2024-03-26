@@ -19,7 +19,7 @@ namespace X.PagedList
                 if (chunk.Any())
                 {
                     result.Add(chunk);
-                };
+                }
             }
             return result;
         }
@@ -62,7 +62,7 @@ namespace X.PagedList
         {
             return new PagedList<T, TKey>(superset.AsQueryable(), keySelector, pageNumber, pageSize);
         }
-	    public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> superset, int pageNumber, int pageSize, CancellationToken cancellationToken)
+        public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> superset, int pageNumber, int pageSize, CancellationToken cancellationToken)
         {
             if (pageNumber < 1)
             {
@@ -82,29 +82,29 @@ namespace X.PagedList
                     subset.AddRange(
                         (pageNumber == 1)
                             ? await superset.Skip(0).Take(pageSize).ToListAsync(cancellationToken).ConfigureAwait(false)
-                            : await superset.Skip(((pageNumber - 1) * pageSize)).Take(pageSize).ToListAsync(cancellationToken).ConfigureAwait(false)
+                            : await superset.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken).ConfigureAwait(false)
                     );
                 }
             }
             return new StaticPagedList<T>(subset, pageNumber, pageSize, totalCount);
         }
-	    public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> superset, int pageNumber, int pageSize)
-	    {
-		    return await ToPagedListAsync(superset, pageNumber, pageSize, CancellationToken.None);
-	    }
-	    public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IEnumerable<T> superset, int pageNumber, int pageSize, CancellationToken cancellationToken)
+        public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> superset, int pageNumber, int pageSize)
+        {
+            return await ToPagedListAsync(superset, pageNumber, pageSize, CancellationToken.None);
+        }
+        public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IEnumerable<T> superset, int pageNumber, int pageSize, CancellationToken cancellationToken)
         {
             return await ToPagedListAsync(superset.AsQueryable(), pageNumber, pageSize, cancellationToken);
         }
-	    public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IEnumerable<T> superset, int pageNumber, int pageSize)
+        public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IEnumerable<T> superset, int pageNumber, int pageSize)
         {
             return await ToPagedListAsync(superset.AsQueryable(), pageNumber, pageSize, CancellationToken.None);
         }
-	    public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> superset, int? pageNumber, int pageSize, CancellationToken cancellationToken)
+        public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> superset, int? pageNumber, int pageSize, CancellationToken cancellationToken)
         {
             return await ToPagedListAsync(superset.AsQueryable(), pageNumber ?? 1, pageSize, cancellationToken);
         }
-	    public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> superset, int? pageNumber, int pageSize)
+        public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> superset, int? pageNumber, int pageSize)
         {
             return await ToPagedListAsync(superset.AsQueryable(), pageNumber ?? 1, pageSize, CancellationToken.None);
         }

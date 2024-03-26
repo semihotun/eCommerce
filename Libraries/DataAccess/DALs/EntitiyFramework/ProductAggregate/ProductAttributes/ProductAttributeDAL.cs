@@ -3,9 +3,9 @@ using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.ProductAggregate;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributes
 {
-    public partial class ProductAttributeDAL : EfEntityRepositoryBase<ProductAttribute, eCommerceContext>, IProductAttributeDAL
+    public class ProductAttributeDAL : EfEntityRepositoryBase<ProductAttribute, ECommerceContext>, IProductAttributeDAL
     {
-        public ProductAttributeDAL(eCommerceContext context) : base(context)
+        public ProductAttributeDAL(ECommerceContext context) : base(context)
         {
         }
     }

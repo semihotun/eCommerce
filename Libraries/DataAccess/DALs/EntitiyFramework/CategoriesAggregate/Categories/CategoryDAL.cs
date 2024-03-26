@@ -12,78 +12,76 @@ using System.Linq;
 using System.Threading.Tasks;
 namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
 {
-    public class CategoryDAL : EfEntityRepositoryBase<Category, eCommerceContext>, ICategoryDAL
+    public class CategoryDAL : EfEntityRepositoryBase<Category, ECommerceContext>, ICategoryDAL
     {
-        public CategoryDAL(eCommerceContext context) : base(context)
+        public CategoryDAL(ECommerceContext context) : base(context)
         {
         }
         [CacheAspect]
-        private async Task<IDataResult<List<CategoryDTO>>> CategoriesForTreeList(CategoriesForTreeList request)
+        private static async Task<Result<List<CategoryDTO>>> CategoriesForTreeList(CategoriesForTreeList request)
         {
             var result = new List<CategoryDTO>();
-            var research = request.Source.Where(c => c.ParentCategoryId == request.ParentId).ToList();
-            foreach (var cat in research)
+            foreach (var cat in request.Source.Where(c => c.ParentCategoryId == request.ParentId).ToList())
             {
-                var category = new CategoryDTO();
-                category.Id = cat.Id;
-                category.CategoryName = cat.CategoryName;
-                category.ParentCategoryId = cat.ParentCategoryId;
-                category.SubCategory = (await CategoriesForTreeList(new CategoriesForTreeList(request.Source, cat.Id))).Data;
-                result.Add(category);
+                result.Add(new CategoryDTO
+                {
+                    Id = cat.Id,
+                    CategoryName = cat.CategoryName,
+                    ParentCategoryId = cat.ParentCategoryId,
+                    SubCategory = (await CategoriesForTreeList(new CategoriesForTreeList(request.Source, cat.Id))).Data
+                });
             }
-            return new SuccessDataResult<List<CategoryDTO>>(result);
+            return Result.SuccessDataResult(result);
         }
         [CacheAspect]
-        public async Task<IDataResult<List<CategoryDTO>>> GetAllCategoryTreeList()
+        public async Task<Result<List<CategoryDTO>>> GetAllCategoryTreeList()
         {
-            var query = from c in Context.Category select c;
-            var queryList = await query.ToListAsync();
-            var result = (await CategoriesForTreeList(new CategoriesForTreeList(queryList.ToList()))).Data;
-            return new SuccessDataResult<List<CategoryDTO>>(result);
+            return Result.SuccessDataResult((
+                await CategoriesForTreeList(
+                    new CategoriesForTreeList(
+                        await (from c in Context.Category select c).ToListAsync()))).Data);
         }
         [CacheAspect]
-        public async Task<IDataResult<CategorySpeficationDTO>> GetCategorySpefication(GetCategorySpefication request)
+        public async Task<Result<CategorySpeficationDTO>> GetCategorySpefication(GetCategorySpefication request)
         {
-            var query = from c in Context.Category
-                        where c.Id == request.CategoryId
-                        let csg = (from cs in Context.CategorySpefication
-                                  where c.Id == cs.CategoryId
-                                  join s in Context.SpecificationAttribute on cs.SpeficationAttributeId equals s.Id
-                                  select s).AsEnumerable()
-                        select new CategorySpeficationDTO
-                        {
-                            Category = c,
-                            CategorySpeficationList = csg
-                        };
-            var data = await query.FirstOrDefaultAsync();
-            return new SuccessDataResult<CategorySpeficationDTO>(data);
+            var data = await (from c in Context.Category
+                              where c.Id == request.CategoryId
+                              let csg = (from cs in Context.CategorySpefication
+                                         where c.Id == cs.CategoryId
+                                         join s in Context.SpecificationAttribute on cs.SpeficationAttributeId equals s.Id
+                                         select s).AsEnumerable()
+                              select new CategorySpeficationDTO
+                              {
+                                  Category = c,
+                                  CategorySpeficationList = csg
+                              }).FirstOrDefaultAsync();
+            return Result.SuccessDataResult(data);
         }
         [CacheAspect]
-        public async Task<IDataResult<CategorySpeficationOptionDTO>> GetCategorySpeficationOptionDTO(GetCategorySpeficationOptionDTO request)
+        public async Task<Result<CategorySpeficationOptionDTO>> GetCategorySpeficationOptionDTO(GetCategorySpeficationOptionDTO request)
         {
-            var query = from c in Context.Category
-                        where c.Id == request.CategoryId
-                        let csg =(from cs in Context.CategorySpefication
-                                  where c.Id == cs.CategoryId
-                                  join s in Context.SpecificationAttribute on cs.SpeficationAttributeId equals s.Id
-                                  let speficationOptionGroup = (from speficationOption in Context.SpecificationAttributeOption
-                                                               where speficationOption.SpecificationAttributeId == s.Id
-                                                               select speficationOption).AsEnumerable()
-                                  select new CategorySpeficationOptionDTO.SpecificationAttribute
-                                  {
-                                      Name = s.Name,
-                                      DisplayOrder = s.DisplayOrder,
-                                      SpecificationAttributeOptionList = speficationOptionGroup
-                                  }).AsEnumerable()
-                        select new CategorySpeficationOptionDTO
-                        {
-                            CategorySpeficationList = csg
-                        };
-            var data = await query.FirstOrDefaultAsync();
-            return new SuccessDataResult<CategorySpeficationOptionDTO>(data);
+            var data = await (from c in Context.Category
+                              where c.Id == request.CategoryId
+                              let csg = (from cs in Context.CategorySpefication
+                                         where c.Id == cs.CategoryId
+                                         join s in Context.SpecificationAttribute on cs.SpeficationAttributeId equals s.Id
+                                         let speficationOptionGroup = (from speficationOption in Context.SpecificationAttributeOption
+                                                                       where speficationOption.SpecificationAttributeId == s.Id
+                                                                       select speficationOption).AsEnumerable()
+                                         select new CategorySpeficationOptionDTO.SpecificationAttribute
+                                         {
+                                             Name = s.Name,
+                                             DisplayOrder = s.DisplayOrder,
+                                             SpecificationAttributeOptionList = speficationOptionGroup
+                                         }).AsEnumerable()
+                              select new CategorySpeficationOptionDTO
+                              {
+                                  CategorySpeficationList = csg
+                              }).FirstOrDefaultAsync();
+            return Result.SuccessDataResult<CategorySpeficationOptionDTO>(data);
         }
         [CacheAspect]
-        public async Task<IDataResult<IList<HierarchyViewModel>>> GetHierarchy()
+        public async Task<Result<List<HierarchyViewModel>>> GetHierarchy()
         {
             var hdList = await Context.Category.ToListAsync();
             var records = hdList.Where(l => l.ParentCategoryId == null)
@@ -94,10 +92,10 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
                     perentId = l.ParentCategoryId,
                     children = GetChildren(new GetChildren(hdList, l.Id))
                 }).ToList();
-            return new SuccessDataResult<List<HierarchyViewModel>>(records);
+            return Result.SuccessDataResult(records);
         }
         [CacheAspect]
-        private List<HierarchyViewModel> GetChildren(GetChildren request)
+        private static List<HierarchyViewModel> GetChildren(GetChildren request)
         {
             return request.HdList.Where(l => l.ParentCategoryId == request.ParentId)
                 .Select(l => new HierarchyViewModel

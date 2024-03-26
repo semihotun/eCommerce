@@ -3,9 +3,9 @@ using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.AdressAggregate;
 namespace DataAccess.DALs.EntitiyFramework.AddressAggregate.MyUserAdressess
 {
-    public class MyUserAdressesDAL : EfEntityRepositoryBase<MyUserAdresses, eCommerceContext>, IMyUserAdressesDAL
+    public class MyUserAdressesDAL : EfEntityRepositoryBase<MyUserAdresses, ECommerceContext>, IMyUserAdressesDAL
     {
-        public MyUserAdressesDAL(eCommerceContext context) : base(context)
+        public MyUserAdressesDAL(ECommerceContext context) : base(context)
         {
         }
     }

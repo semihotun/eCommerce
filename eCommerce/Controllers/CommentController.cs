@@ -2,6 +2,7 @@
 using Core.Library;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels;
+using Entities.Concrete;
 using Entities.ViewModels.WebViewModel.Home;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -23,16 +24,18 @@ namespace eCommerce.Controllers
         [HttpGet]
         public async Task<IActionResult> AllCommentProduct(int id, int pageindex = 1, int pagesize = 10)
         {
-            var model = new AllCommentVM();
-            model.ProductCommentDTO = (await _productDAL.GetCommentListDTO(
+            var model = new AllCommentVM
+            {
+                ProductCommentDTO = (await _productDAL.GetCommentListDTO(
                 new GetCommentListDTO
-                (id, pageindex, pagesize,null,true))).Data;
+                (id, pageindex, pagesize, null, true))).Data
+            };
             return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> CommentAdded(ProductDetailVM entitiy, string Rating = "")
         {
-            var user =await  _userManager.GetUserAsync(User);
+            var user = await _userManager.GetUserAsync(User);
             var model = entitiy.CommentModel;
             model.IsApproved = false;
             model.CreatedOnUtc = DateTime.Now;

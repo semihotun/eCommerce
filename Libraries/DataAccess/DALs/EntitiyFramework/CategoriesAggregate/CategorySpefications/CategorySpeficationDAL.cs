@@ -3,9 +3,9 @@ using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.CategoriesAggregate;
 namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.CategorySpefications
 {
-    public class CategorySpeficationDAL : EfEntityRepositoryBase<CategorySpefication, eCommerceContext>, ICategorySpeficationDAL
+    public class CategorySpeficationDAL : EfEntityRepositoryBase<CategorySpefication, ECommerceContext>, ICategorySpeficationDAL
     {
-        public CategorySpeficationDAL(eCommerceContext context) : base(context)
+        public CategorySpeficationDAL(ECommerceContext context) : base(context)
         {
         }
     }

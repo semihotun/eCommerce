@@ -4,7 +4,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALM
 {
     public class GetProductDataTableList
     {
-        public GetProductDataTableList(ProductDataTableFilter productDataTableDTO , DTParameters dataTablesParam )
+        public GetProductDataTableList(ProductDataTableFilter productDataTableDTO, DTParameters dataTablesParam)
         {
             this.ProductDataTableDTO = productDataTableDTO;
             this.DataTablesParam = dataTablesParam;

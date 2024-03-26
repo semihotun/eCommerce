@@ -14,15 +14,13 @@ namespace Core.Utilities.Infrastructure.Filter
             Expression finalExpression = Expression.Constant(true);
             var type = filtermodel.GetType();
             var parameter = Expression.Parameter(typeof(T), "x");
-            PropertyInfo[] propertyInfos = type.GetProperties();
-            foreach (PropertyInfo propertyInfo in propertyInfos)
+            foreach (PropertyInfo propertyInfo in type.GetProperties())
             {
                 try
                 {
                     Filter attr = (Filter)propertyInfo.GetCustomAttributes<Filter>().First();
                     Expression expression = null;
-                    var columnName = string.IsNullOrEmpty(attr.queryColumn) ? propertyInfo.Name : attr.queryColumn;
-                    var member = Expression.Property(parameter, columnName);
+                    var member = Expression.Property(parameter, string.IsNullOrEmpty(attr.queryColumn) ? propertyInfo.Name : attr.queryColumn);
                     var constantValue = propertyInfo.GetValue(filtermodel, null);
                     var constant = Expression.Constant(constantValue);
                     if (constantValue != null && !string.IsNullOrEmpty(constantValue.ToString()) && constantValue.ToString() != "0")
@@ -33,10 +31,8 @@ namespace Core.Utilities.Infrastructure.Filter
                                 expression = Expression.Equal(member, constant);
                                 break;
                             case FilterOperators.Contains:
-                                //Muamma
                                 MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
-                                var someValue = Expression.Constant(constantValue, typeof(string));
-                                expression = Expression.Call(member, method, someValue);
+                                expression = Expression.Call(member, method, Expression.Constant(constantValue, typeof(string)));
                                 break;
                             case FilterOperators.GreaterThan:
                                 expression = Expression.GreaterThanOrEqual(member, constant);
@@ -53,42 +49,31 @@ namespace Core.Utilities.Infrastructure.Filter
                 }
                 catch { }
             }
-            var data = contex.Where(Expression.Lambda<Func<T, bool>>(finalExpression, parameter));
-            return data;
-        }
-        public class DataTableValueModel
-        {
-            public string Value { get; set; }
-            public string FilterType { get; set; }
+            return contex.Where(Expression.Lambda<Func<T, bool>>(finalExpression, parameter));
         }
         public static IQueryable<T> ApplyDataTableFilter<T>(this IQueryable<T> contex, DTParameters filtermodel)
         {
             Expression finalExpression = Expression.Constant(true);
             var parameter = Expression.Parameter(typeof(T), "x");
-            var filters = filtermodel.Columns.Where(x => x.Search.Value != null);
-            foreach (var item in filters)
+            foreach (var item in filtermodel.Columns.Where(x => x.Search.Value != null))
             {
                 if (item.Search.Value != null)
                 {
                     Expression expression = null;
-                    if (item.Search.Regex == true)
+                    if (item.Search.Regex)
                     {
                         var filterValue = JsonConvert.DeserializeObject<DataTableValueModel>(item.Search.Value);
                         if (!string.IsNullOrEmpty(filterValue.Value))
                         {
-                            var propertyInfo = contex.GetType().GetGenericArguments()[0].GetProperty(item.Name);
                             var member = Expression.Property(parameter, item.Name);
-                            object value = TypeDescriptor.GetConverter(member.Type).ConvertFromString(filterValue.Value);
-                            var constant = Expression.Constant(value, member.Type);
+                            var constant = Expression.Constant(TypeDescriptor.GetConverter(member.Type).ConvertFromString(filterValue.Value), member.Type);
                             switch (Int32.Parse(filterValue.FilterType))
                             {
                                 case (int)FilterOperators.Equals:
                                     expression = Expression.Equal(member, constant);
                                     break;
                                 case (int)FilterOperators.Contains:
-                                    //Muamma
                                     MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
-                                    //var someValue = Expression.Constant(constantValue, typeof(string));
                                     expression = Expression.Call(member, method, constant);
                                     break;
                                 case (int)FilterOperators.GreaterThan:
@@ -105,16 +90,13 @@ namespace Core.Utilities.Infrastructure.Filter
                     }
                     else
                     {
-                        var member = Expression.Property(parameter, item.Name);
-                        var constant = Expression.Constant(item.Search.Value);
-                        expression = Expression.Equal(member, constant);
+                        expression = Expression.Equal(Expression.Property(parameter, item.Name), Expression.Constant(item.Search.Value));
                     }
-                    if(expression != null)
-                         finalExpression = Expression.AndAlso(finalExpression, expression);
+                    if (expression != null)
+                        finalExpression = Expression.AndAlso(finalExpression, expression);
                 }
             }
-            var data = contex.Where(Expression.Lambda<Func<T, bool>>(finalExpression, parameter));
-            return data;
+            return contex.Where(Expression.Lambda<Func<T, bool>>(finalExpression, parameter));
         }
     }
 }

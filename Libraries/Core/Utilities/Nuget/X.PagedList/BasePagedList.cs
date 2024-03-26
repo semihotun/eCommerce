@@ -5,7 +5,7 @@ namespace X.PagedList
 {
     public abstract class BasePagedList<T> : PagedListMetaData, IPagedList<T>
     {
-        protected readonly List<T> Subset = new List<T>();
+        protected readonly List<T> Subset = new();
         protected internal BasePagedList()
         {
         }
@@ -35,7 +35,7 @@ namespace X.PagedList
             HasNextPage = pageNumberIsGood && PageNumber < PageCount;
             IsFirstPage = pageNumberIsGood && PageNumber == 1;
             IsLastPage = pageNumberIsGood && PageNumber == PageCount;
-            var numberOfFirstItemOnPage = (PageNumber - 1) * PageSize + 1;
+            var numberOfFirstItemOnPage = ((PageNumber - 1) * PageSize) + 1;
             FirstItemOnPage = pageNumberIsGood ? numberOfFirstItemOnPage : 0;
             var numberOfLastItemOnPage = numberOfFirstItemOnPage + PageSize - 1;
             LastItemOnPage = pageNumberIsGood

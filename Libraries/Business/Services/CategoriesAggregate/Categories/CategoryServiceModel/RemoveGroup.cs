@@ -3,9 +3,9 @@
     public class RemoveGroup
     {
         public int Id { get; set; }
-        public RemoveGroup(int ıd)
+        public RemoveGroup(int id)
         {
-            Id = ıd;
+            Id = id;
         }
         public RemoveGroup()
         {

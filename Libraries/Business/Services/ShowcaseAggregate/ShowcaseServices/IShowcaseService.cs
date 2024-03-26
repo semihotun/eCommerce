@@ -7,10 +7,10 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseServices
 {
     public interface IShowcaseService
     {
-        Task<IDataResult<IList<ShowCase>>> GetAllShowcase();
-        Task<IDataResult<ShowCase>> GetShowcase(GetShowcase request);
-        Task<IResult> InsertShowcase(ShowCase showCase);
-        Task<IResult> DeleteShowCase(DeleteShowCase request);
-        Task<IResult> UpdateShowcase(ShowCase showCase);
+        Task<Result<IList<ShowCase>>> GetAllShowcase();
+        Task<Result<ShowCase>> GetShowcase(GetShowcase request);
+        Task<Result> InsertShowcase(ShowCase showCase);
+        Task<Result> DeleteShowCase(DeleteShowCase request);
+        Task<Result> UpdateShowcase(ShowCase showCase);
     }
 }

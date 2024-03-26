@@ -7,8 +7,8 @@ namespace Business.Services.ProductAggregate.ProductStocks
 {
     public interface IProductStockService
     {
-        Task<IDataResult<IPagedList<ProductStock>>> GetAllProductStock(GetAllProductStock request);
-        Task<IResult> AddProductStock(ProductStock productStock);
-        Task<IResult> DeleteProductStock(DeleteProductStock request);
+        Task<Result<IPagedList<ProductStock>>> GetAllProductStock(GetAllProductStock request);
+        Task<Result> AddProductStock(ProductStock productStock);
+        Task<Result> DeleteProductStock(DeleteProductStock request);
     }
 }

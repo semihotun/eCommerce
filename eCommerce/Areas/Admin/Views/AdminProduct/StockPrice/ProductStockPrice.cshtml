@@ -3,12 +3,14 @@
 @Html.Partial("StockPrice/_ProductStockPriceDataTable", Model)
 <script>
     var ProductStockPriceTable;
-    var BindProductList = function (response) {
-        if ($.fn.DataTable.isDataTable("#ProductStockPriceList")) {
+    var GetProductStockPriceTable = function (response) {
+        let ProductStockPriceTable;
+        if ($.fn.DataTable.isDataTable("#productStockPriceList")) {
+            ProductStockPriceTable = $("#productStockPriceList").DataTable();
             ProductStockPriceTable.draw();
         }
         else {
-            ProductStockPriceTable = $("#ProductStockPriceList").DataTable({
+            ProductStockPriceTable = $("#productStockPriceList").DataTable({
                 "sAjaxSource": "/Admin/ProductStock/ProductStockListJson?ProductId=" + $("#Id").val(),
                 "bServerSide": true,
                 "bProcessing": true,
@@ -31,51 +33,5 @@
                 }
             });
         }
-    }
-    $(document).ready(function () {
-        var FilterRecord = function () {
-            BindProductList();
-        }
-        FilterRecord();
-    });
-    $("#ProductListForm").submit(function (event) {
-        event.preventDefault();
-        $('#ProductStockPriceList').DataTable().destroy();
-        BindProductList();
-    });
-    $("#ProductStockCreateForm").submit(function (e) {
-        e.preventDefault();
-        $('input[name="ProductStock.ProductId"]').val($("#Id").val());
-        var ProductName = $('input[name="ProductName"]').text() + $('input[name="ProductStock.CombinationId"]').text();
-        $('input[name="ProductStock.ProductName"]').val(ProductName);
-        var data = $("#ProductStockCreateForm").serialize();
-        $.ajax({
-            url: "/Admin/ProductStock/ProductStockAdd?" + data,
-            method: "Post",
-            type: "json",
-            success: function (data) {
-                swal("İşlem Başarılı", "", "success");
-                console.log(data);
-                $('#ProductStockPriceList').DataTable().row.add( data ).draw();
-            },
-            error: function (data) {
-                swal("İşlem Başarısız", "", "error");
-            }
-        });
-    });
-    function DeleteProductStock(thisData) {
-        var deleteDataId = $(thisData).attr("id");
-        $.ajax({
-            url: "/Admin/ProductStock/ProductStockDelete?Id=" + deleteDataId,
-            method: "Post",
-            type: "json",
-            success: function (data) {
-                swal("İşlem Başarılı", "", "success");
-                $(thisData).parent().parent().remove();
-            },
-            error: function (data) {
-                swal("İşlem Başarısız", "", "error");
-            }
-        });
     }
 </script>

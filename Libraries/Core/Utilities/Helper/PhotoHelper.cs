@@ -1,70 +1,50 @@
-﻿using Core.Utilities.Results;
+﻿using Core.Utilities.Helper.Models;
+using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 namespace Core.Utilities.Helper
 {
-    public class PhotoHelper
+    public static class PhotoHelper
     {
-        public class PhotoHelperModel
+        public static Result<PhotoHelperModel> Add(string path, IFormFile file)
         {
-            public string Path { get; set; }
+            var uploadsFolder = Directory.GetCurrentDirectory() + "\\wwwroot" + path;
+            var mimeType = System.IO.Path.GetExtension(file.FileName).ToLower();
+            var uniqueFileName = Guid.NewGuid().ToString() + mimeType;
+            var filepath = uploadsFolder + uniqueFileName;
+            using (var fileStream = new FileStream(filepath, FileMode.Create))
+            {
+                file.CopyTo(fileStream);
+            }
+            var photoModel = new PhotoHelperModel
+            {
+                Path = path + uniqueFileName
+            };
+            return Result.SuccessDataResult(photoModel);
         }
-        public IDataResult<PhotoHelperModel> Add(string path, IFormFile file)
+        public static Result<PhotoHelperModel> Add(string path, IFormFile file, bool deleted = false, string deletePhotoUrl = null)
         {
-            try
+            var uploadsFolder = Directory.GetCurrentDirectory() + "\\wwwroot" + path;
+            var mimeType = System.IO.Path.GetExtension(file.FileName).ToLower();
+            var uniqueFileName = Guid.NewGuid().ToString() + mimeType;
+            var filepath = uploadsFolder + uniqueFileName;
+            using (var fileStream = new FileStream(filepath, FileMode.Create))
             {
-                var uploadsFolder = Directory.GetCurrentDirectory()+"\\wwwroot"+path;
-                var mimeType = System.IO.Path.GetExtension(file.FileName).ToLower();
-                var uniqueFileName = Guid.NewGuid().ToString()+ mimeType; 
-                var filepath = uploadsFolder + uniqueFileName;
-                using (var fileStream = new FileStream(filepath, FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-                var photoModel = new PhotoHelperModel();
-                photoModel.Path = path + uniqueFileName;
-                return new SuccessDataResult<PhotoHelperModel>(photoModel);
+                file.CopyTo(fileStream);
             }
-            catch(Exception ex)
+            var photoModel = new PhotoHelperModel
             {
-                return new ErrorDataResult<PhotoHelperModel>(ex.ToString());
-            }
+                Path = path + uniqueFileName
+            };
+            if (deleted && deletePhotoUrl != null)
+                Delete(deletePhotoUrl);
+            return Result.SuccessDataResult(photoModel);
         }
-        public IDataResult<PhotoHelperModel> Add(string path, IFormFile file, bool deleted = false, string deletePhotoUrl = null)
+        public static Result Delete(string photoUrl)
         {
-            try
-            {
-                var uploadsFolder = Directory.GetCurrentDirectory() + "\\wwwroot" + path;
-                var mimeType = System.IO.Path.GetExtension(file.FileName).ToLower();
-                var uniqueFileName = Guid.NewGuid().ToString() + mimeType;
-                var filepath = uploadsFolder + uniqueFileName;
-                using (var fileStream = new FileStream(filepath, FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-                var photoModel = new PhotoHelperModel();
-                photoModel.Path = path + uniqueFileName;
-                if (deleted == true && deletePhotoUrl != null)
-                    Delete(deletePhotoUrl);
-                return new SuccessDataResult<PhotoHelperModel>(photoModel);
-            }
-            catch (Exception ex)
-            {
-                return new ErrorDataResult<PhotoHelperModel>(ex.ToString());
-            }
-        }
-        public IResult Delete(string photoUrl)
-        {
-            try
-            {
-                System.IO.File.Delete(Directory.GetCurrentDirectory() + "\\wwwroot\\"+ photoUrl);
-                return new SuccessResult();
-            }
-            catch(Exception ex)
-            {
-                return new ErrorResult(ex.ToString());
-            }
+            System.IO.File.Delete(Directory.GetCurrentDirectory() + "\\wwwroot\\" + photoUrl);
+            return Result.SuccessResult();
         }
     }
 }

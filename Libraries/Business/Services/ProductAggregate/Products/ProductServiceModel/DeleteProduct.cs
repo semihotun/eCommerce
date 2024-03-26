@@ -2,9 +2,9 @@
 {
     public class DeleteProduct
     {
-        public DeleteProduct(int ıd)
+        public DeleteProduct(int id)
         {
-            Id = ıd;
+            Id = id;
         }
         public DeleteProduct()
         {

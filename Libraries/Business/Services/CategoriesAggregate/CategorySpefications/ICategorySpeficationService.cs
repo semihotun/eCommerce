@@ -7,10 +7,10 @@ namespace Business.Services.CategoriesAggregate.CategorySpefications
 {
     public interface ICategorySpeficationService
     {
-        Task<IDataResult<CategorySpefication>> GetByCategorySpeficationId(GetByCategorySpeficationId request);
-        Task<IResult> DeleteCategorySpefication(CategorySpefication categorySpefication);
-        Task<IResult> InsertCategorySpefication(CategorySpefication categorySpefication);
-        Task<IResult> UpdateCategorySpefication(CategorySpefication categorySpefication);
-        Task<IDataResult<List<CategorySpefication>>> GetAllCategorySpefication(GetAllCategorySpefication request);
+        Task<Result<CategorySpefication>> GetByCategorySpeficationId(GetByCategorySpeficationId request);
+        Task<Result> DeleteCategorySpefication(CategorySpefication categorySpefication);
+        Task<Result> InsertCategorySpefication(CategorySpefication categorySpefication);
+        Task<Result> UpdateCategorySpefication(CategorySpefication categorySpefication);
+        Task<Result<List<CategorySpefication>>> GetAllCategorySpefication(GetAllCategorySpefication request);
     }
 }

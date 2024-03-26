@@ -3,9 +3,9 @@ using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.BrandAggregate;
 namespace DataAccess.DALs.EntitiyFramework.BrandAggregate.CatalogBrands
 {
-    public class CatalogBrandDAL : EfEntityRepositoryBase<CatalogBrand, eCommerceContext>, ICatalogBrandDAL
+    public class CatalogBrandDAL : EfEntityRepositoryBase<CatalogBrand, ECommerceContext>, ICatalogBrandDAL
     {
-        public CatalogBrandDAL(eCommerceContext context) : base(context)
+        public CatalogBrandDAL(ECommerceContext context) : base(context)
         {
         }
     }

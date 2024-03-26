@@ -5,7 +5,7 @@ namespace Core.Utilities.Interceptors.JsonAspect
 {
     public static class ContextBody
     {
-        public static IDictionary<string,Object> ActionArguments { get; set; }
+        public static IDictionary<string, Object> ActionArguments { get; set; }
         public static ActionDescriptor ActionDescriptor { get; set; }
     }
 }

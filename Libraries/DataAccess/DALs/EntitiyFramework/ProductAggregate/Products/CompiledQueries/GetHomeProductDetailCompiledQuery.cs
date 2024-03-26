@@ -11,12 +11,11 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.CompiledQue
 {
     public static class GetHomeProductDetailCQ
     {
-        public static readonly Func<eCommerceContext, int,int, Task<ProductDetailDTO>> Get =
-        EF.CompileAsyncQuery<eCommerceContext, int, int, ProductDetailDTO>((Context, ProductId, CombinationId) =>
+        public static readonly Func<ECommerceContext, int, int, Task<ProductDetailDTO>> Get =
+        EF.CompileAsyncQuery<ECommerceContext, int, int, ProductDetailDTO>((Context, ProductId, CombinationId) =>
                 (from p in Context.Product
                  where p.Id == ProductId
                  join b in Context.Brand on p.BrandId equals b.Id
-                 let dblg = (from dbl in Context.DiscountBrand where dbl.BrandId == p.BrandId select dbl).AsEnumerable()
                  let pmg = (from pm in Context.ProductAttributeMapping
                             where pm.ProductId == p.Id
                             let pmavg = (from pmav in Context.ProductAttributeValue
@@ -36,7 +35,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.CompiledQue
                              let pacpsg = (from pacps in Context.ProductStock
                                            orderby pacps.CreateTime
                                            where pac.Id == pacps.CombinationId
-                                           && (pacps.AllowOutOfStockOrders == true || pacps.ProductStockPiece > 0)
+                                           && (pacps.AllowOutOfStockOrders || pacps.ProductStockPiece > 0)
                                            select pacps).First()
                              select new ProductDetailDTO.ProductAttributeCombination
                              {
@@ -63,7 +62,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.CompiledQue
                                   SpeficationAtributeTypeName = sa.Name
                               }).AsEnumerable()
                  let pcg = (from pc in Context.Comment
-                            where pc.IsApproved == true && pc.Productid == p.Id
+                            where pc.IsApproved && pc.Productid == p.Id
                             join u in Context.Users on pc.UserId equals u.Id
                             select new ProductDetailDTO.Comment()
                             {
@@ -74,13 +73,13 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.CompiledQue
                              where ppl.ProductId == p.Id
                              join ppcp in Context.CombinationPhoto on ppl.Id equals ppcp.PhotoId into ppcplj
                              from ppcpljg in ppcplj.DefaultIfEmpty()
-                             where CombinationId != 0 ? ppcpljg.CombinationId == CombinationId : true == true
+                             where CombinationId == 0 || ppcpljg.CombinationId == CombinationId
                              select ppl).AsEnumerable()
                  let productStockGroup = (from ps in Context.ProductStock.DefaultIfEmpty()
                                           orderby ps.CreateTime
-                                          where ps.ProductId == p.Id && (ps.AllowOutOfStockOrders == true || ps.ProductStockPiece > 0) &&
+                                          where ps.ProductId == p.Id && (ps.AllowOutOfStockOrders || ps.ProductStockPiece > 0) &&
                                           (p.ProductStockTypeId == (int)ProductStockTypeEnum.VaryasyonUrun
-                                          ? pacg.Count() > 0 && CombinationId == 0 ? ps.CombinationId == pacg.First().Id : ps.CombinationId == CombinationId
+                                          ? pacg.Any() && CombinationId == 0 ? ps.CombinationId == pacg.First().Id : ps.CombinationId == CombinationId
                                           : ps.CombinationId == 0)
                                           select ps).First()
                  select new ProductDetailDTO()
@@ -89,7 +88,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.CompiledQue
                      BrandModel = new ProductDetailDTO.Brand()
                      {
                          BrandInfo = b,
-                         DiscountBrandList = dblg,
                      },
                      CategoryModel = new ProductDetailDTO.Category()
                      {

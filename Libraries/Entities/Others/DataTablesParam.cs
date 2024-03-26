@@ -12,10 +12,12 @@ namespace Entities.Others
         public int iSortCol_0 { get; set; }
         public string sSortDir_0 { get; set; }
         public string sColumns { get; set; }
-        public int PageIndex {
-            get {
+        public int PageIndex
+        {
+            get
+            {
                 int pageNo = 1;
-                if (iDisplayStart >= iDisplayLength && iDisplayStart != 0 || iDisplayLength !=0)
+                if (iDisplayStart >= iDisplayLength && iDisplayStart != 0 || iDisplayLength != 0)
                 {
                     pageNo = (iDisplayStart / iDisplayLength) + 1;
                 }
@@ -23,7 +25,8 @@ namespace Entities.Others
             }
             set { PageIndex = value; }
         }
-        public string[] ColumnListArray {
+        public string[] ColumnListArray
+        {
             get
             {
                 var data = sColumns.ToString().Split(',').ToArray();
@@ -34,16 +37,20 @@ namespace Entities.Others
                 ColumnListArray = value;
             }
         }
-        public string SortedColumnName {
-            get {
+        public string SortedColumnName
+        {
+            get
+            {
                 var data = ColumnListArray[iSortCol_0];
                 return data;
             }
-            set {
+            set
+            {
                 SortedColumnName = value;
             }
         }
-        public int PageSize {
+        public int PageSize
+        {
             get
             {
                 if (iDisplayLength == 0)
@@ -55,11 +62,13 @@ namespace Entities.Others
         }
         public string ColumnOrder
         {
-            get {
+            get
+            {
                 var data = SortedColumnName + " " + sSortDir_0;
                 return data;
             }
-            set {
+            set
+            {
                 ColumnOrder = value;
             }
         }

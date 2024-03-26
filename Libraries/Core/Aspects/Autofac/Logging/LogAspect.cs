@@ -1,11 +1,10 @@
 ﻿using Castle.DynamicProxy;
+using Core.Const;
 using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
-using Core.Utilities.Messages;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
@@ -18,16 +17,14 @@ namespace Core.Aspects.Autofac.Logging
     {
         private readonly LoggerServiceBase _loggerServiceBase;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private IActionContextAccessor actionContextAccessor;
         public LogAspect(Type loggerService)
         {
             if (loggerService.BaseType != typeof(LoggerServiceBase))
             {
-                throw new ArgumentException(AspectMessages.WrongLoggerType);
+                throw new ArgumentException(CoreMessages.WrongLoggerType);
             }
             _loggerServiceBase = (LoggerServiceBase)ServiceTool.ServiceProvider.GetService(loggerService);
             _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
-            actionContextAccessor = ServiceTool.ServiceProvider.GetService<IActionContextAccessor>();
         }
         protected override void OnBefore(IInvocation invocation)
         {
@@ -45,31 +42,28 @@ namespace Core.Aspects.Autofac.Logging
                     Type = invocation.Arguments[i].GetType().Name
                 });
             }
-            var requestIdentity = _httpContextAccessor.HttpContext.User.Identity;
-            var logDetail = new LogDetail();
-            if (requestIdentity != null)
+            if (_httpContextAccessor.HttpContext.User.Identity != null)
             {
-                logDetail = new LogDetail
+                var logDetail = new LogDetail()
                 {
                     MethodName = invocation.Method.Name,
                     Parameters = logParameters,
                     User = (_httpContextAccessor.HttpContext == null || _httpContextAccessor.HttpContext.User.Identity.Name == null) ? "?" : _httpContextAccessor.HttpContext.User.Identity.Name
                 };
+                return JsonConvert.SerializeObject(logDetail);
             }
             else
             {
-                var httpContext = _httpContextAccessor.HttpContext;
-                var tokenCookie = httpContext.Request.Cookies["UserToken"];
-                var token = new JwtSecurityTokenHandler().ReadJwtToken(tokenCookie);
-                var email = token?.Claims.FirstOrDefault(x => x.Type == "email")?.Value;
-                logDetail = new LogDetail
+                var logDetail = new LogDetail()
                 {
                     MethodName = invocation.Method.Name,
                     Parameters = logParameters,
-                    User = email
+                    User = new JwtSecurityTokenHandler().ReadJwtToken(
+                        _httpContextAccessor.HttpContext.Request.Cookies["UserToken"])
+                        ?.Claims.FirstOrDefault(x => x.Type == "email")?.Value
                 };
+                return JsonConvert.SerializeObject(logDetail);
             }
-            return JsonConvert.SerializeObject(logDetail);
         }
     }
 }

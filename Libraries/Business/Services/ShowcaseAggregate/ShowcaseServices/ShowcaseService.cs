@@ -7,6 +7,7 @@ using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices;
+using DataAccess.UnitOfWork;
 using Entities.Concrete.ShowcaseAggregate;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -17,59 +18,59 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseServices
     {
         private readonly IShowcaseDAL _showcaseRepository;
         private readonly IMapper _mapper;
-        public ShowcaseService(IShowcaseDAL showcaseRepository, IMapper mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public ShowcaseService(IShowcaseDAL showcaseRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _showcaseRepository = showcaseRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
         [CacheAspect]
-        public async Task<IDataResult<IList<ShowCase>>> GetAllShowcase()
+        public async Task<Result<IList<ShowCase>>> GetAllShowcase()
         {
-            var result = _showcaseRepository.Query();
-            var data = await result.ToListAsync();
-            return new SuccessDataResult<IList<ShowCase>>(data);
+            return Result.SuccessDataResult<IList<ShowCase>>(await _showcaseRepository.Query().ToListAsync());
         }
-        [TransactionAspect(typeof(eCommerceContext))]
-        [CacheRemoveAspect("IShowCaseProductService.Get", "IShowcaseService.Get","ShowcaseDAL.Get")]
+        [CacheRemoveAspect("IShowCaseProductService.Get", "IShowcaseService.Get", "ShowcaseDAL.Get")]
         [LogAspect(typeof(MsSqlLogger))]
-        public async Task<IResult> InsertShowcase(ShowCase showCase)
+        public async Task<Result> InsertShowcase(ShowCase showCase)
         {
-            if (showCase == null)
-                return new ErrorResult();
-            _showcaseRepository.Add(showCase);
-            await _showcaseRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            {
+                await _showcaseRepository.AddAsync(showCase);
+                return Result.SuccessResult();
+            });
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IShowCaseProductService.Get", "IShowcaseService.Get", "ShowcaseDAL.Get")]
-        public async Task<IResult> DeleteShowCase(DeleteShowCase showCase)
+        public async Task<Result> DeleteShowCase(DeleteShowCase showCase)
         {
-            if (showCase.Id == 0)
-                return new ErrorResult();
-            var deletedData = _showcaseRepository.GetById(showCase.Id);
-            _showcaseRepository.Delete(deletedData);
-            await _showcaseRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            {
+                var data = await _showcaseRepository.GetByIdAsync(showCase.Id);
+                if (data == null)
+                    return Result.SuccessResult();
+                _showcaseRepository.Remove(data);
+                return Result.SuccessResult();
+            });
         }
         [CacheAspect]
-        public async Task<IDataResult<ShowCase>> GetShowcase(GetShowcase request)
+        public async Task<Result<ShowCase>> GetShowcase(GetShowcase request)
         {
-            var result = await _showcaseRepository.GetAsync(x => x.Id == request.Id);
-            return new SuccessDataResult<ShowCase>(result);
+            return Result.SuccessDataResult<ShowCase>(await _showcaseRepository.GetAsync(x => x.Id == request.Id));
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IShowCaseProductService.Get", "IShowcaseService.Get", "ShowcaseDAL.Get")]
         [LogAspect(typeof(MsSqlLogger))]
-        public async Task<IResult> UpdateShowcase(ShowCase showCase)
+        public async Task<Result> UpdateShowcase(ShowCase showCase)
         {
-            if (showCase == null)
-                return new ErrorResult();
-            var data = (await GetShowcase(new GetShowcase(showCase.Id))).Data;
-            var updateData = _mapper.Map(showCase, data);
-            _showcaseRepository.Update(updateData);
-            await _showcaseRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var data = (await GetShowcase(new GetShowcase(showCase.Id))).Data;
+                if(data == null)
+                    return Result.ErrorResult();
+                var updateData = _mapper.Map(showCase, data);
+                _showcaseRepository.Update(updateData);
+                return Result.SuccessResult();
+            });
         }
     }
 }

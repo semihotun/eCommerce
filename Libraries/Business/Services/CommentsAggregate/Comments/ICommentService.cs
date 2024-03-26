@@ -7,11 +7,11 @@ namespace Business.Services.CommentsAggregate.Comments
 {
     public interface ICommentService
     {
-        Task<IDataResult<IPagedList<Comment>>> GetCommentList(GetCommentList request);
-        Task<IResult> AddComment(Comment model);
-        Task<IDataResult<Comment>> GetComment(GetComment request);
-        Task<IResult> DeleteComment(Comment comment);
-        Task<IResult> UpdateComment(Comment comment);
-        Task<IDataResult<int>> GetCommentCount();
+        Task<Result<IPagedList<Comment>>> GetCommentList(GetCommentList request);
+        Task<Result> AddComment(Comment model);
+        Task<Result<Comment>> GetComment(GetComment request);
+        Task<Result> DeleteComment(Comment comment);
+        Task<Result> UpdateComment(Comment comment);
+        Task<Result<int>> GetCommentCount();
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Entities.Concrete.ProductAggregate
 {
-    public partial class ProductSpecificationAttribute : BaseEntity
+    public class ProductSpecificationAttribute : BaseEntity
     {
         public int ProductId { get; set; }
         public int AttributeTypeId { get; set; }

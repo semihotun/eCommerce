@@ -1,18 +1,15 @@
 ﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
 @{
-    ViewBag.Title = "AttrCombinationinsert";
+    ViewBag.Title = "AttrCombinationInsert";
     Layout = "";
 }
 <div class="mt-5">
     <h2 style="font-weight:100;">Kombinasyonlar</h2>
     <div class="row">
         <div class="col-md-3">
-            @Html.ActionLink("Tüm Kombinasyonları Ekle", "AttrCombinationinsert", "AdminProduct", new { ProductId = Model.Id }, new { @class = "btn btn-outline-default" })
+            <button type="button" class="btn btn-outline-default" onclick="GenerateAllCombination()">Tüm Kombinasyonları Ekle</button>  
         </div>
         <div class="col-md-5">
-            <!-- SONRADAN EKLENEN YER -->
-            <!-- Button trigger modal -->
-            @*<button type="button" class="btn btn-default" data-toggle="modal" data-target=".bd-example-modal-lg">Özellik Ekle</button>*@
             <!-- Modal -->
             <div class="modal bd-example-modal-lg" tabindex="35" id="Modal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="height:auto;">
                 <div class="modal-dialog modal-lg">

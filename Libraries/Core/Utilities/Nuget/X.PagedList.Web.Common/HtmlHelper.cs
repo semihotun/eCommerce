@@ -208,7 +208,7 @@ namespace X.PagedList.Web.Common
             {
                 // cannot fit all pages into pager
                 var maxPageNumbersToDisplay = options.MaximumPageNumbersToDisplay.Value;
-                firstPageToDisplay = list.PageNumber - maxPageNumbersToDisplay / 2;
+                firstPageToDisplay = list.PageNumber - (maxPageNumbersToDisplay / 2);
                 if (firstPageToDisplay < 1)
                 {
                     firstPageToDisplay = 1;
@@ -284,7 +284,7 @@ namespace X.PagedList.Web.Common
                 //append class to first item in list?
                 if (!string.IsNullOrWhiteSpace(options.ClassToApplyToFirstListItemInPager))
                 {
-                    listItemLinks.First().AddCssClass(options.ClassToApplyToFirstListItemInPager);
+                    listItemLinks[0].AddCssClass(options.ClassToApplyToFirstListItemInPager);
                 }
                 //append class to last item in list?
                 if (!string.IsNullOrWhiteSpace(options.ClassToApplyToLastListItemInPager))

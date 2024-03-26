@@ -2,9 +2,9 @@
 {
     public class GetPredefinedProductAttributeValueById
     {
-        public GetPredefinedProductAttributeValueById(int ıd)
+        public GetPredefinedProductAttributeValueById(int id)
         {
-            Id = ıd;
+            Id = id;
         }
         public GetPredefinedProductAttributeValueById()
         {

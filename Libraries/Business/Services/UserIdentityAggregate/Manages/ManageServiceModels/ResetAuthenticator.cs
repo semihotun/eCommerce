@@ -1,4 +1,5 @@
-﻿using Core.Library;
+﻿using Entities.Concrete;
+
 namespace Business.Services.UserIdentityAggregate.Manages.ManageServiceModels
 {
     public class ResetAuthenticator

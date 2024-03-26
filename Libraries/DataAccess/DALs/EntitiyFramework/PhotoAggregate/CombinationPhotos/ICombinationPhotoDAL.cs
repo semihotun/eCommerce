@@ -9,6 +9,6 @@ namespace DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos
 {
     public interface ICombinationPhotoDAL : IEntityRepository<CombinationPhoto>
     {
-        Task<IDataResult<List<CombinationPhotoDTO>>> GetAllCombinationPhotosDTO(GetAllCombinationPhotosDTO request);
+        Task<Result<List<CombinationPhotoDTO>>> GetAllCombinationPhotosDTO(GetAllCombinationPhotosDTO request);
     }
 }

@@ -2,9 +2,9 @@
 {
     public class RemoveRangeCategory
     {
-        public RemoveRangeCategory(int ıd)
+        public RemoveRangeCategory(int id)
         {
-            Id = ıd;
+            Id = id;
         }
         public RemoveRangeCategory()
         {

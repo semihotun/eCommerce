@@ -1,5 +1,4 @@
-﻿using Entities.Concrete.DiscountsAggregate;
-using Entities.Concrete.PhotoAggregate;
+﻿using Entities.Concrete.PhotoAggregate;
 using Entities.Concrete.ProductAggregate;
 using System.Collections.Generic;
 namespace Entities.DTO.Product
@@ -14,7 +13,6 @@ namespace Entities.DTO.Product
         public class Brand
         {
             public Concrete.BrandAggregate.Brand BrandInfo { get; set; }
-            public IEnumerable<DiscountBrand> DiscountBrandList { get; set; }
         }
         #endregion
         #region Category
@@ -22,7 +20,6 @@ namespace Entities.DTO.Product
         public class Category
         {
             public Concrete.CategoriesAggregate.Category CategoryInfo { get; set; }
-            public IEnumerable<DiscountCategory> DiscountBrandList { get; set; }
         }
         #endregion
         #region ProductPhoto

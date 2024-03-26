@@ -9,7 +9,7 @@ namespace Core.Utilities.Migration
 {
     public static class HostExtension
     {
-        public static IHost MigrateDbContext<TContext>(this IHost host, Action<TContext, IServiceProvider,bool> seeder)
+        public static IHost MigrateDbContext<TContext>(this IHost host, Action<TContext, IServiceProvider, bool> seeder)
              where TContext : DbContext
         {
             using (var scope = host.Services.CreateScope())
@@ -26,25 +26,23 @@ namespace Core.Utilities.Migration
                             TimeSpan.FromSeconds(5),
                             TimeSpan.FromSeconds(8),
                         });
-                    retry.Execute(() => InvokeSeeder(seeder, context, sp,logger));
+                    retry.Execute(() => InvokeSeeder(seeder, context, sp));
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    logger.LogError("Migration Başaramadı");
+                    throw new Exception(ex.ToString());
                 }
             }
             return host;
         }
-        private static void InvokeSeeder<TContext>(Action<TContext, IServiceProvider,bool> seeder,
+        private static void InvokeSeeder<TContext>(Action<TContext, IServiceProvider, bool> seeder,
             TContext context,
-            IServiceProvider services,
-            ILogger<TContext> logger
+            IServiceProvider services
             )
             where TContext : DbContext
         {
-            var created=context.Database.EnsureCreated();
+            var created = context.Database.EnsureCreated();
             context.Database.Migrate();
-            logger.LogInformation("Migration Çalıştı");
             seeder(context, services, created);
         }
     }

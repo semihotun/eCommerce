@@ -3,9 +3,9 @@ using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.OrderAggregate;
 namespace DataAccess.DALs.EntitiyFramework.OrderAggregate.OrderItems
 {
-    public class OrderItemDAL : EfEntityRepositoryBase<OrderItem, eCommerceContext>, IOrderItemDAL
+    public class OrderItemDAL : EfEntityRepositoryBase<OrderItem, ECommerceContext>, IOrderItemDAL
     {
-        public OrderItemDAL(eCommerceContext context) : base(context)
+        public OrderItemDAL(ECommerceContext context) : base(context)
         {
         }
     }

@@ -1,37 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
- <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
- <ItemGroup>
-   <Compile Remove="Services\ProductAggregate\ProductLikes\CompiledQueries\**" />
-   <Compile Remove="Services\ProductAggregate\ProductLikes\ProductLikesModel\**" />
-   <Compile Remove="Services\ProductAggregate\ProductLikes\Validator\**" />
-   <Compile Remove="Services\ProductAggregate\ProductStockTypes\Validator\**" />
-   <Compile Remove="Services\ProductAggregate\Products\CompiledQueries\**" />
-   <Compile Remove="Services\SpeficationAggregate\SpecificationAttributes\Validator\**" />
-   <Compile Remove="Services\UserIdentityAggregate\Users\**" />
-   <EmbeddedResource Remove="Services\ProductAggregate\ProductLikes\CompiledQueries\**" />
-   <EmbeddedResource Remove="Services\ProductAggregate\ProductLikes\ProductLikesModel\**" />
-   <EmbeddedResource Remove="Services\ProductAggregate\ProductLikes\Validator\**" />
-   <EmbeddedResource Remove="Services\ProductAggregate\ProductStockTypes\Validator\**" />
-   <EmbeddedResource Remove="Services\ProductAggregate\Products\CompiledQueries\**" />
-   <EmbeddedResource Remove="Services\SpeficationAggregate\SpecificationAttributes\Validator\**" />
-   <EmbeddedResource Remove="Services\UserIdentityAggregate\Users\**" />
-   <None Remove="Services\ProductAggregate\ProductLikes\CompiledQueries\**" />
-   <None Remove="Services\ProductAggregate\ProductLikes\ProductLikesModel\**" />
-   <None Remove="Services\ProductAggregate\ProductLikes\Validator\**" />
-   <None Remove="Services\ProductAggregate\ProductStockTypes\Validator\**" />
-   <None Remove="Services\ProductAggregate\Products\CompiledQueries\**" />
-   <None Remove="Services\SpeficationAggregate\SpecificationAttributes\Validator\**" />
-   <None Remove="Services\UserIdentityAggregate\Users\**" />
- </ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Autofac" Version="6.1.0" />
 		<PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
 		<PackageReference Include="FluentValidation" Version="10.0.4" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
 		<PackageReference Include="Quartz" Version="3.4.0" />
-		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.9" />
+		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.10" />
 		<PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
 	</ItemGroup>
 	<ItemGroup>

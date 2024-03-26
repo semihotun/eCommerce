@@ -2,7 +2,7 @@
 {
     public enum ProductStockTypeEnum
     {
-        NormalUrun=1,
-        VaryasyonUrun=2
+        NormalUrun = 1,
+        VaryasyonUrun = 2
     }
 }

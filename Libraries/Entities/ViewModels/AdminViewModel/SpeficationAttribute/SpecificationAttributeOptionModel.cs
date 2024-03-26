@@ -10,7 +10,6 @@ namespace Entities.ViewModels.AdminViewModel.SpeficationAttribute
         public virtual SpecificationAttribute SpecificationAttribute { get; set; }
         public virtual List<ProductSpecificationAttribute> ProductSpecificationAttribute { get; set; }
         public string Name { get; set; }
-        public string ColorSquaresRgb { get; set; }
         public int DisplayOrder { get; set; }
     }
 }

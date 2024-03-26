@@ -8,7 +8,7 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseTypes
 {
     public interface IShowcaseTypeService
     {
-        Task<IDataResult<IList<ShowCaseType>>> GetAllShowCaseType();
-        Task<IDataResult<IEnumerable<SelectListItem>>> GetAllShowCaseTypeSelectListItem(GetAllShowCaseTypeSelectListItem request);
+        Task<Result<IList<ShowCaseType>>> GetAllShowCaseType();
+        Task<Result<IEnumerable<SelectListItem>>> GetAllShowCaseTypeSelectListItem(GetAllShowCaseTypeSelectListItem request);
     }
 }

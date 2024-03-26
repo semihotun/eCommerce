@@ -4,7 +4,7 @@ using Quartz.Spi;
 using System;
 namespace Core.Utilities.Quartz
 {
-    public class SingletonJobFactory:IJobFactory
+    public class SingletonJobFactory : IJobFactory
     {
         private readonly IServiceProvider _serviceProvier;
         public SingletonJobFactory(IServiceProvider serviceProvier)
@@ -15,7 +15,7 @@ namespace Core.Utilities.Quartz
         {
             return _serviceProvier.GetRequiredService(bundle.JobDetail.JobType) as IJob;
         }
-        public void ReturnJob(IJob job) 
+        public void ReturnJob(IJob job)
         {
             if (job is IDisposable disposable)
             {

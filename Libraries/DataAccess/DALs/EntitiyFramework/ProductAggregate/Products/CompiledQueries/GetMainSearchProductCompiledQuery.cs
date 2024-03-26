@@ -8,10 +8,10 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.CompiledQue
 {
     public static class GetMainSearchProductCompiledQuery
     {
-        public static readonly Func<eCommerceContext, int, string, IEnumerable<ProductSearch>> Get =
-      EF.CompileQuery<eCommerceContext, int, string, IEnumerable<ProductSearch>>((Context, PageSize, SearchProductName) =>
+        public static readonly Func<ECommerceContext, int, string, IEnumerable<ProductSearch>> Get =
+      EF.CompileQuery<ECommerceContext, int, string, IEnumerable<ProductSearch>>((Context, PageSize, SearchProductName) =>
               (from p in Context.Product.AsEnumerable()
-               where p.ProductNameUpper.StartsWith(SearchProductName)                                  
+               where p.ProductNameUpper.StartsWith(SearchProductName)
                select new ProductSearch
                {
                    Id = p.Id,

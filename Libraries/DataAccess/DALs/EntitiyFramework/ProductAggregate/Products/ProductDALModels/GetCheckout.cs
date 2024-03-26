@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels
 {
-    public  class GetCheckout
+    public class GetCheckout
     {
         public GetCheckout(List<Basket> basket)
         {

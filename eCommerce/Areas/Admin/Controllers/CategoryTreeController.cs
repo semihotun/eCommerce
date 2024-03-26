@@ -43,13 +43,12 @@ namespace eCommerce.Areas.Admin.Controllers
         #region Method
         public async Task<IActionResult> Index()
         {
-            var category =(await _categoryService.GetAllCategories()).Data;
-            ViewBag.plist = category;
+            ViewBag.plist = (await _categoryService.GetAllCategories()).Data;
             return View();
         }
         public async Task<JsonResult> GetHierarchy()
         {
-            var records=(await _categoryDAL.GetHierarchy()).Data;
+            var records = (await _categoryDAL.GetHierarchy()).Data;
             return Json(records, new JsonSerializerSettings());
         }
         [HttpPost]
@@ -86,26 +85,21 @@ namespace eCommerce.Areas.Admin.Controllers
         #endregion
         public async Task<IActionResult> CategoryEdit(int id)
         {
-            var model = new CategoryEditVM();
-            var categorySpeficationDTOTask = _categoryDAL.GetCategorySpefication(
-                new GetCategorySpefication(id));
-            var speficationAttributeSelectListTask = _specificationAttributeService.GetProductSpeficationAttributeDropdwon(
-                new GetProductSpeficationAttributeDropdwon());
-            await Task.WhenAll(categorySpeficationDTOTask, 
-               speficationAttributeSelectListTask).ContinueWith((t) =>
+            return View(new CategoryEditVM
             {
-                model.CategorySpeficationDTO = categorySpeficationDTOTask.Result.Data;
-                model.SpeficationAttributeSelectList = speficationAttributeSelectListTask.Result.Data;
+                CategorySpeficationDTO = (await _categoryDAL.GetCategorySpefication(
+                new GetCategorySpefication(id))).Data,
+                SpeficationAttributeSelectList = (await _specificationAttributeService.GetProductSpeficationAttributeDropdwon(
+                new GetProductSpeficationAttributeDropdwon())).Data
             });
-            return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> CategoryEdit(CategoryEditVM model)
         {
             ResponseAlert(await _categoryService.UpdateCategory(model.CategorySpeficationDTO.Category));
-            return RedirectToAction(nameof(CategoryEdit),new { id= model.CategorySpeficationDTO.Category.Id});
+            return RedirectToAction(nameof(CategoryEdit), new { id = model.CategorySpeficationDTO.Category.Id });
         }
-        public async Task<IActionResult> CategoryFilterDelete(int speficationId,int categoryId)
+        public async Task<IActionResult> CategoryFilterDelete(int speficationId, int categoryId)
         {
             var deletedData = await _categorySpeficationService.GetByCategorySpeficationId(new GetByCategorySpeficationId(speficationId, categoryId));
             ResponseAlert(await _categorySpeficationService.DeleteCategorySpefication(deletedData.Data));

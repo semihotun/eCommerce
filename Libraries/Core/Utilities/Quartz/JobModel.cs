@@ -8,7 +8,7 @@ namespace Core.Utilities.Quartz
             Type = type;
             Expression = expression;
         }
-        public Type Type { get;  }
+        public Type Type { get; }
         public string Expression { get; set; }
     }
 }

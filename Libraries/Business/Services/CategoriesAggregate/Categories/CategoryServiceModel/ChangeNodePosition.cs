@@ -2,9 +2,9 @@
 {
     public class ChangeNodePosition
     {
-        public ChangeNodePosition(int ıd, int? parentId)
+        public ChangeNodePosition(int id, int? parentId)
         {
-            Id = ıd;
+            Id = id;
             ParentId = parentId;
         }
         public ChangeNodePosition()

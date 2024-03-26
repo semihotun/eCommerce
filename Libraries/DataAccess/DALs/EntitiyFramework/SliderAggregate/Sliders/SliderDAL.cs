@@ -3,9 +3,9 @@ using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.SliderAggregate;
 namespace DataAccess.DALs.EntitiyFramework.SliderAggregate.Sliders
 {
-    public class SliderDAL : EfEntityRepositoryBase<Slider, eCommerceContext>, ISliderDAL
+    public class SliderDAL : EfEntityRepositoryBase<Slider, ECommerceContext>, ISliderDAL
     {
-        public SliderDAL(eCommerceContext context) : base(context)
+        public SliderDAL(ECommerceContext context) : base(context)
         {
         }
     }

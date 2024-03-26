@@ -1,15 +1,16 @@
 #region using
 using Autofac;
 using Business.DependencyResolvers;
+using Business.Extension;
 using Core.DependencyResolvers;
 using Core.Extensions;
-using Core.Utilities.Filter;
 using Core.Utilities.Generate;
+using Core.Utilities.Identity;
 using Core.Utilities.IoC;
 using Core.Utilities.Middlewares;
 using Core.Utilities.Quartz;
 using Core.Utilities.Swagger;
-using Core.Utilities.Identity;
+using DataAccess.UnitOfWork;
 using eCommerce.Extensions;
 using eCommerce.StartUpSettings;
 using FluentValidation.AspNetCore;
@@ -25,64 +26,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json.Serialization;
-using Business.Extension;
 using Utilities.Cookie;
-using Microsoft.AspNetCore.Identity.UI.Services;
 #endregion
 namespace eCommerce
 {
     public class Startup
     {
-        [Obsolete]
         public Startup(IConfiguration configuration, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
             Configuration = configuration;
             CurrentEnvironment = env;
         }
-        [Obsolete]
-        private Microsoft.AspNetCore.Hosting.IHostingEnvironment CurrentEnvironment { get; set; }
+        private Microsoft.AspNetCore.Hosting.IHostingEnvironment CurrentEnvironment { get; }
         public IConfiguration Configuration { get; }
         public IEnumerable<Assembly> PluginAssembly { get; set; }
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
-            {
-                options.AddPolicy(
-                    "AllowOrigin",
-                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            });
+            options.AddPolicy("AllowOrigin", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
             services.AddCustomSwaggerGen();
             services.AddDbContext(Configuration);
             services.AddDependencyResolvers(new ICoreModule[] { new CoreModule() });
             services.AutoMapperSettings();
             services.AddHttpContextAccessor();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             //TempData
             services.AddMemoryCache();
             services.AddSession();
             //Identity  
             services.AddIdentitySettings(Configuration, JwtBearerDefaults.AuthenticationScheme);
-            services.AddUserIdentitySettings(Configuration);
+            services.AddUserIdentitySettings();
             //Jobs
             services.UseQuartz();
             services.AddJobList();
-            //PluginSetting
-            ApiGenerator.GenerateApi();
-            var pluginAssemblies = PluginExtension.GetPluginAssemblies();
-            PluginExtension.RegisterMvc(services, pluginAssemblies);
-            PluginExtension.SetupEmbeddedViewsForPlugins(services, pluginAssemblies);      
-            PluginAssembly = pluginAssemblies;
             services.ConfigureApplicationCookie(CurrentEnvironment);
             services.AddRazorPages().AddNewtonsoftJson();
-            services.AddMvc(options =>
-            {
-                options.Filters.AddService<ValidationFilter>();
-            }).AddFluentValidation();
+            services.AddMvc().AddFluentValidation().ConfigureApiBehaviorOptions(x => x.SuppressModelStateInvalidFilter = true);
             services.AddControllers()
              .AddJsonOptions(options =>
              {
                  options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                 options.JsonSerializerOptions.IgnoreNullValues = true;
+                 options.JsonSerializerOptions.IgnoreNullValues = false;
              });
+            //PluginSetting
+            ApiGenerator.GenerateApi();
+            var pluginAssemblies = PluginExtension.GetPluginAssemblies();
+            PluginExtension.RegisterMvc(services, pluginAssemblies);
+            PluginExtension.SetupEmbeddedViewsForPlugins(services, pluginAssemblies);
+            PluginAssembly = pluginAssemblies;
         }
         public void ConfigureContainer(ContainerBuilder builder)
         {
@@ -98,19 +89,13 @@ namespace eCommerce
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "eCommerce v1");
-                });
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "eCommerce v1"));
             }
             else if (env.IsProduction())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "eCommerce v1");
-                });
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "eCommerce v1"));
             }
             else
             {

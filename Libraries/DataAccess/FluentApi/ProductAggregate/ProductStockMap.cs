@@ -7,7 +7,7 @@ namespace DataAccess.FluentApi.ProductAggregate
     {
         public void Configure(EntityTypeBuilder<ProductStock> builder)
         {
-            builder.HasIndex(x => new{ x.ProductId,x.CombinationId });
+            builder.HasIndex(x => new { x.ProductId, x.CombinationId });
             builder.HasKey(x => x.Id);
             builder.Property(t => t.Id).UseIdentityColumn();
         }

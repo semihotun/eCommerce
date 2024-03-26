@@ -12,7 +12,7 @@ namespace Core.Utilities.Quartz
             services.AddSingleton<IJobFactory, SingletonJobFactory>();
             services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
         }
-        public static void AddQuartzSingleton<TService>(this IServiceCollection services,string expression)
+        public static void AddQuartzSingleton<TService>(this IServiceCollection services, string expression)
         {
             var serviceType = typeof(TService);
             services.AddSingleton(serviceType);

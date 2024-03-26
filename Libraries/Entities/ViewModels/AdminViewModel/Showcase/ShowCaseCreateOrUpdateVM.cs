@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 namespace Entities.ViewModels.AdminViewModel.Showcase
 {
-    public class ShowCaseCreateOrUpdateVM:BaseEntity
+    public class ShowCaseCreateOrUpdateVM : BaseEntity
     {
         public int ShowCaseOrder { get; set; }
         public string ShowCaseTitle { get; set; }

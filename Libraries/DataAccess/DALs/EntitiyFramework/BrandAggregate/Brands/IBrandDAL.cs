@@ -8,6 +8,6 @@ namespace DataAccess.DALs.EntitiyFramework.BrandAggregate.Brands
 {
     public interface IBrandDAL : IEntityRepository<Brand>
     {
-        public Task<IDataResult<IPagedList<Brand>>> GetBrandDataTable(GetBrandDataTable request);
+        public Task<Result<IPagedList<Brand>>> GetBrandDataTable(GetBrandDataTable request);
     }
 }

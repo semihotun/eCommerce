@@ -6,7 +6,7 @@ namespace Core.Utilities.Security.Jwt
     {
         public IEnumerable<ClaimTypeValue> Claims { get; set; }
         public string Token { get; set; }
-        public DateTime Expiration { get; set; } 
+        public DateTime Expiration { get; set; }
     }
     public class ClaimTypeValue
     {

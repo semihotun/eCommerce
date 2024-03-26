@@ -18,25 +18,11 @@
                 @Html.TextBoxFor(x => x.ProductAttributeMappingModel.TextPrompt, new { @class = "form-control" })
             </td>
             <td>
-                @Html.TextBoxFor(x => x.ProductAttributeMappingModel.DisplayOrder, new { @class = "form-control", Value = "0", type = "number" })
+                @Html.TextBoxFor(x => x.ProductAttributeMappingModel.DisplayOrder, new { @class = "form-control", Value = "0", type = "number", min = "0" })
             </td>
             <td>
-                <input type="button" class="btn btn-default" id="mappingAdd" value="Kaydet" />
+                <input type="button" class="btn btn-default" id="mappingAdd" value="Kaydet" onclick="AddMapping()" />
             </td>
         </tr>
     </tbody>
 </table>
-<style>
-    .vertical-absolute-left-center {
-        top: 50%;
-        left: 0%;
-        position: absolute;
-        transform: translateY(-50%);
-    }
-    .vertical-absolute-right-center {
-        top: 50%;
-        right: 0%;
-        position: absolute;
-        transform: translateY(-50%);
-    }
-</style>

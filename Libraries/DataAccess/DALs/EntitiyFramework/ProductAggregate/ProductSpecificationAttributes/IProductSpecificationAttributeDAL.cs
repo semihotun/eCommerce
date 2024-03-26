@@ -9,9 +9,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecification
 {
     public interface IProductSpecificationAttributeDAL : IEntityRepository<ProductSpecificationAttribute>
     {
-        Task<IDataResult<IPagedList<ProductSpecificationAttributeDTO>>> ProductSpecAttrList(
+        Task<Result<IPagedList<ProductSpecificationAttributeDTO>>> ProductSpecAttrList(
             ProductSpecAttrList request);
-        Task<IDataResult<ProductSpecificationAttributeDTO>> GetProductSpeficationAttr(
+        Task<Result<ProductSpecificationAttributeDTO>> GetProductSpeficationAttr(
            GetProductSpeficationAttr request);
     }
 }

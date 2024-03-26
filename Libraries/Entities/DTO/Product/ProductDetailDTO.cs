@@ -1,5 +1,4 @@
-﻿using Core.Library;
-using Entities.Concrete.DiscountsAggregate;
+﻿using Entities.Concrete;
 using Entities.Concrete.PhotoAggregate;
 using Entities.Concrete.ProductAggregate;
 using Entities.DTO.ShowCase;
@@ -16,7 +15,6 @@ namespace Entities.DTO.Product
         public class Brand
         {
             public Concrete.BrandAggregate.Brand BrandInfo { get; set; }
-            public IEnumerable<DiscountBrand> DiscountBrandList { get; set; }
         }
         #endregion
         #region Category
@@ -24,7 +22,6 @@ namespace Entities.DTO.Product
         public class Category
         {
             public Concrete.CategoriesAggregate.Category CategoryInfo { get; set; }
-            public IEnumerable<DiscountCategory> DiscountBrandList { get; set; }
         }
         #endregion
         #region ProductPhoto
@@ -63,13 +60,14 @@ namespace Entities.DTO.Product
         #endregion
         #region ProductAttributeCombination 
         public IEnumerable<ProductAttributeCombination> ProductAttributeCombinationList { get; set; }
-        public  class ProductAttributeCombination {
+        public class ProductAttributeCombination
+        {
             public ProductStock ProductStockModel { get; set; }
             public int Id { get; set; }
             public string AttributesXml { get; set; }
             public string Gtin { get; set; }
             public string Sku { get; set; }
-            public string ManufacturerPartNumber { get; set; }           
+            public string ManufacturerPartNumber { get; set; }
         }
         #endregion
         public IEnumerable<ProductSpecificationAttributeDTO> ProductSpecificationAttributeList { get; set; }

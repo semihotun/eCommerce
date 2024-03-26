@@ -6,6 +6,7 @@ using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
 using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.PredefinedProductAttributeValues;
+using DataAccess.UnitOfWork;
 using Entities.Concrete.ProductAggregate;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -18,64 +19,62 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues
     {
         #region Field
         private readonly IPredefinedProductAttributeValueDAL _predefinedProductAttributeValueRepository;
+        private readonly IUnitOfWork _unitOfWork;
         #endregion
         #region Ctor
-        public PredefinedProductAttributeValueService(IPredefinedProductAttributeValueDAL predefinedProductAttributeValueRepository)
+        public PredefinedProductAttributeValueService(IPredefinedProductAttributeValueDAL predefinedProductAttributeValueRepository, IUnitOfWork unitOfWork)
         {
             _predefinedProductAttributeValueRepository = predefinedProductAttributeValueRepository;
+            _unitOfWork = unitOfWork;
         }
         #endregion
         #region Method
         [LogAspect(typeof(MsSqlLogger))]
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IPredefinedProductAttributeValueService.Get")]
-        public virtual async Task<IResult> DeletePredefinedProductAttributeValue(PredefinedProductAttributeValue ppav)
+        public virtual async Task<Result> DeletePredefinedProductAttributeValue(PredefinedProductAttributeValue ppav)
         {
-            if (ppav == null)
-                return new ErrorResult();
-            _predefinedProductAttributeValueRepository.Delete(ppav);
-            await _predefinedProductAttributeValueRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            {
+                _predefinedProductAttributeValueRepository.Remove(ppav);
+                return Result.SuccessResult();
+            });
         }
         [CacheAspect]
-        public virtual async Task<IDataResult<IList<PredefinedProductAttributeValue>>> GetPredefinedProductAttributeValues(
+        public virtual async Task<Result<List<PredefinedProductAttributeValue>>> GetPredefinedProductAttributeValues(
             GetPredefinedProductAttributeValues request)
         {
-            var query = from ppav in _predefinedProductAttributeValueRepository.Query()
-                        orderby ppav.DisplayOrder
-                        where ppav.ProductAttributeId == request.ProductAttributeId
-                        select ppav;
-            var data = await query.ToListAsync();
-            return new SuccessDataResult<List<PredefinedProductAttributeValue>>(data);
+            return Result.SuccessDataResult(
+                await (from ppav in _predefinedProductAttributeValueRepository.Query()
+                       orderby ppav.DisplayOrder
+                       where ppav.ProductAttributeId == request.ProductAttributeId
+                       select ppav).ToListAsync());
         }
         [CacheAspect]
-        public virtual async Task<IDataResult<PredefinedProductAttributeValue>> GetPredefinedProductAttributeValueById(
+        public virtual async Task<Result<PredefinedProductAttributeValue>> GetPredefinedProductAttributeValueById(
             GetPredefinedProductAttributeValueById request)
         {
-            var data = await _predefinedProductAttributeValueRepository.GetAsync(x => x.Id == request.Id);
-            return new SuccessDataResult<PredefinedProductAttributeValue>(data);
+            return Result.SuccessDataResult(
+                await _predefinedProductAttributeValueRepository.GetAsync(x => x.Id == request.Id));
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IPredefinedProductAttributeValueService.Get")]
-        public virtual async Task<IResult> InsertPredefinedProductAttributeValue(PredefinedProductAttributeValue ppav)
+        public virtual async Task<Result> InsertPredefinedProductAttributeValue(PredefinedProductAttributeValue ppav)
         {
-            if (ppav == null)
-                return new ErrorResult();
-            _predefinedProductAttributeValueRepository.Add(ppav);
-            await _predefinedProductAttributeValueRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            {
+                await _predefinedProductAttributeValueRepository.AddAsync(ppav);
+                return Result.SuccessResult();
+            });
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("IPredefinedProductAttributeValueService.Get")]
-        public virtual async Task<IResult> UpdatePredefinedProductAttributeValue(PredefinedProductAttributeValue ppav)
+        public virtual async Task<Result> UpdatePredefinedProductAttributeValue(PredefinedProductAttributeValue ppav)
         {
-            if (ppav == null)
-                return new ErrorResult();
-            _predefinedProductAttributeValueRepository.Update(ppav);
-            await _predefinedProductAttributeValueRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            {
+                _predefinedProductAttributeValueRepository.Update(ppav);
+                return Result.ErrorResult();
+            });
         }
         #endregion
     }

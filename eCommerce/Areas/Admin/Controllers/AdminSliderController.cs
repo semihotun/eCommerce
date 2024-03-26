@@ -1,16 +1,12 @@
 ﻿using AutoMapper;
 using Business.Services.SliderAggregate.Sliders;
 using Business.Services.SliderAggregate.Sliders.SliderServiceModel;
-using Core.Utilities.Helper;
 using Core.Utilities.Identity;
 using Entities.Concrete.SliderAggregate;
-using Entities.Helpers.AutoMapper;
 using Entities.ViewModels.AdminViewModel.AdminSlider;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.IO;
 using System.Threading.Tasks;
-using Utilities.Constants;
 namespace eCommerce.Areas.Admin.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
@@ -36,9 +32,10 @@ namespace eCommerce.Areas.Admin.Controllers
         #region Helper
         public async Task<IActionResult> SliderIndex()
         {
-            var model = new SliderListVM();
-            model.SliderList= (await _sliderService.GetAllSlider()).Data;
-            return View(model);
+            return View(new SliderListVM
+            {
+                SliderList = (await _sliderService.GetAllSlider()).Data
+            });
         }
         public async Task<IActionResult> SliderEdit(int id = 0)
         {
@@ -47,22 +44,10 @@ namespace eCommerce.Areas.Admin.Controllers
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> SliderEdit(int id, SliderCreateOrUpdateVM model)
+        public async Task<IActionResult> SliderEdit(SliderCreateOrUpdateVM model)
         {
-            var slider = await _sliderService.GetSlider(new GetSlider(id));
-            if (model.Uploadfile != null)
-            {
-                model.SliderImage = new PhotoHelper().Add(PhotoUrl.ShowCase,
-                    model.Uploadfile, true, slider.Data.SliderImage).Data.Path;
-                await _sliderService.UpdateSlider(_mapper.Map<SliderCreateOrUpdateVM, Slider>(model));
-            }
-            else
-            {
-                model.SliderImage = slider.Data.SliderImage;
-            }
-            var replaceModel = _mapper.Map<SliderCreateOrUpdateVM, Slider>(model, slider.Data);
-            ResponseAlert(await _sliderService.UpdateSlider(replaceModel));
-            return View(model);
+            ResponseAlert(await _sliderService.UpdateSlider(model));
+            return RedirectToAction(nameof(SliderIndex));
         }
         public IActionResult SliderCreate()
         {
@@ -71,17 +56,12 @@ namespace eCommerce.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> SliderCreate(SliderCreateOrUpdateVM model)
         {
-            var imageAdd = new PhotoHelper().Add(PhotoUrl.Slider, model.Uploadfile);
-            model.SliderImage = imageAdd.Data.Path;
-            ResponseAlert(await _sliderService.InsertSlider(model.MapTo<Slider>()));
+            ResponseAlert(await _sliderService.InsertSlider(model));
             return RedirectToAction("SliderIndex");
         }
         public async Task<IActionResult> SliderDelete(int id)
         {
-            var slider = (await _sliderService.GetSlider(new GetSlider(id))).Data;
             ResponseAlert(await _sliderService.DeleteSlider(new DeleteSlider(id)));
-            if (slider.SliderImage != null)
-                 new PhotoHelper().Delete(Path.Combine( PhotoUrl.Slider , slider.SliderImage));
             return Json(true, new JsonSerializerSettings());
         }
         #endregion

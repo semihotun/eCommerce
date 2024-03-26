@@ -10,9 +10,9 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
 {
     public interface ICategoryDAL : IEntityRepository<Category>
     {
-        Task<IDataResult<List<CategoryDTO>>> GetAllCategoryTreeList();
-        Task<IDataResult<CategorySpeficationDTO>> GetCategorySpefication(GetCategorySpefication request);
-        Task<IDataResult<CategorySpeficationOptionDTO>> GetCategorySpeficationOptionDTO(GetCategorySpeficationOptionDTO request);
-        Task<IDataResult<IList<HierarchyViewModel>>> GetHierarchy();
+        Task<Result<List<CategoryDTO>>> GetAllCategoryTreeList();
+        Task<Result<CategorySpeficationDTO>> GetCategorySpefication(GetCategorySpefication request);
+        Task<Result<CategorySpeficationOptionDTO>> GetCategorySpeficationOptionDTO(GetCategorySpeficationOptionDTO request);
+        Task<Result<List<HierarchyViewModel>>> GetHierarchy();
     }
 }

@@ -2,9 +2,9 @@
 {
     public class DeleteProductSpecificationAttribute
     {
-        public DeleteProductSpecificationAttribute(int ıd)
+        public DeleteProductSpecificationAttribute(int id)
         {
-            Id = ıd;
+            Id = id;
         }
         public DeleteProductSpecificationAttribute()
         {

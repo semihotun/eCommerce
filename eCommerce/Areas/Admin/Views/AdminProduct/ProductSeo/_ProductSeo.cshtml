@@ -3,47 +3,24 @@
     ViewBag.Title = null;
     Layout = null;
 }
-@*<h2 style="font-weight:100;">Seo Ayarları</h2>*@
-    <div style="display:flex;flex-wrap:wrap;">
-        @Html.HiddenFor(x => x.ProductSeoId)
-        <div class="form-group col-md-12">
-            @Html.LabelFor(x => x.ProductSeoModel.SeoTitle, "Seo Başlık", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(x => x.ProductSeoModel.SeoTitle, new { @class = "form-control  col-md-8" })
-            </div>
-        </div>
-        <div class="form-group col-md-12">
-            @Html.LabelFor(x => x.ProductSeoModel.SeoKey, "Seo Anahtar(Coklu anahtarları " + "," + " ile ayırınız)", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(x => x.ProductSeoModel.SeoKey, new { @class = "textareaform form-control  col-md-8" })
-            </div>
-        </div>
-        <div class="form-group col-md-12">
-            @Html.LabelFor(x => x.ProductSeoModel.SeoContent, "Seo İçerik", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(x => x.ProductSeoModel.SeoContent, new { @class = "textareaform form-control  col-md-8" })
-            </div>
+<div style="display:flex;flex-wrap:wrap;">
+    @Html.HiddenFor(x => x.ProductSeoId)
+    <div class="form-group col-md-12">
+        @Html.LabelFor(x => x.ProductSeoModel.SeoTitle, "Seo Başlık", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(x => x.ProductSeoModel.SeoTitle, new { @class = "form-control  col-md-8" })
         </div>
     </div>
-@*<table>
-        <tbody>
-            <tr>
-                <td>@Html.TextBoxFor(x => x.ProductSeo.ProductId)</td>
-            </tr>
-            <tr>
-                <td>Seo Başlık</td>
-                <td>@Html.TextBoxFor(x => x.ProductSeo.SeoTitle)</td>
-            </tr>
-            <tr>
-                <td>Seo İçerik</td>
-                <td>@Html.TextBoxFor(x => x.ProductSeo.SeoContent)</td>
-            </tr>
-            <tr>
-                <td>Seo Anahtar(Coklu anahtarları "," ile ayırınız)</td>
-                <td>@Html.TextBoxFor(x => x.ProductSeo.SeoKeyword) </td>
-            </tr>
-            <tr>
-                <td><input type="submit" /></td>
-            </tr>
-        </tbody>
-    </table>*@
+    <div class="form-group col-md-12">
+        @Html.LabelFor(x => x.ProductSeoModel.SeoKey, "Seo Anahtar(Coklu anahtarları " + "," + " ile ayırınız)", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(x => x.ProductSeoModel.SeoKey, new { @class = "textareaform form-control  col-md-8" })
+        </div>
+    </div>
+    <div class="form-group col-md-12">
+        @Html.LabelFor(x => x.ProductSeoModel.SeoContent, "Seo İçerik", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(x => x.ProductSeoModel.SeoContent, new { @class = "textareaform form-control  col-md-8" })
+        </div>
+    </div>
+</div>

@@ -3,9 +3,9 @@ using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.ShowcaseAggregate;
 namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowCaseProducts
 {
-    public class ShowCaseProductDAL : EfEntityRepositoryBase<ShowCaseProduct, eCommerceContext>, IShowCaseProductDAL
+    public class ShowCaseProductDAL : EfEntityRepositoryBase<ShowCaseProduct, ECommerceContext>, IShowCaseProductDAL
     {
-        public ShowCaseProductDAL(eCommerceContext context) : base(context)
+        public ShowCaseProductDAL(ECommerceContext context) : base(context)
         {
         }
     }

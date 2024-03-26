@@ -9,7 +9,7 @@ namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices
 {
     public interface IShowcaseDAL : IEntityRepository<ShowCase>
     {
-        Task<IDataResult<IList<ShowCaseDTO>>> GetAllShowCaseDto();
-        Task<IDataResult<ShowCaseDTO>> GetShowCaseDto(GetShowCaseDto request);
+        Task<Result<IList<ShowCaseDTO>>> GetAllShowCaseDto();
+        Task<Result<ShowCaseDTO>> GetShowCaseDto(GetShowCaseDto request);
     }
 }

@@ -2,9 +2,9 @@
 {
     public class DeleteProductStock
     {
-        public DeleteProductStock(int ıd)
+        public DeleteProductStock(int id)
         {
-            Id = ıd;
+            Id = id;
         }
         public DeleteProductStock()
         {

@@ -1,4 +1,5 @@
-﻿using Core.Utilities.DataTable;
+﻿using Business.Constants;
+using Core.Utilities.DataTable;
 using Core.Utilities.Results;
 using Entities.Others;
 using Microsoft.AspNetCore.Mvc;
@@ -9,31 +10,30 @@ namespace eCommerce.Areas.Admin.Controllers
     public class AdminBaseController : Controller
     {
         [NonAction]
-        protected IActionResult ToDataTableJson<T>(IDataResult<IPagedList<T>> data,DataTablesParam param)
+        protected IActionResult ToDataTableJson<T>(Result<IPagedList<T>> data, DataTablesParam param)
         {
             return Json(new DataTableResult<T>
             {
-                aaData = data.Data,
-                sEcho = param.sEcho,
-                iTotalDisplayRecords = data.Data.TotalItemCount,
-                iTotalRecords = data.Data.TotalItemCount
+                AaData = data.Data,
+                SEcho = param.sEcho,
+                ITotalDisplayRecords = data.Data.TotalItemCount,
+                ITotalRecords = data.Data.TotalItemCount
             }, new JsonSerializerSettings());
         }
         [NonAction]
-        protected IActionResult ToDataTableJson<T>(IDataResult<IPagedList<T>> data, DTParameters param)
+        protected IActionResult ToDataTableJson<T>(Result<IPagedList<T>> data, DTParameters param)
         {
             return Json(new DataTableNewVersionResult<T>
             {
-                draw = param.Draw,
-                recordsFiltered = data.Data.TotalItemCount,
-                recordsTotal = data.Data.TotalItemCount,
-                data = data.Data,
+                Draw = param.Draw,
+                RecordsFiltered = data.Data.TotalItemCount,
+                RecordsTotal = data.Data.TotalItemCount,
+                Data = data.Data,
             }, new JsonSerializerSettings());
         }
         protected void Alert(string message, NotificationType notificationType)
         {
-            var msg = "toastr." + notificationType.ToString().ToLower() + "('" + message + "','" + notificationType + "')" + "";
-            TempData["notification"] = msg;
+            TempData["notification"] = "toastr." + notificationType.ToString().ToLower() + "('" + message + "','" + notificationType + "')";
         }
         protected enum NotificationType
         {
@@ -42,34 +42,31 @@ namespace eCommerce.Areas.Admin.Controllers
             warning,
             info
         };
-        protected void ResponseAlert(IResult result)
+        protected void ResponseAlert(Result? result)
         {
-            if(result.Success)
+            if (result.Success)
             {
-                Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : "İşlem Başarılı", NotificationType.success);
+                Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : Messages.OperationSuccessful, NotificationType.success);
             }
             else
             {
-                Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : "İşlem Başarısız", NotificationType.error);
+                Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : Messages.OperationFailed, NotificationType.error);
             }
         }
-        protected void QueryAlert(IResult result)
+        protected void QueryAlert(Result result)
         {
-            if (!result.Success) { 
-                Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : "Böyle bir Kullanıcı Yok", NotificationType.error);
+            if (!result.Success)
+            {
+                Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : Messages.OperationFailed, NotificationType.error);
             }
         }
-        protected void ResponseDataAlert<T>(IDataResult<T> result, out IDataResult<T> outResult)
+        protected void ResponseDataAlert<T>(Result<T> result, out Result<T> outResult)
         {
             outResult = result;
             if (!result.Success)
             {
-                Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : "İşlem Başarısız", NotificationType.error);
+                Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : Messages.OperationFailed, NotificationType.error);
             }
-        }
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
         }
     }
 }

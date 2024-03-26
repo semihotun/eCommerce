@@ -5,8 +5,8 @@ namespace Core.Utilities.Helper
     {
         public static void CreateFile(string DirectoryName, string WriteText)
         {
-            FileStream fileStream = new FileStream(DirectoryName, FileMode.OpenOrCreate, FileAccess.Write);
-            using (StreamWriter writer = new StreamWriter(fileStream))
+            FileStream fileStream = new(DirectoryName, FileMode.OpenOrCreate, FileAccess.Write);
+            using (StreamWriter writer = new(fileStream))
             {
                 writer.WriteLine(WriteText);
                 writer.Close();

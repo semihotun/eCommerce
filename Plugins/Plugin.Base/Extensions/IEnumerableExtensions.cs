@@ -11,7 +11,7 @@ namespace Plugin.Base.Extensions
         }
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumerable)
         {
-            return enumerable == null || !enumerable.Any();
+            return enumerable?.Any() != true;
         }
         public static bool IsNotEmpty<T>(this IEnumerable<T> enumerable)
         {
@@ -19,7 +19,7 @@ namespace Plugin.Base.Extensions
         }
         public static bool IsNotNullAndNotEmpty<T>(this IEnumerable<T> enumerable)
         {
-            return enumerable != null && enumerable.Any();
+            return enumerable?.Any() == true;
         }
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> enumeration, Action<T> action)
         {

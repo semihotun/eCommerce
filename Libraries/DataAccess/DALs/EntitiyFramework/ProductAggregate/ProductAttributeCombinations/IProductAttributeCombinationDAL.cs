@@ -11,11 +11,11 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeComb
 {
     public interface IProductAttributeCombinationDAL : IEntityRepository<ProductAttributeCombination>
     {
-        Task<IDataResult<IEnumerable<SelectListItem>>> ProductAttributeCombinationDropDown(
+        Task<Result<IEnumerable<SelectListItem>>> ProductAttributeCombinationDropDown(
             ProductAttributeCombinationDropDown request);
-        Task<IDataResult<IPagedList<ProductAttributeCombinationVM>>> ProductAttributeCombinationDataTable(
+        Task<Result<IPagedList<ProductAttributeCombinationVM>>> ProductAttributeCombinationDataTable(
             ProductAttributeCombinationDataTable request);
-        Task<IDataResult<IList<ProductAttributeCombinationVM>>> ProductCombinationMappingAttrXml(
+        Task<Result<IList<ProductAttributeCombinationVM>>> ProductCombinationMappingAttrXml(
             ProductCombinationMappingAttrXml request);
     }
 }

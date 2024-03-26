@@ -16,11 +16,11 @@
             {
                 <li class='SearchResultItem'>
                     » @Html.Raw("<a href='/ProductDetail/ProductDetail?productId=" + item.Id + "'>" + item.ProductName.Replace(Model.SearchKey, "<b><font color='#990066'>" + Model.SearchKey + "</font></b></a>")
-                 .Replace(HtmlHelperExtensions.UppercaseFirst(Model.SearchKey), "<b><font color='#990066'>" + HtmlHelperExtensions.UppercaseFirst(Model.SearchKey) + "</font></b>")
+                           .Replace(Model.SearchKey.UppercaseFirst(), "<b><font color='#990066'>" + HtmlHelperExtensions.UppercaseFirst(Model.SearchKey) + "</font></b>")
                  .Replace(Model.SearchKey.ToLower(), "<b><font color='#990066'>" + Model.SearchKey.ToLower() + "</font></b>")
                  .Replace(Model.SearchKey.ToUpper(), "<b><font color='#990066'>" + Model.SearchKey.ToUpper() + "</font></b>")
-                 .Replace(HtmlHelperExtensions.UppercaseFirst(Model.SearchKey.ToLower()), "<b><font color='#990066'>" + HtmlHelperExtensions.UppercaseFirst(Model.SearchKey.ToLower()) + "</font></b>")
-                 .Replace(HtmlHelperExtensions.UppercaseFirst(Model.SearchKey.ToUpper()), "<b><font color='#990066'>" + HtmlHelperExtensions.UppercaseFirst(Model.SearchKey.ToUpper()) + "</font></b>")
+                           .Replace(Model.SearchKey.ToLower().UppercaseFirst(), "<b><font color='#990066'>" + HtmlHelperExtensions.UppercaseFirst(Model.SearchKey.ToLower()) + "</font></b>")
+                           .Replace(Model.SearchKey.ToUpper().UppercaseFirst(), "<b><font color='#990066'>" + HtmlHelperExtensions.UppercaseFirst(Model.SearchKey.ToUpper()) + "</font></b>")
                )
                 </li>
                 @*<li class="SearchResultItem">

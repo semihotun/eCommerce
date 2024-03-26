@@ -12,37 +12,33 @@ namespace DataAccess.ContextSeed.eCommerceContextSeed
 {
     public class EcommerceContextSeed
     {
-        public async Task SeedAsync(eCommerceContext context, ILogger<eCommerceContext> logger)
+        public static async Task SeedAsync(ECommerceContext context, ILogger<ECommerceContext> logger)
         {
-            var policy = CreatePolicy(
-                logger, nameof(eCommerceContext));
+            var policy = CreatePolicy(logger,3);
             await policy.ExecuteAsync(async () =>
             {
-                    using (context)
+                using (context)
+                {
+                    var assm = Assembly.GetExecutingAssembly().GetTypes().Where(x => x.GetInterfaces().Any(x => x.Name == "ISeed`1"));
+                    foreach (var item in assm)
                     {
-                        var assm = Assembly.GetExecutingAssembly().GetTypes().Where(x => x.GetInterfaces().Any(x => x.Name == "ISeed`1"));
-                        foreach (var item in assm)
-                        {
-                            var method = item.GetMethod("GetSeedData");
-                            var obj = Activator.CreateInstance(item);
-                            var returnType = method.ReturnType;
-                            var dataObjects = (IEnumerable<object>)method.Invoke(obj, null);
-                            context.AddRange(dataObjects);
-                        }
-                        await context.SaveChangesAsync();
+                        var method = item.GetMethod("GetSeedData");
+                        var obj = Activator.CreateInstance(item);
+                        var returnType = method.ReturnType;
+                        var dataObjects = (IEnumerable<object>)method.Invoke(obj, null);
+                        context.AddRange(dataObjects);
                     }
+                    await context.SaveChangesAsync();
+                }
             });
         }
-        private AsyncRetryPolicy CreatePolicy(ILogger<eCommerceContext> logger, string prefix, int retries = 3)
+        private static AsyncRetryPolicy CreatePolicy(ILogger<ECommerceContext> logger, int retries)
         {
             return Policy.Handle<SqlException>().
                 WaitAndRetryAsync(
                     retryCount: retries,
                     sleepDurationProvider: retry => TimeSpan.FromSeconds(retry),
-                    onRetry: (exception, timeSpan, retry, ctx) =>
-                    {
-                        logger.LogWarning(exception.Message);
-                    }
+                    onRetry: (exception, _, _, _) => logger.LogWarning(exception.Message)
                );
         }
     }

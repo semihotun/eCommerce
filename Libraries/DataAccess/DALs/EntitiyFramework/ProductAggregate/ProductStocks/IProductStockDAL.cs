@@ -9,6 +9,6 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStocks
 {
     public interface IProductStockDAL : IEntityRepository<ProductStock>
     {
-        Task<IDataResult<IPagedList<ProductStockDto>>> GetAllProductStockDto(GetAllProductStockDto request);
+        Task<Result<IPagedList<ProductStockDto>>> GetAllProductStockDto(GetAllProductStockDto request);
     }
 }

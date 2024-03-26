@@ -1,8 +1,9 @@
-﻿using Business.Extension;
+﻿using Business.Constants;
+using Business.Extension;
 using Business.Services.UserIdentityAggregate.Manages.ManageServiceModels;
-using Core.Library;
 using Core.Utilities.Email;
 using Core.Utilities.Results;
+using Entities.Concrete;
 using Entities.ViewModels.WebViewModel.IdentityManage;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
@@ -27,87 +28,90 @@ namespace Business.Services.UserIdentityAggregate.Manages
             _signInManager = signInManager;
             _urlEncoder = urlEncoder;
         }
-        public async Task<IResult> SendVerificationEmail(SendVerificationEmail request)
+        public async Task<Result> SendVerificationEmail(SendVerificationEmail request)
         {
             var user = await _userManager.GetUserAsync(request.User);
             if (user == null)
             {
-                return new ErrorResult($"Kimliğe sahip kullanıcı yüklenemiyor '{_userManager.GetUserId(request.User)}'.");
+                return Result.ErrorResult(Messages.UnableToLoadUserWithId + _userManager.GetUserId(request.User));
             }
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            var callbackUrl = request.Url.EmailConfirmationLink(user.Id.ToString(), code, request.Request);
+            var callbackUrl = request.Url.EmailConfirmationLink(user.Id.ToString(),
+                await _userManager.GenerateEmailConfirmationTokenAsync(user), request.Request);
             _mailService.Send(new EmailMessage()
             {
-                Content = $@"<a href='{ callbackUrl }'>Doğrulama Linki</a>",
+                Content = $"<a href='{callbackUrl}'>{Messages.VerificationLink}</a>",
                 ToAddresses = new List<string>() { user.Email }
             });
-            return new SuccessResult("Doğrulama e-postası gönderildi. Lütfen emailinizi kontrol edin.");
+            return Result.SuccessResult(Messages.VerificationEmailHasBeenSent);
         }
-        public async Task<IResult> ChangePassword(ChangePassword request)
+        public async Task<Result> ChangePassword(ChangePassword request)
         {
             var user = await _userManager.GetUserAsync(request.User);
             if (user == null)
             {
-                var qq = _userManager.GetUserId(request.User);
-                return new ErrorResult($"Kimliğe sahip kullanıcı yüklenemiyor '{_userManager.GetUserId(request.User)}'.");
+                return Result.ErrorResult(Messages.UnableToLoadUserWithId + _userManager.GetUserId(request.User));
             }
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, request.Model.OldPassword, request.Model.NewPassword);
             if (!changePasswordResult.Succeeded)
-                return new ErrorResult(changePasswordResult.Errors.First().Description);
+                return Result.ErrorResult(changePasswordResult.Errors.First().Description);
             await _signInManager.SignInAsync(user, isPersistent: false);
-            return new SuccessResult("Şifre değiştirme başarılı");
+            return Result.SuccessResult(Messages.PasswordChangeSuccessful);
         }
-        public async Task<IResult> SetPassword(SetPassword request)
+        public async Task<Result> SetPassword(SetPassword request)
         {
             var user = await _userManager.GetUserAsync(request.User);
             if (user == null)
             {
-                return new ErrorResult($"Kimliğe sahip kullanıcı yüklenemiyor '{_userManager.GetUserId(request.User)}'.");
+                return Result.ErrorResult(Messages.UnableToLoadUserWithId + _userManager.GetUserId(request.User));
             }
             var addPasswordResult = await _userManager.AddPasswordAsync(user, request.Model.NewPassword);
             if (!addPasswordResult.Succeeded)
-               return new ErrorResult(addPasswordResult.Errors.First().Description);
+                return Result.SuccessResult(addPasswordResult.Errors.First().Description);
             await _signInManager.SignInAsync(user, isPersistent: false);
-            return new SuccessResult("Şifreniz Ayarlanmıştır");
+            return Result.SuccessResult(Messages.YourPasswordHasBeenSet);
         }
-        public async Task<IDataResult<ShowRecoveryCodesViewModel>> GenerateRecoveryCodes(GenerateRecoveryCodes request)
+        public async Task<Result<ShowRecoveryCodesViewModel>> GenerateRecoveryCodes(GenerateRecoveryCodes request)
         {
             var user = await _userManager.GetUserAsync(request.User);
             if (user == null)
             {
-                return new ErrorDataResult<ShowRecoveryCodesViewModel>($"Kimliğe sahip kullanıcı yüklenemiyo '{_userManager.GetUserId(request.User)}'.");
+                return Result.ErrorDataResult<ShowRecoveryCodesViewModel>(
+                    Messages.UnableToLoadUserWithId + _userManager.GetUserId(request.User));
             }
             if (!user.TwoFactorEnabled)
             {
-                return new ErrorDataResult<ShowRecoveryCodesViewModel>($"'{user.Id}' Doğrulama kodu oluşturulamaz çünkü 2FA kapalı");
+                return Result.ErrorDataResult<ShowRecoveryCodesViewModel>(Messages.TwoFAisSwitchedOff + user.Id);
             }
-            var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-            //_logger.LogInformation("{UserId} hesap için Kurtarma kodu oluşturuldu.", user.Id);
-            var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes.ToArray() };
-            return new SuccessDataResult<ShowRecoveryCodesViewModel>(model);
+            return Result.ErrorDataResult<ShowRecoveryCodesViewModel>
+                (new ShowRecoveryCodesViewModel
+                {
+                    RecoveryCodes = (await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10))
+                    .ToArray()
+                });
         }
-        public async Task<IDataResult<string[]>> EnableAuthenticator(EnableAuthenticator request)
+        public async Task<Result<string[]>> EnableAuthenticator(EnableAuthenticator request)
         {
             var verificationCode = request.Model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
             var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
                 request.User, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
             if (!is2faTokenValid)
             {
-                return new ErrorDataResult<string[]>("Doğrulama kodu geçersiz.");
-                await LoadSharedKeyAndQrCodeUriAsync(
-                    new LoadSharedKeyAndQrCodeUriAsync(request.User, request.Model));           
+                return Result.ErrorDataResult<string[]>(Messages.TheVerificationCodeIsInvalid);
+                //await LoadSharedKeyAndQrCodeUriAsync(
+                //    new LoadSharedKeyAndQrCodeUriAsync(request.User, request.Model));           
             }
             await _userManager.SetTwoFactorEnabledAsync(request.User, true);
-            var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(request.User, 10);
-            return new SuccessDataResult<string[]>(recoveryCodes.ToArray(), "2FA Etkinleştirildi");
+            return Result.SuccessDataResult(
+                (await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(request.User, 10))
+                .ToArray(), "2FA Etkinleştirildi");
         }
-        public async Task<IResult> ResetAuthenticator(ResetAuthenticator request)
+        public async Task<Result> ResetAuthenticator(ResetAuthenticator request)
         {
             await _userManager.SetTwoFactorEnabledAsync(request.User, false);
             await _userManager.ResetAuthenticatorKeyAsync(request.User);
-            return new SuccessResult("'{UserId}' kimlik doğrulama uygulama anahtarını sıfırladı."+ request.User.Id);
+            return Result.SuccessResult(Messages.ResetTheAuthenticationApplicationKey + request.User.Id);
         }
-        public async Task<IResult> LoadSharedKeyAndQrCodeUriAsync(LoadSharedKeyAndQrCodeUriAsync request)
+        public async Task<Result> LoadSharedKeyAndQrCodeUriAsync(LoadSharedKeyAndQrCodeUriAsync request)
         {
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(request.User);
             if (string.IsNullOrEmpty(unformattedKey))
@@ -117,20 +121,20 @@ namespace Business.Services.UserIdentityAggregate.Manages
             }
             request.Model.SharedKey = FormatKey(unformattedKey);
             request.Model.AuthenticatorUri = GenerateQrCodeUri(request.User.Email, unformattedKey);
-            return new SuccessResult();
+            return Result.SuccessResult();
         }
-        private string FormatKey(string unformattedKey)
+        private static string FormatKey(string unformattedKey)
         {
             var result = new StringBuilder();
             int currentPosition = 0;
             while (currentPosition + 4 < unformattedKey.Length)
             {
-                result.Append(unformattedKey.Substring(currentPosition, 4)).Append(" ");
+                result.Append(unformattedKey, currentPosition, 4).Append(' ');
                 currentPosition += 4;
             }
             if (currentPosition < unformattedKey.Length)
             {
-                result.Append(unformattedKey.Substring(currentPosition));
+                result.Append(unformattedKey, currentPosition, unformattedKey.Length - currentPosition);
             }
             return result.ToString().ToLowerInvariant();
         }

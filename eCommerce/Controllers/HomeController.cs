@@ -1,5 +1,4 @@
 ﻿using Business.Services.BasketAggregate.Baskets;
-using Business.Services.ProductAggregate.Products;
 using Business.Services.SliderAggregate.Sliders;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels;
@@ -15,7 +14,6 @@ namespace eCommerce.Controllers
     public class HomeController : BaseController
     {
         #region Fields
-        private readonly IProductService _productService;
         private readonly ISliderService _sliderService;
         private readonly IProductDAL _productDAL;
         private readonly IShowcaseDAL _showcaseDal;
@@ -23,13 +21,11 @@ namespace eCommerce.Controllers
         #endregion
         #region Constructors
         public HomeController(
-            IProductService productService,
             ISliderService sliderService,
             IProductDAL productDAL,
             IShowcaseDAL showcaseDal,
             IBasketService basketService)
         {
-            _productService = productService;
             _sliderService = sliderService;
             _productDAL = productDAL;
             _showcaseDal = showcaseDal;
@@ -39,26 +35,21 @@ namespace eCommerce.Controllers
         #region Method
         public async Task<PartialViewResult> Search(string searchKey)
         {
-            var productList = _productDAL.GetMainSearchProduct(new GetMainSearchProduct(searchProductName: searchKey, pageSize: 6));
-            await Task.WhenAll(productList);
-            var viewModel = new SearchVM
+            var productList = await _productDAL.GetMainSearchProduct(new GetMainSearchProduct(pageSize: 6, searchProductName: searchKey));
+
+            return PartialView("ResultView", new SearchVM
             {
                 SearchKey = searchKey,
-                ProductList = productList.Result.Data
-            };
-            return PartialView("ResultView", viewModel);
+                ProductList = productList.Data
+            });
         }
         public async Task<IActionResult> Index()
         {
-            var model = new MainPageVM();
-            var sliderListTask = _sliderService.GetAllSlider();
-            var showCaseListTask = _showcaseDal.GetAllShowCaseDto();
-            await Task.WhenAll(sliderListTask, showCaseListTask).ContinueWith((t) =>
+            return View(new MainPageVM
             {
-                model.SliderList = sliderListTask.Result.Data;
-                model.ShowCaseList = showCaseListTask.Result.Data;
+                SliderList = (await _sliderService.GetAllSlider()).Data,
+                ShowCaseList = (await _showcaseDal.GetAllShowCaseDto()).Data
             });
-            return View(model);
         }
         public async Task<IActionResult> BasketAdded(Basket basket)
         {
@@ -91,7 +82,7 @@ namespace eCommerce.Controllers
         }
         public async Task<IActionResult> LikeProduct()
         {
-            return Json(null,new JsonSerializerSettings());
+            return Json(null, new JsonSerializerSettings());
         }
         #endregion
     }

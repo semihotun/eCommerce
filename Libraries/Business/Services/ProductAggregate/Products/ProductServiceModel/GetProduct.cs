@@ -3,9 +3,9 @@
     public class GetProduct
     {
         public int Id { get; set; }
-        public GetProduct(int ıd)
+        public GetProduct(int id)
         {
-            Id = ıd;
+            Id = id;
         }
         public GetProduct()
         {

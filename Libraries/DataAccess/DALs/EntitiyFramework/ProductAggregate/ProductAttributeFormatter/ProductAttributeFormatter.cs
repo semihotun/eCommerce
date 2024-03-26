@@ -1,6 +1,5 @@
 ﻿using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingDALModels;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeValues;
 using Entities.DTO;
 using Entities.DTO.Product;
 using Entities.DTO.ProductAttributeCombinations;
@@ -15,34 +14,30 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeForm
     public class ProductAttributeFormatter : IProductAttributeFormatter
     {
         #region field
-        IProductAttributeMappingDAL _productAttributeMappingDAL;
-        IProductAttributeValueDAL _productAttributeValueDAL;
+        private readonly IProductAttributeMappingDAL _productAttributeMappingDAL;
         #endregion
         #region ctor
-        public ProductAttributeFormatter(IProductAttributeMappingDAL productAttributeMappingDAL, IProductAttributeValueDAL productAttributeValueDAL)
+        public ProductAttributeFormatter(IProductAttributeMappingDAL productAttributeMappingDAL)
         {
             _productAttributeMappingDAL = productAttributeMappingDAL;
-            _productAttributeValueDAL = productAttributeValueDAL;
         }
         #endregion
-        public async Task<IList<MappingAttrXml>> AttrXmltoString(string xml)
+        public async Task<List<MappingAttrXml>> AttrXmltoString(string xml)
         {
             if (string.IsNullOrEmpty(xml))
                 return new List<MappingAttrXml>();
-            List<MappingAttrXml> mappingAttr = new List<MappingAttrXml>();
+            List<MappingAttrXml> mappingAttr = new();
             var xmldoc = new XmlDocument();
             xmldoc.LoadXml(xml);
             var attrVal = "";
             var attributeId = 0;
-            XmlNodeList attr = xmldoc.SelectNodes("/Attributes/ProductAttribute");
-            foreach (XmlNode Mapping in attr)
+            foreach (XmlNode Mapping in xmldoc.SelectNodes("/Attributes/ProductAttribute"))
             {
                 var mappingId = Convert.ToInt32(Mapping.Attributes["ID"].InnerText);
                 var data = await _productAttributeMappingDAL.GetMappingProductAttributeList
                     (new GetMappingProductAttributeList(mappingId));
                 var mappingValue = data.Data.TextPrompt;
-                XmlNodeList attrValueList = Mapping.SelectNodes("ProductAttributeValue");
-                foreach (XmlNode attrValue in attrValueList)
+                foreach (XmlNode attrValue in Mapping.SelectNodes("ProductAttributeValue"))
                 {
                     attributeId = Convert.ToInt32(attrValue["Value"].InnerText);
                     attrVal = data.Data.ProductAttributeList.FirstOrDefault(x => x.Id == attributeId).Name;
@@ -57,8 +52,8 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeForm
             }
             return mappingAttr;
         }
-        public IList<ProductAttributeCombinationDTO> ListAttrXmltoString
-            (List<ProductDetailDTO.ProductAttributeCombination> data, IList<ProductDetailDTO.ProductAttributeMapping> productAttributeMappings)
+        public List<ProductAttributeCombinationDTO> ListAttrXmltoString
+            (List<ProductDetailDTO.ProductAttributeCombination> data, List<ProductDetailDTO.ProductAttributeMapping> productAttributeMappings)
         {
             var returndata = new List<ProductAttributeCombinationDTO>();
             foreach (var item in data)
@@ -69,14 +64,12 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeForm
                 xmldoc.LoadXml(xml);
                 var attrVal = "";
                 var attributeId = 0;
-                XmlNodeList attr = xmldoc.SelectNodes("/Attributes/ProductAttribute");
-                foreach (XmlNode Mapping in attr)
+                foreach (XmlNode Mapping in xmldoc.SelectNodes("/Attributes/ProductAttribute"))
                 {
                     var mappingId = Convert.ToInt32(Mapping.Attributes["ID"].InnerText);
-                    var mappingdata = productAttributeMappings.Where(x => x.Id == mappingId).FirstOrDefault();
+                    var mappingdata = productAttributeMappings.Find(x => x.Id == mappingId);
                     var mappingValue = mappingdata.TextPrompt;
-                    XmlNodeList attrValueList = Mapping.SelectNodes("ProductAttributeValue");
-                    foreach (XmlNode attrValue in attrValueList)
+                    foreach (XmlNode attrValue in Mapping.SelectNodes("ProductAttributeValue"))
                     {
                         attributeId = Convert.ToInt32(attrValue["Value"].InnerText);
                         attrVal = mappingdata.ProductAttributeValueList.FirstOrDefault(x => x.Id == attributeId).Name;
@@ -95,8 +88,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeForm
             }
             return returndata;
         }
-        public IList<ProductAttributeCombinationDTO> ListAttrXmltoString
-       (IEnumerable<ProductDetailDTO.ProductAttributeCombination> data,
+        public List<ProductAttributeCombinationDTO> ListAttrXmltoString(IEnumerable<ProductDetailDTO.ProductAttributeCombination> data,
         IEnumerable<ProductDetailDTO.ProductAttributeMapping> productAttributeMappings)
         {
             var returndata = new List<ProductAttributeCombinationDTO>();
@@ -108,14 +100,11 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeForm
                 xmldoc.LoadXml(xml);
                 var attrVal = "";
                 var attributeId = 0;
-                XmlNodeList attr = xmldoc.SelectNodes("/Attributes/ProductAttribute");
-                foreach (XmlNode Mapping in attr)
+                foreach (XmlNode Mapping in xmldoc.SelectNodes("/Attributes/ProductAttribute"))
                 {
-                    var mappingId = Convert.ToInt32(Mapping.Attributes["ID"].InnerText);
-                    var mappingdata = productAttributeMappings.Where(x => x.Id == mappingId).FirstOrDefault();
+                    var mappingdata = productAttributeMappings.FirstOrDefault(x => x.Id == Convert.ToInt32(Mapping.Attributes["ID"].InnerText));
                     var mappingValue = mappingdata.TextPrompt;
-                    XmlNodeList attrValueList = Mapping.SelectNodes("ProductAttributeValue");
-                    foreach (XmlNode attrValue in attrValueList)
+                    foreach (XmlNode attrValue in Mapping.SelectNodes("ProductAttributeValue"))
                     {
                         attributeId = Convert.ToInt32(attrValue["Value"].InnerText);
                         attrVal = mappingdata.ProductAttributeValueList.FirstOrDefault(x => x.Id == attributeId).Name;
@@ -124,7 +113,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeForm
                     {
                         MappingName = mappingValue,
                         ValueName = attrVal,
-                        MappingId = mappingId,
+                        MappingId = Convert.ToInt32(Mapping.Attributes["ID"].InnerText),
                         AttributeId = attributeId
                     });
                 }
@@ -138,22 +127,18 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeForm
         {
             if (string.IsNullOrEmpty(xml))
                 return null;
-            string result = "";
+            var result = "";
             var xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xml);
-            XmlNodeList attr = xmlDoc.SelectNodes("/Attributes/ProductAttribute");
-            foreach (XmlNode Mapping in attr)
+            foreach (XmlNode Mapping in xmlDoc.SelectNodes("/Attributes/ProductAttribute"))
             {
-                var mappingId = Convert.ToInt32(Mapping.Attributes["ID"].InnerText);
                 var data = await _productAttributeMappingDAL.GetMappingProductAttributeList
-                    (new GetMappingProductAttributeList(mappingId));
-                var mappingValue = data.Data.TextPrompt;
-                result = result + "<b>" + mappingValue + "</b> = ";
-                XmlNodeList attrValueList = Mapping.SelectNodes("ProductAttributeValue");
-                foreach (XmlNode attrValue in attrValueList)
+                    (new GetMappingProductAttributeList(Convert.ToInt32(Mapping.Attributes["ID"].InnerText)));
+                result = result + "<b>" + data.Data.TextPrompt + "</b> = ";
+                foreach (XmlNode attrValue in Mapping.SelectNodes("ProductAttributeValue"))
                 {
-                    var attributeId = Convert.ToInt32(attrValue["Value"].InnerText);
-                    var attrVal = data.Data.ProductAttributeList.FirstOrDefault(x => x.Id == attributeId);
+                    var attrVal = data.Data.ProductAttributeList
+                        .FirstOrDefault(x => x.Id == Convert.ToInt32(attrValue["Value"].InnerText));
                     result = result + "" + attrVal.Name + "</br>";
                 }
             }
@@ -166,17 +151,14 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeForm
             string result = "";
             var xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xml);
-            XmlNodeList attr = xmlDoc.SelectNodes("/Attributes/ProductAttribute");
-            foreach (XmlNode Mapping in attr)
+            foreach (XmlNode Mapping in xmlDoc.SelectNodes("/Attributes/ProductAttribute"))
             {
-                var mappingId = Convert.ToInt32(Mapping.Attributes["ID"].InnerText);
                 var data = await _productAttributeMappingDAL.GetMappingProductAttributeList
-                    (new GetMappingProductAttributeList(mappingId));
-                XmlNodeList attrValueList = Mapping.SelectNodes("ProductAttributeValue");
-                foreach (XmlNode attrValue in attrValueList)
+                    (new GetMappingProductAttributeList(Convert.ToInt32(Mapping.Attributes["ID"].InnerText)));
+                foreach (XmlNode attrValue in Mapping.SelectNodes("ProductAttributeValue"))
                 {
-                    var attributeId = Convert.ToInt32(attrValue["Value"].InnerText);
-                    var attrVal = data.Data.ProductAttributeList.FirstOrDefault(x => x.Id == attributeId).Name;
+                    var attrVal = data.Data.ProductAttributeList
+                        .FirstOrDefault(x => x.Id == Convert.ToInt32(attrValue["Value"].InnerText)).Name;
                     result = result + " " + attrVal + " ";
                 }
             }

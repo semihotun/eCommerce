@@ -1,4 +1,4 @@
-﻿using Core.Library;
+﻿using Entities.Concrete;
 using Entities.ViewModels.WebViewModel.IdentityManage;
 namespace Business.Services.UserIdentityAggregate.Manages.ManageServiceModels
 {

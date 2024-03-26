@@ -2,9 +2,9 @@
 {
     public class DeleteProductAttributeCombination
     {
-        public DeleteProductAttributeCombination(int ıd)
+        public DeleteProductAttributeCombination(int id)
         {
-            Id = ıd;
+            Id = id;
         }
         public DeleteProductAttributeCombination()
         {

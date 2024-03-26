@@ -14,20 +14,19 @@ namespace Entities.Helpers.AutoMapper
             params Expression<Func<TDestination, object>>[] membersToExpand
         )
         {
-            var data = source.ProjectTo<TDestination>(AutoMapperConfig.Get(), null , membersToExpand);
-            return data;
+            return source.ProjectTo<TDestination>(AutoMapperConfig.Get(), null, membersToExpand);
         }
-        public static T MapTo <T> (this object src)
+        public static T MapTo<T>(this object src)
         {
             IMapper mapper = new Mapper(AutoMapperConfig.Get());
-            return (T) mapper.Map(src, src.GetType(), typeof(T));
+            return (T)mapper.Map(src, src.GetType(), typeof(T));
         }
-        public static TDest MapTo<T,TDest>(this T src, TDest data)
+        public static TDest MapTo<T, TDest>(this T src, TDest data)
         {
             IMapper mapper = new Mapper(AutoMapperConfig.Get());
-            return  mapper.Map<T, TDest>(src,data);
+            return mapper.Map<T, TDest>(src, data);
         }
-        public static T MapTo<T>(this T src, T data )
+        public static T MapTo<T>(this T src, T data)
         {
             IMapper mapper = new Mapper(AutoMapperConfig.Get());
             return mapper.Map<T, T>(data, src);

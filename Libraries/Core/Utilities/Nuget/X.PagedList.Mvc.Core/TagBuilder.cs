@@ -37,11 +37,9 @@ namespace X.PagedList.Mvc.Core
         public string ToString(TagRenderMode renderMode, HtmlEncoder encoder = null)
         {
             encoder = HtmlEncoder.Create(new TextEncoderSettings());
-            using (var writer = new StringWriter() as TextWriter)
-            {
-                _tagBuilder.WriteTo(writer, encoder);
-                return writer.ToString();
-            }
+            using var writer = new StringWriter() as TextWriter;
+            _tagBuilder.WriteTo(writer, encoder);
+            return writer.ToString();
         }
         public override string ToString()
         {

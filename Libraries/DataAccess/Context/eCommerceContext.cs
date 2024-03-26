@@ -1,9 +1,7 @@
-﻿using Core.Library;
-using Entities.Concrete.AdressAggregate;
+﻿using Entities.Concrete.AdressAggregate;
 using Entities.Concrete.BrandAggregate;
 using Entities.Concrete.CategoriesAggregate;
 using Entities.Concrete.CommentsAggregate;
-using Entities.Concrete.DiscountsAggregate;
 using Entities.Concrete.PhotoAggregate;
 using Entities.Concrete.ProductAggregate;
 using Entities.Concrete.ShowcaseAggregate;
@@ -16,18 +14,18 @@ using System.Linq;
 using System.Reflection;
 namespace DataAccess.Context
 {
-    public class eCommerceContext : CoreContext
+    public class ECommerceContext : CoreContext
     {
-        private DbContextOptions<eCommerceContext> dbContextOptions;
+        private readonly DbContextOptions<ECommerceContext> dbContextOptions;
         protected static DbContextOptions<T> ChangeOptionsType<T>(DbContextOptions options) where T : DbContext
         {
             var sqlExt = options.Extensions.FirstOrDefault(e => e is SqlServerOptionsExtension);
-            if (sqlExt == null)
-                throw new Exception("Failed to retrieve SQL connection string for base Context");
-            return new DbContextOptionsBuilder<T>()
+            return sqlExt == null
+                ? throw new Exception("Failed to retrieve SQL connection string for base Context")
+                : new DbContextOptionsBuilder<T>()
                         .Options;
         }
-        public eCommerceContext(DbContextOptions<eCommerceContext> options) : base(ChangeOptionsType<CoreContext>(options))
+        public ECommerceContext(DbContextOptions<ECommerceContext> options) : base(ChangeOptionsType<CoreContext>(options))
         {
             dbContextOptions = options;
         }
@@ -36,7 +34,7 @@ namespace DataAccess.Context
             var sqlServerOptionsExtension = dbContextOptions.
                   FindExtension<SqlServerOptionsExtension>();
             var connectionString = sqlServerOptionsExtension.ConnectionString;
-            optionsBuilder.UseSqlServer(connectionString);               
+            optionsBuilder.UseSqlServer(connectionString);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -67,11 +65,6 @@ namespace DataAccess.Context
         public virtual DbSet<SpecificationAttribute> SpecificationAttribute { get; set; }
         public virtual DbSet<SpecificationAttributeOption> SpecificationAttributeOption { get; set; }
         public virtual DbSet<ProductSpecificationAttribute> ProductSpecificationAttribute { get; set; }
-        public virtual DbSet<Discount> Discount { get; set; }
-        public virtual DbSet<DiscountProduct> DiscountProduct { get; set; }
-        public virtual DbSet<DiscountBrand> DiscountBrand { get; set; }
-        public virtual DbSet<DiscountCategory> DiscountCategory { get; set; }
-        public virtual DbSet<DiscountUsageHistory> DiscountUsageHistory { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<ShowCaseType> ShowCaseType { get; set; }
         public virtual DbSet<ProductStock> ProductStock { get; set; }

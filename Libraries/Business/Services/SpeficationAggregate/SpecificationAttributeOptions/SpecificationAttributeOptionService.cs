@@ -3,10 +3,9 @@ using Business.Services.SpeficationAggregate.SpecificationAttributeOptions.Speci
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
-using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.SpeficationAggregate.SpecificationAttributeOptions;
+using DataAccess.UnitOfWork;
 using Entities.Concrete.SpeficationAggregate;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,33 +17,33 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions
 {
     public class SpecificationAttributeOptionService : ISpecificationAttributeOptionService
     {
-        ISpecificationAttributeOptionDAL _specificationAttributeOptionRepository;
-        private readonly IMapper _mapper;
         #region field
+        private readonly ISpecificationAttributeOptionDAL _specificationAttributeOptionRepository;
+        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
         #endregion
         #region ctor
-        public SpecificationAttributeOptionService(ISpecificationAttributeOptionDAL specificationAttributeOptionRepository, IMapper _mapper)
+        public SpecificationAttributeOptionService(ISpecificationAttributeOptionDAL specificationAttributeOptionRepository, IMapper _mapper, IUnitOfWork unitOfWork)
         {
             _specificationAttributeOptionRepository = specificationAttributeOptionRepository;
             this._mapper = _mapper;
+            _unitOfWork = unitOfWork;
         }
         #endregion
         #region method
         [CacheAspect]
-        public async Task<IDataResult<SpecificationAttributeOption>> GetSpecificationAttributeOptionById(GetSpecificationAttributeOptionById request)
+        public async Task<Result<SpecificationAttributeOption>> GetSpecificationAttributeOptionById(GetSpecificationAttributeOptionById request)
         {
-            var data = await _specificationAttributeOptionRepository
-                .GetAsync(x => x.Id == request.SpecificationAttributeOptionId);
-            return new SuccessDataResult<SpecificationAttributeOption>(data);
+            return Result.SuccessDataResult<SpecificationAttributeOption>(await _specificationAttributeOptionRepository
+                .GetAsync(x => x.Id == request.SpecificationAttributeOptionId));
         }
         [CacheAspect]
-        public async Task<IDataResult<IList<SpecificationAttributeOption>>> GetSpecificationAttributeOptionsByIds(
+        public async Task<Result<List<SpecificationAttributeOption>>> GetSpecificationAttributeOptionsByIds(
             GetSpecificationAttributeOptionsByIds request)
         {
-            var query = from sao in _specificationAttributeOptionRepository.Query()
-                        where request.SpecificationAttributeOptionIds.Contains(sao.Id)
-                        select sao;
-            var specificationAttributeOptions = await query.ToListAsync();
+            var specificationAttributeOptions = await (from sao in _specificationAttributeOptionRepository.Query()
+                                                       where request.SpecificationAttributeOptionIds.Contains(sao.Id)
+                                                       select sao).ToListAsync();
             var sortedSpecificationAttributeOptions = new List<SpecificationAttributeOption>();
             foreach (var id in request.SpecificationAttributeOptionIds)
             {
@@ -52,65 +51,69 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions
                 if (sao != null)
                     sortedSpecificationAttributeOptions.Add(sao);
             }
-            return new SuccessDataResult<List<SpecificationAttributeOption>>(sortedSpecificationAttributeOptions);
+            return Result.SuccessDataResult(sortedSpecificationAttributeOptions);
         }
         [CacheAspect]
-        public async Task<IDataResult<IPagedList<SpecificationAttributeOption>>> GetSpecificationAttributeOptionsBySpecificationAttribute(
+        public async Task<Result<IPagedList<SpecificationAttributeOption>>> GetSpecificationAttributeOptionsBySpecificationAttribute(
            GetSpecificationAttributeOptionsBySpecificationAttribute request)
         {
-            var query = from sao in _specificationAttributeOptionRepository.Query()
-                        orderby sao.DisplayOrder, sao.Id
-                        where sao.SpecificationAttributeId == request.SpecificationAttributeId
-                        select sao;
-            var result = await query.ToPagedListAsync(request.PageIndex, request.PageSize);
-            return new SuccessDataResult<IPagedList<SpecificationAttributeOption>>(result);
+            return Result.SuccessDataResult<IPagedList<SpecificationAttributeOption>>(
+                await (from sao in _specificationAttributeOptionRepository.Query()
+                       orderby sao.DisplayOrder, sao.Id
+                       where sao.SpecificationAttributeId == request.SpecificationAttributeId
+                       select sao).ToPagedListAsync(request.PageIndex, request.PageSize));
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("ISpecificationAttributeOptionService.Get",
         "ICategoryDAL.GetCategorySpeficationOptionDTO", "ICategoryDAL.GetCategorySpefication")]
-        public async Task<IResult> DeleteSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption)
+        public async Task<Result> DeleteSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption)
         {
-            if (specificationAttributeOption == null)
-                throw new ArgumentNullException(nameof(specificationAttributeOption));
-            _specificationAttributeOptionRepository.Delete(specificationAttributeOption);
-            await _specificationAttributeOptionRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                if (specificationAttributeOption == null)
+                    throw new ArgumentNullException(nameof(specificationAttributeOption));
+                _specificationAttributeOptionRepository.Remove(specificationAttributeOption);
+                return Result.SuccessResult();
+            });
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("ISpecificationAttributeOptionService.Get",
         "ICategoryDAL.GetCategorySpeficationOptionDTO", "ICategoryDAL.GetCategorySpefication")]
-        public async Task<IResult> InsertSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption)
+        public async Task<Result> InsertSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption)
         {
-            if (specificationAttributeOption == null)
-                throw new ArgumentNullException(nameof(specificationAttributeOption));
-            _specificationAttributeOptionRepository.Add(specificationAttributeOption);
-            await _specificationAttributeOptionRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                if (specificationAttributeOption == null)
+                    throw new ArgumentNullException(nameof(specificationAttributeOption));
+                await _specificationAttributeOptionRepository.AddAsync(specificationAttributeOption);
+                return Result.SuccessResult();
+            });
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("ISpecificationAttributeOptionService.Get",
         "ICategoryDAL.GetCategorySpeficationOptionDTO", "ICategoryDAL.GetCategorySpefication")]
-        public async Task<IResult> UpdateSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption)
+        public async Task<Result> UpdateSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption)
         {
-            if (specificationAttributeOption == null)
-                throw new ArgumentNullException(nameof(specificationAttributeOption));
-            var updateData = await _specificationAttributeOptionRepository.GetAsync(x => x.Id == specificationAttributeOption.Id);
-            updateData = _mapper.Map(specificationAttributeOption, updateData);
-            _specificationAttributeOptionRepository.Update(updateData);
-            await _specificationAttributeOptionRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                if (specificationAttributeOption == null)
+                    throw new ArgumentNullException(nameof(specificationAttributeOption));
+                var updateData = await _specificationAttributeOptionRepository.GetAsync(x => x.Id == specificationAttributeOption.Id);
+                updateData = _mapper.Map(specificationAttributeOption, updateData);
+                _specificationAttributeOptionRepository.Update(updateData);
+                return Result.SuccessResult();
+            });
         }
         [CacheAspect]
-        public async Task<IDataResult<int[]>> GetNotExistingSpecificationAttributeOptions(GetNotExistingSpecificationAttributeOptions request)
+        public async Task<Result<int[]>> GetNotExistingSpecificationAttributeOptions(GetNotExistingSpecificationAttributeOptions request)
         {
-            var query = _specificationAttributeOptionRepository.Query();
             var queryFilter = request.AttributeOptionIds.Distinct().ToArray();
-            var filter = await query.Select(a => a.Id).Where(m => queryFilter.Contains(m)).ToListAsync();
-            var data = queryFilter.Except(filter).ToArray();
-            return new SuccessDataResult<int[]>(data);
+            var filter = await _specificationAttributeOptionRepository
+                .Query()
+                .Select(a => a.Id)
+                .Where(m => queryFilter.Contains(m))
+                .ToListAsync();
+            return Result.SuccessDataResult<int[]>(queryFilter.Except(filter).ToArray());
         }
         #endregion
     }

@@ -2,7 +2,7 @@
 using System;
 namespace Entities.ViewModels.AdminViewModel.AdminProduct
 {
-    public class ProductStockCreateOrUpdateVM:BaseEntity
+    public class ProductStockCreateOrUpdateVM : BaseEntity
     {
         public double? ProductPrice { get; set; }
         public double? ProductDiscount { get; set; }

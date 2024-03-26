@@ -10,13 +10,13 @@ namespace X.PagedList
     /// <typeparam name="T">The type of object the collection should contain.</typeparam>
     /// <seealso cref="IEnumerable{T}"/>
     public interface IPagedList<out T> : IPagedList, IReadOnlyList<T>, IEnumerable<T>
-	{
+    {
         T this[int index] { get; }
         int Count { get; }
         PagedListMetaData GetMetaData();
-	}
-	public interface IPagedList
-	{
+    }
+    public interface IPagedList
+    {
         int PageCount { get; }
         int TotalItemCount { get; }
         int PageNumber { get; }
@@ -27,5 +27,5 @@ namespace X.PagedList
         bool IsLastPage { get; }
         int FirstItemOnPage { get; }
         int LastItemOnPage { get; }
-	}
+    }
 }

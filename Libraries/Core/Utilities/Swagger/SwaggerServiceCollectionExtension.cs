@@ -4,14 +4,14 @@ namespace Core.Utilities.Swagger
 {
     public static class SwaggerServiceCollectionExtension
     {
-        public static void AddCustomSwaggerGen(this IServiceCollection services )
+        public static void AddCustomSwaggerGen(this IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {
                 c.CustomSchemaIds(type => type.ToString());
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Version ="v1",
+                    Version = "v1",
                     Title = "eCommerce",
                     Description = "eCommerce",
                 });

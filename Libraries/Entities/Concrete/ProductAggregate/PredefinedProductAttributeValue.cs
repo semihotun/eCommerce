@@ -7,7 +7,6 @@ namespace Entities.Concrete.ProductAggregate
         public decimal PriceAdjustment { get; set; }
         public decimal WeightAdjustment { get; set; }
         public decimal Cost { get; set; }
-        public bool IsPreSelected { get; set; }
         public int DisplayOrder { get; set; }
     }
 }

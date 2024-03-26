@@ -7,8 +7,6 @@ namespace Entities.Concrete.ProductAggregate
         public int? BrandId { get; set; }
         public int? CategoryId { get; set; }
         public string ProductContent { get; set; }
-        public string ProductColor { get; set; }
-        public int? Control { get; set; }
         public bool? ProductShow { get; set; }
         public string Gtin { get; set; }
         public string Sku { get; set; }

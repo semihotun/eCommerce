@@ -2,10 +2,10 @@
 {
     public class GetProductSpecificationAttributeById
     {
-        public int productSpecificationAttributeId { get; set; }
+        public int ProductSpecificationAttributeId { get; set; }
         public GetProductSpecificationAttributeById(int productSpecificationAttributeId)
         {
-            this.productSpecificationAttributeId = productSpecificationAttributeId;
+            this.ProductSpecificationAttributeId = productSpecificationAttributeId;
         }
         public GetProductSpecificationAttributeById()
         {

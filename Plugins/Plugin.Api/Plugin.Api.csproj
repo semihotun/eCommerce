@@ -3,30 +3,15 @@
 		<TargetFramework>net5.0</TargetFramework>
 		<CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
 		<OutputType>Library</OutputType>
+		<PostBuildEvent>xcopy /y *.dll  ..\..\..\..\..\eCommerce\bin\Debug\net5.0</PostBuildEvent>
 	</PropertyGroup>
 	<ItemGroup>
-	  <Compile Remove="Views - Copy\**" />
-	  <Compile Remove="wwwroot - Copy\**" />
-	  <Content Remove="Views - Copy\**" />
-	  <Content Remove="wwwroot - Copy\**" />
-	  <EmbeddedResource Remove="Views - Copy\**" />
-	  <EmbeddedResource Remove="wwwroot - Copy\**" />
-	  <None Remove="Views - Copy\**" />
-	  <None Remove="wwwroot - Copy\**" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Autofac" Version="6.2.0" />
-		<PackageReference Include="Iyzipay" Version="2.1.39" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.0" />
+	  <Folder Include="Controllers\" />
+	  <Folder Include="wwwroot\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Libraries\Business\Business.csproj" />
 	  <ProjectReference Include="..\..\Libraries\Core\Core.csproj" />
 	  <ProjectReference Include="..\..\Libraries\DataAccess\DataAccess.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Controllers\" />
-	  <Folder Include="Views\" />
-	  <Folder Include="wwwroot\" />
 	</ItemGroup>
 </Project>

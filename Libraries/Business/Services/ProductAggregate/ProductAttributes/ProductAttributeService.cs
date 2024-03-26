@@ -3,10 +3,9 @@ using Business.Services.ProductAggregate.ProductAttributes.ProductAttributeServi
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
-using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributes;
+using DataAccess.UnitOfWork;
 using Entities.Concrete.ProductAggregate;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,93 +21,92 @@ namespace Business.Services.ProductAggregate.ProductAttributes
     {
         private readonly IProductAttributeDAL _productAttributeRepository;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
         public ProductAttributeService(
             IProductAttributeDAL productAttributeRepository,
             IMapper mapper
-            )
+,
+            IUnitOfWork unitOfWork)
         {
             _productAttributeRepository = productAttributeRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
         #region Methods
         [LogAspect(typeof(MsSqlLogger))]
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductAttributeService.Get")]
-        public async Task<IResult> DeleteProductAttribute(ProductAttribute productAttribute)
+        public async Task<Result> DeleteProductAttribute(ProductAttribute productAttribute)
         {
-            if (productAttribute == null)
-                return new ErrorResult();
-            _productAttributeRepository.Delete(productAttribute);
-            await _productAttributeRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                _productAttributeRepository.Remove(productAttribute);
+                return Result.SuccessResult();
+            });
         }
         [CacheAspect]
-        public async Task<IDataResult<IPagedList<ProductAttribute>>> GetAllProductAttributes(GetAllProductAttributes request)
+        public async Task<Result<IPagedList<ProductAttribute>>> GetAllProductAttributes(GetAllProductAttributes request)
         {
             var query = from pa in _productAttributeRepository.Query()
                         select pa;
             if (request.Name != null)
                 query = query.Where(x => x.Name == request.Name);
-            var data = await query.ToPagedListAsync(request.PageIndex, request.PageSize);
-            return new SuccessDataResult<IPagedList<ProductAttribute>>(data);
+            return Result.SuccessDataResult(
+                await query.ToPagedListAsync(request.PageIndex, request.PageSize));
         }
         [CacheAspect]
-        public async Task<IDataResult<IList<ProductAttribute>>> GetAllProductAttribute()
+        public async Task<Result<List<ProductAttribute>>> GetAllProductAttribute()
         {
-            var query = await _productAttributeRepository.Query().ToListAsync();
-            return new SuccessDataResult<List<ProductAttribute>>(query);
+            return Result.SuccessDataResult(
+                await _productAttributeRepository.Query().ToListAsync());
         }
         [CacheAspect]
-        public async Task<IDataResult<ProductAttribute>> GetProductAttributeById(GetProductAttributeById request)
+        public async Task<Result<ProductAttribute>> GetProductAttributeById(GetProductAttributeById request)
         {
-            var data = await _productAttributeRepository.GetAsync(x => x.Id == request.ProductAttributeId);
-            return new SuccessDataResult<ProductAttribute>(data);
+            return Result.SuccessDataResult(
+                await _productAttributeRepository.GetAsync(x => x.Id == request.ProductAttributeId));
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductAttributeService.Get")]
         [LogAspect(typeof(MsSqlLogger))]
-        public async Task<IResult> InsertProductAttribute(ProductAttribute productAttribute)
+        public async Task<Result> InsertProductAttribute(ProductAttribute productAttribute)
         {
-            if (productAttribute == null)
-                return new ErrorResult();
-            _productAttributeRepository.Add(productAttribute);
-            await _productAttributeRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                await _productAttributeRepository.AddAsync(productAttribute);
+                return Result.SuccessResult();
+            });
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductAttributeService.Get")]
         [LogAspect(typeof(MsSqlLogger))]
-        public async Task<IResult> UpdateProductAttribute(ProductAttribute productAttribute)
+        public async Task<Result> UpdateProductAttribute(ProductAttribute productAttribute)
         {
-            if (productAttribute == null)
-                return new ErrorResult();
-            var data = await _productAttributeRepository.GetAsync(x => x.Id == productAttribute.Id);
-            data = _mapper.Map(productAttribute, data);
-            _productAttributeRepository.Update(data);
-            await _productAttributeRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var data = await _productAttributeRepository.GetAsync(x => x.Id == productAttribute.Id);
+                data = _mapper.Map(productAttribute, data);
+                _productAttributeRepository.Update(data);
+                return Result.SuccessResult();
+            });
         }
         [CacheAspect]
-        public async Task<IDataResult<int[]>> GetNotExistingAttributes(GetNotExistingAttributes request)
+        public async Task<Result<int[]>> GetNotExistingAttributes(GetNotExistingAttributes request)
         {
-            var query = _productAttributeRepository.Query();
             var queryFilter = request.AttributeId.Distinct().ToArray();
-            var filter = await query.Select(a => a.Id).Where(m => queryFilter.Contains(m)).ToListAsync();
+            var filter = await _productAttributeRepository.Query().Select(a => a.Id).Where(m => queryFilter.Contains(m)).ToListAsync();
             var data = queryFilter.Except(filter).ToArray();
-            return new SuccessDataResult<int[]>(data);
+            return Result.SuccessDataResult(data);
         }
         [CacheAspect]
-        public async Task<IDataResult<IEnumerable<SelectListItem>>> GetProductAttributeDropdown(GetProductAttributeDropdown request)
+        public async Task<Result<IEnumerable<SelectListItem>>> GetProductAttributeDropdown(GetProductAttributeDropdown request)
         {
             var query = from s in _productAttributeRepository.Query()
                         select new SelectListItem
                         {
                             Text = s.Name,
                             Value = s.Id.ToString(),
-                            Selected = s.Id == request.SelectedId ? true : false
+                            Selected = s.Id == request.SelectedId
                         };
             var data = await query.ToListAsync();
-            return new SuccessDataResult<IEnumerable<SelectListItem>>(data);
+            return Result.SuccessDataResult<IEnumerable<SelectListItem>>(data);
         }
         #endregion
     }

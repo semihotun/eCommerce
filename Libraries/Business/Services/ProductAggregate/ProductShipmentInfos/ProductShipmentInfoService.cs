@@ -2,10 +2,9 @@
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
-using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductShipmentInfos;
+using DataAccess.UnitOfWork;
 using Entities.Concrete.ProductAggregate;
 using Entities.Helpers.AutoMapper;
 using System.Threading.Tasks;
@@ -15,49 +14,52 @@ namespace Business.Services.ProductAggregate.ProductShipmentInfos
     {
         #region Field
         private readonly IProductShipmentInfoDAL _productShipmentInfoDAL;
+        private readonly IUnitOfWork _unitOfWork;
         #endregion
         #region Ctor
-        public ProductShipmentInfoService(IProductShipmentInfoDAL productShipmentInfoDAL)
+        public ProductShipmentInfoService(IProductShipmentInfoDAL productShipmentInfoDAL, IUnitOfWork unitOfWork)
         {
             _productShipmentInfoDAL = productShipmentInfoDAL;
+            _unitOfWork = unitOfWork;
         }
         #endregion
         [CacheAspect]
-        public async Task<IDataResult<ProductShipmentInfo>> GetProductShipmentInfo(GetProductShipmentInfo request)
+        public async Task<Result<ProductShipmentInfo>> GetProductShipmentInfo(GetProductShipmentInfo request)
         {
-            var query = await _productShipmentInfoDAL.GetAsync(x => x.ProductId == request.ProductId);
-            return new SuccessDataResult<ProductShipmentInfo>(query);
+            return Result.SuccessDataResult<ProductShipmentInfo>(await _productShipmentInfoDAL.GetAsync(x => x.ProductId == request.ProductId));
         }
         [LogAspect(typeof(MsSqlLogger))]
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductShipmentInfoService.Get")]
-        public async Task<IResult> AddProductShipmentInfo(ProductShipmentInfo productShipmentInfo)
+        public async Task<Result> AddProductShipmentInfo(ProductShipmentInfo productShipmentInfo)
         {
-            _productShipmentInfoDAL.Add(productShipmentInfo);
-            await _productShipmentInfoDAL.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            {
+                await _productShipmentInfoDAL.AddAsync(productShipmentInfo);
+                await Task.CompletedTask;
+                return Result.SuccessResult();
+            });
         }
         [LogAspect(typeof(MsSqlLogger))]
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductShipmentInfoService.Get")]
-        public async Task<IResult> UpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo)
+        public async Task<Result> UpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo)
         {
-            var query = await _productShipmentInfoDAL.GetAsync(x => x.Id == productShipmentInfo.Id);
-            var data = query.MapTo<ProductShipmentInfo>(productShipmentInfo);
-            _productShipmentInfoDAL.Update(data);
-            await _productShipmentInfoDAL.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            {
+                var query = await _productShipmentInfoDAL.GetAsync(x => x.Id == productShipmentInfo.Id);
+                var data = query.MapTo<ProductShipmentInfo>(productShipmentInfo);
+                _productShipmentInfoDAL.Update(data);
+                return Result.SuccessResult();
+            });
         }
         [LogAspect(typeof(MsSqlLogger))]
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("IProductShipmentInfoService.Get")]
-        public async Task<IResult> AddOrUpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo)
+        public async Task<Result> AddOrUpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo)
         {
             if (productShipmentInfo.Id == 0)
                 await AddProductShipmentInfo(productShipmentInfo);
             else
                 await UpdateProductShipmentInfo(productShipmentInfo);
-            return new SuccessResult();
+            return Result.SuccessResult();
         }
     }
 }

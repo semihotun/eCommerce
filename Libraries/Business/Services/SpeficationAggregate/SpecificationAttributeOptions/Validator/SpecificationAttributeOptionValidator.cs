@@ -8,7 +8,7 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions.V
         {
             RuleFor(x => x.SpecificationAttributeId).NotEmpty();
             RuleFor(x => x.Name).NotEmpty();
-            RuleFor(x => x.ColorSquaresRgb).NotEmpty();
+
             RuleFor(x => x.DisplayOrder).NotEmpty();
         }
     }
@@ -18,7 +18,6 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions.V
         {
             RuleFor(x => x.SpecificationAttributeId).NotEmpty();
             RuleFor(x => x.Name).NotEmpty();
-            RuleFor(x => x.ColorSquaresRgb).NotEmpty();
             RuleFor(x => x.DisplayOrder).NotEmpty();
         }
     }

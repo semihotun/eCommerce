@@ -3,72 +3,87 @@ using Business.Services.SliderAggregate.Sliders.SliderServiceModel;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Interceptors;
+using Core.Utilities.Helper;
 using Core.Utilities.Results;
-using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.SliderAggregate.Sliders;
+using DataAccess.UnitOfWork;
 using Entities.Concrete.SliderAggregate;
+using Entities.Helpers.AutoMapper;
+using Entities.ViewModels.AdminViewModel.AdminSlider;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using Utilities.Constants;
 namespace Business.Services.SliderAggregate.Sliders
 {
     public class SliderService : ISliderService
     {
         private readonly ISliderDAL _sliderRepository;
         private readonly IMapper _mapper;
-        public SliderService(ISliderDAL sliderRepository, IMapper mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public SliderService(ISliderDAL sliderRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _sliderRepository = sliderRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("ISliderService.Get")]
         [LogAspect(typeof(MsSqlLogger))]
-        public async Task<IResult> DeleteSlider(DeleteSlider request)
+        public async Task<Result> DeleteSlider(DeleteSlider request)
         {
-            if (request.Id == 0)
-                return new ErrorResult();
-            _sliderRepository.Delete(_sliderRepository.GetById(request.Id));
-            await _sliderRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var slider =await _sliderRepository.GetByIdAsync(request.Id);
+                if (slider == null)
+                    return Result.ErrorResult();
+                _sliderRepository.Remove(slider);
+                if (slider.SliderImage != null)
+                    PhotoHelper.Delete(Path.Combine(PhotoUrl.Slider, slider.SliderImage));
+                return Result.SuccessResult();
+            });
         }
         [CacheAspect]
-        public async Task<IDataResult<IList<Slider>>> GetAllSlider()
+        public async Task<Result<List<Slider>>> GetAllSlider()
         {
-            var query = _sliderRepository.Query();
-            var data = await query.ToListAsync();
-            return new SuccessDataResult<List<Slider>>(data);
+            return Result.SuccessDataResult(await _sliderRepository.Query().ToListAsync());
         }
         [CacheAspect]
-        public async Task<IDataResult<Slider>> GetSlider(GetSlider request)
+        public async Task<Result<Slider>> GetSlider(GetSlider request)
         {
-            var data = await _sliderRepository.GetAsync(x => x.Id == request.Id);
-            return new SuccessDataResult<Slider>(data);
+            return Result.SuccessDataResult<Slider>(await _sliderRepository.GetAsync(x => x.Id == request.Id));
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("ISliderService.Get")]
         [LogAspect(typeof(MsSqlLogger))]
-        public async Task<IResult> InsertSlider(Slider slider)
+        public async Task<Result> InsertSlider(SliderCreateOrUpdateVM model)
         {
-            if (slider == null)
-                return new ErrorResult();
-            _sliderRepository.Add(slider);
-            await _sliderRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var imageAdd = PhotoHelper.Add(PhotoUrl.Slider, model.Uploadfile);
+                model.SliderImage = imageAdd.Data.Path;
+                var sliderData = model.MapTo<Slider>();
+                await _sliderRepository.AddAsync(sliderData);
+                return Result.SuccessResult();
+            });
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("ISliderService.Get")]
         [LogAspect(typeof(MsSqlLogger))]
-        public async Task<IResult> UpdateSlider(Slider slider)
+        public async Task<Result> UpdateSlider(SliderCreateOrUpdateVM model)
         {
-            if (slider == null)
-                return new ErrorResult();
-            var getSlider = await _sliderRepository.GetAsync(x => x.Id == slider.Id);
-            getSlider = _mapper.Map(slider, getSlider);
-            _sliderRepository.Update(getSlider);
-            await _sliderRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var slider = await _sliderRepository.GetAsync(x => x.Id == model.Id);
+                if (slider == null)
+                    return Result.ErrorResult();
+                if (model.Uploadfile != null)
+                {
+                    model.SliderImage = PhotoHelper.Add(PhotoUrl.ShowCase,
+                        model.Uploadfile, true, slider.SliderImage).Data.Path;
+                    slider = _mapper.Map(model, slider);
+                    _sliderRepository.Update(slider);
+                }
+                return Result.SuccessResult();
+            });
         }
     }
 }

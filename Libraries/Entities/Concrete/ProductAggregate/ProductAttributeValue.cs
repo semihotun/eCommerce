@@ -1,11 +1,10 @@
 namespace Entities.Concrete.ProductAggregate
 {
-    public partial class ProductAttributeValue : BaseEntity
+#nullable enable
+    public class ProductAttributeValue : BaseEntity
     {
         public int ProductAttributeMappingId { get; set; }
-        public string Name { get; set; }
-        public string ColorSquaresRgb { get; set; }
-        public bool IsPreSelected { get; set; }
+        public string? Name { get; set; }
         public int DisplayOrder { get; set; }
     }
 }

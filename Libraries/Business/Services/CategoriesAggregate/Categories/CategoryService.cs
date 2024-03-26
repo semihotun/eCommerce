@@ -1,13 +1,14 @@
-﻿using Business.Services.CategoriesAggregate.Categories.CategoryServiceModel;
+﻿using Business.Constants;
+using Business.Services.CategoriesAggregate.Categories.CategoryServiceModel;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
-using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories;
+using DataAccess.UnitOfWork;
 using Entities.Concrete.CategoriesAggregate;
 using Entities.Helpers.AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -20,126 +21,149 @@ namespace Business.Services.CategoriesAggregate.Categories
     {
         #region fields
         private readonly ICategoryDAL _categoryRepository;
+        private readonly IUnitOfWork _unitOfWork;
         #endregion
         #region ctor
         public CategoryService(
-            ICategoryDAL categoryRepository)
+            ICategoryDAL categoryRepository, IUnitOfWork unitOfWork)
         {
             _categoryRepository = categoryRepository;
+            _unitOfWork = unitOfWork;
         }
         #endregion
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("ICategoryService.Get", "ICategoryDAL.Get")]
-        [TransactionAspect(typeof(eCommerceContext))]
-        public async Task<IResult> DeleteCategory(DeleteCategory request)
+        public async Task<Result> DeleteCategory(DeleteCategory request)
         {
-            if (request.Id == 0)
-                return new ErrorResult();
-            _categoryRepository.Delete(_categoryRepository.GetById(request.Id));
-            await _categoryRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            {
+                if (request.Id == 0)
+                    return Result.ErrorResult(Messages.NullOrEmpty);
+                var categorydata = await _categoryRepository.GetByIdAsync(request.Id);
+                if (categorydata == null)
+                {
+                    return Result.ErrorResult(Messages.IdNotFound);
+                }
+                _categoryRepository.Remove(categorydata);
+                return Result.SuccessResult();
+            });
         }
         [LogAspect(typeof(MsSqlLogger))]
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("ICategoryService.Get", "ICategoryDAL.Get")]
-        public async Task<IResult> RemoveRangeCategory(RemoveRangeCategory request)
+        public async Task<Result> RemoveRangeCategory(RemoveRangeCategory request)
         {
-            RemoveGroup(new RemoveGroup(request.Id));
-            var deletedData = _categoryRepository.Query().Where(x => x.Id == request.Id).FirstOrDefault();
-            _categoryRepository.Delete(deletedData);
-            _categoryRepository.SaveChanges();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var subDeletedData = _categoryRepository.Query().Where(x => x.ParentCategoryId == request.Id);
+                if (subDeletedData.Any())
+                {
+                    foreach (var item in subDeletedData)
+                    {
+                        var deletedCategory = _categoryRepository.Query().Where(x => x.Id == item.Id).FirstOrDefault();
+                        if (deletedCategory != null)
+                        {
+                            _categoryRepository.Remove(deletedCategory);
+                        }
+                    }
+                }
+                var deletedData = await _categoryRepository.Query().Where(x => x.Id == request.Id).FirstOrDefaultAsync();
+                _categoryRepository.Remove(deletedData);
+                return Result.SuccessResult();
+            });
         }
         [CacheAspect]
-        public async Task<IDataResult<IList<Category>>> GetAllCategories()
+        public async Task<Result<List<Category>>> GetAllCategories()
         {
-            var data = await _categoryRepository.Query().ToListAsync();
-            return new SuccessDataResult<List<Category>>(data);
+            return Result.SuccessDataResult(await _categoryRepository.Query().ToListAsync());
         }
         [CacheAspect]
-        public async Task<IDataResult<IList<Category>>> GetAllCategoriesByParentCategoryId(
+        public async Task<Result<List<Category>>> GetAllCategoriesByParentCategoryId(
             GetAllCategoriesByParentCategoryId request)
         {
-            var result = await _categoryRepository.Query().Where(x => x.ParentCategoryId == request.ParentCategoryId).ToListAsync();
-            return new SuccessDataResult<List<Category>>(result);
+            return Result.SuccessDataResult(await _categoryRepository.Query().Where(x => x.ParentCategoryId == request.ParentCategoryId).ToListAsync());
         }
         [CacheAspect]
-        public async Task<IDataResult<Category>> GetCategoryById(GetCategoryById request)
+        public async Task<Result<Category>> GetCategoryById(GetCategoryById request)
         {
-            var result = await _categoryRepository.GetAsync(x => x.Id == request.CategoryId);
-            return new SuccessDataResult<Category>(result);
+            return Result.SuccessDataResult(await _categoryRepository.GetAsync(x => x.Id == request.CategoryId));
         }
         [LogAspect(typeof(MsSqlLogger))]
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("ICategoryService.Get", "ICategoryDAL.Get")]
-        public async Task<IResult> InsertCategory(Category category)
+        public async Task<Result> InsertCategory(Category category)
         {
-            if (category == null)
-                return new ErrorDataResult<Category>();
-            _categoryRepository.Add(category);
-            await _categoryRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                await _categoryRepository.AddAsync(category);
+                return Result.SuccessResult();
+            });
         }
         [LogAspect(typeof(MsSqlLogger))]
-        [TransactionAspect(typeof(eCommerceContext))]
         [CacheRemoveAspect("ICategoryService.Get", "ICategoryDAL.Get")]
-        public async Task<IResult> UpdateCategory(Category category)
+        public async Task<Result> UpdateCategory(Category category)
         {
-            var data = await _categoryRepository.GetAsync(x => x.Id == category.Id);
-            var mapData = data.MapTo<Category>(category);
-            _categoryRepository.Update(mapData);
-            await _categoryRepository.SaveChangesAsync();
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            {
+                var data = await _categoryRepository.GetAsync(x => x.Id == category.Id);
+                var mapData = data.MapTo<Category>(category);
+                _categoryRepository.Update(mapData);
+                return Result.SuccessResult();
+            });
         }
         [CacheAspect]
-        public async Task<IDataResult<IEnumerable<SelectListItem>>> GetCategoryDropdown(GetCategoryDropdown request)
+        public async Task<Result<IEnumerable<SelectListItem>>> GetCategoryDropdown(GetCategoryDropdown request)
         {
             var query = from s in _categoryRepository.Query()
                         select new SelectListItem
                         {
                             Text = s.CategoryName,
                             Value = s.Id.ToString(),
-                            Selected = s.Id == request.SelectedId ? true : false
+                            Selected = s.Id == request.SelectedId
                         };
             var data = await query.ToListAsync();
-            data.Insert(0, new SelectListItem("Seçiniz", "0", request.SelectedId == 0));
-            return new SuccessDataResult<IEnumerable<SelectListItem>>(data);
+            data.Insert(0, new SelectListItem(Messages.DropdownFirstItem, "0", request.SelectedId == 0));
+            return Result.SuccessDataResult<IEnumerable<SelectListItem>>(data);
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("ICategoryService.Get", "ICategoryDAL.Get")]
-        public async Task<IResult> ChangeNodePosition(ChangeNodePosition request)
+        public async Task<Result> ChangeNodePosition(ChangeNodePosition request)
         {
-            if (request.ParentId == 0)
-                request.ParentId = null;
-            var hd = await _categoryRepository.Query().FirstOrDefaultAsync(x => x.Id == request.Id);
-            hd.ParentCategoryId = request.ParentId;
-            var update = _categoryRepository.Update(hd);
-            return new SuccessResult();
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            {
+                if (request.ParentId == 0)
+                    request.ParentId = null;
+                var hd = await _categoryRepository.Query().FirstOrDefaultAsync(x => x.Id == request.Id);
+                hd.ParentCategoryId = request.ParentId;
+                var update = _categoryRepository.Update(hd);
+                return Result.SuccessResult();
+            });
         }
-        [TransactionAspect(typeof(eCommerceContext))]
         [LogAspect(typeof(MsSqlLogger))]
         [CacheRemoveAspect("ICategoryService.Get", "ICategoryDAL.Get")]
-        public async Task<IResult> DeleteNodes(DeleteNodes request)
+        public async Task<Result> DeleteNodes(DeleteNodes request)
         {
-            var ids = request.Values.Split(',');
-            foreach (var item in ids)
+            return await _unitOfWork.BeginTransaction<Result>(async () =>
             {
-                await RemoveRangeCategory(new RemoveRangeCategory(int.Parse(item)));
-            }
-            return new SuccessResult();
-        }
-        private void RemoveGroup(RemoveGroup request)
-        {
-            var subDeletedData = _categoryRepository.Query().Where(x => x.ParentCategoryId == request.Id);
-            if (subDeletedData.Count() > 0)
-            {
-                foreach (var item in subDeletedData)
+                foreach (var splitString in request.Values.Split(','))
                 {
-                    var deletedData = _categoryRepository.Query().Where(x => x.Id == item.Id).FirstOrDefault();
-                    _categoryRepository.Delete(deletedData);
+                    await RemoveRangeCategory(new RemoveRangeCategory());
+                    var requestId = int.Parse(splitString);
+                    var subDeletedData = _categoryRepository.Query().Where(x => x.ParentCategoryId == requestId);
+                    if (subDeletedData.Any())
+                    {
+                        foreach (var item in subDeletedData)
+                        {
+                            var deletedCategory = _categoryRepository.Query().Where(x => x.Id == item.Id).FirstOrDefault();
+                            if (deletedCategory != null)
+                            {
+                                _categoryRepository.Remove(deletedCategory);
+                            }
+                        }
+                    }
+                    var deletedData = await _categoryRepository.Query().Where(x => x.Id == requestId).FirstOrDefaultAsync();
+                    _categoryRepository.Remove(deletedData);
                 }
-            }
+                return Result.SuccessResult();
+            });
         }
     }
 }

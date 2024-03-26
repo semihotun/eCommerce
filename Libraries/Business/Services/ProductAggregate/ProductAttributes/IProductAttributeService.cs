@@ -9,13 +9,13 @@ namespace Business.Services.ProductAggregate.ProductAttributes
 {
     public partial interface IProductAttributeService
     {
-        Task<IResult> DeleteProductAttribute(ProductAttribute productAttribute);
-        Task<IDataResult<IPagedList<ProductAttribute>>> GetAllProductAttributes(GetAllProductAttributes request);
-        Task<IDataResult<IList<ProductAttribute>>> GetAllProductAttribute();
-        Task<IDataResult<ProductAttribute>> GetProductAttributeById(GetProductAttributeById request);
-        Task<IResult> InsertProductAttribute(ProductAttribute productAttribute);
-        Task<IResult> UpdateProductAttribute(ProductAttribute productAttribute);
-        Task<IDataResult<int[]>> GetNotExistingAttributes(GetNotExistingAttributes request);
-        Task<IDataResult<IEnumerable<SelectListItem>>> GetProductAttributeDropdown(GetProductAttributeDropdown request);
+        Task<Result> DeleteProductAttribute(ProductAttribute productAttribute);
+        Task<Result<IPagedList<ProductAttribute>>> GetAllProductAttributes(GetAllProductAttributes request);
+        Task<Result<List<ProductAttribute>>> GetAllProductAttribute();
+        Task<Result<ProductAttribute>> GetProductAttributeById(GetProductAttributeById request);
+        Task<Result> InsertProductAttribute(ProductAttribute productAttribute);
+        Task<Result> UpdateProductAttribute(ProductAttribute productAttribute);
+        Task<Result<int[]>> GetNotExistingAttributes(GetNotExistingAttributes request);
+        Task<Result<IEnumerable<SelectListItem>>> GetProductAttributeDropdown(GetProductAttributeDropdown request);
     }
 }

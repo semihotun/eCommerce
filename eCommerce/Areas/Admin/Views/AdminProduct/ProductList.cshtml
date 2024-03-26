@@ -14,13 +14,13 @@
                         <h2 class="card-title">Ürün Listesi</h2>
                     </div>
                     <div class="col-md-8" style="float:right;">
-                        <div class="col-md-3" style="float:right;"><a type="submit" class="btn btn-outline-default pd10-50" style="text-align:center;" href="/Admin/AdminProduct/ProductEdit?Id=0">Ekle</a></div>
+                        <div class="col-md-3" style="float:right;"><a type="submit" class="btn btn-outline-default pd10-50" style="text-align:center;" href="/Admin/AdminProduct/ProductEdit?Id=0&Tap=tap1">Ekle</a></div>
                     </div>
                 </div>
                 <div class="card-body">
                     <br />
                     <div class="col-md-12">
-                        <form id="ProductListForm" class="TableFilterForm">
+                        <form id="ProductListForm" class="tableFilterForm">
                             <div style="display:flex;flex-wrap:wrap;">
                                 <div class="form-group col-md-6 row">
                                     @Html.LabelFor(x => x.Id, "Id", new { @class = "control-label col-md-2 " })
@@ -108,7 +108,7 @@
                                             data: null,
                                             render: function (data, type, row) {
                                                 return "<a href='#' id='" + row.Id + "' ><i class='fa fa-trash-o datatablesil ' style='font-size:20px;' ></i></a>" +
-                                                    "<a href='/Admin/AdminProduct/ProductEdit?Id=" + row.Id + "'><i class='fa fa-edit datatableduzenle' style='font-size:20px;'></i></a>";
+                                                    "<a href='/Admin/AdminProduct/ProductEdit?Id=" + row.Id + "&Tap=tap1'><i class='fa fa-edit datatableduzenle' style='font-size:20px;'></i></a>";
                                             }, "orderable": false
                                         },
                                     ], "language": {

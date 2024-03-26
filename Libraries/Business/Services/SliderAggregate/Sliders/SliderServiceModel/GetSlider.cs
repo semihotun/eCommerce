@@ -2,9 +2,9 @@
 {
     public class GetSlider
     {
-        public GetSlider(int ıd)
+        public GetSlider(int id)
         {
-            Id = ıd;
+            Id = id;
         }
         public GetSlider()
         {

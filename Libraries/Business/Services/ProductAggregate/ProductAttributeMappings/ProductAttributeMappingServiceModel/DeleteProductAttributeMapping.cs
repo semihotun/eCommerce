@@ -2,9 +2,9 @@
 {
     public class DeleteProductAttributeMapping
     {
-        public DeleteProductAttributeMapping(int ıd)
+        public DeleteProductAttributeMapping(int id)
         {
-            Id = ıd;
+            Id = id;
         }
         public DeleteProductAttributeMapping()
         {

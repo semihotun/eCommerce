@@ -7,11 +7,9 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeForm
 {
     public interface IProductAttributeFormatter
     {
-        Task<IList<MappingAttrXml>> AttrXmltoString(string xml);
-        IList<ProductAttributeCombinationDTO> ListAttrXmltoString
-              (List<ProductDetailDTO.ProductAttributeCombination> data,
-               IList<ProductDetailDTO.ProductAttributeMapping> productAttributeMappings);
-        IList<ProductAttributeCombinationDTO> ListAttrXmltoString
+        Task<List<MappingAttrXml>> AttrXmltoString(string xml);
+        List<ProductAttributeCombinationDTO> ListAttrXmltoString(List<ProductDetailDTO.ProductAttributeCombination> data,List<ProductDetailDTO.ProductAttributeMapping> productAttributeMappings);
+        List<ProductAttributeCombinationDTO> ListAttrXmltoString
              (IEnumerable<ProductDetailDTO.ProductAttributeCombination> data,
               IEnumerable<ProductDetailDTO.ProductAttributeMapping> productAttributeMappings);
         Task<string> XmlString(string xml);

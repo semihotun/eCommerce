@@ -11,7 +11,6 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues.Va
             RuleFor(x => x.PriceAdjustment).NotEmpty();
             RuleFor(x => x.WeightAdjustment).NotEmpty();
             RuleFor(x => x.Cost).NotEmpty();
-            RuleFor(x => x.IsPreSelected).NotEmpty();
             RuleFor(x => x.DisplayOrder).NotEmpty();
         }
     }
@@ -24,7 +23,6 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues.Va
             RuleFor(x => x.PriceAdjustment).NotEmpty();
             RuleFor(x => x.WeightAdjustment).NotEmpty();
             RuleFor(x => x.Cost).NotEmpty();
-            RuleFor(x => x.IsPreSelected).NotEmpty();
             RuleFor(x => x.DisplayOrder).NotEmpty();
         }
     }

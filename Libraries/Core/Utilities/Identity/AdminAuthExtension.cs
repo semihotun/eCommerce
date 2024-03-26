@@ -7,7 +7,7 @@ namespace Core.Utilities.Identity
 {
     public static class AdminAuthExtension
     {
-        public static void AddIdentitySettings(this IServiceCollection services, IConfiguration configuration,string authenticationScheme)
+        public static void AddIdentitySettings(this IServiceCollection services, IConfiguration configuration, string authenticationScheme)
         {
             var tokenOptions = configuration.GetSection("TokenOptions").Get<TokenOptions>();
             services.AddAuthentication(authenticationScheme)
@@ -15,7 +15,7 @@ namespace Core.Utilities.Identity
                     {
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
-                            SaveSigninToken=true,
+                            SaveSigninToken = true,
                             ValidateIssuer = true,
                             ValidateAudience = true,
                             ValidateLifetime = true,

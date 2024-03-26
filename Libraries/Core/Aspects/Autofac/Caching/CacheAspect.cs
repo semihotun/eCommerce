@@ -18,7 +18,7 @@ namespace Core.Aspects.Autofac.Caching
         }
         public override void Intercept(IInvocation invocation)
         {
-            if(invocation.Arguments.Count() > 0)
+            if (invocation.Arguments.Length > 0)
             {
                 var methodName = string.Format($"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}");
                 var arguments = invocation.Arguments;
@@ -43,13 +43,14 @@ namespace Core.Aspects.Autofac.Caching
                 _cacheManager.Add(methodName, invocation.ReturnValue, _duration);
             }
         }
-        string BuildKey(object[] args)
+
+        static string BuildKey(object[] args)
         {
             var sb = new StringBuilder();
             foreach (var arg in args)
             {
                 var paramValues = arg.GetType().GetProperties().Select(p => p.GetValue(arg)?.ToString() ?? string.Empty);
-                sb.Append(string.Join('_', paramValues));
+                sb.AppendJoin('_', paramValues);
             }
             return sb.ToString();
         }

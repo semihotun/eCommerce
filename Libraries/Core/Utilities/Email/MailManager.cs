@@ -12,25 +12,26 @@ namespace Core.Utilities.Email
         }
         public void Send(EmailMessage emailMessage)
         {
-            foreach(var toAddress in emailMessage.ToAddresses)
+            var fromAddress = _configuration.GetSection("EmailConfiguration").GetSection("SenderEmail").Value;
+            var fromPassword = _configuration.GetSection("EmailConfiguration").GetSection("Password").Value;
+            if (!string.IsNullOrEmpty(fromAddress) && !string.IsNullOrEmpty(fromPassword))
             {
-                //Secret'da
-                var fromAddress = _configuration.GetSection("EmailConfiguration").GetSection("SenderEmail").Value;
-                var fromPassword = _configuration.GetSection("EmailConfiguration").GetSection("Password").Value;
-                string subject = toAddress;
-                string body =emailMessage.Content;
-                var smtp = new System.Net.Mail.SmtpClient
+                foreach (var toAddress in emailMessage.ToAddresses)
                 {
-                    Host = "smtp.gmail.com",
-                    Port = 587,
-                    EnableSsl = true,
-                    DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(fromAddress, fromPassword),
-                };
-                using var message = new MailMessage(fromAddress, toAddress, subject, body);
-                message.IsBodyHtml = true;
-                smtp.Send(message);
+                    //Secret'da
+                    var smtp = new System.Net.Mail.SmtpClient
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        EnableSsl = true,
+                        DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network,
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential(fromAddress, fromPassword),
+                    };
+                    using var message = new MailMessage(fromAddress, toAddress, toAddress, emailMessage.Content);
+                    message.IsBodyHtml = true;
+                    smtp.Send(message);
+                }
             }
         }
     }

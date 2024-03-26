@@ -30,7 +30,7 @@ namespace Core.Utilities.Quartz
                 // Job ile Trigger ı bir biri ile eşleştiriyoruz.
                 await Scheduler.ScheduleJob(job, trigger, cancellationToken);
             }
-            await Scheduler.Start();
+            await Scheduler.Start(cancellationToken);
         }
         public async Task StopAsync(CancellationToken cancellationToken)
         {

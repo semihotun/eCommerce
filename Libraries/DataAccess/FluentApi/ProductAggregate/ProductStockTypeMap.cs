@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Collections.Generic;
 namespace DataAccess.FluentApi.ProductAggregate
 {
-    public class ProductStockTypeMap : IEntityTypeConfiguration<ProductStockType>,ISeed<ProductStockType>
+    public class ProductStockTypeMap : IEntityTypeConfiguration<ProductStockType>, ISeed<ProductStockType>
     {
         public void Configure(EntityTypeBuilder<ProductStockType> builder)
         {
@@ -16,8 +16,8 @@ namespace DataAccess.FluentApi.ProductAggregate
         {
             return new List<ProductStockType>()
             {
-                new ProductStockType(){Name="Ürün Stoğundan Eksilt"},
-                new ProductStockType(){Name="Varyasyon Stoğundan Eksilt"}
+                new(){Name="Ürün Stoğundan Eksilt"},
+                new(){Name="Varyasyon Stoğundan Eksilt"}
             };
         }
     }

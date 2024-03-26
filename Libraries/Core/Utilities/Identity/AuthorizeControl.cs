@@ -9,10 +9,10 @@ namespace Core.Utilities.Identity
     public class AuthorizeControl : ActionFilterAttribute
     {
         private readonly string[] _roles;
-        private IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public AuthorizeControl(string roles = null)
         {
-            if(roles != null)
+            if (roles != null)
             {
                 _roles = roles.Split(",");
             }
@@ -22,7 +22,7 @@ namespace Core.Utilities.Identity
         {
             var roleClaims = _httpContextAccessor?.HttpContext?.User?.Claims;
             var isLogin = filterContext.HttpContext.Request.Cookies["UserToken"];
-            if (isLogin != null || roleClaims?.Count() > 0)
+            if (isLogin != null || roleClaims.Any())
             {
                 base.OnActionExecuting(filterContext);
             }

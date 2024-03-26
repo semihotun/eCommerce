@@ -3,8 +3,7 @@
 @{
     Layout = null;
 }
-@using (Html.BeginForm("ProductStockAdd", "ProductStock", FormMethod.Post, new { id = "ProductStockCreateForm" }))
-{
+<form id="productStockCreateForm" method="post" onsubmit="CreateProductStock(event)">
     <div class="d-flex flex-wrap">
         @Html.HiddenFor(x => x.ProductStock.Id, new { value = Model.Id })
         @Html.HiddenFor(x=>x.ProductStock.ProductName)
@@ -51,4 +50,4 @@
             </div>
         </div>
     </div>
-}
+</form>

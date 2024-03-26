@@ -3,9 +3,11 @@
     public class DeleteProductAttributeValue
     {
         public int Id { get; set; }
-        public DeleteProductAttributeValue(int ıd)
+        public int ProductId { get; set; }
+        public DeleteProductAttributeValue(int id, int productId)
         {
-            Id = ıd;
+            Id = id;
+            ProductId = productId;
         }
         public DeleteProductAttributeValue()
         {

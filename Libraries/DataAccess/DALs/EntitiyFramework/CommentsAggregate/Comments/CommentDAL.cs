@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 using X.PagedList;
 namespace DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments
 {
-    public class CommentDAL : EfEntityRepositoryBase<Comment, eCommerceContext>, ICommentDAL
+    public class CommentDAL : EfEntityRepositoryBase<Comment, ECommerceContext>, ICommentDAL
     {
-        public CommentDAL(eCommerceContext context) : base(context)
+        public CommentDAL(ECommerceContext context) : base(context)
         {
         }
         [CacheAspect]
-        public async Task<IDataResult<IPagedList<Comment>>> GetCommentDataTable(GetCommentDataTable request)
+        public async Task<Result<IPagedList<Comment>>> GetCommentDataTable(GetCommentDataTable request)
         {
             var query = from c in Context.Comment.ApplyFilter(request.Comment)
                         orderby request.DataTableParam.SortedColumnName
@@ -27,7 +27,7 @@ namespace DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments
                             CommentTitle = c.CommentTitle.Length > 200 ? c.CommentTitle.Substring(0, 200) + "..." : c.CommentTitle,
                         };
             var data = await query.ToPagedListAsync(request.DataTableParam.PageIndex, request.DataTableParam.PageSize);
-            return new SuccessDataResult<IPagedList<Comment>>(data);
+            return Result.SuccessDataResult<IPagedList<Comment>>(data);
         }
     }
 }

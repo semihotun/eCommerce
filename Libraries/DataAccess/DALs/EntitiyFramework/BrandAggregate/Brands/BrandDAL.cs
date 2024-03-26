@@ -12,20 +12,20 @@ using System.Threading.Tasks;
 using X.PagedList;
 namespace DataAccess.DALs.EntitiyFramework.BrandAggregate.Brands
 {
-    public class BrandDAL : EfEntityRepositoryBase<Brand, eCommerceContext>, IBrandDAL
+    public class BrandDAL : EfEntityRepositoryBase<Brand, ECommerceContext>, IBrandDAL
     {
-        public BrandDAL(eCommerceContext context) : base(context)
+        public BrandDAL(ECommerceContext context) : base(context)
         {
         }
         [CacheAspect]
-        public async Task<IDataResult<IPagedList<Brand>>> GetBrandDataTable(GetBrandDataTable request)
+        public async Task<Result<IPagedList<Brand>>> GetBrandDataTable(GetBrandDataTable request)
         {
-            var query = from b in Context.Brand.ApplyFilter(request.Brand)
-                        select b;
-            query=query.ApplyDataTableFilter(request.DataTableParam);
-            var data = await query.OrderBy(request.DataTableParam.SortOrder)
-                .ToPagedListAsync(request.DataTableParam.PageIndex, request.DataTableParam.PageSize);
-            return new SuccessDataResult<IPagedList<Brand>>(data);
+            return Result.SuccessDataResult(
+                await (from b in Context.Brand.ApplyFilter(request.Brand)
+                       select b)
+                       .ApplyDataTableFilter(request.DataTableParam)
+                       .OrderBy(request.DataTableParam.SortOrder)
+                       .ToPagedListAsync(request.DataTableParam.PageIndex, request.DataTableParam.PageSize));
         }
     }
 }

@@ -10,40 +10,39 @@ using System.Linq;
 using System.Threading.Tasks;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings
 {
-    public class ProductAttributeMappingDAL : EfEntityRepositoryBase<ProductAttributeMapping, eCommerceContext>, IProductAttributeMappingDAL
+    public class ProductAttributeMappingDAL : EfEntityRepositoryBase<ProductAttributeMapping, ECommerceContext>, IProductAttributeMappingDAL
     {
-        public ProductAttributeMappingDAL(eCommerceContext context) : base(context)
+        public ProductAttributeMappingDAL(ECommerceContext context) : base(context)
         {
         }
-        public async Task<IDataResult<IList<Entities.DTO.ProductMapping.ProductDetailMappingJson>>> GetProductDetailMappingJson(ProductAttributeMappingDALModels.GetProductDetailMappingJson request)
+        public async Task<Result<IList<ProductDetailMappingJson>>> GetProductDetailMappingJson(ProductAttributeMappingDALModels.GetProductDetailMappingJson request)
         {
-            var query = from p in Context.ProductAttributeMapping
-                        where p.ProductId == request.ProductId
-                        let pavg =(from pav in Context.ProductAttributeValue where pav.ProductAttributeMappingId == p.Id select pav
-                        ).AsEnumerable()
-                        select new Entities.DTO.ProductMapping.ProductDetailMappingJson
-                        {
-                            Id = p.Id,
-                            TextPrompt = p.TextPrompt,
-                            ProductAttributeValueList = pavg.ToList()
-                        };
-            var result = await query.ToListAsync();
-            return new SuccessDataResult<IList<Entities.DTO.ProductMapping.ProductDetailMappingJson>>(result);
+            var result = await (from p in Context.ProductAttributeMapping
+                                where p.ProductId == request.ProductId
+                                let pavg = (from pav in Context.ProductAttributeValue where pav.ProductAttributeMappingId == p.Id select pav
+                                ).AsEnumerable()
+                                select new ProductDetailMappingJson
+                                {
+                                    Id = p.Id,
+                                    TextPrompt = p.TextPrompt,
+                                    ProductAttributeValueList = pavg.ToList()
+                                }).ToListAsync();
+            return Result.SuccessDataResult<IList<ProductDetailMappingJson>>(result);
         }
-        public async Task<IDataResult<MappingProductAttribute>> GetMappingProductAttributeList(GetMappingProductAttributeList request)
+        public async Task<Result<MappingProductAttribute>> GetMappingProductAttributeList(GetMappingProductAttributeList request)
         {
-            var query = from p in Context.ProductAttributeMapping
-                        where p.Id == request.MappingId
-                        let pavg =(from pav in Context.ProductAttributeValue
-                                   where pav.ProductAttributeMappingId == p.Id select pav).AsEnumerable()
-                        select new MappingProductAttribute
-                        {
-                            Id = p.Id,
-                            TextPrompt = p.TextPrompt,
-                            ProductAttributeList = pavg
-                        };
-            var data = await query.FirstOrDefaultAsync();
-            return new SuccessDataResult<MappingProductAttribute>(data);
+            var result = await (from p in Context.ProductAttributeMapping
+                                where p.Id == request.MappingId
+                                let pavg = (from pav in Context.ProductAttributeValue
+                                            where pav.ProductAttributeMappingId == p.Id
+                                            select pav).AsEnumerable()
+                                select new MappingProductAttribute
+                                {
+                                    Id = p.Id,
+                                    TextPrompt = p.TextPrompt,
+                                    ProductAttributeList = pavg
+                                }).FirstOrDefaultAsync();
+            return Result.SuccessDataResult(result);
         }
     }
 }

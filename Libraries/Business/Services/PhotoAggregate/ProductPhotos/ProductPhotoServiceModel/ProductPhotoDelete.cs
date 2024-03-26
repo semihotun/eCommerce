@@ -1,12 +1,12 @@
 ﻿namespace Business.Services.PhotoAggregate.ProductPhotos.ProductPhotoServiceModel
 {
-    public class ProductPhotoDelete
+    public class DeleteProductPhoto
     {
-        public ProductPhotoDelete(int ıd)
+        public DeleteProductPhoto(int id)
         {
-            Id = ıd;
+            Id = id;
         }
-        public ProductPhotoDelete()
+        public DeleteProductPhoto()
         {
         }
         public int Id { get; set; }

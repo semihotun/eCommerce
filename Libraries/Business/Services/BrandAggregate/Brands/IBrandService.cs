@@ -9,11 +9,11 @@ namespace Business.Services.BrandAggregate.Brands
 {
     public interface IBrandService
     {
-        Task<IDataResult<IPagedList<Brand>>> GetBrandList(GetBrandList request);
-        Task<IResult> AddBrand(Brand model);
-        Task<IDataResult<Brand>> GetBrand(GetBrand request);
-        Task<IResult> DeleteBrand(Brand brand);
-        Task<IResult> UpdateBrand(Brand brand);
-        Task<IDataResult<IEnumerable<SelectListItem>>> GetBrandDropdown(GetBrandDropdown request);
+        Task<Result<IPagedList<Brand>>> GetBrandList(GetBrandList request);
+        Task<Result> AddBrand(Brand model);
+        Task<Result<Brand>> GetBrand(GetBrand request);
+        Task<Result> DeleteBrand(Brand brand);
+        Task<Result> UpdateBrand(Brand brand);
+        Task<Result<IEnumerable<SelectListItem>>> GetBrandDropdown(GetBrandDropdown request);
     }
 }

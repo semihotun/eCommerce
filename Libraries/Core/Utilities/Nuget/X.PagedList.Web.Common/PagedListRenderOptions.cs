@@ -71,21 +71,21 @@
         public string ItemSliceAndTotalFormat { get; set; }
         public Func<int, string> FunctionToDisplayEachPageNumber { get; set; }
         public string DelimiterBetweenPageNumbers { get; set; }
-        public static PagedListRenderOptions Classic => new PagedListRenderOptions
+        public static PagedListRenderOptions Classic => new()
         {
             DisplayLinkToFirstPage = PagedListDisplayMode.Never,
             DisplayLinkToLastPage = PagedListDisplayMode.Never,
             DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
             DisplayLinkToNextPage = PagedListDisplayMode.Always
         };
-        public static PagedListRenderOptions ClassicPlusFirstAndLast => new PagedListRenderOptions
+        public static PagedListRenderOptions ClassicPlusFirstAndLast => new()
         {
             DisplayLinkToFirstPage = PagedListDisplayMode.Always,
             DisplayLinkToLastPage = PagedListDisplayMode.Always,
             DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
             DisplayLinkToNextPage = PagedListDisplayMode.Always
         };
-        public static PagedListRenderOptions Minimal => new PagedListRenderOptions
+        public static PagedListRenderOptions Minimal => new()
         {
             DisplayLinkToFirstPage = PagedListDisplayMode.Never,
             DisplayLinkToLastPage = PagedListDisplayMode.Never,
@@ -93,7 +93,7 @@
             DisplayLinkToNextPage = PagedListDisplayMode.Always,
             DisplayLinkToIndividualPages = false
         };
-        public static PagedListRenderOptions MinimalWithPageCountText => new PagedListRenderOptions
+        public static PagedListRenderOptions MinimalWithPageCountText => new()
         {
             DisplayLinkToFirstPage = PagedListDisplayMode.Never,
             DisplayLinkToLastPage = PagedListDisplayMode.Never,
@@ -102,7 +102,7 @@
             DisplayLinkToIndividualPages = false,
             DisplayPageCountAndCurrentLocation = true
         };
-        public static PagedListRenderOptions MinimalWithItemCountText => new PagedListRenderOptions
+        public static PagedListRenderOptions MinimalWithItemCountText => new()
         {
             DisplayLinkToFirstPage = PagedListDisplayMode.Never,
             DisplayLinkToLastPage = PagedListDisplayMode.Never,
@@ -111,7 +111,7 @@
             DisplayLinkToIndividualPages = false,
             DisplayItemSliceAndTotal = true
         };
-        public static PagedListRenderOptions PageNumbersOnly => new PagedListRenderOptions
+        public static PagedListRenderOptions PageNumbersOnly => new()
         {
             DisplayLinkToFirstPage = PagedListDisplayMode.Never,
             DisplayLinkToLastPage = PagedListDisplayMode.Never,
@@ -119,7 +119,7 @@
             DisplayLinkToNextPage = PagedListDisplayMode.Never,
             DisplayEllipsesWhenNotShowingAllPageNumbers = false
         };
-        public static PagedListRenderOptions OnlyShowFivePagesAtATime => new PagedListRenderOptions
+        public static PagedListRenderOptions OnlyShowFivePagesAtATime => new()
         {
             DisplayLinkToFirstPage = PagedListDisplayMode.Never,
             DisplayLinkToLastPage = PagedListDisplayMode.Never,
@@ -127,7 +127,7 @@
             DisplayLinkToNextPage = PagedListDisplayMode.Always,
             MaximumPageNumbersToDisplay = 5
         };
-        public static PagedListRenderOptions TwitterBootstrapPager => new PagedListRenderOptions
+        public static PagedListRenderOptions TwitterBootstrapPager => new()
         {
             DisplayLinkToFirstPage = PagedListDisplayMode.Never,
             DisplayLinkToLastPage = PagedListDisplayMode.Never,
@@ -141,7 +141,7 @@
             LinkToPreviousPageFormat = "Previous",
             LinkToNextPageFormat = "Next"
         };
-        public static PagedListRenderOptions TwitterBootstrapPagerAligned => new PagedListRenderOptions
+        public static PagedListRenderOptions TwitterBootstrapPagerAligned => new()
         {
             DisplayLinkToFirstPage = PagedListDisplayMode.Never,
             DisplayLinkToLastPage = PagedListDisplayMode.Never,
@@ -181,7 +181,7 @@
         public static PagedListRenderOptions EnableUnobtrusiveAjaxReplacing(string id)
         {
             if (id.StartsWith("#"))
-                id = id.Substring(1);
+                id = id[1..];
             var ajaxOptions = new AjaxOptions()
             {
                 HttpMethod = "GET",

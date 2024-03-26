@@ -15,11 +15,10 @@ namespace Business.Services.BrandAggregate.CatalogBrands
         {
             _catalogBrandDAL = catalogBrandDAL;
         }
-        public async Task<IDataResult<IEnumerable<CatalogBrand>>> GetCatalogBrand(GetCatalogBrand request)
+        public async Task<Result<IEnumerable<CatalogBrand>>> GetCatalogBrand(GetCatalogBrand request)
         {
-                var dene = _catalogBrandDAL.GetList();
-                var data = await _catalogBrandDAL.Query().Where(x => x.CategoryId == request.CategoryId).ToListAsync();
-                return new SuccessDataResult<IEnumerable<CatalogBrand>>(data);
+            var data = await _catalogBrandDAL.Query().Where(x => x.CategoryId == request.CategoryId).ToListAsync();
+            return Result.SuccessDataResult<IEnumerable<CatalogBrand>>(data);
         }
     }
 }

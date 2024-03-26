@@ -6,9 +6,9 @@ namespace Business.Services.ProductAggregate.ProductShipmentInfos
 {
     public interface IProductShipmentInfoService
     {
-        Task<IDataResult<ProductShipmentInfo>> GetProductShipmentInfo(GetProductShipmentInfo request);
-        Task<IResult> AddProductShipmentInfo(ProductShipmentInfo productShipmentInfo);
-        Task<IResult> UpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo);
-        Task<IResult> AddOrUpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo);
+        Task<Result<ProductShipmentInfo>> GetProductShipmentInfo(GetProductShipmentInfo request);
+        Task<Result> AddProductShipmentInfo(ProductShipmentInfo productShipmentInfo);
+        Task<Result> UpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo);
+        Task<Result> AddOrUpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo);
     }
 }

@@ -3,9 +3,9 @@
     public class DeleteCategory
     {
         public int Id { get; set; }
-        public DeleteCategory(int ıd)
+        public DeleteCategory(int id)
         {
-            Id = ıd;
+            Id = id;
         }
         public DeleteCategory()
         {

@@ -8,7 +8,6 @@ namespace Business.Services.ProductAggregate.Products.Validator
         {
             RuleFor(x => x.ProductName).NotEmpty();
             RuleFor(x => x.ProductContent).NotEmpty();
-            RuleFor(x => x.ProductColor).NotEmpty();
             RuleFor(x => x.Gtin).NotEmpty();
             RuleFor(x => x.Sku).NotEmpty();
             RuleFor(x => x.CreatedOnUtc).NotEmpty();
@@ -21,7 +20,6 @@ namespace Business.Services.ProductAggregate.Products.Validator
         {
             RuleFor(x => x.ProductName).NotEmpty();
             RuleFor(x => x.ProductContent).NotEmpty();
-            RuleFor(x => x.ProductColor).NotEmpty();
             RuleFor(x => x.Gtin).NotEmpty();
             RuleFor(x => x.Sku).NotEmpty();
             RuleFor(x => x.CreatedOnUtc).NotEmpty();

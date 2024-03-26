@@ -8,16 +8,17 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
 {
     public interface IProductAttributeCombinationService
     {
-        Task<IDataResult<List<string>>> GetProductCombinationXml(GetProductCombinationXml request);
-        Task<IResult> InsertPermutationCombination(InsertPermutationCombination request);
-        Task<IResult> DeleteProductAttributeCombination(DeleteProductAttributeCombination request);
-        Task<IDataResult<IPagedList<ProductAttributeCombination>>> GetAllProductAttributeCombinations(
+        Task<Result<List<string>>> GetProductCombinationXml(GetProductCombinationXml request);
+        Task<Result> AllInsertPermutationCombination(AllInsertPermutationCombination request);
+        Task<Result> InsertPermutationCombination(InsertPermutationCombination request);
+        Task<Result> DeleteProductAttributeCombination(DeleteProductAttributeCombination request);
+        Task<Result<IPagedList<ProductAttributeCombination>>> GetAllProductAttributeCombinations(
             GetAllProductAttributeCombinations request);
-        Task<IDataResult<ProductAttributeCombination>> GetProductAttributeCombinationById(
+        Task<Result<ProductAttributeCombination>> GetProductAttributeCombinationById(
             GetProductAttributeCombinationById request);
-        Task<IDataResult<ProductAttributeCombination>> GetProductAttributeCombinationBySku(
+        Task<Result<ProductAttributeCombination>> GetProductAttributeCombinationBySku(
             GetProductAttributeCombinationBySku request);
-        Task<IResult> InsertProductAttributeCombination(ProductAttributeCombination combination);
-        Task<IResult> UpdateProductAttributeCombination(ProductAttributeCombination combination);
+        Task<Result> InsertProductAttributeCombination(ProductAttributeCombination combination);
+        Task<Result> UpdateProductAttributeCombination(ProductAttributeCombination combination);
     }
 }

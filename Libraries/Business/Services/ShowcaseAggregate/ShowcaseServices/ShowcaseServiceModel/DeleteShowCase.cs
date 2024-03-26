@@ -2,9 +2,9 @@
 {
     public class DeleteShowCase
     {
-        public DeleteShowCase(int ıd)
+        public DeleteShowCase(int id)
         {
-            Id = ıd;
+            Id = id;
         }
         public DeleteShowCase()
         {

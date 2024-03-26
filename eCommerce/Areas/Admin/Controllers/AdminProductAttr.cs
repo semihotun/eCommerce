@@ -20,23 +20,21 @@ namespace eCommerce.Areas.Admin.Controllers
         {
             this._productattrService = productattrService;
         }
-        public async Task<IActionResult> ProductAttributeListJson(ProductAttribute model, DataTablesParam param)
-        {
-            var query =(await _productattrService.GetAllProductAttributes(new GetAllProductAttributes(param.PageIndex, param.PageSize, model.Name)));
-            return ToDataTableJson(query,param);
-        }
+        public async Task<IActionResult> ProductAttributeListJson(ProductAttribute model, DataTablesParam param) =>
+             ToDataTableJson(await _productattrService.GetAllProductAttributes(
+                new GetAllProductAttributes(param.PageIndex, param.PageSize, model.Name)), param);
+
         public IActionResult ProductAttributeList(ProductAttribute model) => View(model);
         public IActionResult AttrCreate() => View();
         [HttpPost]
         public async Task<IActionResult> AttrCreate(ProductAttribute model)
-        {       
+        {
             ResponseAlert(await _productattrService.InsertProductAttribute(model));
-            return RedirectToAction("AttrEdit", "AdminProductAttr", new { Id = model.Id });
+            return RedirectToAction(nameof(ProductAttributeList));
         }
         public async Task<IActionResult> AttrEdit(int Id)
         {
-            var query =await _productattrService.GetProductAttributeById(new GetProductAttributeById(Id));
-            return View(query.Data);
+            return View((await _productattrService.GetProductAttributeById(new GetProductAttributeById(Id))).Data);
         }
         [HttpPost]
         public async Task<ActionResult> AttrEdit(ProductAttribute model)
@@ -46,8 +44,7 @@ namespace eCommerce.Areas.Admin.Controllers
         }
         public async Task<ActionResult> AttrDelete(int id)
         {
-            var query = (await _productattrService.GetProductAttributeById(new GetProductAttributeById(id))).Data;
-            ResponseAlert(await _productattrService.DeleteProductAttribute(query));
+            ResponseAlert(await _productattrService.DeleteProductAttribute((await _productattrService.GetProductAttributeById(new GetProductAttributeById(id))).Data));
             return RedirectToAction("ProductAttributeList");
         }
     }

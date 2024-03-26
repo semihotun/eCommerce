@@ -34,7 +34,7 @@ namespace Entities.ViewModels.AdminViewModel.AdminProduct
         public ProductAttributeValue ProductAttributeValue { get; set; }
         public ProductSpecificationAttributeModel ProductSpecificationAttribute { get; set; }
         public ProductStockCreateOrUpdate ProductStock { get; set; }
-        public List<ProductAttributeMapping> ProductAttributeMappingList { get; set; }
+        public IEnumerable<ProductAttributeMapping> ProductAttributeMappingList { get; set; }
         public List<ProductAttributeCombination> ProductAttiributeCombinationList { get; set; }
         public IEnumerable<SelectListItem> ProductStockTypeSelectList { get; set; }
         public IEnumerable<SelectListItem> CombinationSelectList { get; set; }
