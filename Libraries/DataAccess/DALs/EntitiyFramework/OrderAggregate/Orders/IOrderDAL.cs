@@ -1,4 +1,4 @@
-﻿using eCommerce.Core.DataAccess;
+﻿using Core.DataAccess;
 using Entities.Concrete.OrderAggregate;
 namespace DataAccess.DALs.EntitiyFramework.OrderAggregate.Orders
 {

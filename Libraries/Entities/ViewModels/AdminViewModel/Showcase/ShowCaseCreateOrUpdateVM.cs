@@ -1,6 +1,6 @@
 ﻿using Entities.Concrete;
 using Entities.Concrete.ProductAggregate;
-using Entities.DTO.ShowCase;
+using Entities.Dtos.ShowcaseDALModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

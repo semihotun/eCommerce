@@ -1,4 +1,4 @@
-﻿using eCommerce.Core.DataAccess;
+﻿using Core.DataAccess;
 using Entities.Concrete.SpeficationAggregate;
 namespace DataAccess.DALs.EntitiyFramework.SpeficationAggregate.SpecificationAttributeOptions
 {

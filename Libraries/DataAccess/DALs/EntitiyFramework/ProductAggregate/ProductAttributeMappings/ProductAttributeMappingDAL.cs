@@ -1,9 +1,8 @@
+using Core.DataAccess.EntitiyFramework;
 using Core.Utilities.Results;
 using DataAccess.Context;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingDALModels;
-using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.ProductAggregate;
-using Entities.DTO.ProductMapping;
+using Entities.Dtos.ProductAttributeMappingDALModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,19 +14,19 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMapp
         public ProductAttributeMappingDAL(ECommerceContext context) : base(context)
         {
         }
-        public async Task<Result<IList<ProductDetailMappingJson>>> GetProductDetailMappingJson(ProductAttributeMappingDALModels.GetProductDetailMappingJson request)
+        public async Task<Result<IList<ProductDetailMappingPageJson>>> GetProductDetailMappingJson(GetProductDetailMappingJson request)
         {
             var result = await (from p in Context.ProductAttributeMapping
                                 where p.ProductId == request.ProductId
                                 let pavg = (from pav in Context.ProductAttributeValue where pav.ProductAttributeMappingId == p.Id select pav
                                 ).AsEnumerable()
-                                select new ProductDetailMappingJson
+                                select new ProductDetailMappingPageJson
                                 {
                                     Id = p.Id,
                                     TextPrompt = p.TextPrompt,
                                     ProductAttributeValueList = pavg.ToList()
                                 }).ToListAsync();
-            return Result.SuccessDataResult<IList<ProductDetailMappingJson>>(result);
+            return Result.SuccessDataResult<IList<ProductDetailMappingPageJson>>(result);
         }
         public async Task<Result<MappingProductAttribute>> GetMappingProductAttributeList(GetMappingProductAttributeList request)
         {

@@ -1,9 +1,8 @@
 ﻿using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingDALModels;
-using Entities.DTO;
-using Entities.DTO.Product;
-using Entities.DTO.ProductAttributeCombinations;
-using Entities.Helpers.AutoMapper;
+using Entities.Dtos.ProductAttributeCombinationDALModels;
+using Entities.Dtos.ProductAttributeMappingDALModels;
+using Entities.Dtos.ProductDALModels;
+using Entities.Extensions.AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;

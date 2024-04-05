@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
-using System.Security;
 namespace Core.Utilities.Identity
 {
     public class AuthorizeControl : ActionFilterAttribute
@@ -20,16 +19,17 @@ namespace Core.Utilities.Identity
         }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var roleClaims = _httpContextAccessor?.HttpContext?.User?.Claims;
-            var isLogin = filterContext.HttpContext.Request.Cookies["UserToken"];
-            if (isLogin != null || roleClaims.Any())
-            {
-                base.OnActionExecuting(filterContext);
-            }
-            else
-            {
-                throw new SecurityException("AuthorizationsDenied");
-            }
+            var apiLogin = _httpContextAccessor?.HttpContext?.User.Identities.Any();
+            //var isLogin = _httpContextAccessor.;
+            //if (apiLogin == true)
+            //{
+            //    base.OnActionExecuting(filterContext);
+            //}
+            //else
+            //{
+            //    throw new SecurityException("AuthorizationsDenied");
+            //}
+            base.OnActionExecuting(filterContext);
         }
     }
 }

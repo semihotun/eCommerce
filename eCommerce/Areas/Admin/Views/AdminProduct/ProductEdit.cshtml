@@ -1,7 +1,7 @@
 ﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
 @{
     ViewBag.Title = "ProductEdit";
-    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
 }
 <meta charset='utf-8'>
 <div class="content">
@@ -98,31 +98,31 @@
                                 </form>
                             </div>
                             <div id="tap4" class="tab-pane">
-                                @Html.Partial("ProductSeo/_ProductSeo", Model)
+                                @await Html.PartialAsync("ProductSeo/_ProductSeo", Model)
                             </div>
                             <div id="tap2" class="tab-pane">
                                 <br />
-                                @Html.Partial("AttrMaping/AttrMapping", Model)
-                                @Html.Partial("AttrCombination/AttrCombination", Model)
+                                @await Html.PartialAsync("AttrMaping/AttrMapping", Model)
+                                @await Html.PartialAsync("AttrCombination/AttrCombination", Model)
                             </div>
                             <div id="tap3" class="tab-pane">
                                 <div class="col-md-12">
-                                    @Html.Partial("ProductPhoto/ProductPhoto", Model)
+                                    @await Html.PartialAsync("ProductPhoto/ProductPhoto", Model)
                                 </div>
                             </div>
                             <div id="tap5" class="tab-pane">
                                 <div class="col-md-12">
-                                    @Html.Partial("ProductSpefication/ProductSpefication", Model)
+                                    @await Html.PartialAsync("ProductSpefication/ProductSpefication", Model)
                                 </div>
                             </div>
                             <div id="tap6" class="tab-pane">
                                 <div class="col-md-12">
-                                    @Html.Partial("StockPrice/ProductStockPrice", Model)
+                                    @await Html.PartialAsync("StockPrice/ProductStockPrice", Model)
                                 </div>
                             </div>
                             <div id="tap7" class="tab-pane">
                                 <div class="col-md-12">
-                                    @Html.Partial("ProductShipment/ProductShipment", Model)
+                                    @await Html.PartialAsync("ProductShipment/ProductShipment", Model)
                                 </div>
                             </div>
                         </div>

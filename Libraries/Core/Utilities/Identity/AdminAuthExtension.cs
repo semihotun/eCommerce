@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Security.Encyption;
 using Core.Utilities.Security.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -7,10 +8,10 @@ namespace Core.Utilities.Identity
 {
     public static class AdminAuthExtension
     {
-        public static void AddIdentitySettings(this IServiceCollection services, IConfiguration configuration, string authenticationScheme)
+        public static void AddIdentitySettings(this IServiceCollection services, IConfiguration configuration)
         {
             var tokenOptions = configuration.GetSection("TokenOptions").Get<TokenOptions>();
-            services.AddAuthentication(authenticationScheme)
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
                         options.TokenValidationParameters = new TokenValidationParameters

@@ -1,6 +1,6 @@
-﻿using Business.Services.CategoriesAggregate.Categories.CategoryServiceModel;
-using Core.Utilities.Results;
+﻿using Core.Utilities.Results;
 using Entities.Concrete.CategoriesAggregate;
+using Entities.RequestModel.CategoriesAggregate.Categories;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,15 +8,15 @@ namespace Business.Services.CategoriesAggregate.Categories
 {
     public interface ICategoryService
     {
-        Task<Result> DeleteCategory(DeleteCategory request);
+        Task<Result<Category>> InsertCategory(InsertCategoryReqModel category);
+        Task<Result> UpdateCategory(UpdateCategoryReqModel category);
+        Task<Result> DeleteCategory(DeleteCategoryReqModel request);
         Task<Result<List<Category>>> GetAllCategories();
-        Task<Result<List<Category>>> GetAllCategoriesByParentCategoryId(GetAllCategoriesByParentCategoryId request);
-        Task<Result> RemoveRangeCategory(RemoveRangeCategory request);
-        Task<Result<Category>> GetCategoryById(GetCategoryById request);
-        Task<Result> InsertCategory(Category category);
-        Task<Result> UpdateCategory(Category category);
-        Task<Result<IEnumerable<SelectListItem>>> GetCategoryDropdown(GetCategoryDropdown request);
-        Task<Result> ChangeNodePosition(ChangeNodePosition request);
-        Task<Result> DeleteNodes(DeleteNodes request);
+        Task<Result<List<Category>>> GetAllCategoriesByParentCategoryId(GetAllCategoriesByParentCategoryIdReqModel request);
+        Task<Result> RemoveRangeCategory(RemoveRangeCategoryReqModel request);
+        Task<Result<Category>> GetCategoryById(GetCategoryByIdReqModel request);
+        Task<Result> DeleteNodes(DeleteNodesReqModel request);
+        Task<Result<IEnumerable<SelectListItem>>> GetCategoryDropdown(GetCategoryDropdownReqModel request);
+        Task<Result> ChangeNodePosition(ChangeNodePositionReqModel request);
     }
 }

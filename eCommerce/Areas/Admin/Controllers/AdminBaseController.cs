@@ -1,12 +1,17 @@
 ﻿using Business.Constants;
 using Core.Utilities.DataTable;
+using Core.Utilities.Identity;
+using Core.Utilities.PagedList;
 using Core.Utilities.Results;
 using Entities.Others;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using X.PagedList;
 namespace eCommerce.Areas.Admin.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [Route("[area]/[controller]/[action]")]
+    [AuthorizeControl("")]
+    [Area("Admin")]
     public class AdminBaseController : Controller
     {
         [NonAction]
@@ -14,10 +19,10 @@ namespace eCommerce.Areas.Admin.Controllers
         {
             return Json(new DataTableResult<T>
             {
-                AaData = data.Data,
+                AaData = data.Data!.Data,
                 SEcho = param.sEcho,
-                ITotalDisplayRecords = data.Data.TotalItemCount,
-                ITotalRecords = data.Data.TotalItemCount
+                ITotalDisplayRecords = data.Data!.TotalCount,
+                ITotalRecords = data.Data.TotalCount
             }, new JsonSerializerSettings());
         }
         [NonAction]
@@ -26,9 +31,9 @@ namespace eCommerce.Areas.Admin.Controllers
             return Json(new DataTableNewVersionResult<T>
             {
                 Draw = param.Draw,
-                RecordsFiltered = data.Data.TotalItemCount,
-                RecordsTotal = data.Data.TotalItemCount,
-                Data = data.Data,
+                RecordsFiltered = data.Data!.TotalCount,
+                RecordsTotal = data.Data.TotalCount,
+                Data = data.Data.Data,
             }, new JsonSerializerSettings());
         }
         protected void Alert(string message, NotificationType notificationType)
@@ -44,7 +49,7 @@ namespace eCommerce.Areas.Admin.Controllers
         };
         protected void ResponseAlert(Result? result)
         {
-            if (result.Success)
+            if (result!.Success)
             {
                 Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : Messages.OperationSuccessful, NotificationType.success);
             }
@@ -52,6 +57,18 @@ namespace eCommerce.Areas.Admin.Controllers
             {
                 Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : Messages.OperationFailed, NotificationType.error);
             }
+        }
+        protected Result<T>? ResponseAlert<T>(Result<T>? result)
+        {
+            if (result!.Success)
+            {
+                Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : Messages.OperationSuccessful, NotificationType.success);
+            }
+            else
+            {
+                Alert(!string.IsNullOrEmpty(result.Message) ? result.Message : Messages.OperationFailed, NotificationType.error);
+            }
+            return result;
         }
         protected void QueryAlert(Result result)
         {

@@ -169,3 +169,9 @@
     opacity: 0.5;
     text-decoration: none;
 }
+.width100Percent{
+    width:100%;
+}
+.height100Percent {
+    width: 100%;
+}

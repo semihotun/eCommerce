@@ -2,13 +2,12 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-namespace Utilities.Cookie
+using Microsoft.Extensions.Hosting;
+namespace Core.Utilities.Cookie
 {
     public static class CookieExtension
     {
-        [Obsolete]
-        public static void ConfigureApplicationCookie(this IServiceCollection services, IHostingEnvironment hostingEnvironment)
+        public static void ConfigureApplicationCookie(this IServiceCollection services, IWebHostEnvironment hostingEnvironment)
         {
             services.Configure<CookiePolicyOptions>(options =>
             {

@@ -1,8 +1,9 @@
-﻿using Entities.Concrete.BrandAggregate;
+﻿using Core.Utilities.PagedList;
+using Entities.Concrete.BrandAggregate;
 using Entities.Concrete.SpeficationAggregate;
-using Entities.DTO.Product;
+using Entities.Dtos.ProductDALModels;
 using System.Collections.Generic;
-using X.PagedList;
+using System.Text.Json.Serialization;
 namespace Entities.ViewModels.WebViewModel.Home
 {
     public class CatalogVM
@@ -11,8 +12,10 @@ namespace Entities.ViewModels.WebViewModel.Home
         public string SelectFilter { get; set; }
         public int Id { get; set; }
         public int BrandId { get; set; }
-        public int pageNumber { get; set; }
-        public int pageSize { get; set; }
+        [JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; }
+        [JsonPropertyName("pageSize")]
+        public int PageSize { get; set; }
         public int MinPrice { get; set; }
         public int MaxPrice { get; set; }
         public int SortingId { get; set; }

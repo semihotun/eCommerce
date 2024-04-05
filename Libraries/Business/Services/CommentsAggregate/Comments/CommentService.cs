@@ -1,14 +1,13 @@
 ﻿using Business.Constants;
-using Business.Services.CommentsAggregate.Comments.CommentServiceModel;
 using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Utilities.PagedList;
 using Core.Utilities.Results;
 using DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments;
 using DataAccess.UnitOfWork;
-using Entities.Concrete.CommentsAggregate;
+using Entities.Extensions.AutoMapper;
+using Entities.RequestModel.CommentsAggregate.Comments;
 using System.Threading.Tasks;
-using X.PagedList;
+using Comment = Entities.Concrete.CommentsAggregate.Comment;
 namespace Business.Services.CommentsAggregate.Comments
 {
     public class CommentService : ICommentService
@@ -20,57 +19,108 @@ namespace Business.Services.CommentsAggregate.Comments
             _commentService = commentService;
             _unitOfWork = unitOfWork;
         }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("ICommentService.Get", "ICommentDAL.Get")]
-        public async Task<Result> AddComment(Comment model)
+        #region Command
+        /// <summary>
+        /// AddComment
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IComment")]
+        public async Task<Result<Comment>> AddComment(AddCommentReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
             {
-                await _commentService.AddAsync(model);
+                var data = request.MapTo<Comment>();
+                await _commentService.AddAsync(data);
+                return Result.SuccessDataResult(data);
+            });
+        }
+        /// <summary>
+        /// Delete Comment
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IComment")]
+        public async Task<Result> DeleteComment(DeleteCommentReqModel request)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var commentData =await _commentService.GetByIdAsync(request.Id);
+                if (commentData == null)
+                    return Result.ErrorResult(Messages.IdNotFound);
+                _commentService.Remove(commentData);
                 return Result.SuccessResult();
             });
         }
+        /// <summary>
+        /// Update Comment
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IComment")]
+        public async Task<Result> UpdateComment(UpdateCommentReqModel request)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var commentData = await _commentService.GetByIdAsync(request.Id);
+                if (commentData == null)
+                    return Result.ErrorResult(Messages.IdNotFound);
+                var data = request.MapTo(commentData);
+                _commentService.Update(data);
+                return Result.SuccessResult();
+            });
+        }
+        /// <summary>
+        /// Comment Approve
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<Result> CommentApprove(CommentApproveReqModel request)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var commentData = await _commentService.GetByIdAsync(request.Id);
+                if (commentData == null)
+                    return Result.ErrorResult(Messages.IdNotFound);
+                commentData.IsApproved = true;
+                var data = request.MapTo(commentData);
+                _commentService.Update(data);
+                return Result.SuccessResult();
+            });
+        }
+        #endregion
+        #region Query
+        /// <summary>
+        /// Get Comment List
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [CacheAspect]
         public async Task<Result<IPagedList<Comment>>> GetCommentList(
-           GetCommentList request)
+           GetCommentListReqModel request)
         {
             return Result.SuccessDataResult(
                 await _commentService.Query().ToPagedListAsync(request.PageIndex, request.PageSize));
         }
+        /// <summary>
+        /// Get Comment
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [CacheAspect]
-        public async Task<Result<Comment>> GetComment(GetComment request)
+        public async Task<Result<Comment>> GetComment(GetCommentReqModel request)
         {
             return Result.SuccessDataResult(await _commentService.GetAsync(x => x.Id == request.CommentId));
         }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("ICommentService.Get", "ICommentDAL.Get")]
-        public async Task<Result> DeleteComment(Comment comment)
-        {
-            return await _unitOfWork.BeginTransaction(async () =>
-            {
-                var commentData= _commentService.GetByIdAsync(comment.Id);
-                if(commentData == null)
-                {
-                    return Result.ErrorResult(Messages.IdNotFound);
-                }
-                _commentService.Remove(comment);
-                return Result.SuccessResult();
-            });
-        }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("ICommentService.Get", "ICommentDAL.Get")]
-        public async Task<Result> UpdateComment(Comment comment)
-        {
-            return await _unitOfWork.BeginTransaction(async () =>
-            {
-                _commentService.Update(comment);
-                return Result.SuccessResult();
-            });
-        }
+        /// <summary>
+        /// Get Comment Count
+        /// </summary>
+        /// <returns></returns>
         [CacheAspect]
         public async Task<Result<int>> GetCommentCount()
         {
             return Result.SuccessDataResult(await _commentService.GetCountAsync());
         }
+        #endregion
     }
 }

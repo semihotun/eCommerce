@@ -75,6 +75,12 @@ a:hover, a:focus {
   text-decoration: none;
   outline: none;
 }
+.width100Percent {
+    width: 100%;
+}
+.height100Percent {
+    width: 100%;
+}
 .primary-color {
   color: #F8694A;
 }

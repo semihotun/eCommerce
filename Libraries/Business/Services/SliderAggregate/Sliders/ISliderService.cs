@@ -1,17 +1,16 @@
-﻿using Business.Services.SliderAggregate.Sliders.SliderServiceModel;
-using Core.Utilities.Results;
+﻿using Core.Utilities.Results;
 using Entities.Concrete.SliderAggregate;
-using Entities.ViewModels.AdminViewModel.AdminSlider;
+using Entities.RequestModel.SliderAggregate.Sliders;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace Business.Services.SliderAggregate.Sliders
 {
     public interface ISliderService
     {
+        Task<Result<Slider>> InsertSlider(InsertSliderReqModel slider);
+        Task<Result> UpdateSlider(UpdateSliderReqModel slider);
+        Task<Result> DeleteSlider(DeleteSliderReqModel request);
         Task<Result<List<Slider>>> GetAllSlider();
-        Task<Result> InsertSlider(SliderCreateOrUpdateVM slider);
-        Task<Result> DeleteSlider(DeleteSlider request);
-        Task<Result<Slider>> GetSlider(GetSlider request);
-        Task<Result> UpdateSlider(SliderCreateOrUpdateVM slider);
+        Task<Result<Slider>> GetSlider(GetSliderReqModel request);
     }
 }

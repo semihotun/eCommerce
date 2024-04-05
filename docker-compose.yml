@@ -1,0 +1,55 @@
+version: '3.4'
+
+services:
+  ecommerce:
+    image: ${DOCKER_REGISTRY-}ecommerce
+    build:
+      context: .
+      dockerfile: eCommerce/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:9901
+    ports:
+      - 9901:9901
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - s_sqlserver
+      - s_redis
+  s_sqlserver:
+    container_name: c_sqlserver
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    user: root
+    ports:
+      - ${SQL_Host_Port}:${SQL_TCP_Port}
+    env_file:
+      - ./.env
+    environment:
+      - ACCEPT_EULA=${SQL_User}
+      - MSSQL_SA_PASSWORD=${SQL_Password}
+      - MSSQL_PID=Standard
+      - MSSQL_AGENT_ENABLED=true
+    volumes:
+      - sqlserver_data:/var/opt/mssql/data
+      - sqlserver_log:/var/opt/mssql/log
+  s_redis:
+    container_name: c_redis
+    image: redis:7.2.4
+    ports:
+      - ${Redis__Port}:${Redis__Port}
+    env_file:
+      - ./.env
+    volumes:
+      - /path/to/local/d?ta:/root/redis
+    command: redis-server --requirepass squba
+    environment:
+      - REDIS_PASSWORD=${Redis__Password}
+      - REDIS_PORT=${Redis__Port}
+      - REDIS_REPLICATION_MODE=master 
+volumes:
+  rabbitmq:
+  sqlserver_data:
+  sqlserver_log:
+
+

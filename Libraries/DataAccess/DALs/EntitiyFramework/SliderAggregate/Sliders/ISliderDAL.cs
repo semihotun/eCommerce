@@ -1,4 +1,4 @@
-﻿using eCommerce.Core.DataAccess;
+﻿using Core.DataAccess;
 using Entities.Concrete.SliderAggregate;
 namespace DataAccess.DALs.EntitiyFramework.SliderAggregate.Sliders
 {

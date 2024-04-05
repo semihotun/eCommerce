@@ -1,13 +1,13 @@
 ﻿using Core.Aspects.Autofac.Caching;
+using Core.DataAccess.EntitiyFramework;
 using Core.Utilities.Infrastructure.Filter;
+using Core.Utilities.PagedList;
 using Core.Utilities.Results;
 using DataAccess.Context;
-using DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments.CommentDALModels;
-using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.CommentsAggregate;
+using Entities.Dtos.CommentDALModels;
 using System.Linq;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments
 {
     public class CommentDAL : EfEntityRepositoryBase<Comment, ECommerceContext>, ICommentDAL
@@ -27,7 +27,7 @@ namespace DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments
                             CommentTitle = c.CommentTitle.Length > 200 ? c.CommentTitle.Substring(0, 200) + "..." : c.CommentTitle,
                         };
             var data = await query.ToPagedListAsync(request.DataTableParam.PageIndex, request.DataTableParam.PageSize);
-            return Result.SuccessDataResult<IPagedList<Comment>>(data);
+            return Result.SuccessDataResult(data);
         }
     }
 }

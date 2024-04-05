@@ -1,11 +1,11 @@
-﻿using Business.Services.CategoriesAggregate.CategorySpefications.CategorySpeficationServiceModel;
+﻿using Business.Constants;
 using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.CategorySpefications;
 using DataAccess.UnitOfWork;
 using Entities.Concrete.CategoriesAggregate;
+using Entities.Extensions.AutoMapper;
+using Entities.RequestModel.CategoriesAggregate.CategorySpefications;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,55 +26,84 @@ namespace Business.Services.CategoriesAggregate.CategorySpefications
         }
         #endregion
         #region Method
-        [CacheAspect]
-        public async Task<Result<CategorySpefication>> GetByCategorySpeficationId(GetByCategorySpeficationId request)
+        #region Command
+        /// <summary>
+        /// DeleteCategorySpefication
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("ICategorySpeficationService")]
+        public async Task<Result> DeleteCategorySpefication(DeleteCategorySpeficationReqModel request)
         {
-            return Result.SuccessDataResult(await _categorySpeficationRepository.GetAsync(x => x.CategoryId == request.CategoryId &&
-             x.SpeficationAttributeId == request.SpeficationId));
-        }
-        [LogAspect(typeof(MsSqlLogger))]
-
-        [CacheRemoveAspect("ICategorySpeficationService.Get")]
-        public async Task<Result> DeleteCategorySpefication(CategorySpefication categorySpefication)
-        {
-            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            return await _unitOfWork.BeginTransaction(async () =>
             {
+                var categorySpefication = await _categorySpeficationRepository.GetByIdAsync(request.Id);
+                if (categorySpefication == null)
+                    return Result.ErrorResult(Messages.IdNotFound);
                 _categorySpeficationRepository.Remove(categorySpefication);
                 return Result.SuccessResult();
             });
         }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("ICategorySpeficationService.Get")]
-        public async Task<Result> InsertCategorySpefication(CategorySpefication categorySpefication)
-        {
-            return await _unitOfWork.BeginTransaction<Result>(async () =>
-            {
-                if (categorySpefication == null)
-                    return Result.ErrorResult();
-                await _categorySpeficationRepository.AddAsync(categorySpefication);
-                return Result.SuccessResult();
-            });
-        }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("ICategorySpeficationService.Get")]
-        public async Task<Result> UpdateCategorySpefication(CategorySpefication categorySpefication)
+        /// <summary>
+        /// InsertCategorySpefication
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("ICategorySpeficationService")]
+        public async Task<Result<CategorySpefication>> InsertCategorySpefication(InsertCategorySpeficationReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
             {
-                if (categorySpefication == null)
+                var data = request.MapTo<CategorySpefication>();
+                await _categorySpeficationRepository.AddAsync(data);
+                return Result.SuccessDataResult(data);
+            });
+        }
+        /// <summary>
+        /// UpdateCategorySpefication
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("ICategorySpeficationService")]
+        public async Task<Result> UpdateCategorySpefication(UpdateCategorySpeficationReqModel request)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var categorySpefication = await _categorySpeficationRepository.GetByIdAsync(request.Id);
+                if (categorySpefication != null)
                     return Result.ErrorResult();
+                var data = request.MapTo(categorySpefication);
                 _categorySpeficationRepository.Update(categorySpefication);
                 return Result.SuccessResult();
             });
         }
+        #endregion
+        #region Query
+        /// <summary>
+        /// GetByCategorySpeficationId
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [CacheAspect]
-        public async Task<Result<List<CategorySpefication>>> GetAllCategorySpefication(GetAllCategorySpefication request)
+        public async Task<Result<CategorySpefication>> GetByCategorySpeficationId(GetByCategorySpeficationIdReqModel request)
+        {
+            return Result.SuccessDataResult(await _categorySpeficationRepository.GetAsync(x => x.CategoryId == request.CategoryId &&
+             x.SpeficationAttributeId == request.SpeficationId));
+        }
+        /// <summary>
+        /// GetAllCategorySpefication
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheAspect]
+        public async Task<Result<List<CategorySpefication>>> GetAllCategorySpefication(GetAllCategorySpeficationReqModel request)
         {
             var query = _categorySpeficationRepository.Query();
             if (request.CategoryId != 0)
                 query = query.Where(x => x.CategoryId == request.CategoryId);
             return Result.SuccessDataResult(await query.ToListAsync());
         }
+        #endregion
         #endregion
     }
 }

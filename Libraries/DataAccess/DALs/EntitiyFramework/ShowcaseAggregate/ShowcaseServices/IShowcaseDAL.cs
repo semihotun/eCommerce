@@ -1,8 +1,7 @@
-﻿using Core.Utilities.Results;
-using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices.ShowcaseDALModels;
-using eCommerce.Core.DataAccess;
+﻿using Core.DataAccess;
+using Core.Utilities.Results;
 using Entities.Concrete.ShowcaseAggregate;
-using Entities.DTO.ShowCase;
+using Entities.Dtos.ShowcaseDALModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices

@@ -1,9 +1,8 @@
 ﻿@using Entities.Enum
-@using X.PagedList;
 @model Entities.ViewModels.AdminViewModel.Showcase.ShowCaseCreateOrUpdateVM
 @{
     ViewBag.Title = "ShowcaseCreate";
-    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
 }
 <div class="content">
     <div class="row">
@@ -82,10 +81,10 @@
                                     </div>
                                 </div>
                                     <div id="tap2" class="tab-pane ">
-                                            @{ Html.RenderPartial("ShowcaseText",Model); }
+                                            @{ await Html.RenderPartialAsync("ShowcaseText",Model); }
                                     </div>
                                     <div id="tap3" class="tab-pane ">
-                                        @{ Html.RenderPartial("ShowcaseProducts");}
+                                        @{ await Html.RenderPartialAsync("ShowcaseProducts");}
                                     </div>
                                     <div id="tap4" class="tab-pane">
                                             <div class="table-responsive">

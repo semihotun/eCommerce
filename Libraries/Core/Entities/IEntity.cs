@@ -1,4 +1,4 @@
-﻿namespace eCommerce.Core.Entities
+﻿namespace Core.Entities
 {
     public interface IEntity
     {

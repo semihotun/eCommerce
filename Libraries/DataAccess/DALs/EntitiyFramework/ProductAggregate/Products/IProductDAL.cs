@@ -1,13 +1,12 @@
-﻿using Core.Utilities.Results;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels;
-using eCommerce.Core.DataAccess;
+﻿using Core.DataAccess;
+using Core.Utilities.PagedList;
+using Core.Utilities.Results;
 using Entities.Concrete.ProductAggregate;
-using Entities.DTO.Product;
-using Entities.DTO.ShowCase;
+using Entities.Dtos.ProductDALModels;
+using Entities.Dtos.ShowcaseDALModels;
 using Entities.ViewModels.WebViewModel.Home;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
 {
     public interface IProductDAL : IEntityRepository<Product>

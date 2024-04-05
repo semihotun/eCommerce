@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
 }
 <div class="content">
     <div class="row">
@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="col-md-12">
                         <div class="modal fade in" id="modalAddNode" role="dialog" aria-hidden="true">
-                            @Html.Partial("_AddNode")
+                            @await Html.PartialAsync("_AddNode")
                         </div>
                         <div class="col-md-5">
                             <div class="panel panel-primary">

@@ -1,8 +1,7 @@
-﻿using Core.Utilities.Results;
-using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories.CategoryDALModels;
-using eCommerce.Core.DataAccess;
+﻿using Core.DataAccess;
+using Core.Utilities.Results;
 using Entities.Concrete.CategoriesAggregate;
-using Entities.DTO.Category;
+using Entities.Dtos.CategoryDALModels;
 using Entities.ViewModels.AdminViewModel.CategoryTree;
 using System.Collections.Generic;
 using System.Threading.Tasks;

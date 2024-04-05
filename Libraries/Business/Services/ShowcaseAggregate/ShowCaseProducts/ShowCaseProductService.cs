@@ -1,11 +1,11 @@
-﻿using Business.Services.ShowcaseAggregate.ShowCaseProducts.ShowCaseProductServiceModel;
+﻿using Business.Constants;
 using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowCaseProducts;
 using DataAccess.UnitOfWork;
 using Entities.Concrete.ShowcaseAggregate;
+using Entities.Extensions.AutoMapper;
+using Entities.RequestModel.ShowcaseAggregate.ShowCaseProducts;
 using System.Threading.Tasks;
 namespace Business.Services.ShowcaseAggregate.ShowCaseProducts
 {
@@ -23,28 +23,40 @@ namespace Business.Services.ShowcaseAggregate.ShowCaseProducts
         }
         #endregion
         #region Method
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IShowCaseProductService.Get",
-        "IShowCaseDAL.GetShowCaseDto", "IShowCaseProductService.GetAllShowCaseDto")]
-        public async Task<Result> DeleteShowCaseProduct(DeleteShowCaseProduct request)
+        #region Command
+        /// <summary>
+        /// DeleteShowCaseProduct
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IShowCase")]
+        public async Task<Result> DeleteShowCaseProduct(DeleteShowCaseProductReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
             {
-                _showCaseProductRepository.Remove(await _showCaseProductRepository.GetAsync(x => x.Id == request.Id));
+                var data = await _showCaseProductRepository.GetAsync(x => x.Id == request.Id);
+                if (data == null)
+                    Result.ErrorResult(Messages.IdNotFound);
+                _showCaseProductRepository.Remove(data);
                 return Result.SuccessResult();
             });
         }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IShowCaseProductService.Get",
-        "IShowCaseDAL.GetShowCaseDto", "IShowCaseProductService.GetAllShowCaseDto")]
-        public async Task<Result> InsertProductShowcase(ShowCaseProduct showCaseProduct)
+        /// <summary>
+        /// InsertProductShowcase
+        /// </summary>
+        /// <param name="showCaseProduct"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IShowCase")]
+        public async Task<Result<ShowCaseProduct>> InsertProductShowcase(InsertProductShowcaseReqModel showCaseProduct)
         {
             return await _unitOfWork.BeginTransaction(async () =>
             {
-                await _showCaseProductRepository.AddAsync(showCaseProduct);
-                return Result.SuccessResult();
+                var data = showCaseProduct.MapTo<ShowCaseProduct>();
+                await _showCaseProductRepository.AddAsync(data);
+                return Result.SuccessDataResult(data);
             });
         }
+        #endregion
         #endregion
     }
 }

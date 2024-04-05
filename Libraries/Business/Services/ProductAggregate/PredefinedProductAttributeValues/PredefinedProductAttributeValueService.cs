@@ -1,18 +1,15 @@
-﻿using Business.Services.ProductAggregate.PredefinedProductAttributeValues.PredefinedProductAttributeValueServiceModel;
+﻿using Business.Constants;
 using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Interceptors;
 using Core.Utilities.Results;
-using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.PredefinedProductAttributeValues;
 using DataAccess.UnitOfWork;
 using Entities.Concrete.ProductAggregate;
+using Entities.Extensions.AutoMapper;
+using Entities.RequestModel.ProductAggregate.PredefinedProductAttributeValues;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues
 {
     public class PredefinedProductAttributeValueService : IPredefinedProductAttributeValueService
@@ -29,19 +26,67 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues
         }
         #endregion
         #region Method
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IPredefinedProductAttributeValueService.Get")]
-        public virtual async Task<Result> DeletePredefinedProductAttributeValue(PredefinedProductAttributeValue ppav)
+        #region Command
+        /// <summary>
+        /// InsertPredefinedProductAttributeValue
+        /// </summary>
+        /// <param name="ppav"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IPredefinedProductAttributeValue")]
+        public async Task<Result<PredefinedProductAttributeValue>> InsertPredefinedProductAttributeValue(InsertPredefinedProductAttributeValueReqModel ppav)
         {
-            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            return await _unitOfWork.BeginTransaction(async () =>
             {
-                _predefinedProductAttributeValueRepository.Remove(ppav);
+                var data = ppav.MapTo<PredefinedProductAttributeValue>();
+                await _predefinedProductAttributeValueRepository.AddAsync(data);
+                return Result.SuccessDataResult(data);
+            });
+        }
+        /// <summary>
+        /// UpdatePredefinedProductAttributeValue
+        /// </summary>
+        /// <param name="ppav"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IPredefinedProductAttributeValue")]
+        public async Task<Result> UpdatePredefinedProductAttributeValue(UpdatePredefinedProductAttributeValueReqModel ppav)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var predefinedProductAttributeValue = await _predefinedProductAttributeValueRepository.GetByIdAsync(ppav.Id);
+                if(predefinedProductAttributeValue == null)
+                    return Result.ErrorResult(Messages.IdNotFound);
+                var data = ppav.MapTo(predefinedProductAttributeValue);
+                _predefinedProductAttributeValueRepository.Update(data);
                 return Result.SuccessResult();
             });
         }
+        /// <summary>
+        /// DeletePredefinedProductAttributeValue
+        /// </summary>
+        /// <param name="ppav"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IPredefinedProductAttributeValue")]
+        public async Task<Result> DeletePredefinedProductAttributeValue(DeletePredefinedProductAttributeValueReqModel ppav)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var data = await _predefinedProductAttributeValueRepository.GetByIdAsync(ppav.Id);
+                if (data == null)
+                    return Result.ErrorResult(Messages.IdNotFound);
+                _predefinedProductAttributeValueRepository.Remove(data);
+                return Result.SuccessResult();
+            });
+        }
+        #endregion
+        #region Query
+        /// <summary>
+        /// GetPredefinedProductAttributeValues
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [CacheAspect]
         public virtual async Task<Result<List<PredefinedProductAttributeValue>>> GetPredefinedProductAttributeValues(
-            GetPredefinedProductAttributeValues request)
+            GetPredefinedProductAttributeValuesReqModel request)
         {
             return Result.SuccessDataResult(
                 await (from ppav in _predefinedProductAttributeValueRepository.Query()
@@ -49,33 +94,19 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues
                        where ppav.ProductAttributeId == request.ProductAttributeId
                        select ppav).ToListAsync());
         }
+        /// <summary>
+        /// GetPredefinedProductAttributeValueById
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [CacheAspect]
         public virtual async Task<Result<PredefinedProductAttributeValue>> GetPredefinedProductAttributeValueById(
-            GetPredefinedProductAttributeValueById request)
+            GetPredefinedProductAttributeValueByIdReqModel request)
         {
             return Result.SuccessDataResult(
                 await _predefinedProductAttributeValueRepository.GetAsync(x => x.Id == request.Id));
         }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IPredefinedProductAttributeValueService.Get")]
-        public virtual async Task<Result> InsertPredefinedProductAttributeValue(PredefinedProductAttributeValue ppav)
-        {
-            return await _unitOfWork.BeginTransaction<Result>(async () =>
-            {
-                await _predefinedProductAttributeValueRepository.AddAsync(ppav);
-                return Result.SuccessResult();
-            });
-        }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IPredefinedProductAttributeValueService.Get")]
-        public virtual async Task<Result> UpdatePredefinedProductAttributeValue(PredefinedProductAttributeValue ppav)
-        {
-            return await _unitOfWork.BeginTransaction<Result>(async () =>
-            {
-                _predefinedProductAttributeValueRepository.Update(ppav);
-                return Result.ErrorResult();
-            });
-        }
+        #endregion
         #endregion
     }
 }

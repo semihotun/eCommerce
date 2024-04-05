@@ -1,10 +1,9 @@
 ﻿using Core.Aspects.Autofac.Caching;
+using Core.DataAccess.EntitiyFramework;
 using Core.Utilities.Results;
 using DataAccess.Context;
-using DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories.CategoryDALModels;
-using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.CategoriesAggregate;
-using Entities.DTO.Category;
+using Entities.Dtos.CategoryDALModels;
 using Entities.ViewModels.AdminViewModel.CategoryTree;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -78,7 +77,7 @@ namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.Categories
                               {
                                   CategorySpeficationList = csg
                               }).FirstOrDefaultAsync();
-            return Result.SuccessDataResult<CategorySpeficationOptionDTO>(data);
+            return Result.SuccessDataResult(data);
         }
         [CacheAspect]
         public async Task<Result<List<HierarchyViewModel>>> GetHierarchy()

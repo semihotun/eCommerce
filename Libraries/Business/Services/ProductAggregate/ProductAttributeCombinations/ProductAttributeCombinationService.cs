@@ -1,23 +1,22 @@
-﻿using Business.Services.ProductAggregate.ProductAttributeCombinations.ProductAttributeCombinationServiceModel;
+﻿using Business.Constants;
 using Business.Services.ProductAggregate.ProductAttributeMappings;
-using Business.Services.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingServiceModel;
 using Business.Services.ProductAggregate.ProductAttributeValues;
-using Business.Services.ProductAggregate.ProductAttributeValues.ProductAttributeValueServiceModel;
 using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Helper;
+using Core.Utilities.PagedList;
 using Core.Utilities.Results;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeCombinations;
 using DataAccess.UnitOfWork;
 using Entities.Concrete.ProductAggregate;
-using Entities.Helpers.AutoMapper;
+using Entities.Extensions.AutoMapper;
+using Entities.RequestModel.ProductAggregate.ProductAttributeCombinations;
+using Entities.RequestModel.ProductAggregate.ProductAttributeMappings;
+using Entities.RequestModel.ProductAggregate.ProductAttributeValues;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace Business.Services.ProductAggregate.ProductAttributeCombinations
 {
     public class ProductAttributeCombinationService : IProductAttributeCombinationService
@@ -41,7 +40,8 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
             _unitOfWork = unitOfWork;
         }
         #endregion
-        #region Product attribute combinations
+        #region Methods
+        #region Private
         //AdminProduct/ProductEdit/4
         //<Attributes><ProductAttribute ID = "16"> Burası Mapping İd
         //               <ProductAttributeValue>    
@@ -54,21 +54,14 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
         //               </ProductAttributeValue >
         //            </ProductAttribute >
         //</ Attributes >
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductAttributeCombinationService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
-        "IShowcaseDAL.GetAllShowCaseDto")]
-        public async Task<Result> InsertPermutationCombination(InsertPermutationCombination request)
-        {
-            return await _unitOfWork.BeginTransaction<Result>(async () => await InsertPermutationCombinations(request));
-        }
-        private async Task<Result> InsertPermutationCombinations(InsertPermutationCombination request)
+        private async Task<Result> InsertPermutationCombinationsHelper(InsertPermutationCombinationReqModel request)
         {
             foreach (var item in request.Data)
             {
                 var xml = "<Attributes>";
                 foreach (var smallItem in item)
                 {
-                    var mappingId = await _productAttributeValueService.GetProductAttributeValueById(new GetProductAttributeValueById(smallItem));
+                    var mappingId = await _productAttributeValueService.GetProductAttributeValueById(new GetProductAttributeValueByIdReqModel(smallItem));
                     xml += "<ProductAttribute ID = \"" + mappingId.Data.ProductAttributeMappingId + "\">";
                     xml += "<ProductAttributeValue>";
                     xml += "<Value>" + smallItem + "</Value>";
@@ -85,19 +78,68 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
             }
             return Result.SuccessResult();
         }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductAttributeCombinationService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO", "IShowcaseDAL.GetAllShowCaseDto")]
-        public async Task<Result> AllInsertPermutationCombination(AllInsertPermutationCombination request)
+        #endregion
+        #region Command
+        /// <summary>
+        /// InsertProductAttributeCombination
+        /// </summary>
+        /// <param name="combination"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProductAttributeCombination", "ICombinationPhoto","IShowcase")]
+        public async Task<Result<ProductAttributeCombination>> InsertProductAttributeCombination(InsertProductAttributeCombinationReqModel combination)
         {
-            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var data = combination.MapTo<ProductAttributeCombination>();
+                await _productAttributeCombinationRepository.AddAsync(data);
+                return Result.SuccessDataResult(data);
+            });
+        }
+        /// <summary>
+        /// UpdateProductAttributeCombination
+        /// </summary>
+        /// <param name="combination"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProductAttributeCombination", "ICombinationPhoto","IShowcase")]
+        public async Task<Result> UpdateProductAttributeCombination(UpdateProductAttributeCombinationReqModel combination)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var productAttributeCombination = await _productAttributeCombinationRepository.GetByIdAsync(combination.Id);
+                if(productAttributeCombination == null)
+                    return Result.ErrorResult(Messages.IdNotFound);
+                var data = combination.MapTo(productAttributeCombination);
+                _productAttributeCombinationRepository.Update(data);
+                return Result.SuccessResult();
+            });
+        }
+        /// <summary>
+        /// InsertPermutationCombination
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProductAttributeCombination", "ICombinationPhoto","IShowcase")]
+        public async Task<Result> InsertPermutationCombination(InsertPermutationCombinationReqModel request)
+        {
+            return await _unitOfWork.BeginTransaction(async () => await InsertPermutationCombinationsHelper(request));
+        }
+        /// <summary>
+        /// AllInsertPermutationCombination
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProductAttributeCombination", "ICombinationPhoto", "IShowcase")]
+        public async Task<Result> AllInsertPermutationCombination(AllInsertPermutationCombinationReqModel request)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
             {
                 List<List<int>> data = new();
                 var mappingTask = await _productAttributeMappingService.GetProductAttributeMappingsByProductId(
-                    new GetProductAttributeMappingsByProductId(request.ProductId));
+                    new GetProductAttributeMappingsByProductIdReqModel(request.ProductId));
                 foreach (var item in mappingTask.Data)
                 {
                     var smallData = new List<int>();
-                    var attributes = await _productAttributeValueService.GetProductAttributeValues(new GetProductAttributeValues(item.Id));
+                    var attributes = await _productAttributeValueService.GetProductAttributeValues(new GetProductAttributeValuesReqModel(item.Id));
                     if (attributes.Data.Any())
                     {
                         foreach (var smallItem in attributes.Data)
@@ -108,24 +150,35 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
                     if (smallData.Count > 0)
                         data.Add(smallData);
                 }
-                return await InsertPermutationCombinations(new(AttributeHelper.Permutations(data), request.ProductId));
+                return await InsertPermutationCombinationsHelper(new(AttributeHelper.Permutations(data), request.ProductId));
             });
         }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductAttributeCombinationService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
-         "IShowcaseDAL.GetAllShowCaseDto")]
-        public async Task<Result> DeleteProductAttributeCombination(DeleteProductAttributeCombination request)
+        /// <summary>
+        /// DeleteProductAttributeCombination
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProductAttributeCombination", "ICombinationPhoto","IShowcase")]
+        public async Task<Result> DeleteProductAttributeCombination(DeleteProductAttributeCombinationReqModel request)
         {
-            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            return await _unitOfWork.BeginTransaction(async () =>
             {
-                if (request.Id == 0)
+                var data = await _productAttributeCombinationRepository.GetByIdAsync(request.Id);
+                if (data == null)
                     return Result.ErrorResult();
-                _productAttributeCombinationRepository.Remove(await _productAttributeCombinationRepository.GetByIdAsync(request.Id));
-                return Result.ErrorResult();
+                _productAttributeCombinationRepository.Remove(data);
+                return Result.SuccessResult();
             });
         }
+        #endregion
+        #region Query
+        /// <summary>
+        /// GetAllProductAttributeCombinations
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [CacheAspect]
-        public async Task<Result<IPagedList<ProductAttributeCombination>>> GetAllProductAttributeCombinations(GetAllProductAttributeCombinations request)
+        public async Task<Result<IPagedList<ProductAttributeCombination>>> GetAllProductAttributeCombinations(GetAllProductAttributeCombinationsReqModel request)
         {
             var query = from pac in _productAttributeCombinationRepository.Query()
                         where pac.ProductId == request.ProductId
@@ -134,8 +187,13 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
                 query = query.OrderBy(request.Orderbytext);
             return Result.SuccessDataResult(await query.ToPagedListAsync(request.PageIndex, request.PageSize));
         }
+        /// <summary>
+        /// GetProductCombinationXml
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [CacheAspect]
-        public async Task<Result<List<string>>> GetProductCombinationXml(GetProductCombinationXml request)
+        public async Task<Result<List<string>>> GetProductCombinationXml(GetProductCombinationXmlReqModel request)
         {
             var query = from c in _productAttributeCombinationRepository.Query()
                         orderby c.Id
@@ -143,47 +201,33 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations
                         select c.AttributesXml;
             return Result.SuccessDataResult(await query.ToListAsync());
         }
+        /// <summary>
+        /// GetProductAttributeCombinationById
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [CacheAspect]
-        public async Task<Result<ProductAttributeCombination>> GetProductAttributeCombinationById(GetProductAttributeCombinationById request)
+        public async Task<Result<ProductAttributeCombination>> GetProductAttributeCombinationById(GetProductAttributeCombinationByIdReqModel request)
         {
             var data = await _productAttributeCombinationRepository
                 .GetAsync(x => x.Id == request.ProductAttributeCombinationId);
             return Result.SuccessDataResult(data);
         }
+        /// <summary>
+        /// GetProductAttributeCombinationBySku
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [CacheAspect]
-        public async Task<Result<ProductAttributeCombination>> GetProductAttributeCombinationBySku(GetProductAttributeCombinationBySku request)
+        public async Task<Result<ProductAttributeCombination>> GetProductAttributeCombinationBySku(GetProductAttributeCombinationBySkuReqModel request)
         {
-            var query = from pac in _productAttributeCombinationRepository.Query()
+            var data = await(from pac in _productAttributeCombinationRepository.Query()
                         orderby pac.Id
                         where pac.Sku == request.Sku.Trim()
-                        select pac;
-            var data = await query.ToListAsync();
-            return Result.SuccessDataResult<ProductAttributeCombination>(data.FirstOrDefault());
+                        select pac).FirstOrDefaultAsync();
+            return Result.SuccessDataResult(data);
         }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductAttributeCombinationService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
-        "IShowcaseDAL.GetAllShowCaseDto")]
-        public async Task<Result> InsertProductAttributeCombination(ProductAttributeCombination combination)
-        {
-            return await _unitOfWork.BeginTransaction<Result>(async () =>
-            {
-                await _productAttributeCombinationRepository.AddAsync(combination);
-                return Result.SuccessResult();
-            });
-        }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductAttributeCombinationService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
-        "IShowcaseDAL.GetAllShowCaseDto")]
-        public async Task<Result> UpdateProductAttributeCombination(ProductAttributeCombination combination)
-        {
-            return await _unitOfWork.BeginTransaction<Result>(async () =>
-            {
-                var mapData = (await _productAttributeCombinationRepository.GetAsync(x => x.Id == combination.Id))
-                    .MapTo<ProductAttributeCombination>(combination);
-                _productAttributeCombinationRepository.Update(mapData);
-                return Result.SuccessResult();
-            });
-        }
+        #endregion
         #endregion
     }
 }

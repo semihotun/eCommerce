@@ -1,97 +1,132 @@
-﻿using AutoMapper;
-using Business.Services.SpeficationAggregate.SpecificationAttributes.SpecificationAttributeServiceModel;
+﻿using Business.Constants;
 using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Utilities.PagedList;
 using Core.Utilities.Results;
 using DataAccess.DALs.EntitiyFramework.SpeficationAggregate.SpecificationAttributes;
 using DataAccess.UnitOfWork;
 using Entities.Concrete.SpeficationAggregate;
+using Entities.Extensions.AutoMapper;
+using Entities.RequestModel.SpeficationAggregate.SpecificationAttributes;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace Business.Services.SpeficationAggregate.SpecificationAttributes
 {
     public class SpecificationAttributeService : ISpecificationAttributeService
     {
         #region Fields
         private readonly ISpecificationAttributeDAL _specificationAttributeRepository;
-        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         #endregion
         #region Ctor
         public SpecificationAttributeService(
-            ISpecificationAttributeDAL specificationAttributeRepository, IMapper mapper, IUnitOfWork unitOfWork)
+            ISpecificationAttributeDAL specificationAttributeRepository,IUnitOfWork unitOfWork)
         {
             _specificationAttributeRepository = specificationAttributeRepository;
-            _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
         #endregion
         #region Methods
-        [CacheAspect]
-        public async Task<Result<SpecificationAttribute>> GetSpecificationAttributeById(GetSpecificationAttributeById request)
+        #region Command
+        /// <summary>
+        /// DeleteSpecificationAttribute
+        /// </summary>
+        /// <param name="specificationAttribute"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("ISpecificationAttribute","ICategory")]
+        public async Task<Result> DeleteSpecificationAttribute(DeleteSpecificationAttributeReqModel specificationAttribute)
         {
-            return Result.SuccessDataResult(
-                await _specificationAttributeRepository.GetAsync(x => x.Id == request.SpecificationAttributeId));
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var data = await _specificationAttributeRepository.GetByIdAsync(specificationAttribute.Id);
+                if (data == null)
+                    Result.ErrorResult(Messages.IdNotFound);
+                _specificationAttributeRepository.Remove(data);
+                return Result.SuccessResult();
+            });
         }
+        /// <summary>
+        /// InsertSpecificationAttribute
+        /// </summary>
+        /// <param name="specificationAttribute"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("ISpecification","ICategory")]
+        public async Task<Result<SpecificationAttribute>> InsertSpecificationAttribute(InsertSpecificationAttributeReqModel specificationAttribute)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var data = specificationAttribute.MapTo<SpecificationAttribute>();
+                await _specificationAttributeRepository.AddAsync(data);
+                return Result.SuccessDataResult(data);
+            });
+        }
+        /// <summary>
+        /// UpdateSpecificationAttribute
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("ISpecificationAttribute","ICategory")]
+        public async Task<Result> UpdateSpecificationAttribute(UpdateSpecificationAttributeReqModel request)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var data = await _specificationAttributeRepository.GetByIdAsync(request.Id);
+                if (data == null)
+                    Result.ErrorResult(Messages.IdNotFound);
+                var specificationAttribute = request.MapTo(data);
+                _specificationAttributeRepository.Update(specificationAttribute);
+                return Result.SuccessResult();
+            });
+        }
+        #endregion
+        #region Query
+        /// <summary>
+        /// GetSpecificationAttributeById
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [CacheAspect]
-        public async Task<Result<List<SpecificationAttribute>>> GetSpecificationAttributeByIds(GetSpecificationAttributeByIds request)
+        public async Task<Result<SpecificationAttribute>> GetSpecificationAttributeById(GetSpecificationAttributeByIdReqModel request)
+        {
+            var data = await _specificationAttributeRepository.GetByIdAsync(request.SpecificationAttributeId);
+            return Result.SuccessDataResult(data);
+        }
+        /// <summary>
+        /// GetSpecificationAttributeByIds
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheAspect]
+        public async Task<Result<List<SpecificationAttribute>>> GetSpecificationAttributeByIds(GetSpecificationAttributeByIdsReqModel request)
         {
             return Result.SuccessDataResult(
                 await (from p in _specificationAttributeRepository.Query()
                        where request.SpecificationAttributeIds.Contains(p.Id)
                        select p).ToListAsync());
         }
+        /// <summary>
+        /// GetSpecificationAttributes
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [CacheAspect]
-        public async Task<Result<IPagedList<SpecificationAttribute>>> GetSpecificationAttributes(GetSpecificationAttributes request)
+        public async Task<Result<IPagedList<SpecificationAttribute>>> GetSpecificationAttributes(GetSpecificationAttributesReqModel request)
         {
             return Result.SuccessDataResult(
                 await (from sa in _specificationAttributeRepository.Query()
                        orderby sa.Id
                        select sa).ToPagedListAsync(request.PageIndex, request.PageSize));
         }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("ISpecificationAttributeService.Get",
-        "ICategoryDAL.GetCategorySpeficationOptionDTO", "ICategoryDAL.GetCategorySpefication")]
-        public async Task<Result> DeleteSpecificationAttribute(SpecificationAttribute specificationAttribute)
-        {
-            return await _unitOfWork.BeginTransaction(async () =>
-            {
-                _specificationAttributeRepository.Remove(specificationAttribute);
-                return Result.SuccessResult();
-            });
-        }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("ISpecificationAttributeService.Get",
-        "ICategoryDAL.GetCategorySpeficationOptionDTO", "ICategoryDAL.GetCategorySpefication")]
-        public async Task<Result> InsertSpecificationAttribute(SpecificationAttribute specificationAttribute)
-        {
-            return await _unitOfWork.BeginTransaction(async () =>
-            {
-                await _specificationAttributeRepository.AddAsync(specificationAttribute);
-                return Result.SuccessResult();
-            });
-        }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("ISpecificationAttributeService.Get",
-        "ICategoryDAL.GetCategorySpeficationOptionDTO", "ICategoryDAL.GetCategorySpefication")]
-        public async Task<Result> UpdateSpecificationAttribute(SpecificationAttribute specificationAttribute)
-        {
-            return await _unitOfWork.BeginTransaction(async () =>
-            {
-                var updateData = await _specificationAttributeRepository.GetAsync(x => x.Id == specificationAttribute.Id);
-                updateData = _mapper.Map(specificationAttribute, updateData);
-                _specificationAttributeRepository.Update(updateData);
-                return Result.SuccessResult();
-            });
-        }
+        /// <summary>
+        /// GetProductSpeficationAttributeDropdwon
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [CacheAspect]
-        public async Task<Result<IEnumerable<SelectListItem>>> GetProductSpeficationAttributeDropdwon(GetProductSpeficationAttributeDropdwon request)
+        public async Task<Result<IEnumerable<SelectListItem>>> GetProductSpeficationAttributeDropdwon(GetProductSpeficationAttributeDropdwonReqModel request)
         {
             var data = await (from s in _specificationAttributeRepository.Query()
                               select new SelectListItem
@@ -103,6 +138,7 @@ namespace Business.Services.SpeficationAggregate.SpecificationAttributes
             data.Insert(0, new SelectListItem("Seçiniz", "0", request.SelectedId == 0));
             return Result.SuccessDataResult<IEnumerable<SelectListItem>>(data);
         }
+        #endregion
         #endregion
     }
 }

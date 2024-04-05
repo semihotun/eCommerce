@@ -2,7 +2,7 @@
 using Core.Utilities.Generate;
 using Core.Utilities.Security.Encyption;
 using Core.Utilities.Security.Jwt;
-using Entities.Concrete.AdminUserAggregate;
+using Entities.Concrete.AuthAggregate;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -31,7 +31,7 @@ namespace Business.Services.AdminAggregate.TokenService
                 input = input["Bearer ".Length..];
             return handler.ReadJwtToken(input).ToString();
         }
-        public AccessToken CreateToken(AdminUser user)
+        public AccessToken CreateToken(UserShared user)
         {
             _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
             var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
@@ -50,7 +50,7 @@ namespace Business.Services.AdminAggregate.TokenService
                 })
             };
         }
-        public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, AdminUser user,
+        public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, UserShared user,
                 SigningCredentials signingCredentials)
         {
             return new JwtSecurityToken(
@@ -62,7 +62,7 @@ namespace Business.Services.AdminAggregate.TokenService
                     signingCredentials: signingCredentials
             );
         }
-        private IEnumerable<Claim> SetClaims(AdminUser user)
+        private IEnumerable<Claim> SetClaims(UserShared user)
         {
             var claims = new List<Claim>();
             claims.AddNameIdentifier(user.Id.ToString());

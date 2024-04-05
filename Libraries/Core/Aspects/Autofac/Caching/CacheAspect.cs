@@ -3,47 +3,55 @@ using Core.CrossCuttingConcerns.Caching;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Identity.Core.Cache;
+using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 namespace Core.Aspects.Autofac.Caching
 {
     public class CacheAspect : MethodInterception
     {
         private readonly int _duration;
-        private readonly ICacheManager _cacheManager;
+        private readonly ICacheService _cacheManager;
         public CacheAspect(int duration = 60)
         {
             _duration = duration;
-            _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
+            _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheService>();
         }
         public override void Intercept(IInvocation invocation)
         {
-            if (invocation.Arguments.Length > 0)
+            var methodName = string.Format($"{invocation.Method.ReflectedType.Name}.{invocation.Method.Name}");
+            var arguments = invocation.Arguments;
+            var key = $"{methodName}({BuildKey(arguments)})";
+            var cache = _cacheManager.Get(key);
+            if (cache != null)
             {
-                var methodName = string.Format($"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}");
-                var arguments = invocation.Arguments;
-                var key = $"{methodName}({BuildKey(arguments)})";
-                if (_cacheManager.IsAdd(key))
-                {
-                    invocation.ReturnValue = _cacheManager.Get(key);
-                    return;
-                }
-                invocation.Proceed();
-                _cacheManager.Add(key, invocation.ReturnValue, _duration);
+                var data = JsonConvert.DeserializeObject(cache, new JsonSerializerSettings(){
+                    TypeNameHandling = TypeNameHandling.All
+                });
+                invocation.ReturnValue = typeof(Task)
+                    ?.GetMethod("FromResult")
+                    ?.MakeGenericMethod(data.GetType())
+                    .Invoke(null, new object[] { data });
+                return;
             }
-            else
+            invocation.Proceed();
+            if (invocation.ReturnValue is Task taskResult)
             {
-                var methodName = string.Format($"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}");
-                if (_cacheManager.IsAdd(methodName))
+                taskResult.GetAwaiter().GetResult();
+                var result = typeof(Task<>)
+                    ?.MakeGenericType(taskResult.GetType().GetGenericArguments()[0])
+                    ?.GetProperty("Result")
+                    ?.GetValue(taskResult);
+                _cacheManager.Set(key, JsonConvert.SerializeObject(result,new JsonSerializerSettings()
                 {
-                    invocation.ReturnValue = _cacheManager.Get(methodName);
-                    return;
-                }
-                invocation.Proceed();
-                _cacheManager.Add(methodName, invocation.ReturnValue, _duration);
+                    TypeNameHandling=TypeNameHandling.All
+                }), _duration);
             }
         }
-
         static string BuildKey(object[] args)
         {
             var sb = new StringBuilder();

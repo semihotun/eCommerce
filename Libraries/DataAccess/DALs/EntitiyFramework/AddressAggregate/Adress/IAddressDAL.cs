@@ -1,4 +1,4 @@
-﻿using eCommerce.Core.DataAccess;
+﻿using Core.DataAccess;
 using Entities.Concrete.AdressAggregate;
 namespace DataAccess.DALs.EntitiyFramework.AddressAggregate.Adress
 {

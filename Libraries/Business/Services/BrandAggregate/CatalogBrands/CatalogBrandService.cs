@@ -1,7 +1,7 @@
-﻿using Business.Services.BrandAggregate.CatalogBrands.CatalogBrandModels;
-using Core.Utilities.Results;
+﻿using Core.Utilities.Results;
 using DataAccess.DALs.EntitiyFramework.BrandAggregate.CatalogBrands;
 using Entities.Concrete.BrandAggregate;
+using Entities.RequestModel.BrandAggregate.CatalogBrands;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +15,17 @@ namespace Business.Services.BrandAggregate.CatalogBrands
         {
             _catalogBrandDAL = catalogBrandDAL;
         }
-        public async Task<Result<IEnumerable<CatalogBrand>>> GetCatalogBrand(GetCatalogBrand request)
+        #region Query
+        /// <summary>
+        /// Get Catalog Brand
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<Result<IEnumerable<CatalogBrand>>> GetCatalogBrand(GetCatalogBrandReqModel request)
         {
             var data = await _catalogBrandDAL.Query().Where(x => x.CategoryId == request.CategoryId).ToListAsync();
             return Result.SuccessDataResult<IEnumerable<CatalogBrand>>(data);
         }
+        #endregion
     }
 }

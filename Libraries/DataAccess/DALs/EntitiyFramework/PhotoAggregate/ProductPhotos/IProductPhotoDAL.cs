@@ -1,4 +1,4 @@
-using eCommerce.Core.DataAccess;
+using Core.DataAccess;
 using Entities.Concrete.PhotoAggregate;
 namespace DataAccess.DALs.EntitiyFramework.PhotoAggregate.ProductPhotos
 {

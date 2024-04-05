@@ -1,20 +1,20 @@
 ﻿using DataAccess.Context;
-using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Retry;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-namespace DataAccess.ContextSeed.eCommerceContextSeed
+namespace DataAccess.ContextSeed.eCommerceDbSeed
 {
-    public class EcommerceContextSeed
+    public static class EcommerceContextSeed
     {
-        public static async Task SeedAsync(ECommerceContext context, ILogger<ECommerceContext> logger)
+        public static async Task SeedAsync(ECommerceContext context)
         {
-            var policy = CreatePolicy(logger,3);
+            var policy = CreatePolicy(3);
             await policy.ExecuteAsync(async () =>
             {
                 using (context)
@@ -32,13 +32,13 @@ namespace DataAccess.ContextSeed.eCommerceContextSeed
                 }
             });
         }
-        private static AsyncRetryPolicy CreatePolicy(ILogger<ECommerceContext> logger, int retries)
+        private static AsyncRetryPolicy CreatePolicy(int retries)
         {
             return Policy.Handle<SqlException>().
                 WaitAndRetryAsync(
                     retryCount: retries,
                     sleepDurationProvider: retry => TimeSpan.FromSeconds(retry),
-                    onRetry: (exception, _, _, _) => logger.LogWarning(exception.Message)
+                    onRetry: (exception, _, _, _) => Log.Warning(exception.Message)
                );
         }
     }

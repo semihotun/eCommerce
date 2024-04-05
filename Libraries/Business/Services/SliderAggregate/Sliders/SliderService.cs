@@ -1,89 +1,104 @@
-﻿using AutoMapper;
-using Business.Services.SliderAggregate.Sliders.SliderServiceModel;
-using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Helper;
+﻿using Core.Aspects.Autofac.Caching;
+using Core.Extension;
 using Core.Utilities.Results;
 using DataAccess.DALs.EntitiyFramework.SliderAggregate.Sliders;
 using DataAccess.UnitOfWork;
 using Entities.Concrete.SliderAggregate;
-using Entities.Helpers.AutoMapper;
-using Entities.ViewModels.AdminViewModel.AdminSlider;
+using Entities.Extensions.AutoMapper;
+using Entities.RequestModel.SliderAggregate.Sliders;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using Utilities.Constants;
 namespace Business.Services.SliderAggregate.Sliders
 {
     public class SliderService : ISliderService
     {
         private readonly ISliderDAL _sliderRepository;
-        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        public SliderService(ISliderDAL sliderRepository, IMapper mapper, IUnitOfWork unitOfWork)
+        public SliderService(ISliderDAL sliderRepository, IUnitOfWork unitOfWork)
         {
             _sliderRepository = sliderRepository;
-            _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        [CacheRemoveAspect("ISliderService.Get")]
-        [LogAspect(typeof(MsSqlLogger))]
-        public async Task<Result> DeleteSlider(DeleteSlider request)
+        #region Method
+        #region Command
+        /// <summary>
+        /// DeleteSlider
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("ISlider")]
+        public async Task<Result> DeleteSlider(DeleteSliderReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
             {
-                var slider =await _sliderRepository.GetByIdAsync(request.Id);
+                var slider = await _sliderRepository.GetByIdAsync(request.Id);
                 if (slider == null)
                     return Result.ErrorResult();
                 _sliderRepository.Remove(slider);
-                if (slider.SliderImage != null)
-                    PhotoHelper.Delete(Path.Combine(PhotoUrl.Slider, slider.SliderImage));
                 return Result.SuccessResult();
             });
         }
+        /// <summary>
+        /// InsertSlider
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("ISlider")]
+        public async Task<Result<Slider>> InsertSlider(InsertSliderReqModel model)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                model.SliderImage = model.Uploadfile.ConvertImageToBase64();
+                var sliderData = model.MapTo<Slider>();
+                await _sliderRepository.AddAsync(sliderData);
+                return Result.SuccessDataResult(sliderData);
+            });
+        }
+        /// <summary>
+        /// UpdateSlider
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("ISlider")]
+        public async Task<Result> UpdateSlider(UpdateSliderReqModel request)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var slider = await _sliderRepository.GetByIdAsync(request.Id);
+                if (slider == null)
+                    return Result.ErrorResult();
+
+                request.SliderImage = request.Uploadfile.ConvertImageToBase64();
+                var data = request.MapTo(slider);
+                _sliderRepository.Update(data);
+                return Result.SuccessResult();
+            });
+        }
+        #endregion
+        #region Query
+        /// <summary>
+        /// GetAllSlider
+        /// </summary>
+        /// <returns></returns>
         [CacheAspect]
         public async Task<Result<List<Slider>>> GetAllSlider()
         {
-            return Result.SuccessDataResult(await _sliderRepository.Query().ToListAsync());
+            var data = await _sliderRepository.Query().ToListAsync();
+            return Result.SuccessDataResult(data);
         }
+        /// <summary>
+        /// GetSlider
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [CacheAspect]
-        public async Task<Result<Slider>> GetSlider(GetSlider request)
+        public async Task<Result<Slider>> GetSlider(GetSliderReqModel request)
         {
-            return Result.SuccessDataResult<Slider>(await _sliderRepository.GetAsync(x => x.Id == request.Id));
+            var data = await _sliderRepository.GetByIdAsync(request.Id);
+            return Result.SuccessDataResult(data);
         }
-        [CacheRemoveAspect("ISliderService.Get")]
-        [LogAspect(typeof(MsSqlLogger))]
-        public async Task<Result> InsertSlider(SliderCreateOrUpdateVM model)
-        {
-            return await _unitOfWork.BeginTransaction(async () =>
-            {
-                var imageAdd = PhotoHelper.Add(PhotoUrl.Slider, model.Uploadfile);
-                model.SliderImage = imageAdd.Data.Path;
-                var sliderData = model.MapTo<Slider>();
-                await _sliderRepository.AddAsync(sliderData);
-                return Result.SuccessResult();
-            });
-        }
-        [CacheRemoveAspect("ISliderService.Get")]
-        [LogAspect(typeof(MsSqlLogger))]
-        public async Task<Result> UpdateSlider(SliderCreateOrUpdateVM model)
-        {
-            return await _unitOfWork.BeginTransaction(async () =>
-            {
-                var slider = await _sliderRepository.GetAsync(x => x.Id == model.Id);
-                if (slider == null)
-                    return Result.ErrorResult();
-                if (model.Uploadfile != null)
-                {
-                    model.SliderImage = PhotoHelper.Add(PhotoUrl.ShowCase,
-                        model.Uploadfile, true, slider.SliderImage).Data.Path;
-                    slider = _mapper.Map(model, slider);
-                    _sliderRepository.Update(slider);
-                }
-                return Result.SuccessResult();
-            });
-        }
+        #endregion
+        #endregion
     }
 }

@@ -1,7 +1,7 @@
 ﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
 @{
-    Html.RenderPartial("AttrMaping/_AttrMapingCreate", Model);
+    await Html.RenderPartialAsync("AttrMaping/_AttrMapingCreate", Model);
 }
 @{
-    Html.RenderPartial("AttrMaping/_AttrMapingList", Model);
+    await Html.RenderPartialAsync("AttrMaping/_AttrMapingList", Model);
 }

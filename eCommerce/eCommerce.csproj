@@ -5,6 +5,8 @@
 		<UserSecretsId>a8b204f6-a9b2-414d-a7f1-d0abc02dc74e</UserSecretsId>
 		<ApplicationIcon>favicon.ico</ApplicationIcon>
 		<Nullable>enable</Nullable>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Autofac" Version="6.1.0" />
@@ -12,7 +14,7 @@
 		<PackageReference Include="AutoMapper" Version="10.1.1" />
 		<PackageReference Include="Bogus" Version="29.0.2" />
 		<PackageReference Include="FluentValidation.AspNetCore" Version="10.1.0" />
-		<PackageReference Include="Iyzipay" Version="2.1.39" />
+		<PackageReference Include="Microsoft.AspNet.WebHelpers" Version="3.3.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.0" />
@@ -26,6 +28,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="2.2.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
 		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.3" />
@@ -39,13 +42,12 @@
 		<ProjectReference Include="..\Libraries\Business\Business.csproj" />
 		<ProjectReference Include="..\Libraries\DataAccess\DataAccess.csproj" />
 		<ProjectReference Include="..\Libraries\Entities\Entities.csproj" />
+		<ProjectReference Include="..\Plugins\Plugin.Api\Plugin.Api.csproj" />
 		<ProjectReference Include="..\Plugins\Plugin.Base\Plugin.Base.csproj" />
+		<ProjectReference Include="..\Plugins\Plugin.Iyzico\Plugin.Iyzico.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<Folder Include="wwwroot\Files\ShowCase\" />
-		<Folder Include="wwwroot\Files\Slider\" />
-		<Folder Include="wwwroot\Files\Product\" />
-		<Folder Include="wwwroot\Web\" />
+	  <Folder Include="Areas\Web\Views\Customer\" />
 	</ItemGroup>
 	<!--<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>

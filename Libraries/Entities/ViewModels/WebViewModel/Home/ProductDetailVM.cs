@@ -1,6 +1,6 @@
 ﻿using Entities.Concrete.CommentsAggregate;
-using Entities.DTO.Product;
-using Entities.DTO.ProductAttributeCombinations;
+using Entities.Dtos.ProductAttributeCombinationDALModels;
+using Entities.Dtos.ProductDALModels;
 using System.Collections.Generic;
 namespace Entities.ViewModels.WebViewModel.Home
 {

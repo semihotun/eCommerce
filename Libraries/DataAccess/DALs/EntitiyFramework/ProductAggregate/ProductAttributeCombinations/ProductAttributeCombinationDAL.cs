@@ -1,12 +1,12 @@
+using Core.DataAccess.EntitiyFramework;
+using Core.Utilities.PagedList;
 using Core.Utilities.Results;
 using DataAccess.Context;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeCombinations.ProductAttributeCombinationDALModels;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeMappings.ProductAttributeMappingDALModels;
-using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.ProductAggregate;
-using Entities.DTO;
-using Entities.Helpers.AutoMapper;
+using Entities.Dtos.ProductAttributeCombinationDALModels;
+using Entities.Dtos.ProductAttributeMappingDALModels;
+using Entities.Extensions.AutoMapper;
 using Entities.ViewModels.AdminViewModel.AdminProduct;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
-using X.PagedList;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeCombinations
 {
     public class ProductAttributeCombinationDAL : EfEntityRepositoryBase<ProductAttributeCombination, ECommerceContext>, IProductAttributeCombinationDAL

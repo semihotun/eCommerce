@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 /// <summary>
 /// Ardalis Result
 /// </summary>
@@ -6,9 +7,7 @@ namespace Core.Utilities.Results
 {
     public class Result<T>
     {
-        protected Result()
-        {
-        }
+        [JsonConstructor]
         public Result(T? data, bool success, string message)
         {
             Data = data;
@@ -28,6 +27,9 @@ namespace Core.Utilities.Results
         {
             Success = success;
             Message = message;
+        }
+        protected Result()
+        {
         }
         public T? Data { get; }
         public bool Success { get; protected set; }

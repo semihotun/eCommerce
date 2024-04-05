@@ -15,4 +15,7 @@
 		<ProjectReference Include="..\DataAccess\DataAccess.csproj" />
 		<ProjectReference Include="..\Entities\Entities.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Services\CustomerAggreagate\" />
+	</ItemGroup>
 </Project>

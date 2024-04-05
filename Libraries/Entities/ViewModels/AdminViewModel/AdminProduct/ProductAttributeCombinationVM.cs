@@ -1,5 +1,5 @@
 ﻿using Entities.Concrete.ProductAggregate;
-using Entities.DTO;
+using Entities.Dtos.ProductAttributeMappingDALModels;
 using System.Collections.Generic;
 namespace Entities.ViewModels.AdminViewModel.AdminProduct
 {

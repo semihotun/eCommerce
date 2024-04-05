@@ -1,9 +1,9 @@
-﻿using Core.Utilities.Results;
-using DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments.CommentDALModels;
-using eCommerce.Core.DataAccess;
+﻿using Core.DataAccess;
+using Core.Utilities.PagedList;
+using Core.Utilities.Results;
 using Entities.Concrete.CommentsAggregate;
+using Entities.Dtos.CommentDALModels;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments
 {
     public interface ICommentDAL : IEntityRepository<Comment>

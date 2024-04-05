@@ -1,14 +1,14 @@
-﻿using Business.Services.ProductAggregate.ProductShipmentInfos.ProductShipmentInfoServiceModel;
-using Core.Utilities.Results;
+﻿using Core.Utilities.Results;
 using Entities.Concrete.ProductAggregate;
+using Entities.RequestModel.ProductAggregate.ProductShipmentInfos;
 using System.Threading.Tasks;
 namespace Business.Services.ProductAggregate.ProductShipmentInfos
 {
     public interface IProductShipmentInfoService
     {
-        Task<Result<ProductShipmentInfo>> GetProductShipmentInfo(GetProductShipmentInfo request);
-        Task<Result> AddProductShipmentInfo(ProductShipmentInfo productShipmentInfo);
-        Task<Result> UpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo);
-        Task<Result> AddOrUpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo);
+        Task<Result<ProductShipmentInfo>> GetProductShipmentInfo(GetProductShipmentInfoReqModel request);
+        Task<Result<ProductShipmentInfo>> AddProductShipmentInfo(AddProductShipmentInfoReqModel productShipmentInfo);
+        Task<Result<ProductShipmentInfo>> UpdateProductShipmentInfo(UpdateProductShipmentInfoReqModel productShipmentInfo);
+        Task<Result<ProductShipmentInfo>> AddOrUpdateProductShipmentInfo(AddOrUpdateProductShipmentInfoReqModel productShipmentInfo);
     }
 }

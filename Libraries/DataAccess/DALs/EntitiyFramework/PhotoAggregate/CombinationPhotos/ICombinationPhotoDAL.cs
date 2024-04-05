@@ -1,8 +1,8 @@
-﻿using Core.Utilities.Results;
-using DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos.CombinationPhotoDALModels;
-using eCommerce.Core.DataAccess;
+﻿using Core.DataAccess;
+using Core.Utilities.Results;
 using Entities.Concrete.PhotoAggregate;
-using Entities.DTO;
+using Entities.Dtos.CombinationPhotoDALModels;
+using Entities.Dtos.CommentDALModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos

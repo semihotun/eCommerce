@@ -1,13 +1,9 @@
-﻿using Business.Services.PhotoAggregate.CombinationPhotos.CombinationPhotoServiceModel;
-using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Interceptors;
+﻿using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Results;
-using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos;
 using DataAccess.UnitOfWork;
 using Entities.Concrete.PhotoAggregate;
+using Entities.RequestModel.PhotoAggregate.CombinationPhotos;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,16 +24,16 @@ namespace Business.Services.PhotoAggregate.CombinationPhotos
             _unitOfWork = unitOfWork;
         }
         #endregion
-        [CacheAspect]
-        public async Task<Result<List<CombinationPhoto>>> GetAllCombinationPhotos(GetAllCombinationPhotos request)
+        #region Command
+        /// <summary>
+        /// InsertCombinationPhotos
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("ICombination")]
+        public async Task<Result> InsertCombinationPhotos(InsertCombinationPhotosReqModel request)
         {
-            return Result.SuccessDataResult(await _combinationPhotoRepository.Query().ToListAsync());
-        }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("ICombinationPhotoService.Get")]
-        public async Task<Result> InsertCombinationPhotos(InsertCombinationPhotos request)
-        {
-            return await _unitOfWork.BeginTransaction(async() =>
+            return await _unitOfWork.BeginTransaction(async () =>
             {
                 var combinationData = new List<string>();
                 if (request.Combinations != null)
@@ -57,7 +53,7 @@ namespace Business.Services.PhotoAggregate.CombinationPhotos
                     {
                         var removeData = await _combinationPhotoRepository.GetAsync(x => x.PhotoId == request.PhotoId
                             && x.CombinationId == int.Parse(item));
-                        if(removeData != null)
+                        if (removeData != null)
                         {
                             _combinationPhotoRepository.Remove(removeData);
                         }
@@ -66,5 +62,18 @@ namespace Business.Services.PhotoAggregate.CombinationPhotos
                 return Result.SuccessResult();
             });
         }
+        #endregion
+        #region Query
+        /// <summary>
+        /// GetAllCombinationPhotos
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheAspect]
+        public async Task<Result<List<CombinationPhoto>>> GetAllCombinationPhotos(GetAllCombinationPhotosReqModel request)
+        {
+            return Result.SuccessDataResult(await _combinationPhotoRepository.Query().ToListAsync());
+        }
+        #endregion
     }
 }

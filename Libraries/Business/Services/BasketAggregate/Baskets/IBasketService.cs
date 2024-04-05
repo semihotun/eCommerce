@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete.BasketAggregate;
+using Entities.RequestModel.BasketAggregate.Baskets;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace Business.Services.BasketAggregate.Baskets
@@ -7,8 +8,8 @@ namespace Business.Services.BasketAggregate.Baskets
     public interface IBasketService
     {
         Task<Result<List<Basket>>> GetBasket();
-        Task<Result> AddBasket(Basket basket);
-        Task<Result> DeleteBasketProduct(Basket basket);
-        Task<Result> UpdateBasketProductPiece(Basket basket);
+        Task<Result> AddBasket(AddBasketReqModel basket);
+        Task<Result> DeleteBasketProduct(DeleteBasketProductReqModel basket);
+        Task<Result> UpdateBasketProductPiece(UpdateBasketProductPieceReqModel basket);
     }
 }

@@ -1,10 +1,10 @@
 ﻿using Core.Aspects.Autofac.Caching;
+using Core.DataAccess.EntitiyFramework;
 using Core.Utilities.Results;
 using DataAccess.Context;
-using DataAccess.DALs.EntitiyFramework.PhotoAggregate.CombinationPhotos.CombinationPhotoDALModels;
-using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.PhotoAggregate;
-using Entities.DTO;
+using Entities.Dtos.CombinationPhotoDALModels;
+using Entities.Dtos.CommentDALModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;

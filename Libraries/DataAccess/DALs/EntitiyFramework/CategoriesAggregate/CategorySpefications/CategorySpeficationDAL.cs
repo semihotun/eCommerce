@@ -1,5 +1,5 @@
-﻿using DataAccess.Context;
-using eCommerce.Core.DataAccess.EntitiyFramework;
+﻿using Core.DataAccess.EntitiyFramework;
+using DataAccess.Context;
 using Entities.Concrete.CategoriesAggregate;
 namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.CategorySpefications
 {

@@ -1,21 +1,15 @@
 ﻿using AutoMapper;
+using Business.Constants;
 using Business.Services.CommentsAggregate.Comments;
-using Business.Services.CommentsAggregate.Comments.CommentServiceModel;
 using Core.Utilities.Identity;
 using DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments;
-using DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments.CommentDALModels;
-using eCommerce.Helpers;
 using Entities.Concrete.CommentsAggregate;
-using Entities.DTO.Comment;
+using Entities.Dtos.CommentDALModels;
 using Entities.Others;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 namespace eCommerce.Areas.Admin.Controllers
 {
-    [ApiExplorerSettings(IgnoreApi = true)]
-    [Route("[area]/[controller]/[action]")]
-    [AuthorizeControl("")]
-    [Area("Admin")]
     public class CommentController : AdminBaseController
     {
         private readonly ICommentService _commentService;
@@ -36,29 +30,28 @@ namespace eCommerce.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult CommentList()
         {
-            ViewBag.Approve = SelectListHelper.FillCommentApprove();
+            ViewBag.Approve = ConstList.FillCommentApprove();
             return View();
         }
         [HttpPost]
         public IActionResult CommentList(Comment model)
         {
-            ViewBag.Approve = SelectListHelper.FillCommentApprove(model.IsApproved);
+            ViewBag.Approve = ConstList.FillCommentApprove(model.IsApproved);
             return View(model);
         }
         public async Task<IActionResult> CommentEdit(int id)
         {
-            return View((await _commentService.GetComment(new GetComment(id))).Data);
+            var data = (await _commentService.GetComment(new(id))).Data;
+            return View(data);
         }
         public async Task<IActionResult> CommentDelete(int id)
         {
-            ResponseAlert(await _commentService.DeleteComment((await _commentService.GetComment(new GetComment(id))).Data));
+            ResponseAlert(await _commentService.DeleteComment(new(id)));
             return RedirectToAction("CommentList", "Comment");
         }
         public async Task<IActionResult> CommentApprove(int id)
-        {
-            var data = await _commentService.GetComment(new GetComment(id));
-            data.Data.IsApproved = true;
-            ResponseAlert(await _commentService.UpdateComment(data.Data));
+        {    
+            ResponseAlert(await _commentService.CommentApprove(new(id)));
             return RedirectToAction("CommentList", "Comment");
         }
     }

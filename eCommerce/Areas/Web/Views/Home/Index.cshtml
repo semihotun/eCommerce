@@ -1,0 +1,219 @@
+﻿@model Entities.ViewModels.WebViewModel.Home.MainPageVM
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Web/Views/Shared/_Layout.cshtml";
+}
+<!-- HOME -->
+<div id="home">
+    <!-- container -->
+    @*<div class="container">*@
+        <!-- home wrap -->
+        <div class="home-wrap">
+            <!-- home slick -->
+            <div id="home-slick">
+                @foreach (var item in Model.SliderList)
+                {
+                    <div class="banner banner-1">
+                        <img src="@item.SliderImage" height="510" />
+                        <div class="banner-caption">
+                            <h1 class="primary-color">@item.SliderHeading<br><span class="white-color font-weak">@item.SliderText</span></h1>
+                            <a href="@item.SliderLink"><button class="primary-btn">Şimdi İncele</button> </a>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- /home slick -->
+        </div>
+        <!-- /home wrap -->
+    @*</div>*@
+    <!-- /container -->
+</div>
+<!-- /HOME -->
+@foreach (var item in Model.ShowCaseList)
+{
+    if (item.ShowCaseType == 2)
+    {
+        <!-- section -->
+<div class="section">
+    <!-- container -->
+    <div class="container-fluid home-container" >
+        <!-- row -->
+        <div class="row">
+            <!-- section title -->
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2 class="title">@item.ShowCaseTitle</h2>
+                </div>
+            </div>
+            @foreach (var product in item.ShowCaseProductList)
+            {
+                <div class="col-md-2 col-sm-6 col-xs-6">
+                    <div class="product product-single">
+                        <div class="product-thumb">
+                            <div class="product-label">
+                                @if (product.ProductModel.CreatedOnUtc.AddDays(7) > DateTime.Now)
+                                {
+                                    <span>Yeni</span>
+                                }
+                                @*<span class="sale">-20%</span>*@
+                            </div>
+                            @{var productlink = "/Web/ProductDetail/ProductDetail?productId=" + product.ProductId +
+                                        "&combinationId=" + (product.ProductModel.ProductAttributeCombination != null
+                                                            ? product.ProductModel.ProductAttributeCombination.Id
+                                                            : 0);
+                            }
+                            <a href="@productlink ">
+                                <button class="main-btn quick-view">
+                                    <i class="fa fa-search-plus">
+                                    </i> Ürünü İncele
+                                </button>
+                            </a>
+                            @foreach (var photos in product.ProductModel.ProductPhotoList.Take(1))
+                            {
+                                <img class="card-img" src="@photos.ProductPhotoName" alt="" width="150" height="300">
+                            }
+                        </div>
+                        <div class="product-body">
+                            @if (product.ProductModel.ProductStock != null)
+                            {
+                                <h3 class="product-price">@product.ProductModel.ProductStock.ProductPrice TL</h3>
+                            }
+                            @*<div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o empty"></i>
+                                </div>*@
+                            <h2 class="product-name"><a href="#">@product.ProductModel.ProductName</a></h2>
+                            <div class="product-btns">
+                                <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+                                <a href="@productlink ">
+                                    <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Ürünü İncele</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+        <!-- /section -->
+    }
+    <!-- ================ offer section start ================= -->
+    if (item.ShowCaseType == 3)
+    {
+        @Html.Raw(System.Web.HttpUtility.HtmlDecode(item.ShowCaseText));
+    }
+    <!-- ================ offer section end ================= -->
+    <!-- ================ Best Selling item  carousel ================= -->
+    if (item.ShowCaseType == 1)
+    {
+        <!-- section -->
+<div class="section">
+    <!-- container -->
+    <div class="container-fluid home-container" >
+        <!-- row -->
+        <div class="row">
+            <!-- section-title -->
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2 class="title">@item.ShowCaseTitle</h2>
+                    <div class="pull-right">
+                        <div class="product-slick-dots-1 custom-dots"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- /section-title -->
+            <!-- banner -->
+            <div class="col-md-2 col-sm-6 col-xs-6">
+                <div class="banner banner-2">
+                    <img src="~/Content/Themes/img/banner14.jpg" />
+                    <div class="banner-caption">
+                        <h2 class="white-color">NEW<br>COLLECTION</h2>
+                        <button class="primary-btn">Shop Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- /banner -->
+            <!-- Product Slick -->
+            <div class="col-md-10 col-sm-6 col-xs-6">
+                <div class="row">
+                    <div class="product-slick product-slick-1">
+                        @foreach (var product in item.ShowCaseProductList)
+                        {
+                            <!-- Product Single -->
+                            <div class="product product-single">
+                                <div class="product-thumb">
+                                    <div class="product-label">
+                                        @if (product.ProductModel.CreatedOnUtc.AddDays(7) > DateTime.Now)
+                                        {
+                                            <span>Yeni</span>
+                                        }
+                                        @*<span class="sale">-20%</span>*@
+                                    </div>
+                                    @*<ul class="product-countdown">
+                                            <li><span>00 H</span></li>
+                                            <li><span>00 M</span></li>
+                                            <li><span>00 S</span></li>
+                                        </ul>*@
+                                    @{var productlink = "/ProductDetail/ProductDetail?productId=" + product.ProductId +
+                                "&combinationId=" + (product.ProductModel.ProductAttributeCombination != null
+                                                    ? product.ProductModel.ProductAttributeCombination.Id
+                                                    : 0);
+                                    }
+                                    <a href="@productlink">
+                                        <button class="main-btn quick-view">
+                                            <i class="fa fa-search-plus">
+                                            </i> Ürünü incele
+                                        </button>
+                                    </a>
+                                    @foreach (var image in product.ProductModel.ProductPhotoList.Take(1))
+                                    {
+                                        <img src="@image.ProductPhotoName" alt="" width="150" height="300">
+                                    }
+                                </div>
+                                <div class="product-body">
+                                    <h3 class="product-price">
+                                        @*@product.Product.ProductPrice-@product.Product.ProductDiscount*@
+                                        @product.ProductModel.ProductStock?.ProductPrice TL
+                                        <del class="product-old-price"></del>
+                                    </h3>
+                                    @*<div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o empty"></i>
+                                        </div>*@
+                                    <h2 class="product-name"><a href="#">@product.ProductModel.ProductName</a></h2>
+                                    <div class="product-btns">
+                                        @if (User.Identity!.IsAuthenticated)
+                                        {
+                                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+                                        }
+                                        else
+                                        {
+                                            <div>BOş aga şuan</div>
+                                        }
+                                        <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Product Single -->
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- /Product Slick -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+        <!-- /section -->
+    }
+}

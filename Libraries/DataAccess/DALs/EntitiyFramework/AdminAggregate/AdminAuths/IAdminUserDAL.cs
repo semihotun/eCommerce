@@ -1,5 +1,5 @@
-﻿using eCommerce.Core.DataAccess;
-using Entities.Concrete.AdminUserAggregate;
+﻿using Core.DataAccess;
+using Entities.Concrete.AuthAggregate;
 
 namespace DataAccess.DALs.EntitiyFramework.AdminAggregate.AdminAuths
 {

@@ -1,19 +1,18 @@
-﻿using Business.Services.PhotoAggregate.ProductPhotos.ProductPhotoServiceModel;
+﻿using Business.Constants;
 using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Extension;
 using Core.Utilities.Generate;
-using Core.Utilities.Helper;
+using Core.Utilities.PagedList;
 using Core.Utilities.Results;
 using DataAccess.DALs.EntitiyFramework.PhotoAggregate.ProductPhotos;
 using DataAccess.UnitOfWork;
 using Entities.Concrete.PhotoAggregate;
+using Entities.Extensions.AutoMapper;
+using Entities.RequestModel.PhotoAggregate.ProductPhotos;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
-using Utilities.Constants;
-using X.PagedList;
 namespace Business.Services.PhotoAggregate.ProductPhotos
 {
     public class ProductPhotoService : IProductPhotoService
@@ -30,35 +29,10 @@ namespace Business.Services.PhotoAggregate.ProductPhotos
         }
         #endregion
         #region Method
-        [CacheAspect]
-        public async Task<Result<ProductPhoto>> GetProductPhotoById(GetProductPhotoById request)
-        {
-            return Result.SuccessDataResult(await _productPhotoRepository.GetAsync(x => x.Id == request.PhotoId));
-        }
-        [CacheAspect]
-        public async Task<Result<IPagedList<ProductPhoto>>> GetProductPhoto(GetProductPhoto request)
-        {
-            var query = _productPhotoRepository.Query().Where(x => x.ProductId == request.Id);
-            if (request.OrderByText != null)
-                query = query.OrderBy(request.OrderByText);
-            return Result.SuccessDataResult(await query.ToPagedListAsync(request.PageIndex, request.PageSize));
-        }
-        [CacheRemoveAspect("IProductPhotoService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
-            "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
-        [LogAspect(typeof(MsSqlLogger))]
-        public async Task<Result> AddProductPhoto(ProductPhoto product)
-        {
-            return await _unitOfWork.BeginTransaction<Result>(async () =>
-            {
-                await _productPhotoRepository.AddAsync(product);
-                return Result.SuccessResult();
-            });
-        }
-        [CacheRemoveAspect("IProductPhotoService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
-         "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
-        [LogAspect(typeof(MsSqlLogger))]
+        #region Command
+        [CacheRemoveAspect("IProductPhoto", "ICombinationPhoto","IShowcase")]
         [GenerateApiFromFromAttribute]
-        public async Task<Result> AddRangeProductPhotoInsert(AddRangeProductPhotoInsert request)
+        public async Task<Result> AddRangeProductPhotoInsert(AddRangeProductPhotoInsertReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
             {
@@ -67,7 +41,7 @@ namespace Business.Services.PhotoAggregate.ProductPhotos
                 {
                     var image = new ProductPhoto
                     {
-                        ProductPhotoName = PhotoHelper.Add(PhotoUrl.Product, item).Data.Path,
+                        ProductPhotoName = item.ConvertImageToBase64(),
                         ProductId = request.ProductId
                     };
                     newProductPhotoList.Add(image);
@@ -76,19 +50,64 @@ namespace Business.Services.PhotoAggregate.ProductPhotos
                 return Result.SuccessResult();
             });
         }
-        [CacheRemoveAspect("IProductPhotoService.Get", "ICombinationPhotoDAL.GetAllCombinationPhotosDTO",
-         "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
-        [LogAspect(typeof(MsSqlLogger))]
-        public async Task<Result> DeleteProductPhoto(DeleteProductPhoto request)
+        /// <summary>
+        /// DeleteProductPhoto
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProductPhoto", "ICombinationPhoto","IShowcase", "IShowcase")]
+        public async Task<Result> DeleteProductPhoto(DeleteProductPhotoReqModel request)
         {
-            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            return await _unitOfWork.BeginTransaction(async () =>
             {
-                if (request.Id == 0)
-                    return Result.ErrorResult();
-                _productPhotoRepository.Remove(await _productPhotoRepository.GetByIdAsync(request.Id));
+                var data = await _productPhotoRepository.GetByIdAsync(request.Id);
+                if (data == null)
+                    return Result.ErrorResult(Messages.IdNotFound);
+                _productPhotoRepository.Remove(data);
                 return Result.SuccessResult();
             });
         }
+        /// <summary>
+        /// AddProductPhoto
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProductPhoto", "ICombinationPhoto","IShowcase")]
+        public async Task<Result<ProductPhoto>> AddProductPhoto(AddProductPhotoReqModel product)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var data = product.MapTo<ProductPhoto>();
+                await _productPhotoRepository.AddAsync(data);
+                return Result.SuccessDataResult(data);
+            });
+        }
+        #endregion
+        #region Query
+        /// <summary>
+        /// GetProductPhotoById
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheAspect]
+        public async Task<Result<ProductPhoto>> GetProductPhotoById(GetProductPhotoByIdReqModel request)
+        {
+            return Result.SuccessDataResult(await _productPhotoRepository.GetAsync(x => x.Id == request.PhotoId));
+        }
+        /// <summary>
+        /// GetProductPhoto
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheAspect]
+        public async Task<Result<IPagedList<ProductPhoto>>> GetProductPhoto(GetProductPhotoReqModel request)
+        {
+            var query = _productPhotoRepository.Query().Where(x => x.ProductId == request.Id);
+            if (request.OrderByText != null)
+                query = query.OrderBy(request.OrderByText);
+            return Result.SuccessDataResult(await query.ToPagedListAsync(request.Param.PageIndex, request.Param.PageSize));
+        }
+        #endregion
         #endregion
     }
 }

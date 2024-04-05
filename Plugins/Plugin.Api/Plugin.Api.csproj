@@ -3,11 +3,10 @@
 		<TargetFramework>net5.0</TargetFramework>
 		<CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
 		<OutputType>Library</OutputType>
-		<PostBuildEvent>xcopy /y *.dll  ..\..\..\..\..\eCommerce\bin\Debug\net5.0</PostBuildEvent>
 	</PropertyGroup>
 	<ItemGroup>
 	  <Folder Include="Controllers\" />
-	  <Folder Include="wwwroot\" />
+	  <Folder Include="Extension\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Libraries\Business\Business.csproj" />

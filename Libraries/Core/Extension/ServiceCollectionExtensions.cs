@@ -1,6 +1,6 @@
 ﻿using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
-namespace Core.Extensions
+namespace Core.Extension
 {
     public static class ServiceCollectionExtensions
     {

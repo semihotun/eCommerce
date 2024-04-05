@@ -1,37 +1,3 @@
 ﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductVM
-@Html.Partial("StockPrice/_ProductStockCreate", Model)
-@Html.Partial("StockPrice/_ProductStockPriceDataTable", Model)
-<script>
-    var ProductStockPriceTable;
-    var GetProductStockPriceTable = function (response) {
-        let ProductStockPriceTable;
-        if ($.fn.DataTable.isDataTable("#productStockPriceList")) {
-            ProductStockPriceTable = $("#productStockPriceList").DataTable();
-            ProductStockPriceTable.draw();
-        }
-        else {
-            ProductStockPriceTable = $("#productStockPriceList").DataTable({
-                "sAjaxSource": "/Admin/ProductStock/ProductStockListJson?ProductId=" + $("#Id").val(),
-                "bServerSide": true,
-                "bProcessing": true,
-                "bSearchable": true,
-                "bLengthChange": false,
-                "searching": false,
-                "columns": [
-                    { "data": "Id", "name": "ProductStock.Id", "autoWidth": true },
-                    { "data": "ProductName", "name": "ProductName", "autoWidth": true },
-                    { "data": "ProductStockPiece", "name": "ProductStock.ProductStockPiece", "autoWidth": true },
-                    {
-                        data: null,
-                        render: function (data, type, row) {
-                            return "<a id='" + row.Id + "' onClick='DeleteProductStock(this)'><i class='fa fa-trash-o datatablesil ' style='font-size:20px;' ></i></a>";
-                        }, "orderable": false
-                    },
-                ],
-                "language": {
-                    "url": "/datatablelanguage.json"
-                }
-            });
-        }
-    }
-</script>
+@await Html.PartialAsync("StockPrice/_ProductStockCreate", Model)
+@await Html.PartialAsync("StockPrice/_ProductStockPriceDataTable", Model)

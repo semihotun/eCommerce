@@ -1,47 +1,44 @@
-﻿using AutoMapper;
-using Business.Constants;
-using Business.Services.ProductAggregate.ProductAttributeValues.ProductAttributeValueServiceModel;
-using Business.Services.ProductAggregate.ProductAttributeValues.Validator;
+﻿using Business.Constants;
 using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeCombinations;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeValues;
 using DataAccess.UnitOfWork;
 using Entities.Concrete.ProductAggregate;
+using Entities.Extensions.AutoMapper;
+using Entities.RequestModel.ProductAggregate.ProductAttributeValues;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
-using X.PagedList;
 namespace Business.Services.ProductAggregate.ProductAttributeValues
 {
     public class ProductAttributeValueService : IProductAttributeValueService
     {
         #region Field
         private readonly IProductAttributeValueDAL _productAttributeValueRepository;
-        private readonly IMapper _mapper;
         private readonly IProductAttributeCombinationDAL _productAttributeCombinationDAL;
         private readonly IUnitOfWork _unitOfWork;
         #endregion
         #region Ctor
-        public ProductAttributeValueService(IProductAttributeValueDAL productAttributeValueRepository,
-            IMapper mapper, IProductAttributeCombinationDAL productAttributeCombinationDAL, IUnitOfWork unitOfWork)
+        public ProductAttributeValueService(IProductAttributeValueDAL productAttributeValueRepository,IProductAttributeCombinationDAL productAttributeCombinationDAL, IUnitOfWork unitOfWork)
         {
             _productAttributeValueRepository = productAttributeValueRepository;
-            _mapper = mapper;
             _productAttributeCombinationDAL = productAttributeCombinationDAL;
             _unitOfWork = unitOfWork;
         }
         #endregion
         #region Method
-        [CacheRemoveAspect("IProductAttributeValueService.Get")]
-        [LogAspect(typeof(MsSqlLogger))]
-        public async Task<Result> DeleteProductAttributeValue(DeleteProductAttributeValue request)
+        #region Command
+        /// <summary>
+        /// DeleteProductAttributeValue
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProductAttributeValue")]
+        public async Task<Result> DeleteProductAttributeValue(DeleteProductAttributeValueReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
             {
@@ -70,8 +67,77 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues
                 return Result.SuccessResult();
             });
         }
+        /// <summary>
+        /// InsertProductAttributeValue
+        /// </summary>
+        /// <param name="productAttributeValue"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProductAttributeValue")]
+        public async Task<Result<ProductAttributeValue>> InsertProductAttributeValue(InsertProductAttributeValueReqModel productAttributeValue)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var data = productAttributeValue.MapTo<ProductAttributeValue>();
+                await _productAttributeValueRepository.AddAsync(data);
+                return Result.SuccessDataResult(data);
+            });
+        }
+        /// <summary>
+        /// InsertOrUpdateProductAttributeValue
+        /// </summary>
+        /// <param name="productAttributeValue"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProductAttributeValue")]
+        public async Task<Result<ProductAttributeValue>> InsertOrUpdateProductAttributeValue(InsertOrUpdateProductAttributeValueReqModel productAttributeValue)
+        {
+            if (productAttributeValue.Id == 0)
+            {
+                var updateData = productAttributeValue.MapTo<InsertProductAttributeValueReqModel>();
+                return await InsertProductAttributeValue(updateData);
+            }
+            else
+            {
+                var updateData = productAttributeValue.MapTo<UpdateProductAttributeValueReqModel>();
+                return await UpdateProductAttributeValue(updateData);
+            }
+        }
+        /// <summary>
+        /// UpdateProductAttributeValue
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProductAttributeValue")]
+        public async Task<Result<ProductAttributeValue>> UpdateProductAttributeValue(UpdateProductAttributeValueReqModel request)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                var productAttributeValue = await _productAttributeValueRepository.GetAsync(x => x.Id == request.Id);
+                if (productAttributeValue == null)
+                    Result.ErrorDataResult(Messages.IdNotFound);
+                var data = request.MapTo(productAttributeValue);
+                _productAttributeValueRepository.Update(data);
+                return Result.SuccessDataResult(data);
+            });
+        }
+        #endregion
+        #region Query
+        /// <summary>
+        /// GetProductAttributeValueById
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [CacheAspect]
-        public async Task<Result<List<ProductAttributeValue>>> GetProductAttributeValues(GetProductAttributeValues request)
+        public async Task<Result<ProductAttributeValue>> GetProductAttributeValueById(GetProductAttributeValueByIdReqModel request)
+        {
+            return Result.SuccessDataResult(await _productAttributeValueRepository.GetAsync(x => x.Id == request.ProductAttributeValueId));
+        }
+        /// <summary>
+        /// GetProductAttributeValues
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheAspect]
+        public async Task<Result<List<ProductAttributeValue>>> GetProductAttributeValues(GetProductAttributeValuesReqModel request)
         {
             var data = await (from pav in _productAttributeValueRepository.Query()
                               orderby pav.DisplayOrder, pav.Id
@@ -79,47 +145,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues
                               select pav).ToListAsync();
             return Result.SuccessDataResult(data);
         }
-        [CacheAspect]
-        public async Task<Result<ProductAttributeValue>> GetProductAttributeValueById(GetProductAttributeValueById request)
-        {
-            return Result.SuccessDataResult(await _productAttributeValueRepository.GetAsync(x => x.Id == request.ProductAttributeValueId));
-        }
-        [ValidationAspect(typeof(CreateProductAttributeValueValidator))]
-        [CacheRemoveAspect("IProductAttributeValueService.Get")]
-        [LogAspect(typeof(MsSqlLogger))]
-        public async Task<Result<ProductAttributeValue>> InsertProductAttributeValue(ProductAttributeValue productAttributeValue)
-        {
-            return await _unitOfWork.BeginTransaction(async () =>
-            {
-                await _productAttributeValueRepository.AddAsync(productAttributeValue);
-                return Result.SuccessDataResult(productAttributeValue);
-            });
-        }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductAttributeValueService.Get")]
-        public async Task<Result> InsertOrUpdateProductAttributeValue(ProductAttributeValue productAttributeValue)
-        {
-            return await _unitOfWork.BeginTransaction(async () =>
-            {
-                if (productAttributeValue.Id == 0)
-                    await _productAttributeValueRepository.AddAsync(productAttributeValue);
-                else
-                    _productAttributeValueRepository.Update(productAttributeValue);
-                return Result.SuccessResult();
-            });
-        }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductAttributeValueService.Get")]
-        public async Task<Result<ProductAttributeValue>> UpdateProductAttributeValue(ProductAttributeValue productAttributeValue)
-        {
-            return await _unitOfWork.BeginTransaction(async () =>
-            {
-                var mapData = _mapper.Map(productAttributeValue,
-                    await _productAttributeValueRepository.GetAsync(x => x.Id == productAttributeValue.Id));
-                _productAttributeValueRepository.Update(mapData);
-                return Result.SuccessDataResult(mapData);
-            });
-        }
+        #endregion
         #endregion
     }
 }

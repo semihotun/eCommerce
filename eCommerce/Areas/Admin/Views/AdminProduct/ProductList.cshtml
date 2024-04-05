@@ -1,9 +1,7 @@
-﻿@using X.PagedList.Mvc.Core; <!--import to get HTML Helper-->
-@using X.PagedList;
-@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductListVM
+﻿@model Entities.ViewModels.AdminViewModel.AdminProduct.ProductListVM
 @{
     ViewBag.Title = "ProductList";
-    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
 }
 <div class="content">
     <div class="row">
@@ -73,8 +71,8 @@
                         </table>
                     </div>
                     <script>
-                        let ProductListTableo;
-                        let BindProductList = function (response) {
+                        const GetProductDataTable = (response) => {
+                            let ProductListTableo;
                             if ($.fn.DataTable.isDataTable("#ProductList")) {
                                 ProductListTableo.draw();
                             }
@@ -116,34 +114,10 @@
                                     }
                                 });
                             }
+                            return ProductListTableo;
                         }
-                        $(document).ready(function () {
-                            BindProductList();
-                            AddDataTableFilter(ProductListTableo);
-                            let productid = $("#Id").val();
-                            $('#ProductList tbody').on('click', '.ProductListDelete', function () {
-                                let combinationid = $(this).attr('Id');
-                                $.ajax({
-                                    type: 'GET',
-                                    dataType: 'json',
-                                    data: 'ProductId=' + productid,
-                                    url: '/Admin/AdminProduct/ProductDelete',
-                                    success: function (datas) {
-                                        toastr.success("Basariyla Silindi");
-                                        BindProductList();
-                                    },
-                                    error: function () {
-                                        toastr.warning("Veri Silerken hata");
-                                    },
-                                });
-                            });
-                        });
-                        $("#ProductListForm").submit(function (event) {
-                            event.preventDefault();
-                            $('#ProductList').DataTable().destroy();
-                            BindProductList();
-                        });
                     </script>
+                    <script src="~/admin/productlist.js"></script>
                 </div>
             </div>
         </div>

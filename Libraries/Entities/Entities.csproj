@@ -15,4 +15,39 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Core\Core.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="ViewModelsValidator\" />
+	  <Folder Include="RequestModel\AdminAggregate\AdminServices\" />
+	  <Folder Include="RequestModel\AdminAggregate\TokenServices\" />
+	  <Folder Include="RequestModel\ProductAggregate\ProductSeo\" />
+	  <Folder Include="RequestModelValidator\AdminAggregate\AdminAuths\" />
+	  <Folder Include="RequestModelValidator\AdminAggregate\AdminServices\" />
+	  <Folder Include="RequestModelValidator\AdminAggregate\TokenServices\" />
+	  <Folder Include="RequestModelValidator\BasketAggregate\Baskets\" />
+	  <Folder Include="RequestModelValidator\BrandAggregate\Brands\" />
+	  <Folder Include="RequestModelValidator\BrandAggregate\CatalogBrands\" />
+	  <Folder Include="RequestModelValidator\CategoriesAggregate\Categories\" />
+	  <Folder Include="RequestModelValidator\CategoriesAggregate\CategorySpefications\" />
+	  <Folder Include="RequestModelValidator\CommentsAggregate\Comments\" />
+	  <Folder Include="RequestModelValidator\PhotoAggregate\CombinationPhotos\" />
+	  <Folder Include="RequestModelValidator\PhotoAggregate\ProductPhotos\" />
+	  <Folder Include="RequestModelValidator\ProductAggregate\PredefinedProductAttributeValues\" />
+	  <Folder Include="RequestModelValidator\ProductAggregate\ProductAttributeCombinations\" />
+	  <Folder Include="RequestModelValidator\ProductAggregate\ProductAttributeMappings\" />
+	  <Folder Include="RequestModelValidator\ProductAggregate\ProductAttributes\" />
+	  <Folder Include="RequestModelValidator\ProductAggregate\ProductAttributeValues\" />
+	  <Folder Include="RequestModelValidator\ProductAggregate\ProductSeo\" />
+	  <Folder Include="RequestModelValidator\ProductAggregate\ProductShipmentInfos\" />
+	  <Folder Include="RequestModelValidator\ProductAggregate\ProductSpecificationAttributes\" />
+	  <Folder Include="RequestModelValidator\ProductAggregate\ProductStocks\" />
+	  <Folder Include="RequestModelValidator\ProductAggregate\ProductStockTypes\" />
+	  <Folder Include="RequestModelValidator\ProductAggregate\Products\" />
+	  <Folder Include="RequestModelValidator\ShowcaseAggregate\ShowCaseProducts\" />
+	  <Folder Include="RequestModelValidator\ShowcaseAggregate\ShowcaseServices\" />
+	  <Folder Include="RequestModelValidator\ShowcaseAggregate\ShowcaseTypes\" />
+	  <Folder Include="RequestModelValidator\SliderAggregate\Sliders\" />
+	  <Folder Include="RequestModelValidator\SpeficationAggregate\SpecificationAttributeOptions\" />
+	  <Folder Include="RequestModelValidator\SpeficationAggregate\SpecificationAttributes\" />
+	  <Folder Include="RequestModelValidator\UserIdentityAggregate\Manages\" />
+	</ItemGroup>
 </Project>

@@ -1,24 +1,24 @@
-﻿using Business.Services.ProductAggregate.ProductAttributeCombinations.ProductAttributeCombinationServiceModel;
+﻿using Core.Utilities.PagedList;
 using Core.Utilities.Results;
 using Entities.Concrete.ProductAggregate;
+using Entities.RequestModel.ProductAggregate.ProductAttributeCombinations;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace Business.Services.ProductAggregate.ProductAttributeCombinations
 {
     public interface IProductAttributeCombinationService
     {
-        Task<Result<List<string>>> GetProductCombinationXml(GetProductCombinationXml request);
-        Task<Result> AllInsertPermutationCombination(AllInsertPermutationCombination request);
-        Task<Result> InsertPermutationCombination(InsertPermutationCombination request);
-        Task<Result> DeleteProductAttributeCombination(DeleteProductAttributeCombination request);
+        Task<Result<ProductAttributeCombination>> InsertProductAttributeCombination(InsertProductAttributeCombinationReqModel combination);
+        Task<Result> UpdateProductAttributeCombination(UpdateProductAttributeCombinationReqModel combination);
+        Task<Result<List<string>>> GetProductCombinationXml(GetProductCombinationXmlReqModel request);
+        Task<Result> AllInsertPermutationCombination(AllInsertPermutationCombinationReqModel request);
+        Task<Result> InsertPermutationCombination(InsertPermutationCombinationReqModel request);
+        Task<Result> DeleteProductAttributeCombination(DeleteProductAttributeCombinationReqModel request);
         Task<Result<IPagedList<ProductAttributeCombination>>> GetAllProductAttributeCombinations(
-            GetAllProductAttributeCombinations request);
+            GetAllProductAttributeCombinationsReqModel request);
         Task<Result<ProductAttributeCombination>> GetProductAttributeCombinationById(
-            GetProductAttributeCombinationById request);
+            GetProductAttributeCombinationByIdReqModel request);
         Task<Result<ProductAttributeCombination>> GetProductAttributeCombinationBySku(
-            GetProductAttributeCombinationBySku request);
-        Task<Result> InsertProductAttributeCombination(ProductAttributeCombination combination);
-        Task<Result> UpdateProductAttributeCombination(ProductAttributeCombination combination);
+            GetProductAttributeCombinationBySkuReqModel request);
     }
 }

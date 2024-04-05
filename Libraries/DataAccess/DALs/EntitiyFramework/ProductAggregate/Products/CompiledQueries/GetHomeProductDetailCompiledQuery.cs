@@ -1,12 +1,12 @@
 ﻿using DataAccess.Context;
-using Entities.DTO;
-using Entities.DTO.Product;
+using Entities.Dtos.ProductDALModels;
 using Entities.Enum;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities.Dtos.ProductSpecificationAttributeDALModels;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.CompiledQueries
 {
     public static class GetHomeProductDetailCQ
@@ -63,7 +63,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.CompiledQue
                               }).AsEnumerable()
                  let pcg = (from pc in Context.Comment
                             where pc.IsApproved && pc.Productid == p.Id
-                            join u in Context.Users on pc.UserId equals u.Id
+                            join u in Context.CustomerUser on pc.UserId equals u.Id
                             select new ProductDetailDTO.Comment()
                             {
                                 CommentInfo = pc,

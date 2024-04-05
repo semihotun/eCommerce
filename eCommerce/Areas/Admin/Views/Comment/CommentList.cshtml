@@ -1,7 +1,7 @@
 ﻿@model Entities.Concrete.CommentsAggregate.Comment
 @{
     ViewData["Title"] = "CommentList";
-    Layout = "~/Views/Shared/_AdminLayoutPage1.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
 }
 <div class="content">
     <div class="row">
@@ -17,7 +17,7 @@
                         <br />
                         @Html.DropDownListFor(model => model.IsApproved, (List<SelectListItem>)ViewBag.Approve, new { @class = " form-control  col-md-4",onchange="this.form.submit()" })
                     </form>
-                    @Html.Partial("CommentDatatable", Model)
+                    @await Html.PartialAsync("CommentDatatable", Model)
                 </div>
             </div>
         </div>

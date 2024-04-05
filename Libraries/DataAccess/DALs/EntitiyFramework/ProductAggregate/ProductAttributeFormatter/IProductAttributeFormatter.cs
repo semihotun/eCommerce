@@ -1,6 +1,6 @@
-﻿using Entities.DTO;
-using Entities.DTO.Product;
-using Entities.DTO.ProductAttributeCombinations;
+﻿using Entities.Dtos.ProductAttributeCombinationDALModels;
+using Entities.Dtos.ProductAttributeMappingDALModels;
+using Entities.Dtos.ProductDALModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeFormatter

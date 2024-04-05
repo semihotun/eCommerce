@@ -1,6 +1,5 @@
 ﻿using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Caching.Microsoft;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.CrossCuttingConcerns.Logging.SeriLog;
 using Core.Utilities.Email;
 using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -18,11 +17,9 @@ namespace Core.DependencyResolvers
         public void Load(IServiceCollection serviceCollection)
         {
             serviceCollection.AddMemoryCache();
-            serviceCollection.AddSingleton<Stopwatch>();
-            serviceCollection.AddSingleton<ICacheManager, MemoryCacheManager>();
-            serviceCollection.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            serviceCollection.AddScoped<Stopwatch>();
+            serviceCollection.AddScoped<IActionContextAccessor, ActionContextAccessor>();
             serviceCollection.AddTransient<IMailService, MailManager>();
-            serviceCollection.AddTransient<FileLogger>();
             serviceCollection.AddTransient<MsSqlLogger>();
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
             var assembliesFilter = assemblies.Where(

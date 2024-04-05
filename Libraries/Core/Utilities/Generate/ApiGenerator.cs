@@ -77,7 +77,6 @@ namespace Core.Utilities.Generate
         private static string GenerateCommandControllerString(string parameterMethod, MethodInfo methodInfo, Type item, string pushParams, string isAllowAnonymous)
         {
             var modelBinding = methodInfo.GetCustomAttributes<GenerateApiFromFromAttribute>().Any() ? "[FromForm]" : "[FromBody]";
-            var returnSuccess = methodInfo.ReturnType.ToString().Contains("IResult") ? "return Ok(result);" : "return Ok(result.Data);";
             return $@"{isAllowAnonymous}
                        [Produces(""application/json"", ""text/plain"")]
                        [HttpPost(""{methodInfo.Name.ToLowerInvariant()}"")]
@@ -85,7 +84,7 @@ namespace Core.Utilities.Generate
                        public async Task<IActionResult> {methodInfo.Name} ({modelBinding}{parameterMethod}) {{
                             var result = await {"_" + item.Name.FirstCharToLowerCase()}.{methodInfo.Name}({pushParams});
                             if(result.Success)
-                                {returnSuccess}
+                                return Ok(result);
                             else
                                 return BadRequest(result.Message);
                        }}";
@@ -95,7 +94,7 @@ namespace Core.Utilities.Generate
             var parameterReferenceList = new List<string>();
             parameterReferenceList.AddRange(new List<string>
                 {
-                    "System", "System.Collections.Generic","System.Text","X.PagedList","Microsoft.AspNetCore.Mvc",
+                    "System", "System.Collections.Generic","System.Text","Core.Utilities.PagedList","Microsoft.AspNetCore.Mvc",
                     assemblyClass.Namespace,"Microsoft.AspNetCore.Http","System.Threading.Tasks","Microsoft.AspNetCore.Authorization","Core.Utilities.Identity"
                 });
             return parameterReferenceList;

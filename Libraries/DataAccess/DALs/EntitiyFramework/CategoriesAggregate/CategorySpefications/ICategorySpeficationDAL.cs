@@ -1,4 +1,4 @@
-﻿using eCommerce.Core.DataAccess;
+﻿using Core.DataAccess;
 using Entities.Concrete.CategoriesAggregate;
 namespace DataAccess.DALs.EntitiyFramework.CategoriesAggregate.CategorySpefications
 {

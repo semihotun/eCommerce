@@ -1,13 +1,14 @@
-﻿using Core.Utilities.Infrastructure.Filter;
+﻿using Core.Aspects.Autofac.Caching;
+using Core.DataAccess.EntitiyFramework;
+using Core.Utilities.Infrastructure.Filter;
+using Core.Utilities.PagedList;
 using Core.Utilities.Results;
 using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeFormatter;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.CompiledQueries;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products.ProductDALModels;
-using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.ProductAggregate;
-using Entities.DTO.Product;
-using Entities.DTO.ShowCase;
+using Entities.Dtos.ProductDALModels;
+using Entities.Dtos.ShowcaseDALModels;
 using Entities.Enum;
 using Entities.ViewModels.WebViewModel.Home;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
 {
     public class ProductDAL : EfEntityRepositoryBase<Product, ECommerceContext>, IProductDAL
@@ -29,6 +29,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
             _productAttributeFormatter = productAttributeFormatter;
         }
         //Category,Brand,Product,ProductAttributeCombination,ProductStock
+        [CacheAspect]
         public async Task<Result<IPagedList<ProductDataTableJson>>> GetProductDataTableList(GetProductDataTableList request)
         {
             var query = from p in Context.Product.ApplyFilter(request.ProductDataTableDTO)
@@ -157,7 +158,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
             return Result.SuccessDataResult(data);
         }
         //Product,Brand,Category,ProductAttributeCombination,ProductStock,ProductPhoto,CombinationPhoto,ProductSpecificationAttribute,
-        public async Task<Result<IPagedList<Entities.DTO.Product.CatalogProduct>>> GetCatalogProduct(CatalogVM catalog)
+        public async Task<Result<IPagedList<CatalogProduct>>> GetCatalogProduct(CatalogVM catalog)
         {
             var data = JsonConvert.DeserializeObject<IList<CatalogVM.SelectFilterModel>>(catalog.SelectFilter);
             Expression filterfinalExpression = Expression.Constant(true);
@@ -202,7 +203,7 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
                         let psg = (from pse in Context.ProductSpecificationAttribute
                                    where pse.ProductId == p.Id
                                    select pse).Any(lamdaFinalExpression)
-                        select new Entities.DTO.Product.CatalogProduct
+                        select new Entities.Dtos.ProductDALModels.CatalogProduct
                         {
                             Id = p.Id,
                             CreatedOnUtc = p.CreatedOnUtc.ToString("MM/dd/yyyy"),
@@ -219,24 +220,24 @@ namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.Products
             query = query.Where(x => x.SpeficationIn);
             if (catalog.SelectedBrand != null)
             {
-                var parameter = Expression.Parameter(typeof(Entities.DTO.Product.CatalogProduct), "x");
+                var parameter = Expression.Parameter(typeof(CatalogProduct), "x");
                 Expression finalExpression = Expression.Constant(false);
                 var brandData = catalog.SelectedBrand.Split(',');
                 foreach (var brand in brandData)
                 {
                     Expression expression = null;
-                    var property = Expression.Property(parameter, typeof(Entities.DTO.Product.CatalogProduct).GetProperty("BrandId").GetMethod);
+                    var property = Expression.Property(parameter, typeof(CatalogProduct).GetProperty("BrandId").GetMethod);
                     var constant = Expression.Constant(Convert.ToInt32(brand));
                     expression = Expression.Equal(property, constant);
                     finalExpression = Expression.Or(finalExpression, expression);
                 }
-                query = query.Where(Expression.Lambda<Func<Entities.DTO.Product.CatalogProduct, bool>>(finalExpression, parameter));
+                query = query.Where(Expression.Lambda<Func<CatalogProduct, bool>>(finalExpression, parameter));
             }
             if (catalog.SortingId == 1)
                 query = query.OrderBy(x => x.ProductName);
             if (catalog.SortingId == 2)
                 query = query.OrderByDescending(x => x.ProductName);
-            var result = await query.ToPagedListAsync(catalog.pageNumber, catalog.pageSize);
+            var result = await query.ToPagedListAsync(catalog.PageNumber, catalog.PageSize);
             return Result.SuccessDataResult(result);
         }
         public async Task<Result<ProductDetailVM>> GetProductDetailVM(GetProductDetailVM request)

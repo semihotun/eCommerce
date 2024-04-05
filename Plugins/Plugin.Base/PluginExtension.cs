@@ -3,10 +3,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Intrinsics.X86;
 using System.Runtime.Loader;
 namespace Plugin.Base
 {

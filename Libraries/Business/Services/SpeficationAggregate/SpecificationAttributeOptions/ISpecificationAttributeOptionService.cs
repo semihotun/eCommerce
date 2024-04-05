@@ -1,19 +1,19 @@
-﻿using Business.Services.SpeficationAggregate.SpecificationAttributeOptions.SpecificationAttributeOptionServiceModel;
+﻿using Core.Utilities.PagedList;
 using Core.Utilities.Results;
 using Entities.Concrete.SpeficationAggregate;
+using Entities.RequestModel.SpeficationAggregate.SpecificationAttributeOptions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace Business.Services.SpeficationAggregate.SpecificationAttributeOptions
 {
     public interface ISpecificationAttributeOptionService
     {
-        Task<Result<SpecificationAttributeOption>> GetSpecificationAttributeOptionById(GetSpecificationAttributeOptionById request);
-        Task<Result<List<SpecificationAttributeOption>>> GetSpecificationAttributeOptionsByIds(GetSpecificationAttributeOptionsByIds request);
-        Task<Result<int[]>> GetNotExistingSpecificationAttributeOptions(GetNotExistingSpecificationAttributeOptions request);
-        Task<Result<IPagedList<SpecificationAttributeOption>>> GetSpecificationAttributeOptionsBySpecificationAttribute(GetSpecificationAttributeOptionsBySpecificationAttribute request);
-        Task<Result> DeleteSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption);
-        Task<Result> InsertSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption);
-        Task<Result> UpdateSpecificationAttributeOption(SpecificationAttributeOption specificationAttributeOption);
+        Task<Result<SpecificationAttributeOption>> InsertSpecificationAttributeOption(InsertSpecificationAttributeOptionReqModel specificationAttributeOption);
+        Task<Result> UpdateSpecificationAttributeOption(UpdateSpecificationAttributeOptionReqModel specificationAttributeOption);
+        Task<Result> DeleteSpecificationAttributeOption(DeleteSpecificationAttributeOptionReqModel specificationAttributeOption);
+        Task<Result<SpecificationAttributeOption>> GetSpecificationAttributeOptionById(GetSpecificationAttributeOptionByIdReqModel request);
+        Task<Result<List<SpecificationAttributeOption>>> GetSpecificationAttributeOptionsByIds(GetSpecificationAttributeOptionsByIdsReqModel request);
+        Task<Result<int[]>> GetNotExistingSpecificationAttributeOptions(GetNotExistingSpecificationAttributeOptionsReqModel request);
+        Task<Result<IPagedList<SpecificationAttributeOption>>> GetSpecificationAttributeOptionsBySpecificationAttribute(GetSpecificationAttributeOptionsBySpecificationAttributeReqModel request);
     }
 }

@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
-using X.PagedList;
+using System.Collections.Generic;
 namespace Core.Utilities.Results
 {
     public class DataTableResult<T>
     {
         [JsonProperty("aaData")]
-        public IPagedList<T> AaData { get; set; }
+        public IEnumerable<T> AaData { get; set; }
         [JsonProperty("sEcho")]
         public int SEcho { get; set; }
         [JsonProperty("iTotalDisplayRecords")]

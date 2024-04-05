@@ -1,4 +1,4 @@
-﻿using eCommerce.Core.Entities;
+﻿using Core.Entities;
 using System.Collections.Generic;
 namespace Core.Utilities.Migration
 {

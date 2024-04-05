@@ -1,15 +1,13 @@
 ﻿using Core.Aspects.Autofac.Caching;
+using Core.DataAccess.EntitiyFramework;
 using Core.Utilities.Results;
 using DataAccess.Context;
-using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices.ShowcaseDALModels;
-using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.ShowcaseAggregate;
-using Entities.DTO.ShowCase;
+using Entities.Dtos.ShowcaseDALModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices
 {
     public class ShowcaseDAL : EfEntityRepositoryBase<ShowCase, ECommerceContext>, IShowcaseDAL

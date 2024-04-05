@@ -1,12 +1,11 @@
-﻿using Business.Services.ProductAggregate.ProductShipmentInfos.ProductShipmentInfoServiceModel;
+﻿using Business.Constants;
 using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Core.Utilities.Results;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductShipmentInfos;
 using DataAccess.UnitOfWork;
 using Entities.Concrete.ProductAggregate;
-using Entities.Helpers.AutoMapper;
+using Entities.Extensions.AutoMapper;
+using Entities.RequestModel.ProductAggregate.ProductShipmentInfos;
 using System.Threading.Tasks;
 namespace Business.Services.ProductAggregate.ProductShipmentInfos
 {
@@ -23,43 +22,71 @@ namespace Business.Services.ProductAggregate.ProductShipmentInfos
             _unitOfWork = unitOfWork;
         }
         #endregion
-        [CacheAspect]
-        public async Task<Result<ProductShipmentInfo>> GetProductShipmentInfo(GetProductShipmentInfo request)
+        #region Method
+        #region Command
+        /// <summary>
+        /// AddProductShipmentInfo
+        /// </summary>
+        /// <param name="productShipmentInfo"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProductShipmentInfo")]
+        public async Task<Result<ProductShipmentInfo>> AddProductShipmentInfo(AddProductShipmentInfoReqModel productShipmentInfo)
         {
-            return Result.SuccessDataResult<ProductShipmentInfo>(await _productShipmentInfoDAL.GetAsync(x => x.ProductId == request.ProductId));
-        }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductShipmentInfoService.Get")]
-        public async Task<Result> AddProductShipmentInfo(ProductShipmentInfo productShipmentInfo)
-        {
-            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            return await _unitOfWork.BeginTransaction(async () =>
             {
-                await _productShipmentInfoDAL.AddAsync(productShipmentInfo);
-                await Task.CompletedTask;
-                return Result.SuccessResult();
+                var data= productShipmentInfo.MapTo<ProductShipmentInfo>();
+                await _productShipmentInfoDAL.AddAsync(data);
+                return Result.SuccessDataResult(data);
             });
         }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductShipmentInfoService.Get")]
-        public async Task<Result> UpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo)
+        /// <summary>
+        /// UpdateProductShipmentInfo
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProductShipmentInfo")]
+        public async Task<Result<ProductShipmentInfo>> UpdateProductShipmentInfo(UpdateProductShipmentInfoReqModel request)
         {
-            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            return await _unitOfWork.BeginTransaction(async () =>
             {
-                var query = await _productShipmentInfoDAL.GetAsync(x => x.Id == productShipmentInfo.Id);
-                var data = query.MapTo<ProductShipmentInfo>(productShipmentInfo);
-                _productShipmentInfoDAL.Update(data);
-                return Result.SuccessResult();
+                var data = await _productShipmentInfoDAL.GetByIdAsync(request.Id);
+                if (data == null)
+                    Result.ErrorResult(Messages.IdNotFound);
+                var productShipment = request.MapTo(data);
+                _productShipmentInfoDAL.Update(productShipment);
+                return Result.SuccessDataResult(productShipment);
             });
         }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductShipmentInfoService.Get")]
-        public async Task<Result> AddOrUpdateProductShipmentInfo(ProductShipmentInfo productShipmentInfo)
+        /// <summary>
+        /// AddOrUpdateProductShipmentInfo
+        /// </summary>
+        /// <param name="productShipmentInfo"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProductShipmentInfo")]
+        public async Task<Result<ProductShipmentInfo>> AddOrUpdateProductShipmentInfo(AddOrUpdateProductShipmentInfoReqModel productShipmentInfo)
         {
             if (productShipmentInfo.Id == 0)
-                await AddProductShipmentInfo(productShipmentInfo);
+            {
+                return await AddProductShipmentInfo(productShipmentInfo.MapTo<AddProductShipmentInfoReqModel>());
+            }
             else
-                await UpdateProductShipmentInfo(productShipmentInfo);
-            return Result.SuccessResult();
+            {
+                return await UpdateProductShipmentInfo(productShipmentInfo.MapTo<UpdateProductShipmentInfoReqModel>());
+            }
         }
+        #endregion
+        #region Query
+        /// <summary>
+        /// GetProductShipmentInfo
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheAspect]
+        public async Task<Result<ProductShipmentInfo>> GetProductShipmentInfo(GetProductShipmentInfoReqModel request)
+        {
+            return Result.SuccessDataResult(await _productShipmentInfoDAL.GetAsync(x => x.ProductId == request.ProductId));
+        }
+        #endregion
+        #endregion
     }
 }

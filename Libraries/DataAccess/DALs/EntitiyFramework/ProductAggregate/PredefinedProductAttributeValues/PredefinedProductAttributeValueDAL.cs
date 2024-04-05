@@ -1,5 +1,5 @@
+using Core.DataAccess.EntitiyFramework;
 using DataAccess.Context;
-using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.ProductAggregate;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.PredefinedProductAttributeValues
 {

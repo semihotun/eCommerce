@@ -1,9 +1,9 @@
-﻿using Core.Utilities.Results;
-using DataAccess.DALs.EntitiyFramework.BrandAggregate.Brands.BrandDALModels;
-using eCommerce.Core.DataAccess;
+﻿using Core.DataAccess;
+using Core.Utilities.PagedList;
+using Core.Utilities.Results;
 using Entities.Concrete.BrandAggregate;
+using Entities.Dtos.BrandDALModels;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace DataAccess.DALs.EntitiyFramework.BrandAggregate.Brands
 {
     public interface IBrandDAL : IEntityRepository<Brand>

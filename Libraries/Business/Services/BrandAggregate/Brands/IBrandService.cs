@@ -1,19 +1,19 @@
-﻿using Business.Services.BrandAggregate.Brands.BrandServiceModel;
+﻿using Core.Utilities.PagedList;
 using Core.Utilities.Results;
 using Entities.Concrete.BrandAggregate;
+using Entities.RequestModel.BrandAggregate.Brands;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace Business.Services.BrandAggregate.Brands
 {
     public interface IBrandService
     {
-        Task<Result<IPagedList<Brand>>> GetBrandList(GetBrandList request);
-        Task<Result> AddBrand(Brand model);
-        Task<Result<Brand>> GetBrand(GetBrand request);
-        Task<Result> DeleteBrand(Brand brand);
-        Task<Result> UpdateBrand(Brand brand);
-        Task<Result<IEnumerable<SelectListItem>>> GetBrandDropdown(GetBrandDropdown request);
+        Task<Result<IPagedList<Brand>>> GetBrandList(GetBrandListReqModel request);
+        Task<Result<Brand>> AddBrand(AddBrandReqModel model);
+        Task<Result<Brand>> GetBrand(GetBrandReqModel request);
+        Task<Result> DeleteBrand(DeleteBrandReqModel brand);
+        Task<Result> UpdateBrand(UpdateBrandReqModel brand);
+        Task<Result<IEnumerable<SelectListItem>>> GetBrandDropdown(GetBrandDropdownReqModel request);
     }
 }

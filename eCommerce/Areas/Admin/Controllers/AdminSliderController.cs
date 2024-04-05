@@ -1,18 +1,14 @@
 ﻿using AutoMapper;
 using Business.Services.SliderAggregate.Sliders;
-using Business.Services.SliderAggregate.Sliders.SliderServiceModel;
 using Core.Utilities.Identity;
-using Entities.Concrete.SliderAggregate;
+using Entities.Extensions.AutoMapper;
+using Entities.RequestModel.SliderAggregate.Sliders;
 using Entities.ViewModels.AdminViewModel.AdminSlider;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 namespace eCommerce.Areas.Admin.Controllers
 {
-    [ApiExplorerSettings(IgnoreApi = true)]
-    [Route("[area]/[controller]/[action]")]
-    [AuthorizeControl("")]
-    [Area("Admin")]
     public class AdminSliderController : AdminBaseController
     {
         #region field
@@ -37,14 +33,14 @@ namespace eCommerce.Areas.Admin.Controllers
                 SliderList = (await _sliderService.GetAllSlider()).Data
             });
         }
-        public async Task<IActionResult> SliderEdit(int id = 0)
+        public async Task<IActionResult> SliderEdit(int id)
         {
-            var sliderTask = await _sliderService.GetSlider(new GetSlider(id));
-            var model = _mapper.Map<Slider, SliderCreateOrUpdateVM>(sliderTask.Data);
-            return View(model);
+            var slider = await _sliderService.GetSlider(new (id));
+            var data = slider.Data.MapTo<UpdateSliderReqModel>();
+            return View(data);
         }
         [HttpPost]
-        public async Task<IActionResult> SliderEdit(SliderCreateOrUpdateVM model)
+        public async Task<IActionResult> SliderEdit(UpdateSliderReqModel model)
         {
             ResponseAlert(await _sliderService.UpdateSlider(model));
             return RedirectToAction(nameof(SliderIndex));
@@ -54,14 +50,14 @@ namespace eCommerce.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> SliderCreate(SliderCreateOrUpdateVM model)
+        public async Task<IActionResult> SliderCreate(InsertSliderReqModel model)
         {
             ResponseAlert(await _sliderService.InsertSlider(model));
             return RedirectToAction("SliderIndex");
         }
         public async Task<IActionResult> SliderDelete(int id)
         {
-            ResponseAlert(await _sliderService.DeleteSlider(new DeleteSlider(id)));
+            ResponseAlert(await _sliderService.DeleteSlider(new DeleteSliderReqModel(id)));
             return Json(true, new JsonSerializerSettings());
         }
         #endregion

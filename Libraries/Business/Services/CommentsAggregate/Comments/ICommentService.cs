@@ -1,17 +1,18 @@
-﻿using Business.Services.CommentsAggregate.Comments.CommentServiceModel;
+﻿using Core.Utilities.PagedList;
 using Core.Utilities.Results;
 using Entities.Concrete.CommentsAggregate;
+using Entities.RequestModel.CommentsAggregate.Comments;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace Business.Services.CommentsAggregate.Comments
 {
     public interface ICommentService
     {
-        Task<Result<IPagedList<Comment>>> GetCommentList(GetCommentList request);
-        Task<Result> AddComment(Comment model);
-        Task<Result<Comment>> GetComment(GetComment request);
-        Task<Result> DeleteComment(Comment comment);
-        Task<Result> UpdateComment(Comment comment);
+        Task<Result<Comment>> AddComment(AddCommentReqModel model);
+        Task<Result> DeleteComment(DeleteCommentReqModel comment);
+        Task<Result> UpdateComment(UpdateCommentReqModel comment);
+        Task<Result<IPagedList<Comment>>> GetCommentList(GetCommentListReqModel request);
+        Task<Result<Comment>> GetComment(GetCommentReqModel request);
         Task<Result<int>> GetCommentCount();
+        Task<Result> CommentApprove(CommentApproveReqModel request);
     }
 }

@@ -1,12 +1,12 @@
+using Core.DataAccess;
+using Core.Utilities.PagedList;
 using Core.Utilities.Results;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeCombinations.ProductAttributeCombinationDALModels;
-using eCommerce.Core.DataAccess;
 using Entities.Concrete.ProductAggregate;
+using Entities.Dtos.ProductAttributeCombinationDALModels;
 using Entities.ViewModels.AdminViewModel.AdminProduct;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductAttributeCombinations
 {
     public interface IProductAttributeCombinationDAL : IEntityRepository<ProductAttributeCombination>

@@ -1,14 +1,13 @@
-﻿using Core.Utilities.Results;
+﻿using Core.DataAccess.EntitiyFramework;
+using Core.Utilities.PagedList;
+using Core.Utilities.Results;
 using DataAccess.Context;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecificationAttributes.ProductSpecificationAttributeDALModels;
-using eCommerce.Core.DataAccess.EntitiyFramework;
 using Entities.Concrete.ProductAggregate;
-using Entities.DTO;
+using Entities.Dtos.ProductSpecificationAttributeDALModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecificationAttributes
 {
     public class ProductSpecificationAttributeDAL : EfEntityRepositoryBase<ProductSpecificationAttribute, ECommerceContext>, IProductSpecificationAttributeDAL

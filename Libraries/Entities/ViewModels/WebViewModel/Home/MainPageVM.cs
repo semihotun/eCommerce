@@ -1,6 +1,6 @@
 ﻿using Entities.Concrete.CategoriesAggregate;
 using Entities.Concrete.SliderAggregate;
-using Entities.DTO.ShowCase;
+using Entities.Dtos.ShowcaseDALModels;
 using System.Collections.Generic;
 namespace Entities.ViewModels.WebViewModel.Home
 {
@@ -11,6 +11,7 @@ namespace Entities.ViewModels.WebViewModel.Home
             SliderList = new List<Slider>();
             ShowCaseList = new List<ShowCaseDTO>();
             CategoryList = new List<Category>();
+            CategoryList = null;
         }
         public IList<Slider> SliderList { get; set; }
         public IList<ShowCaseDTO> ShowCaseList { get; set; }

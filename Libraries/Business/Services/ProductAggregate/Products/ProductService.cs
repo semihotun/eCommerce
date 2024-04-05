@@ -1,26 +1,23 @@
 ﻿using Business.Constants;
-using Business.Services.ProductAggregate.Products.ProductServiceModel;
 using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
-using Core.Utilities.Interceptors;
+using Core.Utilities.PagedList;
 using Core.Utilities.Results;
-using DataAccess.Context;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecificationAttributes;
 using DataAccess.DALs.EntitiyFramework.SpeficationAggregate.SpecificationAttributeOptions;
 using DataAccess.UnitOfWork;
 using Entities.Concrete.ProductAggregate;
-using Entities.Helpers.AutoMapper;
+using Entities.Extensions.AutoMapper;
+using Entities.RequestModel.ProductAggregate.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace Business.Services.ProductAggregate.Products
 {
     public class ProductService : IProductService
     {
+        #region Ctor
         private readonly IProductDAL _productRepository;
         private readonly IProductSpecificationAttributeDAL _productSpecificationAttributeRepository;
         private readonly ISpecificationAttributeOptionDAL _specificationAttributeOptionRepository;
@@ -36,61 +33,99 @@ namespace Business.Services.ProductAggregate.Products
             _specificationAttributeOptionRepository = specificationAttributeOptionRepository;
             _unitOfWork = unitOfWork;
         }
-        [CacheAspect]
-        public async Task<Result<Product>> GetProduct(GetProduct request)
+        #endregion
+        #region Methods
+        #region Command
+        /// <summary>
+        /// DeleteProduct
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProduct","IShowcase", "IShowcase")]
+        public async Task<Result> DeleteProduct(DeleteProductReqModel request)
         {
-            return Result.SuccessDataResult(await _productRepository.GetAsync(x => x.Id == request.Id));
-        }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductService.Get",
-        "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
-        public async Task<Result> DeleteProduct(DeleteProduct request)
-        {
-            return await _unitOfWork.BeginTransaction<Result>(async () =>
+            return await _unitOfWork.BeginTransaction(async () =>
             {
-                _productRepository.Remove(await _productRepository.GetAsync(x => x.Id == request.Id));
+                var data = await _productRepository.GetByIdAsync(request.Id);
+                if (data == null)
+                    Result.ErrorResult(Messages.IdNotFound);
+                _productRepository.Remove(data);
                 return Result.SuccessResult();
             });
         }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductService.Get",
-        "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
-        public async Task<Result<Product>> AddProduct(Product product)
+        /// <summary>
+        /// AddProduct
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProduct", "IShowcase")]
+        public async Task<Result<Product>> AddProduct(AddProductReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
             {
-                product.CreatedOnUtc = DateTime.Now;
-                product.ProductNameUpper = product.ProductName.ToUpper();
-                await _productRepository.AddAsync(product);
-                return Result.SuccessDataResult(product);
+                var data = request.MapTo<Product>();
+                data.CreatedOnUtc = DateTime.Now;
+                data.ProductNameUpper = request.ProductName.ToUpper();
+                await _productRepository.AddAsync(data);
+                return Result.SuccessDataResult(data);
             });
         }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductService.Get", "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
-        public async Task<Result<Product>> CreateOrUpdateProduct(Product product)
+        /// <summary>
+        /// UpdateProduct
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProduct","IShowcase", "IShowcase")]
+        public async Task<Result<Product>> UpdateProduct(UpdateProductReqModel request)
+        {
+            return await _unitOfWork.BeginTransaction(async () =>
+            {
+                request.CreatedOnUtc = DateTime.Now;
+                var query = await _productRepository.GetByIdAsync(request.Id);
+                var data = request.MapTo(query);
+                _productRepository.Update(data);
+                return Result.SuccessDataResult(data);
+            });
+        }
+        /// <summary>
+        /// CreateOrUpdateProduct
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        [CacheRemoveAspect("IProduct", "IShowcase")]
+        public async Task<Result<Product>> CreateOrUpdateProduct(CreateOrUpdateProductReqModel product)
         {
             if (product.Id == 0)
-                return await AddProduct(product);
-            else
-                return await UpdateProduct(product);
-        }
-        [LogAspect(typeof(MsSqlLogger))]
-        [CacheRemoveAspect("IProductService.Get",
-        "IShowcaseDAL.GetShowCaseDto", "IShowcaseDAL.GetAllShowCaseDto")]
-        public async Task<Result<Product>> UpdateProduct(Product product)
-        {
-            return await _unitOfWork.BeginTransaction(async () =>
             {
-                product.CreatedOnUtc = DateTime.Now;
-                var query = await _productRepository.GetAsync(x => x.Id == product.Id);
-                var data = query.MapTo<Product>(product);
-                _productRepository.Update(query);
-                return Result.SuccessDataResult(product);
-            });
+                var data = product.MapTo<AddProductReqModel>();
+                return await AddProduct(data);
+            }
+            else
+            {
+                var data = product.MapTo<UpdateProductReqModel>();
+                return await UpdateProduct(data);
+            }
         }
+        #endregion
+        #region Query
+        /// <summary>
+        /// GetProduct
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [CacheAspect]
+        public async Task<Result<Product>> GetProduct(GetProductReqModel request)
+        {
+            return Result.SuccessDataResult(await _productRepository.GetAsync(x => x.Id == request.Id));
+        }
+        /// <summary>
+        /// GetProductsBySpecificationAttributeId
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [CacheAspect]
         public async Task<Result<IPagedList<Product>>> GetProductsBySpecificationAttributeId(
-            GetProductsBySpecificationAttributeId request)
+            GetProductsBySpecificationAttributeIdReqModel request)
         {
             var query = from product in _productRepository.Query()
                         join psa in _productSpecificationAttributeRepository.Query() on product.Id equals psa.ProductId
@@ -100,5 +135,8 @@ namespace Business.Services.ProductAggregate.Products
                         select product;
             return Result.SuccessDataResult(await query.ToPagedListAsync(request.PageIndex, request.PageSize));
         }
+        #endregion
+        #endregion
+
     }
 }

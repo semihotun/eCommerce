@@ -1,8 +1,8 @@
 ﻿using Business.Constants;
-using Business.Services.ProductAggregate.ProductStockTypes.ProductStockTypeServiceModel;
 using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Results;
 using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStockTypes;
+using Entities.RequestModel.ProductAggregate.ProductStockTypes;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -22,8 +22,9 @@ namespace Business.Services.ProductAggregate.ProductStockTypes
         }
         #endregion
         #region Method
+        #region Query
         [CacheAspect]
-        public async Task<Result<IEnumerable<SelectListItem>>> GetAllProductStockType(GetAllProductStockType request)
+        public async Task<Result<IEnumerable<SelectListItem>>> GetAllProductStockType(GetAllProductStockTypeReqModel request)
         {
             var query = from pst in _productStockTypeDal.Query()
                         select new SelectListItem
@@ -36,6 +37,7 @@ namespace Business.Services.ProductAggregate.ProductStockTypes
             result.Insert(0, new SelectListItem(Messages.DropdownFirstItem, "0", request.SelectedId == 0));
             return Result.SuccessDataResult<IEnumerable<SelectListItem>>(result);
         }
+        #endregion
         #endregion
     }
 }

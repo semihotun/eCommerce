@@ -9,47 +9,4 @@
         </div>
     </form>
 </div>
-@{Html.RenderPartial("ProductPhoto/_ProductPhotoList", Model);}
-<script>
-    const GetProductPhotoDatatable = (response) => {
-        let ProductPhotoDataTable;
-        if ($.fn.DataTable.isDataTable("#productPhotoTable")) {
-            ProductPhotoDataTable = $("#productPhotoTable").DataTable();
-            ProductPhotoDataTable.draw();
-        }
-        else {
-            ProductPhotoDataTable = $("#productPhotoTable").DataTable({
-                "sAjaxSource": "/Admin/ProductPhoto/ProductPhotoList?productId="+@Model.Id,
-                "bServerSide": true,
-                "bProcessing": true,
-                "bSearchable": true,
-                "bLengthChange": false,
-                "searching":false,
-                "columns": [
-                    { "data": "Id","name":"Id","autoWidth": true },
-                    { "data": "ProductPhotoName", "name": "ProductPhotoName", "autoWidth": true },
-                    {
-                        data: null,
-                        "render": function (data, type, row) {
-                            return '<img src="' + row.ProductPhotoName + '" height="175px">';
-                        }, "orderable": false
-                    },
-                    {
-                        data: null,
-                        "render": function (data, type, row) {
-                            return '<a class="btn btn btn-outline-default combinationbtn" data-target="#productPhotoTableModal" data-toggle="modal" id="' + row.Id + '" >Kombinasyon</a>';
-                        }, "orderable": false
-                    },
-                    {
-                        data: null,
-                        render: function (data, type, row) {
-                            return "<a href='#' class='DeleteProductPhotoList' id='" + row.Id + "' ><i class='fa fa-trash-o datatablesil ' style='font-size:20px;' ></i></a>";
-                        }, "orderable": false
-                    },
-                ], "language": {
-                    "url": "/datatablelanguage.json"
-                }
-            });
-        }
-    }
-</script>
+@{await Html.RenderPartialAsync("ProductPhoto/_ProductPhotoDataTable", Model);}

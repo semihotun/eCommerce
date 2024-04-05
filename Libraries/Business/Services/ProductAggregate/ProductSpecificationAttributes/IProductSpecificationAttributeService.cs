@@ -1,17 +1,17 @@
-﻿using Business.Services.ProductAggregate.ProductSpecificationAttributes.ProductSpecificationAttributeServiceModel;
+﻿using Core.Utilities.PagedList;
 using Core.Utilities.Results;
 using Entities.Concrete.ProductAggregate;
+using Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes;
 using System.Threading.Tasks;
-using X.PagedList;
 namespace Business.Services.ProductAggregate.ProductSpecificationAttributes
 {
     public interface IProductSpecificationAttributeService
     {
-        Task<Result> DeleteProductSpecificationAttribute(DeleteProductSpecificationAttribute request);
-        Task<Result<IPagedList<ProductSpecificationAttribute>>> GetProductSpecificationAttributes(GetProductSpecificationAttributes request);
-        Task<Result<ProductSpecificationAttribute>> GetProductSpecificationAttributeById(GetProductSpecificationAttributeById request);
-        Task<Result> InsertProductSpecificationAttribute(ProductSpecificationAttribute productSpecificationAttribute);
-        Task<Result> UpdateProductSpecificationAttribute(ProductSpecificationAttribute productSpecificationAttribute);
-        Task<Result<int>> GetProductSpecificationAttributeCount(GetProductSpecificationAttributeCount request);
+        Task<Result<ProductSpecificationAttribute>> InsertProductSpecificationAttribute(InsertProductSpecificationAttributeReqModel productSpecificationAttribute);
+        Task<Result> UpdateProductSpecificationAttribute(UpdateProductSpecificationAttributeReqModel productSpecificationAttribute);
+        Task<Result> DeleteProductSpecificationAttribute(DeleteProductSpecificationAttributeReqModel request);
+        Task<Result<IPagedList<ProductSpecificationAttribute>>> GetProductSpecificationAttributes(GetProductSpecificationAttributesReqModel request);
+        Task<Result<ProductSpecificationAttribute>> GetProductSpecificationAttributeById(GetProductSpecificationAttributeByIdReqModel request);
+        Task<Result<int>> GetProductSpecificationAttributeCount(GetProductSpecificationAttributeCountReqModel request);
     }
 }

@@ -1,16 +1,16 @@
-﻿using Business.Services.CategoriesAggregate.CategorySpefications.CategorySpeficationServiceModel;
-using Core.Utilities.Results;
+﻿using Core.Utilities.Results;
 using Entities.Concrete.CategoriesAggregate;
+using Entities.RequestModel.CategoriesAggregate.CategorySpefications;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace Business.Services.CategoriesAggregate.CategorySpefications
 {
     public interface ICategorySpeficationService
     {
-        Task<Result<CategorySpefication>> GetByCategorySpeficationId(GetByCategorySpeficationId request);
-        Task<Result> DeleteCategorySpefication(CategorySpefication categorySpefication);
-        Task<Result> InsertCategorySpefication(CategorySpefication categorySpefication);
-        Task<Result> UpdateCategorySpefication(CategorySpefication categorySpefication);
-        Task<Result<List<CategorySpefication>>> GetAllCategorySpefication(GetAllCategorySpefication request);
+        Task<Result<CategorySpefication>> GetByCategorySpeficationId(GetByCategorySpeficationIdReqModel request);
+        Task<Result> DeleteCategorySpefication(DeleteCategorySpeficationReqModel categorySpefication);
+        Task<Result<CategorySpefication>> InsertCategorySpefication(InsertCategorySpeficationReqModel categorySpefication);
+        Task<Result> UpdateCategorySpefication(UpdateCategorySpeficationReqModel categorySpefication);
+        Task<Result<List<CategorySpefication>>> GetAllCategorySpefication(GetAllCategorySpeficationReqModel request);
     }
 }
