@@ -1,6 +1,32 @@
-﻿@model Entities.ViewModels.WebViewModel.Home.CatalogVM
-@{
+﻿@{
     ViewBag.Title = "Catalog";
     Layout = "~/Areas/Web/Views/Shared/_Layout.cshtml"; 
 }
 
+<div class="loginContainer">
+    <div class="col-md-6">
+        <div class="col-md-12 loginHeader"><h2 class="loginHeaderTitle">Register</h2></div>
+        <form>
+            <div class="form-group row ">
+                <span>İsim</span>
+                <input type="text" class="form-control" name="Email" />
+            </div>
+            <div class="form-group row ">
+                <span>Soyisim</span>
+                <input type="text" class="form-control" name="Email" />
+            </div>
+            <div class="form-group row ">
+                <span>Email</span>
+                <input type="text" class="form-control" name="Email" />
+            </div>
+            <div class="form-group row ">
+                <span>Sifre</span>
+                <input type="text" class="form-control" name="Password" />
+            </div>
+            <div class="form-group row ">
+                <button onclick="Register(event)" class="primary-btn col-md-12">Register</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="~/Web/Register.js"></script>

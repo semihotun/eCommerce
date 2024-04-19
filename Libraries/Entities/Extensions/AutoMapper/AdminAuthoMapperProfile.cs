@@ -1,19 +1,7 @@
 ﻿using AutoMapper;
-using Core.Utilities.Results;
-using Entities.Concrete.AuthAggregate;
-using Entities.Concrete.BasketAggregate;
-using Entities.Concrete.BrandAggregate;
-using Entities.Concrete.CategoriesAggregate;
-using Entities.Concrete.CommentsAggregate;
-using Entities.Concrete.PhotoAggregate;
-using Entities.Concrete.ProductAggregate;
-using Entities.Concrete.ShowcaseAggregate;
-using Entities.Concrete.SliderAggregate;
-using Entities.Concrete.SpeficationAggregate;
-using Entities.Dtos.ProductAttributeMappingDALModels;
+using Entities.Concrete;
 using Entities.Dtos.ProductDALModels;
 using Entities.Dtos.ShowcaseDALModels;
-using Entities.Others;
 using Entities.RequestModel.AdminAggregate.AdminAuths;
 using Entities.RequestModel.BasketAggregate.Baskets;
 using Entities.RequestModel.BrandAggregate.Brands;
@@ -37,7 +25,7 @@ using Entities.RequestModel.SpeficationAggregate.SpecificationAttributeOptions;
 using Entities.RequestModel.SpeficationAggregate.SpecificationAttributes;
 using Entities.ViewModels.AdminViewModel.AdminProduct;
 using Entities.ViewModels.AdminViewModel.Showcase;
-using Entities.ViewModels.AdminViewModel.SpeficationAttribute;
+using Entities.ViewModels.AdminViewModel.SpeficationAttributes;
 namespace Entities.Extensions.AutoMapper
 {
     public class AdminAuthoMapperProfile : Profile
@@ -62,7 +50,6 @@ namespace Entities.Extensions.AutoMapper
             CreateMap<Category, Category>().ForMember(x => x.Id, mo => mo.Ignore());
             CreateMap<ShowCaseDTO, ShowCase>();
             CreateMap<Product, ProductDataTableJson>().ReverseMap();
-            CreateMap<MappingAttrModel, MappingAttrXml>().ReverseMap();
             CreateMap<ShowCaseCreateOrUpdateVM, ShowCase>().ReverseMap();
             CreateMap<SpecificationAttributeVM, SpecificationAttribute>().ReverseMap();
             CreateMap<Product, ProductVM>().ReverseMap();

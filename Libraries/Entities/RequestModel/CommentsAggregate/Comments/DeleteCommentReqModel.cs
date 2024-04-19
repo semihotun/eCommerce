@@ -1,15 +1,16 @@
 ﻿using Entities.Concrete;
+using System;
 
 namespace Entities.RequestModel.CommentsAggregate.Comments
 {
     public class DeleteCommentReqModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public DeleteCommentReqModel()
         {
             
         }
-        public DeleteCommentReqModel(int id)
+        public DeleteCommentReqModel(Guid id)
         {
             Id = id;
         }

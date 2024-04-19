@@ -16,6 +16,7 @@
 		<ProjectReference Include="..\Entities\Entities.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Services\CustomerAggreagate\" />
+	  <Folder Include="Services\AuthAggregate\Customers\" />
+	  <Folder Include="Services\ProductAggregate\Products\DtoQueries\CompiledQueries\" />
 	</ItemGroup>
 </Project>

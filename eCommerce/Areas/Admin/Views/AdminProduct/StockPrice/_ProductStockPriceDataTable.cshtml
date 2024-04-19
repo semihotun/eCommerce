@@ -6,7 +6,6 @@
     <table id="productStockPriceList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
     <thead>
     <tr>
-        <th>Id</th>
         <th>Ürün Adı</th>
         <th>Stok Miktarı</th>
         <th></th>
@@ -28,7 +27,6 @@
                     "url": "/Admin/ProductStock/ProductStockListJson?ProductId=" + $("#Id").val(),
                     "datatype": "json",
                     "type": "POST",
-                    "async": false
                 },
                 dom: '<"bottom">rtip',
                 buttons: [
@@ -42,7 +40,6 @@
                 "responsive": true,
                 "searching": true,
                 "columns": [
-                    { "data": "Id", "name": "ProductStock.Id", "autoWidth": true },
                     { "data": "ProductName", "name": "ProductName", "autoWidth": true },
                     { "data": "ProductStockPiece", "name": "ProductStock.ProductStockPiece", "autoWidth": true },
                     {

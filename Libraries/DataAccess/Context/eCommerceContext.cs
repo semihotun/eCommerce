@@ -1,15 +1,7 @@
-﻿using Entities.Concrete.AdressAggregate;
-using Entities.Concrete.AuthAggregate;
-using Entities.Concrete.BrandAggregate;
-using Entities.Concrete.CategoriesAggregate;
-using Entities.Concrete.CommentsAggregate;
-using Entities.Concrete.CustomerUserAggregate;
-using Entities.Concrete.PhotoAggregate;
-using Entities.Concrete.ProductAggregate;
-using Entities.Concrete.ShowcaseAggregate;
-using Entities.Concrete.SliderAggregate;
-using Entities.Concrete.SpeficationAggregate;
+﻿using Core.SeedWork;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Reflection;
 namespace DataAccess.Context
 {
@@ -23,6 +15,10 @@ namespace DataAccess.Context
             var assm = Assembly.GetExecutingAssembly();
             modelBuilder.ApplyConfigurationsFromAssembly(assm);
             base.OnModelCreating(modelBuilder);
+        }
+        public IQueryable<TEntity> Query<TEntity>() where TEntity : BaseEntity
+        {
+            return Set<TEntity>().AsQueryable().Where(x => !x.IsDeleted);
         }
         #region DBSets
         public DbSet<AdminUser> AdminUser { get; set; }

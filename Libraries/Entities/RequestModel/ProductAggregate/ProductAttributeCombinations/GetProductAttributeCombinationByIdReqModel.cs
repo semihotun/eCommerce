@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
 {
     public class GetProductAttributeCombinationByIdReqModel
     {
@@ -6,10 +8,10 @@
         {
             
         }
-        public GetProductAttributeCombinationByIdReqModel(int productAttributeCombinationId)
+        public GetProductAttributeCombinationByIdReqModel(Guid productAttributeCombinationId)
         {
             ProductAttributeCombinationId = productAttributeCombinationId;
         }
-        public int ProductAttributeCombinationId { get; set; }
+        public Guid ProductAttributeCombinationId { get; set; }
     }
 }

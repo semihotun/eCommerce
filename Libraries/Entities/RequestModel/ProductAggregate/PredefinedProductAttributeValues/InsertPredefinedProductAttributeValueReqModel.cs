@@ -1,11 +1,12 @@
 ﻿using Entities.Concrete;
+using System;
 
 namespace Entities.RequestModel.ProductAggregate.PredefinedProductAttributeValues
 {
     public class InsertPredefinedProductAttributeValueReqModel
     {
         public bool IsDeleted { get; set; }
-        public int ProductAttributeId { get; set; }
+        public Guid ProductAttributeId { get; set; }
         public string Name { get; set; }
         public decimal PriceAdjustment { get; set; }
         public decimal WeightAdjustment { get; set; }
@@ -15,7 +16,7 @@ namespace Entities.RequestModel.ProductAggregate.PredefinedProductAttributeValue
         {
             
         }
-        public InsertPredefinedProductAttributeValueReqModel(int productAttributeId,
+        public InsertPredefinedProductAttributeValueReqModel(Guid productAttributeId,
             string name,
             decimal priceAdjustment,
             decimal weightAdjustment,

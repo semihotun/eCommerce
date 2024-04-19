@@ -1,4 +1,4 @@
-﻿using Entities.Concrete.BrandAggregate;
+﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace DataAccess.FluentApi.BrandAggregate
@@ -9,7 +9,6 @@ namespace DataAccess.FluentApi.BrandAggregate
         {
             builder.HasIndex(x => x.CategoryId);
             builder.HasKey(x => x.Id);
-            builder.Property(t => t.Id).UseIdentityColumn();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.CommentsAggregate.Comments
+﻿using System;
+
+namespace Entities.RequestModel.CommentsAggregate.Comments
 {
     public class GetCommentReqModel
     {
@@ -6,10 +8,10 @@
         {
             
         }
-        public GetCommentReqModel(int commentId)
+        public GetCommentReqModel(Guid commentId)
         {
             CommentId = commentId;
         }
-        public int CommentId { get; set; }
+        public Guid CommentId { get; set; }
     }
 }

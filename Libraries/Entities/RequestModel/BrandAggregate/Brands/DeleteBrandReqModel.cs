@@ -1,15 +1,16 @@
 ﻿using Entities.Concrete;
+using System;
 
 namespace Entities.RequestModel.BrandAggregate.Brands
 {
     public class DeleteBrandReqModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public DeleteBrandReqModel()
         {
                 
         }
-        public DeleteBrandReqModel(int id)
+        public DeleteBrandReqModel(Guid id)
         {
             Id = id;
         }

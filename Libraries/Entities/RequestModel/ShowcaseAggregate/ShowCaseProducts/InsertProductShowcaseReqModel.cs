@@ -1,17 +1,18 @@
 ﻿using Entities.Concrete;
+using System;
 
 namespace Entities.RequestModel.ShowcaseAggregate.ShowCaseProducts
 {
     public class InsertProductShowcaseReqModel
     {
-        public int ShowCaseId { get; set; }
-        public int ProductId { get; set; }
-        public int CombinationId { get; set; }
+        public Guid ShowCaseId { get; set; }
+        public Guid ProductId { get; set; }
+        public Guid CombinationId { get; set; }
         public InsertProductShowcaseReqModel()
         {
             
         }
-        public InsertProductShowcaseReqModel(int showCaseId, int productId, int combinationId)
+        public InsertProductShowcaseReqModel(Guid showCaseId, Guid productId, Guid combinationId)
         {
             ShowCaseId = showCaseId;
             ProductId = productId;

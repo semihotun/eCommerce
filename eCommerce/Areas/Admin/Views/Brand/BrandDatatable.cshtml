@@ -3,7 +3,6 @@
     <table id="BrandList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
         <thead>
             <tr>
-                <th filterType="int">Id</th>
                 <th filterType="string">İsim</th>
                 <th> </th>
             </tr>
@@ -13,8 +12,8 @@
     </table>
 </div>
 <script>
-    let Brandable;
-    let BindBrand = function (response) {
+    const GetBrandDataTable = function (response) {
+        let Brandable;
         if ($.fn.DataTable.isDataTable("#BrandList")) {
             Brandable.draw();
         }
@@ -37,7 +36,6 @@
                 "responsive": true,
                 "searching": true,
                 "columns": [
-                    { "data": "Id", "name": "Id", "autoWidth": true, "type": "int" },
                     { "data": "BrandName", "name": "BrandName", "autoWidth": true },
                     {
                         data: null,
@@ -50,16 +48,9 @@
                     "url": "/datatablelanguage.json"
                 }
             });
+            AddDataTableFilter(Brandable);
+            $(".dataTables_filter").remove();
         };
     }
-    $(document).ready(function () {
-        BindBrand();
-        AddDataTableFilter(Brandable);
-        $(".dataTables_filter").remove();
-    });
-    $("#BrandFilterForm").submit(function (event) {
-        event.preventDefault();
-        $('#BrandList').DataTable().destroy();
-        BindBrand();
-    });
 </script>
+<script src="~/admin/Brand/brandDatatable.js"></script>

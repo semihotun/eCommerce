@@ -32,6 +32,7 @@
                             </ul>
                         </div>
                         <div class="tab-content col-md-10" style="padding-left: 10px;">
+                            @Html.HiddenFor(model => model.Id, new { @class = "form-control" })
                             <div id="tap1" class="tab-pane active ">
                                 <form method="post" enctype="multipart/form-data" id="ProductInfoCreateOrUpdate" onsubmit="CreateProduct(event)">
                                     @Html.HiddenFor(x => x.Tap, new { @class = "tabHiddenFor" })
@@ -133,7 +134,7 @@
     </div>
 </div>
 
-<script src="/Admin/productEdit.js"></script>
+<script src="/Admin/AdminProduct/productEdit.js"></script>
 <script>
     tinymce.init({
         selector: '#ProductContent',

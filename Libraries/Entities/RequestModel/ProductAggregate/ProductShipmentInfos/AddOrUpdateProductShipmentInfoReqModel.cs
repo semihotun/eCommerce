@@ -1,20 +1,21 @@
 ﻿using Entities.Concrete;
+using System;
 
 namespace Entities.RequestModel.ProductAggregate.ProductShipmentInfos
 {
     public class AddOrUpdateProductShipmentInfoReqModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public double? Width { get; set; }
         public double? Length { get; set; }
         public double? Height { get; set; }
         public double? Weight { get; set; }
-        public int ProductId { get; set; }
+        public Guid ProductId { get; set; }
         public AddOrUpdateProductShipmentInfoReqModel()
         {
             
         }
-        public AddOrUpdateProductShipmentInfoReqModel(int id, double? width, double? length, double? height, double? weight, int productId)
+        public AddOrUpdateProductShipmentInfoReqModel(Guid id, double? width, double? length, double? height, double? weight, Guid productId)
         {
             Id = id;
             Width = width;

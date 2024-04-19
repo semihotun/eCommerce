@@ -47,6 +47,67 @@ services:
       - REDIS_PASSWORD=${Redis__Password}
       - REDIS_PORT=${Redis__Port}
       - REDIS_REPLICATION_MODE=master 
+  s_kafka:
+    container_name: c_kafka
+    image: debezium/kafka:2.5.2.Final
+    ports:
+      - "${Kafka_TCP_Port}:${Kafka_TCP_Port}"
+      - "${Kafka_External_Tcp}:${Kafka_External_Tcp}"
+    depends_on:
+      - s_zookeeper
+    environment:
+      - ZOOKEEPER_CONNECT=s_zookeeper:${Zookeeper_Port}
+      - KAFKA_ADVERTISED_LISTENERS=LISTENER_EXT://s_kafka:${Kafka_External_Tcp},LISTENER_INT://s_kafka:${Kafka_TCP_Port}
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=LISTENER_INT:PLAINTEXT,LISTENER_EXT:PLAINTEXT
+      - KAFKA_LISTENERS=LISTENER_INT://s_kafka:${Kafka_TCP_Port},LISTENER_EXT://s_kafka:${Kafka_External_Tcp}
+      - KAFKA_INTER_BROKER_LISTENER_NAME=LISTENER_INT
+  s_zookeeper:
+    container_name: c_zookeeper
+    image: debezium/zookeeper:2.5.2.Final
+    ports:
+      - "${Zookeeper_Port}:${Zookeeper_Port}"
+      - "2888:2888"
+      - "3888:3888"
+    env_file:
+      - ./.env
+  s_debeziumconnect:
+    container_name: c_debeziumconnect
+    image: debezium/connect:2.5.2.Final
+    ports:
+      - ${Debeziumconnect_Port}:${Debeziumconnect_Port}
+    environment:
+      - BOOTSTRAP_SERVERS=s_kafka:${Kafka_TCP_Port}
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=my_connect_configs
+      - OFFSET_STORAGE_TOPIC=my_connect_offsets
+      - STATUS_STORAGE_TOPIC=my_connect_statuses
+    depends_on:
+      - s_zookeeper
+      - s_kafka
+    env_file:
+      - ./.env
+  s_debeziumui:
+    image: debezium/debezium-ui:2.5
+    container_name: c_debezium-ui
+    ports:
+      - "${Debezium_UI_Port}:${Debezium_UI_Port}"
+    restart: always
+    environment:
+      - KAFKA_CONNECT_URIS=http://s_debeziumconnect:${Debeziumconnect_Port}
+    env_file:
+      - ./.env
+  s_kafka-ui:
+    container_name: c_kafka-ui
+    image: provectuslabs/kafka-ui:53a6553765a806eda9905c43bfcfe09da6812035
+    ports:
+      - "${Kafka_UI_Port}:${Kafka_UI_Port}"
+    restart: always
+    environment:
+      - SERVER_PORT=${Kafka_UI_Port}
+      - KAFKA_CLUSTERS_0_NAME=host.docker.internal
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=s_kafka:${Kafka_TCP_Port}   
+    env_file:
+      - ./.env 
 volumes:
   rabbitmq:
   sqlserver_data:

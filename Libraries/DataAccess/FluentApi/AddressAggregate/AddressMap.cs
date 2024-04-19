@@ -1,4 +1,4 @@
-﻿using Entities.Concrete.AdressAggregate;
+﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace DataAccess.FluentApi.AddressAggregate
@@ -8,7 +8,6 @@ namespace DataAccess.FluentApi.AddressAggregate
         public void Configure(EntityTypeBuilder<Address> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(t => t.Id).UseIdentityColumn();
         }
     }
 }

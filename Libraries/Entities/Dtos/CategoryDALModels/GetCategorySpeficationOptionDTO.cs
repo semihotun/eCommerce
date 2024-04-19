@@ -1,14 +1,16 @@
-﻿namespace Entities.Dtos.CategoryDALModels
+﻿using System;
+
+namespace Entities.Dtos.CategoryDALModels
 {
     public class GetCategorySpeficationOptionDTO
     {
-        public GetCategorySpeficationOptionDTO(int categoryId)
+        public GetCategorySpeficationOptionDTO(Guid categoryId)
         {
             CategoryId = categoryId;
         }
         public GetCategorySpeficationOptionDTO()
         {
         }
-        public int CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
     }
 }

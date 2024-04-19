@@ -22,10 +22,10 @@
                                     <div class="clearfix">
                                     </div>
                                     <br />
-                                    <div>
-                                        <button id="btnDeleteNode" data-toggle="modal" class='btn btn-danger'> Satır Sil <span class="glyphicon glyphicon-trash"></span> </button>
-                                        <button id="btnpopoverAddNode" data-toggle="modal" class='btn btn-warning'> Satır Ekle <span class="glyphicon glyphicon-plus"></span>  </button>
-                                        <button id="btnEditNode" data-toggle="modal" class='btn btn-danger'> Düzenle <span class="glyphicon glyphicon-trash"></span> </button>
+                                    <div class="d-flex">
+                                        <button id="btnDeleteNode" onclick="RemoveNode(event)" data-toggle="modal" class='btn btn-danger m-1'> Satır Sil <span class="glyphicon glyphicon-trash"></span> </button>
+                                        <button onclick="OpenModal(event)" data-toggle="modal" class='btn btn-warning m-1'> Satır Ekle <span class="glyphicon glyphicon-plus"></span>  </button>
+                                        <button onclick="EditNode(event)" data-toggle="modal" class='btn btn-danger m-1'> Düzenle <span class="glyphicon glyphicon-trash"></span> </button>
                                     </div>
                                 </div>
                             </div>
@@ -36,143 +36,6 @@
         </div>
     </div>
 </div>
-<style type="text/css">
-    li.gj-tree-item [data-role="display"]{
-    padding:9px 7px !important;
-    font-size:15px;
-    }
-    input[type="radio"], input[type="checkbox"] {
-        width:15px;
-        height:15px;
-        margin-top:6px;
-    }
-</style>
 <link href="~/Content/Admin/js/gijgo/gijgo.css" rel="stylesheet" />
 <script src="~/Content/Admin/js/gijgo/gijgo.min.js"></script>
-<script type="text/javascript">
-    //'Hierarchy/GetHierarchy'
-    $(document).ready(function () {
-        $('.petenddiv').attr("class", "petenddiv d-none");
-        $("#NodeTypeRbtn").prop("checked", true);
-        var Usertree = "";
-        var tree = "";
-        $.ajax({
-            type: 'get',
-            dataType: 'json',
-            cache: false,
-            url: '/Admin/CategoryTree/GetHierarchy',
-            success: function (records, textStatus, jqXHR) {
-                tree = $('#tree').tree({
-                    primaryKey: 'Id',
-                    dataSource: records,
-                    dragAndDrop: true,
-                    checkboxes: true,
-                    iconsLibrary: '>',
-                });
-                Usertree = $('#Usertree').tree({
-                    primaryKey: 'Id',
-                    dataSource: records,
-                    dragAndDrop: false,
-                    checkboxes: true,
-                    iconsLibrary: '>',
-                });
-                tree.on('nodeDrop', function (e, Id, PerentId) {
-                    currentNode = Id ? tree.getDataById(Id) : {};
-                    console.log("current Node = " + currentNode);
-                    parentNode = PerentId ? tree.getDataById(PerentId) : {};
-                    console.log("parent Node = " + parentNode);
-                    var params = { id: Id, parentId: PerentId };
-                    $.ajax({
-                        type: "POST",
-                        url: "/Admin/CategoryTree/ChangeNodePosition",
-                        data: params,
-                        dataType: "json",
-                        success: function (data) {
-                            $.ajax({
-                                type: "Get",
-                                url: "/Admin/CategoryTree/GetHierarchy",
-                                dataType: "json",
-                                success: function (records) {
-                                    Usertree.destroy();
-                                    Usertree = $('#Usertree').tree({
-                                        primaryKey: 'Id',
-                                        dataSource: records,
-                                        dragAndDrop: false,
-                                        checkboxes: true,
-                                        iconsLibrary: 'glyphicons',
-                                    });
-                                }
-                            });
-                        }
-                    });
-                });
-                $('#btnDeleteNode').click(function (e) {
-                    e.preventDefault();
-                    var result = tree.getCheckedNodes();
-                    if (result != "") {
-                        $.ajax({
-                            type: "POST",
-                            url: "/Admin/CategoryTree/DeleteNode",
-                            data: { values: result.toString() },
-                            dataType: "json",
-                            success: function (data) {
-                                window.location.reload();
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-                            },
-                        });
-                    }
-                    else {
-                        toastr.warning("Lütfen Silinecek Kategorileri Seçiniz");
-                    }
-                });
-                $('#btnEditNode').click(function (e) {
-                    e.preventDefault();
-                    var result = tree.getCheckedNodes()[0];
-                    window.location.assign('/Admin/CategoryTree/CategoryEdit?id=' + result.toString());
-                });
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert('Error - ' + errorThrown);
-            }
-        });
-        $('#btnpopoverAddNode').click(function (e) {
-            e.preventDefault();
-            $("#modalAddNode").modal("show");
-        });
-        $(document).on("click", "#savenode", function (event) {
-            event.preventDefault();
-            $('#formaddNode').validate();
-            if ($('#formaddNode').valid()) {
-                var formdata = $('#formaddNode').serialize();
-                $.ajax({
-                    type: "POST",
-                    url: "/Admin/CategoryTree/AddNewNode",
-                    dataType: "json",
-                    data: formdata,
-                    success: function (response) {
-                        window.location.reload();
-                    },
-                    error: function (response) {
-                        window.location.reload();
-                    },
-                    complete: function () {
-                    }
-                });
-            }
-        });
-        $(document).on("click", "#closePopup", function (e) {
-            e.preventDefault();
-            $("#modalAddNode").modal("hide");
-        });
-        $('.rbtnnodetype').click(function (e) {
-            if ($(this).val() == "Pn") {
-                $('.petenddiv').attr("class", "petenddiv d-none");
-                $("#ParentName").val("");
-            }
-            else {
-                $('.petenddiv').attr("class", "petenddiv");
-            }
-        });
-    });
-</script>
+<script src="~/admin/CategoryTree/categoryTreeIndex.js"></script>

@@ -1,8 +1,10 @@
-﻿namespace Entities.RequestModel.ShowcaseAggregate.ShowCaseProducts
+﻿using System;
+
+namespace Entities.RequestModel.ShowcaseAggregate.ShowCaseProducts
 {
     public class DeleteShowCaseProductReqModel
     {
-        public DeleteShowCaseProductReqModel(int id)
+        public DeleteShowCaseProductReqModel(Guid id)
         {
             Id = id;
         }
@@ -10,6 +12,6 @@
         {
             
         }
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

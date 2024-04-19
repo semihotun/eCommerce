@@ -1,4 +1,4 @@
-﻿using Entities.Concrete;
+﻿using Core.SeedWork;
 using System;
 namespace Entities.ViewModels.AdminViewModel.AdminProduct
 {
@@ -10,8 +10,8 @@ namespace Entities.ViewModels.AdminViewModel.AdminProduct
         public bool AllowOutOfStockOrders { get; set; }
         public int NotifyAdminForQuantityBelow { get; set; }
         public DateTime CreateTime { get; set; }
-        public int ProductId { get; set; }
-        public int CombinationId { get; set; }
+        public Guid ProductId { get; set; }
+        public Guid CombinationId { get; set; }
         public string ProductName { get; set; }
     }
 }

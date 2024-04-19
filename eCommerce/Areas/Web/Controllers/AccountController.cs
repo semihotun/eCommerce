@@ -9,17 +9,7 @@ namespace eCommerce.Areas.Web.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public IActionResult Login(LoginVm model)
-        {
-            return View();
-        }
         public IActionResult Register()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult Register(RegisterVm model)
         {
             return View();
         }

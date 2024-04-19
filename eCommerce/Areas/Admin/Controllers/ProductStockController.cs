@@ -1,19 +1,17 @@
-﻿using Core.Utilities.DataTable;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductStocks;
-using Entities.ViewModels.AdminViewModel.AdminProduct;
+﻿using Business.Services.ProductAggregate.ProductStocks.DtoQueries;
+using Entities.RequestModel.ProductAggregate.ProductStocks;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 namespace eCommerce.Areas.Admin.Controllers
 {
     public class ProductStockController : AdminBaseController
     {
-        private readonly IProductStockDAL _productStockDal;
-        public ProductStockController(IProductStockDAL productStockDal)
+        private readonly IProductStockDtoQueryService _productStockDtoQueryService;
+        public ProductStockController(IProductStockDtoQueryService productStockDtoQueryService)
         {
-            _productStockDal = productStockDal;
+            _productStockDtoQueryService = productStockDtoQueryService;
         }
-        public async Task<IActionResult> ProductStockListJson(ProductStockFilter productStockFilter, DTParameters param) =>
-            ToDataTableJson(await _productStockDal.GetAllProductStockDto(
-                new (productStockFilter.ProductId, param)), param);
+        public async Task<IActionResult> ProductStockListJson(GetAllProductStockReqModel request) =>
+            ToDataTableJson(await _productStockDtoQueryService.GetAllProductStockDto(request), request);
     }
 }

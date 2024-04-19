@@ -1,16 +1,17 @@
 ﻿using Entities.Concrete;
+using System;
 
 namespace Entities.RequestModel.PhotoAggregate.ProductPhotos
 {
     public class AddProductPhotoReqModel
     {
         public string ProductPhotoName { get; set; }
-        public int? ProductId { get; set; }
+        public Guid? ProductId { get; set; }
         public AddProductPhotoReqModel()
         {
             
         }
-        public AddProductPhotoReqModel(string productPhotoName, int? productId)
+        public AddProductPhotoReqModel(string productPhotoName, Guid? productId)
         {
             ProductPhotoName = productPhotoName;
             ProductId = productId;

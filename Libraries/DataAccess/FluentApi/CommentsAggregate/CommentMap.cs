@@ -1,4 +1,4 @@
-﻿using Entities.Concrete.CommentsAggregate;
+﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace DataAccess.FluentApi.CommentsAggregate
@@ -9,7 +9,6 @@ namespace DataAccess.FluentApi.CommentsAggregate
         {
             builder.HasIndex(x => x.Productid);
             builder.HasKey(x => x.Id);
-            builder.Property(t => t.Id).UseIdentityColumn();
         }
     }
 }

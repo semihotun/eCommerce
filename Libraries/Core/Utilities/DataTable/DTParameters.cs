@@ -2,14 +2,11 @@
 {
     public class DTParameters
     {
-        public int Draw { get; set; }
+        public int Draw { get; set; } = 1;
         public DTColumn[] Columns { get; set; }
         public DTOrder[] Order { get; set; }
-        public int Start
-        {
-            get; set;
-        }
-        public int Length { get; set; }
+        public int Start { get; set; } = 0;
+        public int Length { get; set; } = int.MaxValue;
         public DTSearch Search { get; set; }
         public string SortOrder
         {

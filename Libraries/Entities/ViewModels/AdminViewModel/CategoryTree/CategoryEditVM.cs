@@ -1,5 +1,5 @@
-﻿using Entities.Concrete;
-using Entities.Concrete.CategoriesAggregate;
+﻿using Core.SeedWork;
+using Entities.Concrete;
 using Entities.Dtos.CategoryDALModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;

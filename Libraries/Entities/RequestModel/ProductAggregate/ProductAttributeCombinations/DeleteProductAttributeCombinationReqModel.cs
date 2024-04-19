@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
 {
     public class DeleteProductAttributeCombinationReqModel
     {
@@ -6,10 +8,10 @@
         {
             
         }
-        public DeleteProductAttributeCombinationReqModel(int id)
+        public DeleteProductAttributeCombinationReqModel(Guid id)
         {
             Id = id;
         }
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

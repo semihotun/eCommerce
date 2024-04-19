@@ -1,16 +1,16 @@
-﻿using Entities.Concrete.BrandAggregate;
-using Entities.Concrete.CategoriesAggregate;
+﻿using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 namespace Entities.ViewModels.AdminViewModel.AdminProduct
 {
     public class ProductListVM
     {
-        public int? Id { get; set; }
+        public Guid? Id { get; set; }
         public string ProductName { get; set; }
-        public int? CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
         public Category CategoryModel { get; set; }
-        public int? BrandId { get; set; }
+        public Guid? BrandId { get; set; }
         public string BrandName { get; set; }
         public Brand BrandModel { get; set; }
         public double? ProductPrice { get; set; }

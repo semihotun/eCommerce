@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.CategoriesAggregate.Categories
+﻿using System;
+
+namespace Entities.RequestModel.CategoriesAggregate.Categories
 {
     public class ChangeNodePositionReqModel
     {
@@ -6,12 +8,12 @@
         {
             
         }
-        public ChangeNodePositionReqModel(int id, int? parentId)
+        public ChangeNodePositionReqModel(Guid id, Guid? parentId)
         {
             Id = id;
             ParentId = parentId;
         }
-        public int Id { get; set; }
-        public int? ParentId { get; set; }
+        public Guid Id { get; set; }
+        public Guid? ParentId { get; set; }
     }
 }

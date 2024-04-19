@@ -8,11 +8,11 @@ namespace Entities.RequestModel.CommentsAggregate.Comments
 {
     public class CommentApproveReqModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public CommentApproveReqModel()
         {
         }
-        public CommentApproveReqModel(int id)
+        public CommentApproveReqModel(Guid id)
         {
             Id = id;
         }

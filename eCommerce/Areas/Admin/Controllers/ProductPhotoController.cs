@@ -1,19 +1,19 @@
-﻿using Business.Services.PhotoAggregate.ProductPhotos;
+﻿using Business.Services.PhotoAggregate.ProductPhotos.Queries;
 using Core.Utilities.DataTable;
-using Entities.Others;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 namespace eCommerce.Areas.Admin.Controllers
 {
     public class ProductPhotoController : AdminBaseController
     {
-        private readonly IProductPhotoService _productPhotoService;
+        private readonly IProductPhotoQueryService _productPhotoQueryService;
         public ProductPhotoController(
-            IProductPhotoService productPhotoService)
+            IProductPhotoQueryService productPhotoQueryService)
         {
-            _productPhotoService = productPhotoService;
+            _productPhotoQueryService = productPhotoQueryService;
         }
-        public async Task<IActionResult> ProductPhotoList(int productId, DTParameters param) =>
-             ToDataTableJson(await _productPhotoService.GetProductPhoto(new(productId, param)), param);
+        public async Task<IActionResult> ProductPhotoList(Guid productId, DTParameters param) =>
+             ToDataTableJson(await _productPhotoQueryService.GetProductPhoto(new(productId, param)), param);
     }
 }

@@ -12,7 +12,7 @@
                 <div class="card-header p-0 d-flex  position-relative" id="@collapseHeadingId">
                     @{ var mappingButtonId = "MappingButton" + item.Id;}
                     @{ var collapseIdHashtag = "#collapse" + item.Id;}
-                    <button type="button" class="btn text-left w-100 p-4 btn-neutral d-flex" onclick="GetMappingAttribute(@item.Id)" id="@mappingButtonId"
+                    <button type="button" class="btn text-left w-100 p-4 btn-neutral d-flex" onclick="GetMappingAttribute('@item.Id')" id="@mappingButtonId"
                             data-toggle="collapse" data-target="@collapseIdHashtag" aria-expanded="False" aria-controls="collapseOne">
                         <span class="vertical-absolute-left-center ml-4">
                             @item.TextPrompt
@@ -22,7 +22,7 @@
                         <a href='@Url.Action("AttrAttributeValueList", "AdminProductAttr", new {ProductAttrMapingId = item.Id})' class="btn btn-outline-default">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a onclick="DeleteAttributeMapping(@item.Id)" class="btn btn-outline-default">
+                        <a onclick="DeleteAttributeMapping('@item.Id')" class="btn btn-outline-default">
                             <i class="fas fa-remove"></i>
                         </a>
                     </span>
@@ -43,7 +43,7 @@
                             <tbody>
                                 <input type="button" class="btn btn btn-outline-default mt-3 mb-3"
                                        value="Attribute Ekle"
-                                       onclick="ChangeTextboxAttributeMappingId(@item.Id)" />
+                                       onclick="ChangeTextboxAttributeMappingId('@item.Id')" />
                             </tbody>
                         </table>
                     </div>

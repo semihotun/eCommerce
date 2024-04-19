@@ -1,4 +1,4 @@
-﻿@model Entities.Concrete.ProductAggregate.ProductAttribute
+﻿@model Entities.Concrete.ProductAttribute
 @{
     ViewBag.Title = "ShowcaseCreate";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
@@ -23,9 +23,8 @@
                             <table id="ProductAttrList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Açıklama</th>
                                         <th>İsim</th>
+                                        <th>Açıklama</th>
                                         <th> </th>
                                     </tr>
                                 </thead>
@@ -34,21 +33,30 @@
                             </table>
                         </div>
                         <script>
-                            var ProductListTableo;
-                            var BindProductList = function (response) {
+                            const GetProductAttributeTable =  () => {
+                                let ProductAttributeTable;
                                 if ($.fn.DataTable.isDataTable("#ProductAttrList")) {
-                                    ProductListTableo.draw();
+                                    ProductAttributeTable.draw();
                                 }
                                 else {
-                                    ProductListTableo = $("#ProductAttrList").DataTable({
-                                        "sAjaxSource": "/Admin/AdminProductAttr/ProductAttributeListJson",
-                                        "bServerSide": true,
-                                        "bProcessing": true,
-                                        "bSearchable": true,
-                                        "bLengthChange": false,
-                                        "searching": false,
+                                    ProductAttributeTable = $("#ProductAttrList").DataTable({
+                                        "ajax": {
+                                            "url": "/Admin/AdminProductAttr/ProductAttributeListJson",
+                                            "datatype": "json",
+                                            "type": "POST"
+                                        },
+                                        dom: 'Brtip',
+                                        buttons: [
+                                            'copy', 'csv', 'excel', 'pdf', 'print'
+                                        ],
+                                        "orderCellsTop": true,
+                                        "fixedHeader": true,
+                                        "pagingType": "full_numbers",
+                                        "processing": true,
+                                        "serverSide": true,
+                                        "responsive": true,
+                                        "searching": true,
                                         "columns": [
-                                            { "data": "Id", "name": "Id", "autoWidth": true },
                                             { "data": "Description", "name": "Description", "autoWidth": true },
                                             { "data": "Name", "name": "Name", "autoWidth": true },
                                             {
@@ -58,23 +66,14 @@
                                                         "<a href='/Admin/AdminProductAttr/AttrDelete?Id=" + row.Id + "' ><i class='fa fa-trash-o datatablesil ' style='font-size:20px;' ></i></a>";
                                                 }, "orderable": false
                                             },
-                                        ],
-                                        oLanguage: {
-                                            oPaginate: {
-                                                sPrevious: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
-                                                sNext: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
-                                            }
+                                        ], "language": {
+                                            "url": "/datatablelanguage.json"
                                         }
-                                    });
+                                    });   
                                 }
                             }
-                            var FilterRecord = function () {
-                                BindProductList();
-                            }
-                            $(document).ready(function () {
-                                BindProductList();
-                            });
                         </script>
+                        <script src="~/admin/AdminProductAttr/productAttributeList.js"></script>
                     </div>
                 </div>
             </div>

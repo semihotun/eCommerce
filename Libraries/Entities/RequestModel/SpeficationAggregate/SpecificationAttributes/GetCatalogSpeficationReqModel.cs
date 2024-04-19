@@ -1,12 +1,14 @@
-﻿namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributes
+﻿using System;
+
+namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributes
 {
     public class GetCatalogSpeficationReqModel
     {
-        public GetCatalogSpeficationReqModel(int categoryId = 0)
+        public GetCatalogSpeficationReqModel(Guid categoryId)
         {
             CategoryId = categoryId;
         }
-        public int CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
         public GetCatalogSpeficationReqModel()
         {
             

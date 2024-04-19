@@ -1,5 +1,4 @@
-﻿using Entities.Concrete.PhotoAggregate;
-using Entities.Concrete.ProductAggregate;
+﻿using Entities.Concrete;
 using System.Collections.Generic;
 namespace Entities.Dtos.ProductDALModels
 {
@@ -12,14 +11,14 @@ namespace Entities.Dtos.ProductDALModels
         public Brand BrandModel { get; set; }
         public class Brand
         {
-            public Concrete.BrandAggregate.Brand BrandInfo { get; set; }
+            public Concrete.Brand BrandInfo { get; set; }
         }
         #endregion
         #region Category
         public Category CategoryModel { get; set; }
         public class Category
         {
-            public Concrete.CategoriesAggregate.Category CategoryInfo { get; set; }
+            public Concrete.Category CategoryInfo { get; set; }
         }
         #endregion
         #region ProductPhoto

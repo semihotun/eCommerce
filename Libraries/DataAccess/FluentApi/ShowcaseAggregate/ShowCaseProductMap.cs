@@ -1,4 +1,4 @@
-﻿using Entities.Concrete.ShowcaseAggregate;
+﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace DataAccess.FluentApi.ShowcaseAggregate
@@ -9,7 +9,6 @@ namespace DataAccess.FluentApi.ShowcaseAggregate
         {
             builder.HasIndex(x => new { x.ProductId, x.CombinationId });
             builder.HasKey(x => x.Id);
-            builder.Property(t => t.Id).UseIdentityColumn();
         }
     }
 }

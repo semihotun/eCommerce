@@ -1,8 +1,10 @@
-﻿namespace Entities.RequestModel.ProductAggregate.PredefinedProductAttributeValues
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.PredefinedProductAttributeValues
 {
     public class GetPredefinedProductAttributeValueByIdReqModel
     {
-        public GetPredefinedProductAttributeValueByIdReqModel(int id)
+        public GetPredefinedProductAttributeValueByIdReqModel(Guid id)
         {
             Id = id;
         }
@@ -10,6 +12,6 @@
         {
             
         }
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

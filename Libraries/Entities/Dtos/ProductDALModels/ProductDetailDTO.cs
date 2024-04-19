@@ -1,7 +1,4 @@
 ﻿using Entities.Concrete;
-using Entities.Concrete.CustomerUserAggregate;
-using Entities.Concrete.PhotoAggregate;
-using Entities.Concrete.ProductAggregate;
 using Entities.Dtos.ProductSpecificationAttributeDALModels;
 using Entities.Dtos.ShowcaseDALModels;
 using Entities.ViewModels.AdminViewModel.AdminProduct;
@@ -16,14 +13,14 @@ namespace Entities.Dtos.ProductDALModels
         public Brand BrandModel { get; set; }
         public class Brand
         {
-            public Concrete.BrandAggregate.Brand BrandInfo { get; set; }
+            public Concrete.Brand BrandInfo { get; set; }
         }
         #endregion
         #region Category
         public Category CategoryModel { get; set; }
         public class Category
         {
-            public Concrete.CategoriesAggregate.Category CategoryInfo { get; set; }
+            public Concrete.Category CategoryInfo { get; set; }
         }
         #endregion
         #region ProductPhoto
@@ -34,15 +31,15 @@ namespace Entities.Dtos.ProductDALModels
         {
             public string CommentTitle { get; set; }
             public string CommentText { get; set; }
-            public int Productid { get; set; }
-            public int UserId { get; set; }
+            public Guid Productid { get; set; }
+            public Guid UserId { get; set; }
             public bool IsApproved { get; set; }
             public DateTime CreatedOnUtc { get; set; }
             public int Rating { get; set; }
         }
         public class Comment
         {
-            public Concrete.CommentsAggregate.Comment CommentInfo { get; set; }
+            public Concrete.Comment CommentInfo { get; set; }
             public CustomerUser User { get; set; }
         }
         public IEnumerable<Comment> CommentList { get; set; }
@@ -51,11 +48,11 @@ namespace Entities.Dtos.ProductDALModels
         public IEnumerable<ProductAttributeMapping> ProductAttributeMappingList { get; set; }
         public class ProductAttributeMapping
         {
-            public int Id { get; set; }
-            public int ProductAttributeId { get; set; }
+            public Guid Id { get; set; }
+            public Guid ProductAttributeId { get; set; }
             public string TextPrompt { get; set; }
             public bool IsRequired { get; set; }
-            public int AttributeControlTypeId { get; set; }
+            public Guid AttributeControlTypeId { get; set; }
             public int DisplayOrder { get; set; }
             public IEnumerable<ProductAttributeValue> ProductAttributeValueList { get; set; }
         }
@@ -65,7 +62,7 @@ namespace Entities.Dtos.ProductDALModels
         public class ProductAttributeCombination
         {
             public ProductStock ProductStockModel { get; set; }
-            public int Id { get; set; }
+            public Guid Id { get; set; }
             public string AttributesXml { get; set; }
             public string Gtin { get; set; }
             public string Sku { get; set; }

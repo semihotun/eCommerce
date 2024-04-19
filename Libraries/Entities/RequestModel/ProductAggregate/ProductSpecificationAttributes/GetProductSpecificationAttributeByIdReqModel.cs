@@ -1,13 +1,15 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
 {
     public class GetProductSpecificationAttributeByIdReqModel
     {
-        public int ProductSpecificationAttributeId { get; set; }
+        public Guid ProductSpecificationAttributeId { get; set; }
         public GetProductSpecificationAttributeByIdReqModel()
         {
             
         }
-        public GetProductSpecificationAttributeByIdReqModel(int productSpecificationAttributeId)
+        public GetProductSpecificationAttributeByIdReqModel(Guid productSpecificationAttributeId)
         {
             ProductSpecificationAttributeId = productSpecificationAttributeId;
         }

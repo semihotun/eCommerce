@@ -1,6 +1,6 @@
-﻿using Entities.Concrete.SpeficationAggregate;
+﻿using Entities.Concrete;
 using System.Collections.Generic;
-using CategoryModel = Entities.Concrete.CategoriesAggregate.Category;
+using CategoryModel = Entities.Concrete.Category;
 namespace Entities.Dtos.CategoryDALModels
 {
     public class CategorySpeficationDTO

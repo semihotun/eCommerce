@@ -1,13 +1,15 @@
-﻿namespace Entities.RequestModel.BrandAggregate.Brands
+﻿using System;
+
+namespace Entities.RequestModel.BrandAggregate.Brands
 {
     public class GetBrandDropdownReqModel
     {
-        public int? SelectedId { get; set; }
+        public Guid? SelectedId { get; set; }
         public GetBrandDropdownReqModel()
         {
             
         }
-        public GetBrandDropdownReqModel(int? selectedId = null)
+        public GetBrandDropdownReqModel(Guid? selectedId = null)
         {
             SelectedId = selectedId;
         }

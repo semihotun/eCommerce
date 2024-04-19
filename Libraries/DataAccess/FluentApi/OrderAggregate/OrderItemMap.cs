@@ -1,4 +1,4 @@
-﻿using Entities.Concrete.OrderAggregate;
+﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace DataAccess.FluentApi.OrderAggregate
@@ -8,7 +8,6 @@ namespace DataAccess.FluentApi.OrderAggregate
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(t => t.Id).UseIdentityColumn();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductAttributes
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductAttributes
 {
     public class GetProductAttributeDropdownReqModel
     {
@@ -6,10 +8,10 @@
         {
             
         }
-        public GetProductAttributeDropdownReqModel(int? selectedId = 0)
+        public GetProductAttributeDropdownReqModel(Guid? selectedId)
         {
             SelectedId = selectedId;
         }
-        public int? SelectedId { get; set; }
+        public Guid? SelectedId { get; set; }
     }
 }

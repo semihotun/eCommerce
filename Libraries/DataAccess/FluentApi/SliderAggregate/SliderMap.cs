@@ -1,4 +1,4 @@
-﻿using Entities.Concrete.SliderAggregate;
+﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace DataAccess.FluentApi.SliderAggregate
@@ -8,7 +8,9 @@ namespace DataAccess.FluentApi.SliderAggregate
         public void Configure(EntityTypeBuilder<Slider> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(t => t.Id).UseIdentityColumn();
+            builder.Property(e => e.SliderImage)
+              .IsRequired()
+              .HasColumnType("nvarchar(max)");
         }
     }
 }

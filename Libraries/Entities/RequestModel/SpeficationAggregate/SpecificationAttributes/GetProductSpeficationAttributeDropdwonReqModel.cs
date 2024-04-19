@@ -1,12 +1,14 @@
-﻿namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributes
+﻿using System;
+
+namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributes
 {
     public class GetProductSpeficationAttributeDropdwonReqModel
     {
-        public GetProductSpeficationAttributeDropdwonReqModel(int selectedId = 0)
+        public GetProductSpeficationAttributeDropdwonReqModel(Guid selectedId)
         {
             SelectedId = selectedId;
         }
-        public int SelectedId { get; set; }
+        public Guid SelectedId { get; set; }
         public GetProductSpeficationAttributeDropdwonReqModel()
         {
             

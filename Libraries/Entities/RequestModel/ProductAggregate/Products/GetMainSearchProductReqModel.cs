@@ -1,17 +1,21 @@
-﻿namespace Entities.RequestModel.ProductAggregate.Products
+﻿using System.Threading;
+
+namespace Entities.RequestModel.ProductAggregate.Products
 {
-    public class MainSearchProduct
+    public class GetMainSearchProductReqModel
     {
         public int PageSize { get; set; }
         public string SearchProductName { get; set; }
-        public MainSearchProduct()
+        public CancellationToken Token { get; set; }
+        public GetMainSearchProductReqModel()
         {
-            
+
         }
-        public MainSearchProduct(int pageSize = int.MaxValue, string searchProductName = null)
+        public GetMainSearchProductReqModel(int pageSize, string searchProductName, CancellationToken token)
         {
             PageSize = pageSize;
             SearchProductName = searchProductName;
+            Token = token;
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using Entities.Concrete;
-using Entities.Concrete.SliderAggregate;
+﻿using Core.SeedWork;
+using Entities.Concrete;
 using System.Collections.Generic;
 namespace Entities.ViewModels.AdminViewModel.AdminSlider
 {

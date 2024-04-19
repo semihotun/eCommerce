@@ -1,42 +1,40 @@
 ﻿using Business.Services.BasketAggregate.Baskets;
-using Business.Services.SliderAggregate.Sliders;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products;
-using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices;
-using Entities.Concrete.BasketAggregate;
+using Business.Services.ProductAggregate.Products.DtoQueries;
+using Business.Services.ShowcaseAggregate.ShowcaseServices.DtoQueries;
+using Business.Services.SliderAggregate.Sliders.Queries;
+using Entities.Concrete;
 using Entities.Extensions.AutoMapper;
 using Entities.RequestModel.BasketAggregate.Baskets;
 using Entities.ViewModels.WebViewModel.Home;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Threading;
 using System.Threading.Tasks;
 namespace eCommerce.Areas.Web.Controllers
 {
     //[Authorize(Roles ="Admin")]
     public class HomeController : WebBaseController
     {
-        #region Fields
-        private readonly ISliderService _sliderService;
-        private readonly IProductDAL _productDAL;
-        private readonly IShowcaseDAL _showcaseDal;
-        private readonly IBasketService _basketService;
-        #endregion
         #region Constructors
-        public HomeController(
-            ISliderService sliderService,
-            IProductDAL productDAL,
-            IShowcaseDAL showcaseDal,
-            IBasketService basketService)
+        private readonly ISliderQueryService _sliderQueryService;
+        private readonly IShowCaseDtoQueryService _showCaseQueryService;
+        private readonly IBasketService _basketService;
+        private readonly IProductDtoQuery _productDtoQuery;
+        public HomeController(ISliderQueryService sliderQueryService,
+            IShowCaseDtoQueryService showCaseQueryService,
+            IBasketService basketService,
+            IProductDtoQuery productDtoQuery)
         {
-            _sliderService = sliderService;
-            _productDAL = productDAL;
-            _showcaseDal = showcaseDal;
+            _sliderQueryService = sliderQueryService;
+            _showCaseQueryService = showCaseQueryService;
             _basketService = basketService;
+            _productDtoQuery = productDtoQuery;
         }
         #endregion
         #region Method
-        public async Task<PartialViewResult> Search(string searchKey)
+        public async Task<PartialViewResult> Search(string searchKey, CancellationToken cancellationToken)
         {
-            var productList = await _productDAL.GetMainSearchProduct(new(pageSize: 6, searchProductName: searchKey));
+            var productList = await _productDtoQuery.GetMainSearchProduct(new(pageSize: 6, searchProductName: searchKey,cancellationToken));
 
             return PartialView("ResultView", new SearchVM
             {
@@ -48,8 +46,8 @@ namespace eCommerce.Areas.Web.Controllers
         {
             return View(new MainPageVM()
             {
-                SliderList = (await _sliderService.GetAllSlider()).Data,
-                ShowCaseList = (await _showcaseDal.GetAllShowCaseDto()).Data
+                SliderList = (await _sliderQueryService.GetAllSlider()).Data,
+                ShowCaseList = (await _showCaseQueryService.GetAllShowCaseDto()).Data
             });
         }
         public async Task<IActionResult> BasketAdded(Basket basket)
@@ -67,7 +65,7 @@ namespace eCommerce.Areas.Web.Controllers
         public async Task<IActionResult> GetCheckout()
         {
             var basket = (await _basketService.GetBasket()).Data;
-            var result = (await _productDAL.GetCheckout(new(basket))).Data;
+            var result = (await _productDtoQuery.GetCheckout(new(basket))).Data;
             return Json(result, new JsonSerializerSettings());
         }
         public async Task<IActionResult> DeleteProductCheckout(Basket basket)
@@ -75,7 +73,7 @@ namespace eCommerce.Areas.Web.Controllers
             var data = basket.MapTo<DeleteBasketProductReqModel>();
             await _basketService.DeleteBasketProduct(data);
             var basketData = (await _basketService.GetBasket()).Data;
-            var result = (await _productDAL.GetCheckout(new(basketData))).Data;
+            var result = (await _productDtoQuery.GetCheckout(new(basketData))).Data;
             return Json(result, new JsonSerializerSettings());
         }
         public async Task<IActionResult> UpdateProductPiece(Basket basket)
@@ -87,6 +85,10 @@ namespace eCommerce.Areas.Web.Controllers
         public IActionResult LikeProduct()
         {
             return Json(null, new JsonSerializerSettings());
+        }
+        public IActionResult Error()
+        {
+            return View();
         }
         #endregion
     }

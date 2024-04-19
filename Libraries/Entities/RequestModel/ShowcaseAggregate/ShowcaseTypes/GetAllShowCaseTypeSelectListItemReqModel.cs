@@ -1,8 +1,10 @@
-﻿namespace Entities.RequestModel.ShowcaseAggregate.ShowcaseTypes
+﻿using System;
+
+namespace Entities.RequestModel.ShowcaseAggregate.ShowcaseTypes
 {
     public class GetAllShowCaseTypeSelectListItemReqModel
     {
-        public GetAllShowCaseTypeSelectListItemReqModel(int? selectedId = 0)
+        public GetAllShowCaseTypeSelectListItemReqModel(Guid? selectedId)
         {
             SelectedId = selectedId;
         }
@@ -10,6 +12,6 @@
         {
             
         }
-        public int? SelectedId { get; set; }
+        public Guid? SelectedId { get; set; }
     }
 }

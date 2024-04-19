@@ -1,8 +1,6 @@
 ﻿using Core.Utilities.DataTable;
-using Core.Utilities.Identity;
 using Core.Utilities.PagedList;
 using Core.Utilities.Results;
-using Entities.Others;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -14,17 +12,6 @@ namespace eCommerce.Areas.Web.Controllers
     [Area("Web")]
     public class WebBaseController : Controller
     {
-        [NonAction]
-        protected IActionResult ToDataTableJson<T>(Result<IPagedList<T>> data, DataTablesParam param)
-        {
-            return Json(new DataTableResult<T>
-            {
-                AaData = data.Data!.Data,
-                SEcho = param.sEcho,
-                ITotalDisplayRecords = data.Data.TotalCount,
-                ITotalRecords = data.Data.TotalCount
-            }, new JsonSerializerSettings());
-        }
         [NonAction]
         protected IActionResult ToDataTableJson<T>(Result<IPagedList<T>> data, DTParameters param)
         {

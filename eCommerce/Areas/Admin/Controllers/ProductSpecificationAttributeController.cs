@@ -1,21 +1,19 @@
-﻿using Core.Utilities.DataTable;
-using DataAccess.DALs.EntitiyFramework.ProductAggregate.ProductSpecificationAttributes;
-using Entities.ViewModels.AdminViewModel.AdminProduct;
+﻿using Business.Services.ProductAggregate.ProductSpecificationAttributes.DtoQueries;
+using Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 namespace eCommerce.Areas.Admin.Controllers
 {
     public class ProductSpecificationAttributeController : AdminBaseController
     {
-        private readonly IProductSpecificationAttributeDAL _productSpecificationAttributeDAL;
+        private readonly IProductSpecificationAttributeDtoQueryService _productSpecificationAttributeDtoQueryService;
         public ProductSpecificationAttributeController(
-            IProductSpecificationAttributeDAL productSpecificationAttributeDAL
+            IProductSpecificationAttributeDtoQueryService productSpecificationAttributeDtoQueryService
             )
         {
-            _productSpecificationAttributeDAL = productSpecificationAttributeDAL;
+            _productSpecificationAttributeDtoQueryService = productSpecificationAttributeDtoQueryService;
         }
-        public async Task<IActionResult> ProductSpeficationJson(ProductVM model, DTParameters param) =>
-             ToDataTableJson(await _productSpecificationAttributeDAL.ProductSpecAttrList(
-                new (model.Id, param)), param);
+        public async Task<IActionResult> ProductSpeficationJson(GetProductSpecAttrListReqModel request) =>
+             ToDataTableJson(await _productSpecificationAttributeDtoQueryService.GetProductSpecAttrList(request), request);
     }
 }

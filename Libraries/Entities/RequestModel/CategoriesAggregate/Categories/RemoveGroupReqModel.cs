@@ -1,13 +1,15 @@
-﻿namespace Entities.RequestModel.CategoriesAggregate.Categories
+﻿using System;
+
+namespace Entities.RequestModel.CategoriesAggregate.Categories
 {
     public class RemoveGroupReqModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public RemoveGroupReqModel()
         {
             
         }
-        public RemoveGroupReqModel(int id)
+        public RemoveGroupReqModel(Guid id)
         {
             Id = id;
         }

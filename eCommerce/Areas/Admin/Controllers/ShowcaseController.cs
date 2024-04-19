@@ -1,10 +1,11 @@
-﻿using Business.Services.BrandAggregate.Brands;
-using Business.Services.CategoriesAggregate.Categories;
-using Business.Services.ShowcaseAggregate.ShowCaseProducts;
-using Business.Services.ShowcaseAggregate.ShowcaseServices;
-using Business.Services.ShowcaseAggregate.ShowcaseTypes;
-using DataAccess.DALs.EntitiyFramework.ShowcaseAggregate.ShowcaseServices;
-using Entities.Concrete.ShowcaseAggregate;
+﻿using Business.Services.BrandAggregate.Brands.Queries;
+using Business.Services.CategoriesAggregate.Categories.Queries;
+using Business.Services.ShowcaseAggregate.ShowCaseProducts.Commands;
+using Business.Services.ShowcaseAggregate.ShowcaseServices.Commands;
+using Business.Services.ShowcaseAggregate.ShowcaseServices.DtoQueries;
+using Business.Services.ShowcaseAggregate.ShowcaseServices.Queries;
+using Business.Services.ShowcaseAggregate.ShowcaseTypes.Queries;
+using Entities.Concrete;
 using Entities.Dtos.ShowcaseDALModels;
 using Entities.Extensions.AutoMapper;
 using Entities.RequestModel.ShowcaseAggregate.ShowCaseProducts;
@@ -12,60 +13,64 @@ using Entities.RequestModel.ShowcaseAggregate.ShowcaseServices;
 using Entities.ViewModels.AdminViewModel.Showcase;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 namespace eCommerce.Areas.Admin.Controllers
 {
     public class ShowcaseController : AdminBaseController
     {
-        #region field
-        private readonly IShowcaseService _showcaseService;
-        private readonly ICategoryService _categoryService;
-        private readonly IShowCaseProductService _showCaseProductService;
-        private readonly IShowcaseTypeService _showcaseTypeService;
-        private readonly IShowcaseDAL _showcaseDal;
-        private readonly IBrandService _brandService;
-        private readonly Dictionary<int, string> ShowCaseDictionary = ShowCaseTap.ShowCaseDictionary;
-        #endregion
-        #region constructer
-        public ShowcaseController(IShowcaseService showcaseService, ICategoryService categoryService, IShowCaseProductService showCaseProductService,
-            IShowcaseTypeService showcaseTypeService, IShowcaseDAL showcaseDal, IBrandService brandService)
+        #region ctor
+        private readonly IShowCaseQueryService _showCaseQueryService;
+        private readonly IShowCaseCommandService _showCaseCommandService;
+        private readonly IShowcaseTypeQueryService _showcaseTypeQueryService;
+        private readonly IBrandQueryService _brandQueryService;
+        private readonly ICategoryQueryService _categoryQueryService;
+        private readonly IShowCaseDtoQueryService _showCaseDtoQueryService;
+        private readonly IShowcaseProductCommandService _showCaseProductService;
+        public ShowcaseController(IShowCaseQueryService showCaseQueryService,
+            IShowCaseCommandService showCaseCommandService,
+            IShowcaseTypeQueryService showcaseTypeQueryService,
+            IBrandQueryService brandQueryService,
+            ICategoryQueryService categoryQueryService,
+            IShowCaseDtoQueryService showCaseDtoQueryService,
+            IShowcaseProductCommandService showCaseProductService)
         {
-            this._showcaseService = showcaseService;
-            this._categoryService = categoryService;
-            this._showCaseProductService = showCaseProductService;
-            _showcaseTypeService = showcaseTypeService;
-            _showcaseDal = showcaseDal;
-            _brandService = brandService;
+            _showCaseQueryService = showCaseQueryService;
+            _showCaseCommandService = showCaseCommandService;
+            _showcaseTypeQueryService = showcaseTypeQueryService;
+            _brandQueryService = brandQueryService;
+            _categoryQueryService = categoryQueryService;
+            _showCaseDtoQueryService = showCaseDtoQueryService;
+            _showCaseProductService = showCaseProductService;
         }
         #endregion
         #region Method
         public async Task<IActionResult> ShowcaseList()
         {
-            return View((await _showcaseService.GetAllShowcase()).Data);
+            return View((await _showCaseQueryService.GetAllShowcase()).Data);
         }
         public async Task<IActionResult> ShowcaseCreate() => View(new ShowCaseCreateOrUpdateVM
         {
-            ShowCaseTypeList = (await _showcaseTypeService.GetAllShowCaseTypeSelectListItem(new ())).Data
+            ShowCaseTypeList = (await _showcaseTypeQueryService.GetAllShowCaseTypeSelectListItem(new ())).Data
         });
         [HttpPost]
         public async Task<IActionResult> ShowcaseCreate(ShowCaseCreateOrUpdateVM model)
         {
             var showcase =model.MapTo<InsertShowcaseReqModel>();
-            var id = ResponseAlert(await _showcaseService.InsertShowcase(showcase))?.Data?.Id;
+            var id = ResponseAlert(await _showCaseCommandService.InsertShowcase(showcase))?.Data?.Id;
             return RedirectToAction("ShowcaseEdit", new { id = id });
         }
-        public async Task<IActionResult> ShowCaseDelete(int id)
+        public async Task<IActionResult> ShowCaseDelete(Guid id)
         {
-            ResponseAlert(await _showcaseService.DeleteShowCase(new (id)));
+            ResponseAlert(await _showCaseCommandService.DeleteShowCase(new (id)));
             return Json(true, new JsonSerializerSettings());
         }
-        public async Task<IActionResult> ShowcaseEdit(int id, string? tap)
+        public async Task<IActionResult> ShowcaseEdit(Guid id, string? tap)
         {
-            var brandTask = _brandService.GetBrandDropdown(new ());
-            var categoryTask = _categoryService.GetCategoryDropdown(new ());
-            var showcaseTypeTask = _showcaseTypeService.GetAllShowCaseTypeSelectListItem(new (id));
-            var showcaseTask = _showcaseDal.GetShowCaseDto(new (id));
+            var brandTask = _brandQueryService.GetBrandDropdown(new ());
+            var categoryTask = _categoryQueryService.GetCategoryDropdown(new ());
+            var showcaseTypeTask = _showcaseTypeQueryService.GetAllShowCaseTypeSelectListItem(new (id));
+            var showcaseTask = _showCaseDtoQueryService.GetShowCaseDto(new (id));
             await Task.WhenAll(brandTask, categoryTask, showcaseTypeTask);
             return View(new ShowCaseCreateOrUpdateVM
             {
@@ -80,16 +85,16 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<IActionResult> ShowcaseEdit(ShowCaseCreateOrUpdateVM model)
         {
             var showCaseMap = model.ShowCaseDto.MapTo<UpdateShowcaseReqModel>();
-            var showcaseTask = _showcaseDal.GetShowCaseDto(new GetShowCaseDto(model.ShowCaseDto.Id));
-            var brandTask = _brandService.GetBrandDropdown(new ());
-            var categoryTask = _categoryService.GetCategoryDropdown(new ());
-            var showcaseTypeTask = _showcaseTypeService.GetAllShowCaseTypeSelectListItem(new (model.ShowCaseDto.ShowCaseType));
+            var showcaseTask = _showCaseDtoQueryService.GetShowCaseDto(new GetShowCaseDto(model.ShowCaseDto.Id));
+            var brandTask = _brandQueryService.GetBrandDropdown(new ());
+            var categoryTask = _categoryQueryService.GetCategoryDropdown(new ());
+            var showcaseTypeTask = _showcaseTypeQueryService.GetAllShowCaseTypeSelectListItem(new (model.ShowCaseDto.ShowCaseType));
             await Task.WhenAll(showcaseTask, brandTask, categoryTask, showcaseTypeTask);
             model.ShowCaseDto = (await showcaseTask).Data;
             model.BrandSelectListItems = (await brandTask).Data;
             model.CategorySelectListItems = (await categoryTask).Data;
             model.ShowCaseTypeList = (await showcaseTypeTask).Data;
-            ResponseAlert(await _showcaseService.UpdateShowcase(showCaseMap));
+            ResponseAlert(await _showCaseCommandService.UpdateShowcase(showCaseMap));
             return RedirectToAction("ShowcaseEdit", "ShowCase", new { id = model.Id });
         }
         public async Task<IActionResult> ShowcaseAdded(ShowCaseProduct showCaseProduct)
@@ -99,16 +104,16 @@ namespace eCommerce.Areas.Admin.Controllers
             return RedirectToAction("ShowcaseEdit", "ShowCase", new
             {
                 id = showCaseProduct.ShowCaseId,
-                tap = ShowCaseDictionary[(int)ShowcaseTapList.ShowCaseAddedProductList]
+                tap = ShowCaseTap.ShowCaseDictionary[(int)ShowcaseTapList.ShowCaseAddedProductList]
             });
         }
-        public async Task<IActionResult> ShowcaseDeletedproduct(int id, int showCaseId)
+        public async Task<IActionResult> ShowcaseDeletedproduct(Guid id, Guid showCaseId)
         {
             ResponseAlert(await _showCaseProductService.DeleteShowCaseProduct(new(id)));
             return RedirectToAction("ShowcaseEdit", "ShowCase", new
             {
                 id = showCaseId,
-                tap = ShowCaseDictionary[(int)ShowcaseTapList.ShowCaseAddedProductList]
+                tap = ShowCaseTap.ShowCaseDictionary[(int)ShowcaseTapList.ShowCaseAddedProductList]
             });
         }
         #endregion

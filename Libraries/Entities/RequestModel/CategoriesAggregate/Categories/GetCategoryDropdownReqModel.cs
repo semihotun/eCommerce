@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.CategoriesAggregate.Categories
+﻿using System;
+
+namespace Entities.RequestModel.CategoriesAggregate.Categories
 {
     public class GetCategoryDropdownReqModel
     {
@@ -6,10 +8,10 @@
         {
             
         }
-        public GetCategoryDropdownReqModel(int? selectedId = 0)
+        public GetCategoryDropdownReqModel(Guid? selectedId)
         {
             SelectedId = selectedId;
         }
-        public int? SelectedId { get; set; }
+        public Guid? SelectedId { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model Entities.ViewModels.AdminViewModel.SpeficationAttribute.SpecificationAttributeVM
+﻿@model Entities.ViewModels.AdminViewModel.SpeficationAttributes.SpecificationAttributeVM
 @{
     ViewData["Title"] = "SpeficationAttributeEdit";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
@@ -66,7 +66,6 @@
                             <table id="SpeficationOptionList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
                                         <th>Name</th>
                                         <th>Sıra</th>
                                         <th> </th>
@@ -76,22 +75,31 @@
                                 </tbody>
                             </table>
                         </div>
-                        <script>
-                            var ProductListTableo;
-                            var BindProductList = function (response) {
+                        <script>                          
+                            const GetSpeficationAttributeTable = () =>{
+                                let SpeficationAttributeOptionTable;
                                 if ($.fn.DataTable.isDataTable("#SpeficationOptionList")) {
-                                    ProductListTableo.draw();
+                                    SpeficationAttributeOptionTable.draw();
                                 }
                                 else {
-                                    ProductListTableo = $("#SpeficationOptionList").DataTable({
-                                        "sAjaxSource": "/Admin/SpeficationAttribute/SpeficationAttributeOptionListJson?SpecificationAttributeId="+@Model.Id,
-                                        "bServerSide": true,
-                                        "bProcessing": true,
-                                        "bSearchable": true,
-                                        "bLengthChange": false,
-                                        "searching": false,
+                                    SpeficationAttributeOptionTable = $("#SpeficationOptionList").DataTable({
+                                        "ajax": {
+                                            "url": "/Admin/SpeficationAttribute/SpeficationAttributeOptionListJson?SpecificationAttributeId=" + $("#Id").val(),
+                                            "datatype": "json",
+                                            "type": "POST"
+                                        },
+                                        dom: 'Brtip',
+                                        buttons: [
+                                            'copy', 'csv', 'excel', 'pdf', 'print'
+                                        ],
+                                        "orderCellsTop": true,
+                                        "fixedHeader": true,
+                                        "pagingType": "full_numbers",
+                                        "processing": true,
+                                        "serverSide": true,
+                                        "responsive": true,
+                                        "searching": true,
                                         "columns": [
-                                            { "data": "Id", "name": "Id", "autoWidth": true },
                                             { "data": "Name", "name": "Name", "autoWidth": true },
                                             { "data": "DisplayOrder", "DisplayOrder": "DisplayOrder", "autoWidth": true },
                                             {
@@ -107,11 +115,8 @@
                                     });
                                 }
                             }
-                            var FilterRecord = function () {
-                                BindProductList();
-                            }
                             $(document).ready(function () {
-                                BindProductList();
+                                GetSpeficationAttributeTable();
                             });
                         </script>
                     </div>

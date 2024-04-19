@@ -1,5 +1,4 @@
-﻿@using Entities.Concrete.ShowcaseAggregate
-@model IList<Entities.Concrete.ShowcaseAggregate.ShowCase>
+﻿@model IList<Entities.Concrete.ShowCase>
 @{
     ViewBag.Title = "ShowcaseList";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
@@ -46,7 +45,7 @@
                                     </td>
                                     <td>
                                         @Html.ActionLink("Düzenle", "ShowcaseEdit", new {Id = item.Id },new { @class = "btn btn-outline-default" }) |
-                                        <button onclick="DeleteFunction(@item.Id)" id="@item.Id" class="btn btn-outline-danger">Sil</button>
+                                        <button onclick="DeleteFunction('@item.Id')" id="@item.Id" class="btn btn-outline-danger">Sil</button>
                                     </td>
                                 </tr>
                             }

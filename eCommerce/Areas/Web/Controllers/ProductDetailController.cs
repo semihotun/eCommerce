@@ -1,6 +1,7 @@
-﻿using DataAccess.DALs.EntitiyFramework.ProductAggregate.Products;
+﻿using Business.Services.ProductAggregate.Products.DtoQueries;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Threading.Tasks;
 namespace eCommerce.Areas.Web.Controllers
 {
@@ -8,22 +9,22 @@ namespace eCommerce.Areas.Web.Controllers
     {
         #region Fields
 
-        private readonly IProductDAL _productDAL;
+        private readonly IProductDtoQuery _productDtoQuery;
         #endregion
         #region Constructors
-        public ProductDetailController(IProductDAL productDAL)
+        public ProductDetailController(IProductDtoQuery productDtoQuery)
         {
-            _productDAL = productDAL;
+            _productDtoQuery = productDtoQuery;
         }
         #endregion
-        public async Task<IActionResult> ProductDetail(int productId, int combinationId)
+        public async Task<IActionResult> ProductDetail(Guid productId, Guid combinationId)
         {
-            var model = (await _productDAL.GetProductDetailVM(new(productId, combinationId))).Data;
+            var model = (await _productDtoQuery.GetProductDetailVM(new(productId, combinationId))).Data;
             return View(model);
         }
         public async Task<IActionResult> GetAnotherProduct()
         {
-            var data = (await _productDAL.GetAnotherProductList()).Data;
+            var data = (await _productDtoQuery.GetAnotherProductList()).Data;
             return Json(data, new JsonSerializerSettings());
         }
     }

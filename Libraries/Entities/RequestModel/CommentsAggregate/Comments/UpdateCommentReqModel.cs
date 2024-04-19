@@ -5,21 +5,20 @@ namespace Entities.RequestModel.CommentsAggregate.Comments
 {
     public class UpdateCommentReqModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public bool IsDeleted { get; set; }
         public string CommentTitle { get; set; }
         public string CommentText { get; set; }
-        public int Productid { get; set; }
-        public int UserId { get; set; }
+        public Guid Productid { get; set; }
+        public Guid UserId { get; set; }
         public bool IsApproved { get; set; }
         public DateTime CreatedOnUtc { get; set; }
         public int Rating { get; set; }
         public UpdateCommentReqModel()
-        {
-            
+        {         
         }
 
-        public UpdateCommentReqModel(int id, string commentTitle, string commentText, int productid, int userId, bool isApproved, DateTime createdOnUtc, int rating)
+        public UpdateCommentReqModel(Guid id, string commentTitle, string commentText, Guid productid, Guid userId, bool isApproved, DateTime createdOnUtc, int rating)
         {
             Id = id;
             CommentTitle = commentTitle;

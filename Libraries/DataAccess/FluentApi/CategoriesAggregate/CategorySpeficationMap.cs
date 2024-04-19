@@ -1,4 +1,4 @@
-﻿using Entities.Concrete.CategoriesAggregate;
+﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace DataAccess.FluentApi.CategoriesAggregate
@@ -9,7 +9,6 @@ namespace DataAccess.FluentApi.CategoriesAggregate
         {
             builder.HasIndex(x => x.CategoryId);
             builder.HasKey(x => x.Id);
-            builder.Property(t => t.Id).UseIdentityColumn();
         }
     }
 }

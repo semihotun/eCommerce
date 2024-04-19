@@ -1,5 +1,5 @@
 ﻿using Core.Utilities.Migration;
-using Entities.Concrete.AuthAggregate;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Collections.Generic;
@@ -11,7 +11,6 @@ namespace DataAccess.FluentApi.AuthAggregate
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(t => t.Id).UseIdentityColumn();
         }
         public List<Role> GetSeedData()
         {

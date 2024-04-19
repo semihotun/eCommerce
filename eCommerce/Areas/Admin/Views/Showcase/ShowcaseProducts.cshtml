@@ -43,7 +43,6 @@
         <table id="ProductList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>İsim</th>
                     <th>Marka</th>
                     <th>Kategori</th>
@@ -82,7 +81,6 @@
                                     "responsive": true,
                                     "searching": true,
                                     "columns": [
-                                        { "data": "Id", "name": "Id", "autoWidth": true },
                                         { "data": "ProductName", "name": "ProductName", "autoWidth": true },
                                         { "data": "BrandName", "name": "BrandName", "autoWidth": true },
                                         { "data": "CategoryName", "name": "CategoryName", "autoWidth": true },
@@ -90,7 +88,7 @@
                                            data: null,
                             render: function (data, type, row) {
                                 return "<a href='/Admin/Showcase/ShowcaseAdded?productid=" + row.Id +
-                                    "&showcaseid=" +@Model.ShowCaseDto.Id+
+                                    "&showcaseid=" +'@Model.ShowCaseDto.Id'+
                                     "&combinationId=" + (row.ProductAttributeCombination != null ? row.ProductAttributeCombination.Id : 0) +
                                     "' class='btn btn btn-outline-default'  >Ekle</a>";
                             }, "orderable": false

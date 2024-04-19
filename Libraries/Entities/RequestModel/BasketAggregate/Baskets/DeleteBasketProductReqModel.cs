@@ -1,20 +1,21 @@
 ﻿using Entities.Concrete;
+using System;
 
 namespace Entities.RequestModel.BasketAggregate.Baskets
 {
     public class DeleteBasketProductReqModel
     {
-        public int ProductId { get; set; }
-        public int CombinationId { get; set; }
-        public int UserId { get; set; }
+        public Guid ProductId { get; set; }
+        public Guid CombinationId { get; set; }
+        public Guid UserId { get; set; }
         public int ProductPiece { get; set; }
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public bool IsDeleted { get; set; }
         public DeleteBasketProductReqModel()
         {
                 
         }
-        public DeleteBasketProductReqModel(int id, int productId, int combinationId, int userId, int productPiece)
+        public DeleteBasketProductReqModel(Guid id, Guid productId, Guid combinationId, Guid userId, int productPiece)
         {
             Id = id;
             ProductId = productId;

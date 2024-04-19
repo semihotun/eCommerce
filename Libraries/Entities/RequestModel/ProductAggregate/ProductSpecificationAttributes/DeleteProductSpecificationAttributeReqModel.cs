@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
 {
     public class DeleteProductSpecificationAttributeReqModel
     {
@@ -6,10 +8,10 @@
         {
             
         }
-        public DeleteProductSpecificationAttributeReqModel(int id)
+        public DeleteProductSpecificationAttributeReqModel(Guid id)
         {
             Id = id;
         }
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

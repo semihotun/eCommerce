@@ -24,7 +24,7 @@
                                     <div class="col-md-10">
                                         <div class="row">
                                             <div class="col-md-5"> <input type="file" name="Uploadfile" id="Uploadfile" class="form-control " value="@Model.SliderImage" /> </div>
-                                            <div class="col-md-7" style="float:left;"> <img src="@Model.SliderImage" width="40px" height="40px" id="resim" /> </div>
+                                            <div class="col-md-7" style="float:left;"> <img src="@Model.SliderImage" width="40px" height="40px" id="image" /> </div>
                                         </div>
                                         @Html.ValidationMessageFor(model => model.SliderImage, "", new { @class = "text-danger" })
                                     </div>
@@ -65,17 +65,4 @@
 <div>
     @Html.ActionLink("Geri Dön", "Index")
 </div>
-<script type="text/javascript">
-            $("#Uploadfile").change(function(){//eğer file değişirse
-                    var resim = document.getElementById("Uploadfile");//resime eriş
-					if (resim.files && resim.files[0]){//eğer dosya var ise
-						var veri=new FileReader();//veri okuma apisi başlatıyoruz.
-						veri.onload=function() {//altta readAsDataURL verileri okuyoruz.O okuma tamamladığın da
-                            var adres = veri.result;//veriyi al
-                            $("#resim").attr("src", adres);                    
-							$('.onizleme').html('<img src="'+adres+'"/>');//resim olarak çizdir.
-						}
-						veri.readAsDataURL(resim.files[0]);//veri okuma
-					}
-				});
-</script>
+<script src="~/admin/adminslider/sliderEdit.js"></script>

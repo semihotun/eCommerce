@@ -1,10 +1,12 @@
-﻿namespace Entities.RequestModel.ProductAggregate.PredefinedProductAttributeValues
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.PredefinedProductAttributeValues
 {
     public class UpdatePredefinedProductAttributeValueReqModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public bool IsDeleted { get; set; }
-        public int ProductAttributeId { get; set; }
+        public Guid ProductAttributeId { get; set; }
         public string Name { get; set; }
         public decimal PriceAdjustment { get; set; }
         public decimal WeightAdjustment { get; set; }
@@ -14,7 +16,7 @@
         {
             
         }
-        public UpdatePredefinedProductAttributeValueReqModel(int id,int productAttributeId,
+        public UpdatePredefinedProductAttributeValueReqModel(Guid id, Guid productAttributeId,
             string name,
             decimal priceAdjustment,
             decimal weightAdjustment

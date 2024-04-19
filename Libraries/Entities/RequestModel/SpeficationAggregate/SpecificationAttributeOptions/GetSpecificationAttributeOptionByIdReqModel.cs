@@ -1,8 +1,10 @@
-﻿namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributeOptions
+﻿using System;
+
+namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributeOptions
 {
     public class GetSpecificationAttributeOptionByIdReqModel
     {
-        public GetSpecificationAttributeOptionByIdReqModel(int? specificationAttributeOptionId)
+        public GetSpecificationAttributeOptionByIdReqModel(Guid? specificationAttributeOptionId)
         {
             SpecificationAttributeOptionId = specificationAttributeOptionId;
         }
@@ -10,6 +12,6 @@
         {
             
         }
-        public int? SpecificationAttributeOptionId { get; set; }
+        public Guid? SpecificationAttributeOptionId { get; set; }
     }
 }

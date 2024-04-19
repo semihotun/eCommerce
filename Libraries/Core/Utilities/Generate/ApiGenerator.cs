@@ -10,11 +10,11 @@ namespace Core.Utilities.Generate
 {
     public static class ApiGenerator
     {
-        public static void GenerateApi()
+        public static void GenerateApi(Assembly assembly)
         {
             try
             {
-                foreach (var item in GetAllAssemblyClass())
+                foreach (var item in GetAllAssemblyClass(assembly))
                 {
                     var parameterReferenceList = GetParameterReferenceList(item);
                     var controllerText = GetControllerText(item);
@@ -104,21 +104,12 @@ namespace Core.Utilities.Generate
             methods = assemblyClass.GetMethods().Where(x => x.DeclaringType.Name != "EfEntityRepositoryBase`2" && x.Module.Name != "System.Private.CoreLib.dll");
             return methods.Any();
         }
-        private static IEnumerable<Type> GetAllAssemblyClass()
+        private static IEnumerable<Type> GetAllAssemblyClass(Assembly assembly)
         {
-            return AppDomain.CurrentDomain.GetAssemblies().Where(
-             x => x.ManifestModule.Name == "Business.dll" ||
-             x.ManifestModule.Name == "DataAccess.dll" ||
-             x.ManifestModule.Name == "Core.dll"
-             ).SelectMany(x => x.GetTypes().Where(x =>
-                (x.IsClass && x.IsPublic &&
-                (x.Name.Contains("service", StringComparison.InvariantCultureIgnoreCase) ||
-                 x.Name.Contains("dal", StringComparison.InvariantCultureIgnoreCase)) &&
-                 (x.FullName.Contains("Business.Services") ||
-                 x.FullName.Contains("DataAccess.DALs.EntitiyFramework") ||
-                 x.FullName.Contains("Core.Library.Business"))) ||
-                 x.FullName.Contains("Core.Library.DAL")))
+            var data = assembly.GetTypes().Where(x =>
+                x.IsClass && x.IsPublic && x.FullName.Contains("Business.Services"))
              .Where(type => !Attribute.IsDefined(type, typeof(IgnoreGeneratorAttribute)));
+            return data;
         }
         private static string GetControllerText(Type item)
         {

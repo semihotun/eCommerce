@@ -1,5 +1,4 @@
-﻿using Entities.Concrete.CategoriesAggregate;
-using Entities.Concrete.SliderAggregate;
+﻿using Entities.Concrete;
 using Entities.Dtos.ShowcaseDALModels;
 using System.Collections.Generic;
 namespace Entities.ViewModels.WebViewModel.Home

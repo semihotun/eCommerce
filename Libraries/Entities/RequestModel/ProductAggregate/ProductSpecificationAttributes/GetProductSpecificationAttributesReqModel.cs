@@ -1,10 +1,12 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
 {
     public class GetProductSpecificationAttributesReqModel
     {
-        public int ProductId { get; set; }
+        public Guid ProductId { get; set; }
         public string SpecificationAttributeName { get; set; }
-        public int SpecificationAttributeOptionId { get; set; }
+        public Guid SpecificationAttributeOptionId { get; set; }
         public bool? AllowFiltering { get; set; }
         public bool? ShowOnProductPage { get; set; }
         public int PageIndex { get; set; }
@@ -13,11 +15,11 @@
         {
             
         }
-        public GetProductSpecificationAttributesReqModel(int productId = 0,
-            string specificationAttributeName = null,
-            int specificationAttributeOptionId = 0,
-            bool? allowFiltering = null,
-            bool? showOnProductPage = null,
+        public GetProductSpecificationAttributesReqModel(Guid productId,
+            string? specificationAttributeName,
+            Guid specificationAttributeOptionId,
+            bool? allowFiltering,
+            bool? showOnProductPage,
             int pageIndex = 1,
             int pageSize = int.MaxValue)
         {

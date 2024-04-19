@@ -1,4 +1,4 @@
-﻿using Entities.Concrete.AdressAggregate;
+﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace DataAccess.FluentApi.AddressAggregate
@@ -10,7 +10,6 @@ namespace DataAccess.FluentApi.AddressAggregate
             builder.HasIndex(x => x.UserId);
             builder.HasIndex(x => x.AddressId);
             builder.HasKey(x => x.Id);
-            builder.Property(t => t.Id).UseIdentityColumn();
         }
     }
 }

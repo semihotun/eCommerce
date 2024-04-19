@@ -1,7 +1,8 @@
-﻿using Entities.Concrete;
-using Entities.Concrete.ProductAggregate;
+﻿using Core.SeedWork;
+using Entities.Concrete;
 using Entities.Dtos.ShowcaseDALModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 namespace Entities.ViewModels.AdminViewModel.Showcase
@@ -12,7 +13,7 @@ namespace Entities.ViewModels.AdminViewModel.Showcase
         public string ShowCaseTitle { get; set; }
         public int SearchProductId { get; set; }
         public string SearchProductName { get; set; }
-        public int ShowCaseType { get; set; }
+        public Guid ShowCaseType { get; set; }
         [UIHint("tinymce_full")]
         public string ShowCaseText { get; set; }
         public string Tap { get; set; }

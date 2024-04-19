@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
 {
     public class GetProductCombinationXmlReqModel
     {
@@ -6,8 +8,8 @@
         {
             
         }
-        public int ProductId { get; set; }
-        public GetProductCombinationXmlReqModel(int productId)
+        public Guid ProductId { get; set; }
+        public GetProductCombinationXmlReqModel(Guid productId)
         {
             ProductId = productId;
         }

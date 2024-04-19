@@ -11,7 +11,7 @@
     <tbody>
         <tr>
             <td>
-                @Html.DropDownList("ProductAttributeId", Model.ProductAttributeSelectlist, new { @class = "form-control" })
+                @Html.DropDownList("ProductAttributeId", Model.ProductAttributeSelectlist, new { @class = "form-control" , onchange="ChangedMappingValueSelectList()"})
             </td>
             <td>
                 @Html.TextBoxFor(x => x.ProductAttributeMappingModel.TextPrompt, new { @class = "form-control" })

@@ -1,5 +1,5 @@
 ﻿using Core.Utilities.Migration;
-using Entities.Concrete.ProductAggregate;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Collections.Generic;
@@ -10,7 +10,6 @@ namespace DataAccess.FluentApi.ProductAggregate
         public void Configure(EntityTypeBuilder<ProductStockType> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(t => t.Id).UseIdentityColumn();
         }
         public List<ProductStockType> GetSeedData()
         {

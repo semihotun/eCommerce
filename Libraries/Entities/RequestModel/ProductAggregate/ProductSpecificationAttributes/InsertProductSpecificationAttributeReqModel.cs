@@ -1,12 +1,13 @@
 ﻿using Entities.Concrete;
+using System;
 
 namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
 {
     public class InsertProductSpecificationAttributeReqModel
     {
-        public int ProductId { get; set; }
-        public int AttributeTypeId { get; set; }
-        public int SpecificationAttributeOptionId { get; set; }
+        public Guid ProductId { get; set; }
+        public Guid AttributeTypeId { get; set; }
+        public Guid SpecificationAttributeOptionId { get; set; }
         public bool AllowFiltering { get; set; }
         public bool ShowOnProductPage { get; set; }
         public int DisplayOrder { get; set; }
@@ -14,7 +15,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
         {
             
         }
-        public InsertProductSpecificationAttributeReqModel(int productId, int attributeTypeId, int specificationAttributeOptionId,
+        public InsertProductSpecificationAttributeReqModel(Guid productId, Guid attributeTypeId, Guid specificationAttributeOptionId,
             bool allowFiltering, bool showOnProductPage, int displayOrder)
         {
             ProductId = productId;

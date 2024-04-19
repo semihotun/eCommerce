@@ -1,8 +1,10 @@
-﻿namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributeOptions
+﻿using System;
+
+namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributeOptions
 {
     public class GetNotExistingSpecificationAttributeOptionsReqModel
     {
-        public GetNotExistingSpecificationAttributeOptionsReqModel(int[] attributeOptionIds)
+        public GetNotExistingSpecificationAttributeOptionsReqModel(Guid[] attributeOptionIds)
         {
             AttributeOptionIds = attributeOptionIds;
         }
@@ -10,6 +12,6 @@
         {
             
         }
-        public int[] AttributeOptionIds { get; set; }
+        public Guid[] AttributeOptionIds { get; set; }
     }
 }

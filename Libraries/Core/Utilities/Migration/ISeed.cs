@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+﻿using Core.SeedWork;
 using System.Collections.Generic;
 namespace Core.Utilities.Migration
 {

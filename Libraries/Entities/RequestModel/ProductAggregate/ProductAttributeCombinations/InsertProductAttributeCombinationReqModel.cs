@@ -1,8 +1,10 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
 {
     public class InsertProductAttributeCombinationReqModel
     {
-        public int ProductId { get; set; }
+        public Guid ProductId { get; set; }
         public string AttributesXml { get; set; }
         public string Gtin { get; set; }
         public string Sku { get; set; }
@@ -11,7 +13,7 @@
         {
             
         }
-        public InsertProductAttributeCombinationReqModel(int productId, string attributesXml, string gtin, string sku, string manufacturerPartNumber)
+        public InsertProductAttributeCombinationReqModel(Guid productId, string attributesXml, string gtin, string sku, string manufacturerPartNumber)
         {
             ProductId = productId;
             AttributesXml = attributesXml;

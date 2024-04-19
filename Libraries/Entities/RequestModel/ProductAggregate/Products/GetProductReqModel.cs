@@ -1,13 +1,15 @@
-﻿namespace Entities.RequestModel.ProductAggregate.Products
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.Products
 {
     public class GetProductReqModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public GetProductReqModel()
         {
             
         }
-        public GetProductReqModel(int id)
+        public GetProductReqModel(Guid id)
         {
             Id = id;
         }

@@ -1,14 +1,15 @@
 ﻿using Entities.Concrete;
+using System;
 
 namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributeOptions
 {
     public class UpdateSpecificationAttributeOptionReqModel
     {
-        public int Id { get; set; }
-        public int SpecificationAttributeId { get; set; }
+        public Guid Id { get; set; }
+        public Guid SpecificationAttributeId { get; set; }
         public string Name { get; set; }
         public int DisplayOrder { get; set; }
-        public UpdateSpecificationAttributeOptionReqModel(int id, int specificationAttributeId, string name, int displayOrder)
+        public UpdateSpecificationAttributeOptionReqModel(Guid id, Guid specificationAttributeId, string name, int displayOrder)
         {
             Id = id;
             SpecificationAttributeId = specificationAttributeId;

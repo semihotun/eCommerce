@@ -1,6 +1,4 @@
 ﻿using Entities.Concrete;
-using Entities.Concrete.CustomerUserAggregate;
-using Entities.Concrete.ProductAggregate;
 using Entities.Dtos.ProductDALModels;
 namespace Entities.ViewModels.WebViewModel.Home
 {

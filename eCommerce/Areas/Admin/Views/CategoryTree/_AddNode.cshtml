@@ -15,34 +15,18 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
-                <div class="col-md-12 d-flex">
-                    <div class="col-md-6 row">
-                        <div class="input-group align-items-center justify-content-sm-between">
-                            <span>Parent Node</span>
-                            <span class="input-group-addon">
-                                @Html.RadioButtonFor(model => model.NodeTypeRbtn, "Pn", new { @class = "rbtnnodetype" })
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-group align-items-center justify-content-sm-between">
-                            <span> Child Node</span>
-                            <span class="input-group-addon">
-                                @Html.RadioButtonFor(model => model.NodeTypeRbtn, "Cn", new { @class = "rbtnnodetype" })
-                            </span>
-                        </div>
-                    </div>
-                    <br />
-                    @Html.ValidationMessageFor(m => m.NodeTypeRbtn, "", new { @class = "alert-error" })
-                </div>
                 <div class="clearfix">
                 </div>
                 <div class="col-md-12">
-                    <div class="petenddiv hidden">
                         @Html.Label("Hangi sınıfa ait")
-                        @Html.DropDownList("ParentName", new SelectList(ViewBag.plist, "Id", "CategoryName"), "--select--", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.ParentName, "", new { @class = "alert-error" })
-                    </div>
+                        <select id="ParentId" name="ParentId" class="form-control">
+                            <option value="@Guid.Empty.ToString()" selected>Ana Kategori</option>
+                            @foreach (var item in ViewBag.plist)
+                            {
+                                <option value="@item.Id">@item.CategoryName</option>
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(m => m.ParentId, "", new { @class = "alert-error" })
                 </div>
                 <div class="clearfix">
                 </div>
@@ -53,17 +37,13 @@
                         @Html.ValidationMessageFor(model => model.NodeName, "", new { @class = "alert-error" })
                     </div>
                 </div>
-                <div class="clearfix">
-                </div>
-                <br />
-                <br />
                 <div class="col-md-12">
                     <div>
                         <div class="pull-left">
-                            <input type="submit" id="savenode" value="Kaydet" class="btn btn-primary" />
+                            <input type="submit" onclick="CreateNode(event)" value="Kaydet" class="btn btn-primary" />
                         </div>
                         <div class="pull-right">
-                            <input type="button" id="closePopOver" value="İptal" class="btn btn-primary" />
+                            <input type="button" onclick="CloseModal(event)" value="İptal" class="btn btn-primary" />
                         </div>
                     </div>
                 </div>

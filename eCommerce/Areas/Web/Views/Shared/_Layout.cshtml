@@ -279,29 +279,36 @@
 </html>
 <script type="text/javascript">
     $(document).ready(function () {
-                var searchboxID = "#txtSearch";
+        var searchboxID = "#txtSearch";
+        var xhr;
         $('#srcButton').click(function () {
+            if (xhr && xhr.readyState !== 4) {
+                xhr.abort();
+            }
             $(searchboxID).keyup();
-                });
+        });
         $(searchboxID).keyup(function (event) {
+            if (xhr && xhr.readyState !== 4) {
+                xhr.abort();
+            }
             if (event.keyCode != 13 && event.keyCode != 37 && event.keyCode != 39) {
-            if ($.trim($(searchboxID).val()).length >= 2) {
-                delay(function () {
-                        $.ajax({
-                            url : '/Web/Home/Search?searchKey=' + $(searchboxID).val(),
-                            type: "POST",
+                if ($.trim($(searchboxID).val()).length >= 2) {
+                    delay(function () {
+                        xhr = $.ajax({
+                            url: '/Web/Home/Search?searchKey=' + $(searchboxID).val(),
+                            type: "GET",
                             success: function (result) {
                                 $("#searchDiv").hide();
                                 $("#searchDiv").html(result);
                                 $("#searchDiv").show();
                                 $("#searchDiv").css('z-index', '1');
-                        }
-                    });
-                }, 100);
-            } else {
+                            }
+                        });
+                    }, 100);
+                } else {
                     $("#searchDiv").hide();
+                }
             }
-        }
         });
     });
     $("body:not(#searchDiv):not(input#txtSearch)").click(function (event) {

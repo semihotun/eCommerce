@@ -1,4 +1,4 @@
-﻿@using Entities.Enum
+﻿@using Entities.EntitiesConst
 @model Entities.ViewModels.AdminViewModel.Showcase.ShowCaseCreateOrUpdateVM
 @{
     ViewBag.Title = "ShowcaseCreate";
@@ -24,7 +24,7 @@
                                 <br />
                                 <ul class="nav" style="display:block;">
                                     <li class="tapli"><a data-toggle="tab" href="#tap1" class="tab tap1">Showcase Bilgisi</a></li>
-                                    @if (Model.ShowCaseDto.ShowCaseType == (int)ShowcaseEnum.text)
+                                    @if (Model.ShowCaseDto.ShowCaseType == ShowcaseConst.Text)
                                     {
                                         <li class="tapli"><a data-toggle="tab" href="#tap2" class="tab tap2">Yazı(Seçili Ürünler)</a></li>
                                     }

@@ -1,8 +1,10 @@
-﻿namespace Entities.RequestModel.ShowcaseAggregate.ShowcaseServices
+﻿using System;
+
+namespace Entities.RequestModel.ShowcaseAggregate.ShowcaseServices
 {
     public class GetShowcaseReqModel
     {
-        public GetShowcaseReqModel(int id)
+        public GetShowcaseReqModel(Guid id)
         {
             Id = id;
         }
@@ -10,6 +12,6 @@
         {
             
         }
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

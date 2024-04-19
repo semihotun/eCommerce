@@ -1,8 +1,10 @@
-﻿namespace Entities.RequestModel.ProductAggregate.Products
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.Products
 {
     public class GetProductsBySpecificationAttributeIdReqModel
     {
-        public GetProductsBySpecificationAttributeIdReqModel(int specificationAttributeId, int pageIndex = 1, int pageSize = int.MaxValue)
+        public GetProductsBySpecificationAttributeIdReqModel(Guid specificationAttributeId, int pageIndex = 1, int pageSize = int.MaxValue)
         {
             SpecificationAttributeId = specificationAttributeId;
             PageIndex = pageIndex;
@@ -12,7 +14,7 @@
         {
             
         }
-        public int SpecificationAttributeId { get; set; }
+        public Guid SpecificationAttributeId { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
     }

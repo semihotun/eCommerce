@@ -1,4 +1,4 @@
-﻿using Entities.Concrete.ProductAggregate;
+﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace DataAccess.FluentApi.ProductAggregate
@@ -9,7 +9,6 @@ namespace DataAccess.FluentApi.ProductAggregate
         {
             builder.HasIndex(x => x.ProductId);
             builder.HasKey(x => x.Id);
-            builder.Property(t => t.Id).UseIdentityColumn();
         }
     }
 }

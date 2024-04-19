@@ -6,10 +6,10 @@
         {
             
         }
-        public DeleteNodesReqModel(string values)
+        public DeleteNodesReqModel(string idsString)
         {
-            Values = values;
+            IdsString = idsString;
         }
-        public string Values { get; set; }
+        public string IdsString { get; set; }
     }
 }

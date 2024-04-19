@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
 {
     public class AllInsertPermutationCombinationReqModel
     {
@@ -6,10 +8,10 @@
         {
             
         }
-        public AllInsertPermutationCombinationReqModel(int productId)
+        public AllInsertPermutationCombinationReqModel(Guid productId)
         {
             ProductId = productId;
         }
-        public int ProductId { get; set; }
+        public Guid ProductId { get; set; }
     }
 }

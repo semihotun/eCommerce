@@ -1,4 +1,4 @@
-﻿using Entities.Concrete;
+﻿using Core.SeedWork;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ namespace Entities.ViewModels.AdminViewModel.Discount
     {
         public string Name { get; set; }
         public string AdminComment { get; set; }
-        public int DiscountTypeId { get; set; }
+        public Guid DiscountTypeId { get; set; }
         public bool UsePercentage { get; set; }
         public decimal DiscountPercentage { get; set; }
         public decimal DiscountAmount { get; set; }
@@ -17,7 +17,7 @@ namespace Entities.ViewModels.AdminViewModel.Discount
         public DateTime EndDateUtc { get; set; }
         public bool RequiresCouponCode { get; set; }
         public string CouponCode { get; set; }
-        public int DiscountLimitationId { get; set; }
+        public Guid DiscountLimitationId { get; set; }
         public int LimitationTimes { get; set; }
         public int? MaximumDiscountedQuantity { get; set; }
         public bool AppliedToSubCategories { get; set; }

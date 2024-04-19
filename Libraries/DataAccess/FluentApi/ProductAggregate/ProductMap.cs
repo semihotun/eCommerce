@@ -1,4 +1,4 @@
-﻿using Entities.Concrete.ProductAggregate;
+﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Linq;
@@ -14,7 +14,6 @@ namespace DataAccess.FluentApi.ProductAggregate
             builder.HasIndex(x => x.Id).IncludeProperties(typeof(Product).GetProperties().Select(x => x.Name).Where(x => x != "Id").ToArray());
             builder.Property(x => x.ProductName).HasMaxLength(50);
             builder.HasKey(x => x.Id);
-            builder.Property(t => t.Id).UseIdentityColumn();
         }
     }
 }

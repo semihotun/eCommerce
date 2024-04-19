@@ -1,31 +1,33 @@
-﻿using AutoMapper;
-using Business.Constants;
-using Business.Services.CommentsAggregate.Comments;
-using Core.Utilities.Identity;
-using DataAccess.DALs.EntitiyFramework.CommentsAggregate.Comments;
-using Entities.Concrete.CommentsAggregate;
-using Entities.Dtos.CommentDALModels;
-using Entities.Others;
+﻿using Business.Constants;
+using Business.Services.CommentsAggregate.Comments.Commands;
+using Business.Services.CommentsAggregate.Comments.DtoQueries;
+using Business.Services.CommentsAggregate.Comments.Queries;
+using Entities.Concrete;
+using Entities.RequestModel.CommentsAggregate.Comments;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 namespace eCommerce.Areas.Admin.Controllers
 {
     public class CommentController : AdminBaseController
     {
-        private readonly ICommentService _commentService;
-        private readonly IMapper _mapper;
-        private readonly ICommentDAL _commentDal;
-        public CommentController(ICommentService commentService,
-            IMapper mapper,
-            ICommentDAL commentDal)
+        #region ctor
+        private readonly ICommentCommandService _commentCommandService;
+        private readonly ICommentQueryService _commentQueryService;
+        private readonly ICommentDtoQueryService _commentDtoQueryService;
+        public CommentController(
+            ICommentCommandService commentCommandService,
+            ICommentQueryService commentQueryService,
+            ICommentDtoQueryService commentDtoQueryService)
         {
-            this._commentService = commentService;
-            this._mapper = mapper;
-            this._commentDal = commentDal;
+            _commentCommandService = commentCommandService;
+            _commentQueryService = commentQueryService;
+            _commentDtoQueryService = commentDtoQueryService;
         }
-        public async Task<IActionResult> CommentListJson(CommentDataTableFilter model, DataTablesParam param)
+        #endregion
+        public async Task<IActionResult> CommentListJson(GetCommentDataTableReqModel model)
         {
-            return ToDataTableJson(await _commentDal.GetCommentDataTable(new GetCommentDataTable(model, param)), param);
+            return ToDataTableJson(await _commentDtoQueryService.GetCommentDataTable(model), model);
         }
         [HttpGet]
         public IActionResult CommentList()
@@ -39,19 +41,19 @@ namespace eCommerce.Areas.Admin.Controllers
             ViewBag.Approve = ConstList.FillCommentApprove(model.IsApproved);
             return View(model);
         }
-        public async Task<IActionResult> CommentEdit(int id)
+        public async Task<IActionResult> CommentEdit(Guid id)
         {
-            var data = (await _commentService.GetComment(new(id))).Data;
+            var data = (await _commentQueryService.GetComment(new(id))).Data;
             return View(data);
         }
-        public async Task<IActionResult> CommentDelete(int id)
+        public async Task<IActionResult> CommentDelete(Guid id)
         {
-            ResponseAlert(await _commentService.DeleteComment(new(id)));
+            ResponseAlert(await _commentCommandService.DeleteComment(new(id)));
             return RedirectToAction("CommentList", "Comment");
         }
-        public async Task<IActionResult> CommentApprove(int id)
-        {    
-            ResponseAlert(await _commentService.CommentApprove(new(id)));
+        public async Task<IActionResult> CommentApprove(Guid id)
+        {
+            ResponseAlert(await _commentCommandService.CommentApprove(new(id)));
             return RedirectToAction("CommentList", "Comment");
         }
     }

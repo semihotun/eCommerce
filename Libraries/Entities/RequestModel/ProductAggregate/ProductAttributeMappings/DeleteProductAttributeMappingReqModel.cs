@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductAttributeMappings
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductAttributeMappings
 {
     public class DeleteProductAttributeMappingReqModel
     {
@@ -6,10 +8,10 @@
         {
             
         }
-        public DeleteProductAttributeMappingReqModel(int id)
+        public DeleteProductAttributeMappingReqModel(Guid id)
         {
             Id = id;
         }
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

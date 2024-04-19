@@ -1,19 +1,10 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductAttributes
+﻿using Core.Utilities.DataTable;
+using Core.Utilities.Infrastructure.Filter;
+
+namespace Entities.RequestModel.ProductAggregate.ProductAttributes
 {
-    public class GetAllProductAttributesReqModel
+    public class GetAllProductAttributesReqModel : DTParameters, IFilterable
     {
-        public int PageIndex { get; set; }
-        public int PageSize { get; set; }
         public string Name { get; set; }
-        public GetAllProductAttributesReqModel()
-        {
-            
-        }
-        public GetAllProductAttributesReqModel(int pageIndex = 0, int pageSize = int.MaxValue, string name = null)
-        {
-            PageIndex = pageIndex;
-            PageSize = pageSize;
-            Name = name;
-        }
     }
 }

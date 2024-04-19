@@ -1,4 +1,4 @@
-﻿@model Entities.ViewModels.AdminViewModel.SpeficationAttribute.SpecificationAttributeVM
+﻿@model Entities.ViewModels.AdminViewModel.SpeficationAttributes.SpecificationAttributeVM
 @{
     ViewBag.Title = "ShowcaseCreate";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayoutPage.cshtml";
@@ -23,7 +23,6 @@
                             <table id="SpeficationList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
                                         <th>Name</th>
                                         <th>Sıra</th>
                                         <th> </th>
@@ -34,21 +33,30 @@
                             </table>
                         </div>
                         <script>
-                            var ProductListTableo;
-                            var BindProductList = function (response) {
+                            const GetSpeficationDataTableList = function (response) {
+                                let SpeficationDataTableList;
                                 if ($.fn.DataTable.isDataTable("#SpeficationList")) {
-                                    ProductListTableo.draw();
+                                    SpeficationDataTableList.draw();
                                 }
                                 else {
-                                    ProductListTableo = $("#SpeficationList").DataTable({
-                                        "sAjaxSource": "/Admin/SpeficationAttribute/SpeficationAttributeListJson",
-                                        "bServerSide": true,
-                                        "bProcessing": true,
-                                        "bSearchable": true,
-                                        "bLengthChange": false,
-                                        "searching": false,
+                                    SpeficationDataTableList = $("#SpeficationList").DataTable({
+                                        "ajax": {
+                                            "url": "/Admin/SpeficationAttribute/SpeficationAttributeListJson",
+                                            "datatype": "json",
+                                            "type": "POST"
+                                        },
+                                        dom: 'Brtip',
+                                        buttons: [
+                                            'copy', 'csv', 'excel', 'pdf', 'print'
+                                        ],
+                                        "orderCellsTop": true,
+                                        "fixedHeader": true,
+                                        "pagingType": "full_numbers",
+                                        "processing": true,
+                                        "serverSide": true,
+                                        "responsive": true,
+                                        "searching": true,
                                         "columns": [
-                                            { "data": "Id", "name": "Id", "autoWidth": true },
                                             { "data": "Name", "name": "Name", "autoWidth": true },
                                             { "data": "DisplayOrder", "name": "DisplayOrder", "autoWidth": true },
                                             {
@@ -59,20 +67,14 @@
                                                 }, "orderable": false
                                             },
                                         ],
-                                        oLanguage: {
-                                            oPaginate: {
-                                                sPrevious: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
-                                                sNext: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
-                                            }
+                                        "language": {
+                                            "url": "/datatablelanguage.json"
                                         }
                                     });
                                 }
                             }
-                            var FilterRecord = function () {
-                                BindProductList();
-                            }
                             $(document).ready(function () {
-                                BindProductList();
+                                GetSpeficationDataTableList();
                             });
                         </script>
                     </div>

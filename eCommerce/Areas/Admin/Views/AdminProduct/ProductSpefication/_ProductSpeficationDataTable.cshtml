@@ -7,7 +7,6 @@
     <table id="productSpeficationList" class="table tablesorter table-hover dt-responsive nowrapr" width="100%" cellspacing="0">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Özellik Key</th>
                 <th>Özellik Value</th>
                 <th>Sıra</th>
@@ -19,7 +18,7 @@
     </table>
 </div>
 <script>
-    const GetProductSpeficationDatatable = function (response) {
+    const GetProductSpeficationDatatable =  async () => {
         let ProductSpeficationTable;
         if ($.fn.DataTable.isDataTable("#productSpeficationList")) {
             ProductSpeficationTable = $("#productSpeficationList").DataTable();
@@ -28,10 +27,10 @@
         else {
             ProductSpeficationTable = $("#productSpeficationList").DataTable({
                 "ajax": {
-                    "url": "/Admin/ProductSpecificationAttribute/ProductSpeficationJson?Id=" + productId,
+                    "url": "/Admin/ProductSpecificationAttribute/ProductSpeficationJson?ProductId=" + $("#Id").val(),
                     "datatype": "json",
                     "type": "POST",
-                    "async":false
+
                 },
                 dom: '<"bottom">rtip',
                 buttons: [
@@ -45,7 +44,6 @@
                 "responsive": true,
                 "searching": true,
                 "columns": [
-                    { "data": "Id", "name": "Id", "autoWidth": true },
                     { "data": "SpeficationAtributeTypeName", "name": "SpeficationAtributeTypeName", "autoWidth": true },
                     { "data": "SpecificationAttributeOptionName", "name": "SpecificationAttributeOptionName", "autoWidth": true },
                     { "data": "DisplayOrder", "name": "DisplayOrder", "autoWidth": true },
@@ -74,7 +72,7 @@
                     {
                         data: null,
                         render: function (data, type, row) {
-                            return "<a onClick='ProductSpeficationDelete(" + row.Id + ")'><i class='fa fa-trash-o datatablesil ' style='font-size:20px;' ></i></a>";
+                            return "<a onClick='ProductSpeficationDelete(" + JSON.stringify(row.Id) + ")' Id='" + row.Id + "'><i class='fa fa-trash-o datatablesil ' style='font-size:20px;' ></i></a>";
                         }, "orderable": false
                     }
                 ],

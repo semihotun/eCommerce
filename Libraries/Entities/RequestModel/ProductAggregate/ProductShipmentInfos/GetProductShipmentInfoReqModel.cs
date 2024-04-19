@@ -1,14 +1,16 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductShipmentInfos
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductShipmentInfos
 {
     public class GetProductShipmentInfoReqModel
     {
         public GetProductShipmentInfoReqModel()
         {
         }
-        public GetProductShipmentInfoReqModel(int productId)
+        public GetProductShipmentInfoReqModel(Guid productId)
         {
             ProductId = productId;
         }
-        public int ProductId { get; set; }
+        public Guid ProductId { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿using Entities.Concrete;
-using Entities.Concrete.ProductAggregate;
+﻿using Core.SeedWork;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -8,11 +8,11 @@ namespace Entities.ViewModels.AdminViewModel.AdminProduct
 {
     public class ProductVM
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; } = Guid.Empty;
         public string ProductName { get; set; }
-        public int? BrandId { get; set; }
+        public Guid? BrandId { get; set; } = Guid.Empty;
         public string BrandName { get; set; }
-        public int? CategoryId { get; set; }
+        public Guid? CategoryId { get; set; } = Guid.Empty;
         public string CategoryName { get; set; }
         public int? PageNumber { get; set; }
         public int? PageSize { get; set; }
@@ -24,9 +24,9 @@ namespace Entities.ViewModels.AdminViewModel.AdminProduct
         public string Tap { get; set; }
         public string Gtin { get; set; }
         public string Sku { get; set; }
-        public int ProductSeoId { get; set; }
-        public int ProductAttributeId { get; set; }
-        public int ProductStockTypeId { get; set; }
+        public Guid ProductSeoId { get; set; } = Guid.Empty;
+        public Guid ProductAttributeId { get; set; } = Guid.Empty;
+        public Guid ProductStockTypeId { get; set; } = Guid.Empty;
         public DateTime CreatedOnUtc { get; set; }
         public ProductShipmentInfo ProductShipmentInfo { get; set; }
         public ProductSeo ProductSeoModel { get; set; }
@@ -50,16 +50,16 @@ namespace Entities.ViewModels.AdminViewModel.AdminProduct
             public bool AllowOutOfStockOrders { get; set; }
             public int NotifyAdminForQuantityBelow { get; set; }
             public DateTime CreateTime { get; set; }
-            public int ProductId { get; set; }
-            public int CombinationId { get; set; }
+            public Guid ProductId { get; set; } = Guid.Empty;
+            public Guid CombinationId { get; set; } = Guid.Empty;
             public string ProductName { get; set; }
         }
         public partial class ProductSpecificationAttributeModel : BaseEntity
         {
             public string SpecificationAttributeOptionName { get; set; }
             public string SpeficationAtributeTypeName { get; set; }
-            public int ProductId { get; set; }
-            public int? AttributeTypeId { get; set; }
+            public Guid ProductId { get; set; } = Guid.Empty;
+            public Guid? AttributeTypeId { get; set; } = Guid.Empty;
             public int? SpecificationAttributeOptionId { get; set; }
             public bool AllowFiltering { get; set; }
             public bool ShowOnProductPage { get; set; }

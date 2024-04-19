@@ -1,18 +1,10 @@
-﻿using Entities.Others;
+﻿using Core.Utilities.DataTable;
+using Core.Utilities.Infrastructure.Filter;
+using System;
 namespace Entities.RequestModel.ProductAggregate.ProductAttributeMappings
 {
-    public class GetAllProductAttributeMappingReqModel
+    public class GetAllProductAttributeMappingReqModel : DTParameters, IFilterable
     {
-        public int ProductId { get; set; }
-        public DataTablesParam Param { get; set; }
-        public GetAllProductAttributeMappingReqModel()
-        {
-            
-        }
-        public GetAllProductAttributeMappingReqModel(int productId, DataTablesParam param)
-        {
-            ProductId = productId;
-            Param = param;
-        }
+        public Guid ProductId { get; set; }
     }
 }

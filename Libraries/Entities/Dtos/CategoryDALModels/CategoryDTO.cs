@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 namespace Entities.Dtos.CategoryDALModels
 {
     public class CategoryDTO
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string CategoryName { get; set; }
-        public int? ParentCategoryId { get; set; }
+        public Guid? ParentCategoryId { get; set; }
         public List<CategoryDTO> SubCategory { get; set; }
     }
 }

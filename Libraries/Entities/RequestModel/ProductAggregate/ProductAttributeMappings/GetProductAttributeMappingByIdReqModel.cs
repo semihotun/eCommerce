@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductAttributeMappings
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductAttributeMappings
 {
     public class GetProductAttributeMappingByIdReqModel
     {
@@ -6,10 +8,10 @@
         {
             
         }
-        public GetProductAttributeMappingByIdReqModel(int productAttributeMappingId)
+        public GetProductAttributeMappingByIdReqModel(Guid productAttributeMappingId)
         {
             ProductAttributeMappingId = productAttributeMappingId;
         }
-        public int ProductAttributeMappingId { get; set; }
+        public Guid ProductAttributeMappingId { get; set; }
     }
 }

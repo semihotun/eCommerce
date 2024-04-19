@@ -1,12 +1,14 @@
-﻿namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributes
+﻿using System;
+
+namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributes
 {
     public class GetSpecificationAttributeByIdReqModel
     {
-        public GetSpecificationAttributeByIdReqModel(int specificationAttributeId)
+        public GetSpecificationAttributeByIdReqModel(Guid specificationAttributeId)
         {
             SpecificationAttributeId = specificationAttributeId;
         }
-        public int SpecificationAttributeId { get; set; }
+        public Guid SpecificationAttributeId { get; set; }
         public GetSpecificationAttributeByIdReqModel()
         {
 

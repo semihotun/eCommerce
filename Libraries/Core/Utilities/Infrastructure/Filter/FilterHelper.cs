@@ -18,12 +18,14 @@ namespace Core.Utilities.Infrastructure.Filter
             {
                 try
                 {
-                    Filter attr = (Filter)propertyInfo.GetCustomAttributes<Filter>().First();
+                    var attr = propertyInfo.GetCustomAttribute<Filter>();
+                    if (attr == null) continue;
                     Expression expression = null;
                     var member = Expression.Property(parameter, string.IsNullOrEmpty(attr.queryColumn) ? propertyInfo.Name : attr.queryColumn);
                     var constantValue = propertyInfo.GetValue(filtermodel, null);
                     var constant = Expression.Constant(constantValue);
-                    if (constantValue != null && !string.IsNullOrEmpty(constantValue.ToString()) && constantValue.ToString() != "0")
+                    if (!string.IsNullOrEmpty(constantValue?.ToString()) && constantValue?.ToString() != default(int).ToString() &&
+                        Guid.Empty.ToString() != constantValue?.ToString())
                     {
                         switch (attr.filters)
                         {
@@ -49,6 +51,8 @@ namespace Core.Utilities.Infrastructure.Filter
                 }
                 catch { }
             }
+            if (finalExpression == null)
+                return contex;
             return contex.Where(Expression.Lambda<Func<T, bool>>(finalExpression, parameter));
         }
         public static IQueryable<T> ApplyDataTableFilter<T>(this IQueryable<T> contex, DTParameters filtermodel)
@@ -96,6 +100,8 @@ namespace Core.Utilities.Infrastructure.Filter
                         finalExpression = Expression.AndAlso(finalExpression, expression);
                 }
             }
+            if (finalExpression == null)
+                return contex;
             return contex.Where(Expression.Lambda<Func<T, bool>>(finalExpression, parameter));
         }
     }

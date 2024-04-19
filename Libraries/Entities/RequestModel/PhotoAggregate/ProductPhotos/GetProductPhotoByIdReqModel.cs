@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.PhotoAggregate.ProductPhotos
+﻿using System;
+
+namespace Entities.RequestModel.PhotoAggregate.ProductPhotos
 {
     public class GetProductPhotoByIdReqModel
     {
@@ -6,10 +8,10 @@
         {
             
         }
-        public GetProductPhotoByIdReqModel(int photoId)
+        public GetProductPhotoByIdReqModel(Guid photoId)
         {
             PhotoId = photoId;
         }
-        public int PhotoId { get; set; }
+        public Guid PhotoId { get; set; }
     }
 }

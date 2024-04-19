@@ -1,46 +1,46 @@
-﻿using Business.Services.BrandAggregate.Brands;
-using Core.Utilities.DataTable;
-using Core.Utilities.Identity;
-using DataAccess.DALs.EntitiyFramework.BrandAggregate.Brands;
-using Entities.Concrete.BrandAggregate;
-using Entities.Dtos.BrandDALModels;
+﻿using Business.Services.BrandAggregate.Brands.Commands;
+using Business.Services.BrandAggregate.Brands.DtoQueries;
+using Business.Services.BrandAggregate.Brands.Queries;
+using Entities.Concrete;
 using Entities.Extensions.AutoMapper;
 using Entities.RequestModel.BrandAggregate.Brands;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 namespace eCommerce.Areas.Admin.Controllers
 {
     public class BrandController : AdminBaseController
     {
         #region Field
-        private readonly IBrandService _brandService;
-        private readonly IBrandDAL _brandDal;
-        #endregion
-        #region Constructer
-        public BrandController(IBrandService brandService,
-           IBrandDAL brandDal)
+        private readonly IBrandCommandService _brandCommandService;
+        private readonly IBrandDtoQueryService _brandDtoQueryService;
+        private readonly IBrandQueryService _brandQueryService;
+        public BrandController(IBrandCommandService brandCommandService,
+            IBrandDtoQueryService brandDtoQueryService,
+            IBrandQueryService brandQueryService)
         {
-            this._brandService = brandService;
-            this._brandDal = brandDal;
+            _brandCommandService = brandCommandService;
+            _brandDtoQueryService = brandDtoQueryService;
+            _brandQueryService = brandQueryService;
         }
         #endregion
         #region Method
         public async Task<IActionResult> BrandListJson(GetBrandDataTable model)
         {
-            ResponseDataAlert(await _brandDal.GetBrandDataTable(model), out var result);
+            ResponseDataAlert(await _brandDtoQueryService.GetBrandDataTable(model), out var result);
             return ToDataTableJson<Brand>(result, model);
         }
         public IActionResult BrandList() => View();
-        public async Task<IActionResult> BrandEdit(int id)
+        public async Task<IActionResult> BrandEdit(Guid id)
         {
-            var data = await _brandService.GetBrand(new (id));
+            var data = await _brandQueryService.GetBrand(new (id));
             return View(data.Data);
         }
         [HttpPost]
         public async Task<IActionResult> BrandEdit(Brand model)
         {
             var data = model.MapTo<UpdateBrandReqModel>();
-            ResponseAlert(await _brandService.UpdateBrand(data));
+            ResponseAlert(await _brandCommandService.UpdateBrand(data));
             return RedirectToAction(nameof(BrandList));
         }
         public IActionResult BrandCreate() => View();
@@ -48,12 +48,12 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<IActionResult> BrandCreate(Brand model)
         {
             var data = model.MapTo<AddBrandReqModel>();
-            ResponseAlert(await _brandService.AddBrand(data));
+            ResponseAlert(await _brandCommandService.AddBrand(data));
             return View(model);
         }
-        public async Task<IActionResult> BrandDelete(int id)
+        public async Task<IActionResult> BrandDelete(Guid id)
         {
-            ResponseAlert(await _brandService.DeleteBrand(new(id)));
+            ResponseAlert(await _brandCommandService.DeleteBrand(new(id)));
             return RedirectToAction("BrandList", "Brand");
         }
         #endregion

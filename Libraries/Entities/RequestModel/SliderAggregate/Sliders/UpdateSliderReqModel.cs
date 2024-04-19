@@ -1,11 +1,12 @@
 ﻿using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
+using System;
 
 namespace Entities.RequestModel.SliderAggregate.Sliders
 {
     public class UpdateSliderReqModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string SliderImage { get; set; }
         public string SliderHeading { get; set; }
         public string SliderText { get; set; }
@@ -15,7 +16,7 @@ namespace Entities.RequestModel.SliderAggregate.Sliders
         {
             
         }
-        public UpdateSliderReqModel(int id, string sliderImage, string sliderHeading, string sliderText, string sliderLink, IFormFile uploadfile)
+        public UpdateSliderReqModel(Guid id, string sliderImage, string sliderHeading, string sliderText, string sliderLink, IFormFile uploadfile)
         {
             Id = id;
             SliderImage = sliderImage;

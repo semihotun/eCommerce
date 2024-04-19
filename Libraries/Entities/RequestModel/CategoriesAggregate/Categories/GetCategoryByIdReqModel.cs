@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.CategoriesAggregate.Categories
+﻿using System;
+
+namespace Entities.RequestModel.CategoriesAggregate.Categories
 {
     public class GetCategoryByIdReqModel
     {
@@ -6,10 +8,10 @@
         {
             
         }
-        public GetCategoryByIdReqModel(int categoryId)
+        public GetCategoryByIdReqModel(Guid categoryId)
         {
             CategoryId = categoryId;
         }
-        public int CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
     }
 }

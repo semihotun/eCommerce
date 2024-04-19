@@ -1,18 +1,19 @@
 ﻿using Entities.Concrete;
+using System;
 
 namespace Entities.RequestModel.CategoriesAggregate.CategorySpefications
 {
     public class UpdateCategorySpeficationReqModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public bool IsDeleted { get; set; }
-        public int? CategoryId { get; set; }
-        public int? SpeficationAttributeId { get; set; }
+        public Guid? CategoryId { get; set; }
+        public Guid? SpeficationAttributeId { get; set; }
         public UpdateCategorySpeficationReqModel()
         {
             
         }
-        public UpdateCategorySpeficationReqModel(int id, int? categoryId, int? speficationAttributeId)
+        public UpdateCategorySpeficationReqModel(Guid id, Guid? categoryId, Guid? speficationAttributeId)
         {
             Id = id;
             CategoryId = categoryId;

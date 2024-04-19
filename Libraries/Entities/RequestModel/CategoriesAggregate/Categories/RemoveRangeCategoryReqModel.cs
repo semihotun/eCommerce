@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.CategoriesAggregate.Categories
+﻿using System;
+
+namespace Entities.RequestModel.CategoriesAggregate.Categories
 {
     public class RemoveRangeCategoryReqModel
     {
@@ -6,10 +8,10 @@
         {
             
         }
-        public RemoveRangeCategoryReqModel(int id)
+        public RemoveRangeCategoryReqModel(Guid id)
         {
             Id = id;
         }
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

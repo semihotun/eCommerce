@@ -1,4 +1,4 @@
-﻿@model Entities.ViewModels.WebViewModel.Home.CatalogVM
+﻿@model Entities.RequestModel.ProductAggregate.Catalog.GetCatalogProductReqModel
 @{
     ViewBag.Title = "Catalog";
     Layout = "~/Areas/Web/Views/Shared/_Layout.cshtml"; 
@@ -30,7 +30,7 @@
                                 Markalar <i style="float:right;" class="fa fa-arrow-down"></i>
                             </button>
                             <div class="collapse collapsehome in" id="collapseExamplebrand">
-                                <div class="card card-body" ng-init="GetAllBrandFilter(@Model.CategoryId)">
+                                <div class="card card-body" ng-init="GetAllBrandFilter('@Model.CategoryId')">
                                     <ul ng-repeat="Brand in BrandData">
                                         <li class="filter-list">
                                             <input class="pixel-radio" type="checkbox" ng-model="Brand.checked"
@@ -61,12 +61,12 @@
                                     <div class="search">
                                         <input type="button" value="Ara"
                                                class="pricesearch btn btn-default"
-                                               ng-click="GetAllData(@Model.CategoryId,1)" />
+                                               ng-click="GetAllData('@Model.CategoryId',1)" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div ng-init="GetAllCategoryFilter(@Model.CategoryId)">
+                        <div ng-init="GetAllCategoryFilter('@Model.CategoryId')">
                             <div ng-repeat="Filter in CatalogFilterData ">
                                 <div class="aside">
                                     <button class="aside-title btncollapsecatalog" type="button" data-toggle="collapse"
@@ -107,8 +107,7 @@
                                                                (List<SelectListItem>)ViewBag.Sortingenum, new
                                                                     {
                                                                         ng_model = "Sortingenum",
-                                                                        ng_change
-                                                                    = "GetAllData(" + @Model.CategoryId + ",1)",
+                                                                        ng_change = "GetAllData(" + @Model.CategoryId + ",1)",
                                                                         @class = "input"
                                                                     })
                                 </div>
@@ -118,7 +117,7 @@
                         <!-- STORE -->
                         <div id="store">
                             <!-- row -->
-                            <div style="display:flex;flex-wrap:wrap;" class="row" ng-init="GetAllData(@Model.CategoryId,@Model.PageNumber)">
+                            <div style="display:flex;flex-wrap:wrap;" class="row" ng-init="GetAllData('@Model.CategoryId',@Model.PageNumber)">
                                 <div ng-if="ProductData.length === 0" style="width:100%;">
                                     <h3 class="text-center" >Bu Kategoriye Ait Ürün bulunamadı</h3>
                                 </div>
@@ -133,8 +132,7 @@
                                             <button class="main-btn quick-view">
                                                 <i class="fa fa-search-plus"></i><a href="~/Web/ProductDetail/ProductDetail?productid={{product.Id}}&combinationId={{product.ProductAttributeCombination.Id}}">Ürünü İncele</a>
                                             </button>
-                                            <img src="{{product.ProductPhotoModel != null ? product.ProductPhotoModel.ProductPhotoName : null }}" width="253"
-                                                 height="350">
+                                            <img ng-src="{{product && product.ProductPhotoModel != null ? product.ProductPhotoModel.ProductPhotoName : '/Content/Themes/img/noImage.png' }}" width="253" height="350">
                                         </div>
                                             <div class="product-body">
                                                 <h3 class="product-price" ng-if="product.ProductDiscount===0">
@@ -160,15 +158,15 @@
                                     <p>{{CurrentPage}} of {{TotalPages}} pages</p>
                                     <ul class="pagination">
                                         <li>
-                                            <a href="#" ng-click="GetAllData(@Model.CategoryId,BackwardOne)">
+                                            <a href="#" ng-click="GetAllData('@Model.CategoryId',BackwardOne)">
                                                 <i class="fa fa-fast-backward"></i>
                                             </a>
                                             <a class="page-number page-item" ng-repeat="data in PageNumberArray"
-                                               ng-click="GetAllData(@Model.CategoryId,data)" href="#"  ng-class="data == CurrentPage ? 'active' :''">
+                                               ng-click="GetAllData('@Model.CategoryId',data)" href="#"  ng-class="data == CurrentPage ? 'active' :''">
                                                 {{data}}
                                                 &nbsp;&nbsp;
                                             </a>
-                                            <a href="#" ng-click="GetAllData(@Model.CategoryId,ForwardOne)"
+                                            <a href="#" ng-click="GetAllData('@Model.CategoryId',ForwardOne)"
                                                ng-show="showForwardBtn"><i class="fa fa-fast-forward"></i></a>
                                         </li>
                                     </ul>

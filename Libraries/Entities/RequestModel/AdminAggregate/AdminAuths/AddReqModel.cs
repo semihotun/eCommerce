@@ -1,8 +1,10 @@
-﻿namespace Entities.RequestModel.AdminAggregate.AdminAuths
+﻿using System;
+
+namespace Entities.RequestModel.AdminAggregate.AdminAuths
 {
     public class AddReqModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -13,7 +15,7 @@
         {
             
         }
-        public AddReqModel(int id, string firstName, string lastName, string email, byte[] passwordSalt, byte[] passwordHash, bool status)
+        public AddReqModel(Guid id, string firstName, string lastName, string email, byte[] passwordSalt, byte[] passwordHash, bool status)
         {
             Id = id;
             FirstName = firstName;

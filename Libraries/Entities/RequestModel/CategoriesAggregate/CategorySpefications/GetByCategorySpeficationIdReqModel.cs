@@ -1,14 +1,16 @@
-﻿namespace Entities.RequestModel.CategoriesAggregate.CategorySpefications
+﻿using System;
+
+namespace Entities.RequestModel.CategoriesAggregate.CategorySpefications
 {
     public class GetByCategorySpeficationIdReqModel
     {
-        public int SpeficationId { get; set; }
-        public int CategoryId { get; set; }
+        public Guid SpeficationId { get; set; }
+        public Guid CategoryId { get; set; }
         public GetByCategorySpeficationIdReqModel()
         {
             
         }
-        public GetByCategorySpeficationIdReqModel(int speficationId, int categoryId)
+        public GetByCategorySpeficationIdReqModel(Guid speficationId, Guid categoryId)
         {
             SpeficationId = speficationId;
             CategoryId = categoryId;

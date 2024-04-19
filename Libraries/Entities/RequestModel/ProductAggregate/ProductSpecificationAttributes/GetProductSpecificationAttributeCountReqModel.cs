@@ -1,14 +1,16 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
 {
     public class GetProductSpecificationAttributeCountReqModel
     {
-        public int ProductId { get; set; }
-        public int SpecificationAttributeOptionId { get; set; }
+        public Guid ProductId { get; set; }
+        public Guid SpecificationAttributeOptionId { get; set; }
         public GetProductSpecificationAttributeCountReqModel()
         {
             
         }
-        public GetProductSpecificationAttributeCountReqModel(int productId = 0, int specificationAttributeOptionId = 0)
+        public GetProductSpecificationAttributeCountReqModel(Guid productId, Guid specificationAttributeOptionId)
         {
             ProductId = productId;
             SpecificationAttributeOptionId = specificationAttributeOptionId;

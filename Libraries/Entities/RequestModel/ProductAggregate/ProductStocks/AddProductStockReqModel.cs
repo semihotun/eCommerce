@@ -11,14 +11,14 @@ namespace Entities.RequestModel.ProductAggregate.ProductStocks
         public bool AllowOutOfStockOrders { get; set; }
         public int NotifyAdminForQuantityBelow { get; set; }
         public DateTime CreateTime { get; set; }
-        public int ProductId { get; set; }
-        public int CombinationId { get; set; }
+        public Guid ProductId { get; set; }
+        public Guid CombinationId { get; set; }
         public AddProductStockReqModel()
         {
             
         }
         public AddProductStockReqModel(double? productPrice, double? productDiscount, int? productStockPiece, bool allowOutOfStockOrders,
-            int notifyAdminForQuantityBelow, DateTime createTime, int productId, int combinationId)
+            int notifyAdminForQuantityBelow, DateTime createTime, Guid productId, Guid combinationId)
         {
             ProductPrice = productPrice;
             ProductDiscount = productDiscount;

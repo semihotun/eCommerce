@@ -1,12 +1,13 @@
-﻿using Entities.Concrete.ProductAggregate;
+﻿using Entities.Concrete;
 using Entities.Dtos.ProductAttributeMappingDALModels;
+using System;
 using System.Collections.Generic;
 namespace Entities.ViewModels.AdminViewModel.AdminProduct
 {
     public class ProductAttributeCombinationVM
     {
-        public int Id { get; set; }
-        public int ProductId { get; set; }
+        public Guid Id { get; set; }
+        public Guid ProductId { get; set; }
         public string AttributesXml { get; set; }
         public string Gtin { get; set; }
         public string Sku { get; set; }

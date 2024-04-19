@@ -10,8 +10,6 @@
 </div>
 <div>
     <ul class='SearchResultItemHead'>
-        @if (Model.ProductList != null)
-        {
             @foreach (var item in Model.ProductList)
             {
                 <li class='SearchResultItem'>
@@ -24,6 +22,5 @@
                )
                 </li>
             }
-        }
     </ul>
 </div>

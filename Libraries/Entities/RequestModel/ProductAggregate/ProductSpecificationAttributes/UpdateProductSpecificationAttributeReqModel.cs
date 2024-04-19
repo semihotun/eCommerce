@@ -1,11 +1,13 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
 {
     public class UpdateProductSpecificationAttributeReqModel
     {
-        public int Id { get; set; }
-        public int ProductId { get; set; }
-        public int AttributeTypeId { get; set; }
-        public int SpecificationAttributeOptionId { get; set; }
+        public Guid Id { get; set; }
+        public Guid ProductId { get; set; }
+        public Guid AttributeTypeId { get; set; }
+        public Guid SpecificationAttributeOptionId { get; set; }
         public bool AllowFiltering { get; set; }
         public bool ShowOnProductPage { get; set; }
         public int DisplayOrder { get; set; }
@@ -14,7 +16,7 @@
             
         }
 
-        public UpdateProductSpecificationAttributeReqModel(int id, int productId, int attributeTypeId, int specificationAttributeOptionId, bool allowFiltering,
+        public UpdateProductSpecificationAttributeReqModel(Guid id, Guid productId, Guid attributeTypeId, Guid specificationAttributeOptionId, bool allowFiltering,
             bool showOnProductPage, int displayOrder)
         {
             Id = id;

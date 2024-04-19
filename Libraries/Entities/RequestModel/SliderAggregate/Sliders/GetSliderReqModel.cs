@@ -1,8 +1,10 @@
-﻿namespace Entities.RequestModel.SliderAggregate.Sliders
+﻿using System;
+
+namespace Entities.RequestModel.SliderAggregate.Sliders
 {
     public class GetSliderReqModel
     {
-        public GetSliderReqModel(int id)
+        public GetSliderReqModel(Guid id)
         {
             Id = id;
         }
@@ -10,6 +12,6 @@
         {
             
         }
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

@@ -19,7 +19,6 @@
                     <table class="table tablesorter table-hover">
                         <thead class="">
                             <tr>
-                                <th>İd</th>
                                 <th>Başlık</th>
                                 <th>Resim</th>
                                 <th>Link</th>
@@ -31,7 +30,6 @@
                             @foreach (var item in Model.SliderList)
                             {
                                 <tr>
-                                    <td>@item.Id</td>
                                     <td>@item.SliderHeading</td>
                                     <td><img src="@item.SliderImage" width="40px" height="40px" /></td>
                                     <td>@item.SliderLink</td>

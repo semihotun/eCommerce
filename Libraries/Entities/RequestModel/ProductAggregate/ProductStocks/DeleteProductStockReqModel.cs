@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductStocks
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductStocks
 {
     public class DeleteProductStockReqModel
     {
@@ -6,10 +8,10 @@
         {
             
         }
-        public DeleteProductStockReqModel(int id)
+        public DeleteProductStockReqModel(Guid id)
         {
             Id = id;
         }
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

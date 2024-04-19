@@ -1,5 +1,5 @@
 ﻿using Core.Utilities.Results;
-using Entities.Concrete.BasketAggregate;
+using Entities.Concrete;
 using Entities.RequestModel.BasketAggregate.Baskets;
 using System.Collections.Generic;
 using System.Threading.Tasks;

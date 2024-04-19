@@ -1,15 +1,16 @@
 ﻿using Entities.Concrete;
+using System;
 
 namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributeOptions
 {
     public class DeleteSpecificationAttributeOptionReqModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public DeleteSpecificationAttributeOptionReqModel()
         {
             
         }
-        public DeleteSpecificationAttributeOptionReqModel(int id)
+        public DeleteSpecificationAttributeOptionReqModel(Guid id)
         {
             Id = id;
         }

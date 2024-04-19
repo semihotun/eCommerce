@@ -1,7 +1,7 @@
 ﻿using Business.Constants;
-using Core.CrossCuttingConcerns.Caching;
+using Core.Utilities.Caching;
 using Core.Utilities.Results;
-using Entities.Concrete.BasketAggregate;
+using Entities.Concrete;
 using Entities.Extensions.AutoMapper;
 using Entities.RequestModel.BasketAggregate.Baskets;
 using Newtonsoft.Json;

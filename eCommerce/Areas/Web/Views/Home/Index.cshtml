@@ -1,4 +1,5 @@
-﻿@model Entities.ViewModels.WebViewModel.Home.MainPageVM
+﻿@using Entities.EntitiesConst
+@model Entities.ViewModels.WebViewModel.Home.MainPageVM
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Web/Views/Shared/_Layout.cshtml";
@@ -31,7 +32,7 @@
 <!-- /HOME -->
 @foreach (var item in Model.ShowCaseList)
 {
-    if (item.ShowCaseType == 2)
+    if (item.ShowCaseType == ShowcaseConst.Product8x8)
     {
         <!-- section -->
 <div class="section">
@@ -104,13 +105,13 @@
         <!-- /section -->
     }
     <!-- ================ offer section start ================= -->
-    if (item.ShowCaseType == 3)
+    if (item.ShowCaseType == ShowcaseConst.Text)
     {
         @Html.Raw(System.Web.HttpUtility.HtmlDecode(item.ShowCaseText));
     }
     <!-- ================ offer section end ================= -->
     <!-- ================ Best Selling item  carousel ================= -->
-    if (item.ShowCaseType == 1)
+    if (item.ShowCaseType == ShowcaseConst.ProductSlider)
     {
         <!-- section -->
 <div class="section">
@@ -153,13 +154,8 @@
                                         {
                                             <span>Yeni</span>
                                         }
-                                        @*<span class="sale">-20%</span>*@
                                     </div>
-                                    @*<ul class="product-countdown">
-                                            <li><span>00 H</span></li>
-                                            <li><span>00 M</span></li>
-                                            <li><span>00 S</span></li>
-                                        </ul>*@
+
                                     @{var productlink = "/ProductDetail/ProductDetail?productId=" + product.ProductId +
                                 "&combinationId=" + (product.ProductModel.ProductAttributeCombination != null
                                                     ? product.ProductModel.ProductAttributeCombination.Id
@@ -182,13 +178,6 @@
                                         @product.ProductModel.ProductStock?.ProductPrice TL
                                         <del class="product-old-price"></del>
                                     </h3>
-                                    @*<div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o empty"></i>
-                                        </div>*@
                                     <h2 class="product-name"><a href="#">@product.ProductModel.ProductName</a></h2>
                                     <div class="product-btns">
                                         @if (User.Identity!.IsAuthenticated)

@@ -1,25 +1,27 @@
-﻿namespace Entities.RequestModel.ProductAggregate.ProductAttributeMappings
+﻿using System;
+
+namespace Entities.RequestModel.ProductAggregate.ProductAttributeMappings
 {
     public class InsertProductAttributeMappingReqModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public bool IsDeleted { get; set; }
-        public int ProductId { get; set; }
-        public int ProductAttributeId { get; set; }
+        public Guid ProductId { get; set; }
+        public Guid ProductAttributeId { get; set; }
         public string TextPrompt { get; set; }
         public bool IsRequired { get; set; }
-        public int AttributeControlTypeId { get; set; }
+        public Guid AttributeControlTypeId { get; set; }
         public int DisplayOrder { get; set; }
         public string DefaultValue { get; set; }
         public InsertProductAttributeMappingReqModel()
         {
             
         }
-        public InsertProductAttributeMappingReqModel(int productId,
-            int productAttributeId,
+        public InsertProductAttributeMappingReqModel(Guid productId,
+            Guid productAttributeId,
             string textPrompt,
             bool ısRequired,
-            int attributeControlTypeId,
+            Guid attributeControlTypeId,
             int displayOrder,
             string defaultValue)
         {

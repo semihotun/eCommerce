@@ -1,15 +1,16 @@
 ﻿using Entities.Concrete;
+using System;
 
 namespace Entities.RequestModel.CategoriesAggregate.CategorySpefications
 {
     public class DeleteCategorySpeficationReqModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public DeleteCategorySpeficationReqModel()
         {
             
         }
-        public DeleteCategorySpeficationReqModel(int id)
+        public DeleteCategorySpeficationReqModel(Guid id)
         {
             Id = id;
         }

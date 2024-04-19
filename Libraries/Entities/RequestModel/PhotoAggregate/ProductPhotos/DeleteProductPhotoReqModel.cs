@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestModel.PhotoAggregate.ProductPhotos
+﻿using System;
+
+namespace Entities.RequestModel.PhotoAggregate.ProductPhotos
 {
     public class DeleteProductPhotoReqModel
     {
@@ -6,10 +8,10 @@
         {
             
         }
-        public DeleteProductPhotoReqModel(int id)
+        public DeleteProductPhotoReqModel(Guid id)
         {
             Id = id;
         }
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

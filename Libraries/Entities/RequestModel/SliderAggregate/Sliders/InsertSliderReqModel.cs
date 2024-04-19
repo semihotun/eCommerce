@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System;
 
 namespace Entities.RequestModel.SliderAggregate.Sliders
 {
     public class InsertSliderReqModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string SliderImage { get; set; }
         public string SliderHeading { get; set; }
         public string SliderText { get; set; }

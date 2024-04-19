@@ -1,14 +1,15 @@
 ﻿using Entities.Concrete;
+using System;
 
 namespace Entities.RequestModel.ProductAggregate.PredefinedProductAttributeValues
 {
     public class DeletePredefinedProductAttributeValueReqModel {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public DeletePredefinedProductAttributeValueReqModel()
         {
             
         }
-        public DeletePredefinedProductAttributeValueReqModel(int id)
+        public DeletePredefinedProductAttributeValueReqModel(Guid id)
         {
             Id = id;
         }

@@ -1,19 +1,18 @@
-﻿using Entities.Concrete.PhotoAggregate;
-using Entities.Concrete.ProductAggregate;
+﻿using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 namespace Entities.Dtos.ShowcaseDALModels
 {
     public class ShowCaseProductDTO
     {
-        public int Id { get; set; }
-        public int ShowCaseId { get; set; }
-        public int ProductId { get; set; }
+        public Guid Id { get; set; }
+        public Guid ShowCaseId { get; set; }
+        public Guid ProductId { get; set; }
         public string ShowCaseText { get; set; }
         public Product ProductModel { get; set; }
         public class Product
         {
-            public int Id { get; set; }
+            public Guid Id { get; set; }
             public string ProductName { get; set; }
             public DateTime CreatedOnUtc { get; set; }
             public IEnumerable<ProductPhoto> ProductPhotoList { get; set; }
