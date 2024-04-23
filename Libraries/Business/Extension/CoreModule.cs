@@ -1,7 +1,6 @@
 ﻿using Business.Services.ProductAggregate.ProductAttributeFormatters;
 using Core.Utilities.Email;
 using Core.Utilities.IoC;
-using Core.Utilities.Logging.SeriLog;
 using DataAccess.Repository.Read;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -27,7 +26,6 @@ namespace Business.Extension
             serviceCollection.AddScoped<IActionContextAccessor, ActionContextAccessor>();
             serviceCollection.AddTransient<IMailService, MailManager>();
             serviceCollection.AddTransient<IProductAttributeFormatter, ProductAttributeFormatter>();
-            serviceCollection.AddTransient<MsSqlLogger>();
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
             var assembliesFilter = assemblies.Where(
                  x => x.ManifestModule.Name == "Business.dll"

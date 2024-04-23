@@ -3,8 +3,10 @@ using Core.Utilities.Caching;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 namespace Core.Utilities.Aspects.Autofac.Caching
 {
     public class CacheAspect : MethodInterception
@@ -24,7 +26,8 @@ namespace Core.Utilities.Aspects.Autofac.Caching
             //var cache = _cacheManager.Get(key);
             //if (cache != null)
             //{
-            //    var data = JsonConvert.DeserializeObject(cache, new JsonSerializerSettings(){
+            //    var data = JsonConvert.DeserializeObject(cache, new JsonSerializerSettings()
+            //    {
             //        TypeNameHandling = TypeNameHandling.All
             //    });
             //    invocation.ReturnValue = typeof(Task)
@@ -41,9 +44,9 @@ namespace Core.Utilities.Aspects.Autofac.Caching
             //        ?.MakeGenericType(taskResult.GetType().GetGenericArguments()[0])
             //        ?.GetProperty("Result")
             //        ?.GetValue(taskResult);
-            //    _cacheManager.Set(key, JsonConvert.SerializeObject(result,new JsonSerializerSettings()
+            //    _cacheManager.Set(key, JsonConvert.SerializeObject(result, new JsonSerializerSettings()
             //    {
-            //        TypeNameHandling=TypeNameHandling.All
+            //        TypeNameHandling = TypeNameHandling.All
             //    }), _duration);
             //}
         }

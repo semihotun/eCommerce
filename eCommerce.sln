@@ -38,6 +38,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generators", "Generators", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGenerator", "Generators\ApiGenerator\ApiGenerator.csproj", "{2489389C-20F3-403D-8FFB-D1C2A16EA60A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafkaWorkerService", "WorkerService\KafkaWorkerService\KafkaWorkerService.csproj", "{867E2773-FD5F-4DB1-903C-135949AA6733}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +86,10 @@ Global
 		{2489389C-20F3-403D-8FFB-D1C2A16EA60A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2489389C-20F3-403D-8FFB-D1C2A16EA60A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2489389C-20F3-403D-8FFB-D1C2A16EA60A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{867E2773-FD5F-4DB1-903C-135949AA6733}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{867E2773-FD5F-4DB1-903C-135949AA6733}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{867E2773-FD5F-4DB1-903C-135949AA6733}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{867E2773-FD5F-4DB1-903C-135949AA6733}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +102,7 @@ Global
 		{662C9EE7-88AA-4AFB-9F2E-A289BAC27603} = {3E09EAB6-BB5E-4732-8670-E4C17E1ED2C0}
 		{B2ED26B6-D7D2-4BC3-861C-47920D0164AD} = {3E09EAB6-BB5E-4732-8670-E4C17E1ED2C0}
 		{2489389C-20F3-403D-8FFB-D1C2A16EA60A} = {76F1B3F4-FB6D-48FA-BC5D-94533135362A}
+		{867E2773-FD5F-4DB1-903C-135949AA6733} = {1FBB061E-CC38-4F75-8521-BB3D5022317D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E3ED5AA-8A2F-494E-B053-A03B44366D71}

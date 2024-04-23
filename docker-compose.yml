@@ -17,6 +17,8 @@ services:
     depends_on:
       - s_sqlserver
       - s_redis
+    env_file:
+      - ./.env
   ecommerceApi:
     image: ${DOCKER_REGISTRY-}ecommerceapi
     build:
@@ -33,6 +35,8 @@ services:
     depends_on:
       - s_sqlserver
       - s_redis
+    env_file:
+      - ./.env
   s_sqlserver:
     container_name: c_sqlserver
     image: mcr.microsoft.com/mssql/server:2019-latest
