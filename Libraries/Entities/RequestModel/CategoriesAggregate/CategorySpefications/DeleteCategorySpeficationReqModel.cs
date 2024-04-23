@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.CategoriesAggregate.CategorySpefications
 {
@@ -8,7 +7,7 @@ namespace Entities.RequestModel.CategoriesAggregate.CategorySpefications
         public Guid Id { get; set; }
         public DeleteCategorySpeficationReqModel()
         {
-            
+
         }
         public DeleteCategorySpeficationReqModel(Guid id)
         {

@@ -1,5 +1,7 @@
 ﻿using Business.Constants;
+using Core.Const;
 using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -28,6 +30,7 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues.Co
         /// <param name="ppav"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IPredefinedProductAttributeValue")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<PredefinedProductAttributeValue>> InsertPredefinedProductAttributeValue(InsertPredefinedProductAttributeValueReqModel ppav)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -43,6 +46,7 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues.Co
         /// <param name="ppav"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IPredefinedProductAttributeValue")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> UpdatePredefinedProductAttributeValue(UpdatePredefinedProductAttributeValueReqModel ppav)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -61,6 +65,7 @@ namespace Business.Services.ProductAggregate.PredefinedProductAttributeValues.Co
         /// <param name="ppav"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IPredefinedProductAttributeValue")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeletePredefinedProductAttributeValue(DeletePredefinedProductAttributeValueReqModel ppav)
         {
             return await _unitOfWork.BeginTransaction(async () =>

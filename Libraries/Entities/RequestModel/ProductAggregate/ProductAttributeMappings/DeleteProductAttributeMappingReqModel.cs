@@ -6,7 +6,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductAttributeMappings
     {
         public DeleteProductAttributeMappingReqModel()
         {
-            
+
         }
         public DeleteProductAttributeMappingReqModel(Guid id)
         {

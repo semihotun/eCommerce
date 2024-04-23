@@ -1,5 +1,7 @@
 ﻿using Business.Constants;
+using Core.Const;
 using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -25,6 +27,7 @@ namespace Business.Services.CategoriesAggregate.CategorySpefications.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ICategorySpeficationService")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteCategorySpefication(DeleteCategorySpeficationReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -42,6 +45,7 @@ namespace Business.Services.CategoriesAggregate.CategorySpefications.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ICategorySpeficationService")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<CategorySpefication>> InsertCategorySpefication(InsertCategorySpeficationReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -57,6 +61,7 @@ namespace Business.Services.CategoriesAggregate.CategorySpefications.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ICategorySpeficationService")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> UpdateCategorySpefication(UpdateCategorySpeficationReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>

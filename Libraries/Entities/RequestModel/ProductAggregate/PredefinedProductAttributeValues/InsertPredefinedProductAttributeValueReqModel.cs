@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.ProductAggregate.PredefinedProductAttributeValues
 {
@@ -14,7 +13,7 @@ namespace Entities.RequestModel.ProductAggregate.PredefinedProductAttributeValue
         public int DisplayOrder { get; set; }
         public InsertPredefinedProductAttributeValueReqModel()
         {
-            
+
         }
         public InsertPredefinedProductAttributeValueReqModel(Guid productAttributeId,
             string name,

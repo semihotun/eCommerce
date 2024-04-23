@@ -10,7 +10,7 @@ namespace Entities.RequestModel.ShowcaseAggregate.ShowcaseServices
         }
         public GetShowcaseReqModel()
         {
-            
+
         }
         public Guid Id { get; set; }
     }

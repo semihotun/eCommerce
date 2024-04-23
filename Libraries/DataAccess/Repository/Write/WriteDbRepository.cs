@@ -1,5 +1,4 @@
-﻿using Core.Extension;
-using Core.SeedWork;
+﻿using Core.SeedWork;
 using DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -58,7 +57,7 @@ namespace DataAccess.Repository.Write
                 ? await _writeContext.Query<TEntity>().FirstOrDefaultAsync(expression)
                 : await _writeContext.Query<TEntity>().FirstOrDefaultAsync();
         }
-        public async Task<List<TEntity>> ToListAsync(Expression<Func<TEntity, bool>>? expression )
+        public async Task<List<TEntity>> ToListAsync(Expression<Func<TEntity, bool>>? expression)
         {
             return expression != null
                   ? await _writeContext.Query<TEntity>().Where(expression).ToListAsync()

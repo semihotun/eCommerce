@@ -1,15 +1,15 @@
 ﻿using Business.Constants;
 using Core.Utilities.Aspects.Autofac.Caching;
 using Core.Utilities.Results;
+using DataAccess.Repository.Read;
+using Entities.Concrete;
 using Entities.RequestModel.CategoriesAggregate.Categories;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
-using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using DataAccess.Repository.Read;
+using System.Threading.Tasks;
 
 namespace Business.Services.CategoriesAggregate.Categories.Queries
 {

@@ -26,10 +26,9 @@ namespace Core.Utilities.Caching
                 services.AddSession(options =>
                 {
                     options.Cookie.Name = "Session";
-                    options.IdleTimeout = TimeSpan.FromMinutes(10);
+                    options.IdleTimeout = TimeSpan.FromDays(1);
                     options.Cookie.HttpOnly = true;
                     options.Cookie.IsEssential = true;
-                    options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None;
                 });
             }
             return services;

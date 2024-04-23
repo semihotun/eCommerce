@@ -1,6 +1,8 @@
 ﻿using Business.Constants;
+using Core.Const;
 using Core.Extension;
 using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Generate;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
@@ -25,6 +27,7 @@ namespace Business.Services.PhotoAggregate.ProductPhotos.Commands
 
         [CacheRemoveAspect("IProductPhoto", "ICombinationPhoto", "IShowcase")]
         [GenerateApiFromFromAttribute]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> AddRangeProductPhotoInsert(AddRangeProductPhotoInsertReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -49,6 +52,7 @@ namespace Business.Services.PhotoAggregate.ProductPhotos.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductPhoto", "ICombinationPhoto", "IShowcase", "IShowcase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteProductPhoto(DeleteProductPhotoReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -66,6 +70,7 @@ namespace Business.Services.PhotoAggregate.ProductPhotos.Commands
         /// <param name="product"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductPhoto", "ICombinationPhoto", "IShowcase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<ProductPhoto>> AddProductPhoto(AddProductPhotoReqModel product)
         {
             return await _unitOfWork.BeginTransaction(async () =>

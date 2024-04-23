@@ -6,7 +6,7 @@ namespace Entities.RequestModel.CategoriesAggregate.Categories
     {
         public GetAllCategoriesByParentCategoryIdReqModel()
         {
-            
+
         }
         public GetAllCategoriesByParentCategoryIdReqModel(Guid parentCategoryId)
         {

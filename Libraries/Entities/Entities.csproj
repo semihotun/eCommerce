@@ -49,5 +49,6 @@
 	  <Folder Include="RequestModelValidator\SpeficationAggregate\SpecificationAttributeOptions\" />
 	  <Folder Include="RequestModelValidator\SpeficationAggregate\SpecificationAttributes\" />
 	  <Folder Include="RequestModelValidator\UserIdentityAggregate\Manages\" />
+	  <Folder Include="ViewModels\AdminAuthViewModel\" />
 	</ItemGroup>
 </Project>

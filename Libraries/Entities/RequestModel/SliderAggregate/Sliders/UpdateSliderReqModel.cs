@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System;
 
 namespace Entities.RequestModel.SliderAggregate.Sliders
@@ -14,7 +13,7 @@ namespace Entities.RequestModel.SliderAggregate.Sliders
         public IFormFile Uploadfile { get; set; }
         public UpdateSliderReqModel()
         {
-            
+
         }
         public UpdateSliderReqModel(Guid id, string sliderImage, string sliderHeading, string sliderText, string sliderLink, IFormFile uploadfile)
         {

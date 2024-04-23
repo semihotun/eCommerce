@@ -1,4 +1,6 @@
-﻿using Core.Utilities.Aspects.Autofac.Caching;
+﻿using Core.Const;
+using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -25,7 +27,8 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseServices.Commands
         /// </summary>
         /// <param name="showCase"></param>
         /// <returns></returns>
-        [CacheRemoveAspect("IShowCas")]
+        [CacheRemoveAspect("IShowCase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> UpdateShowcase(UpdateShowcaseReqModel showCase)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -44,6 +47,7 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseServices.Commands
         /// <param name="showCase"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IShowCase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<ShowCase>> InsertShowcase(InsertShowcaseReqModel showCase)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -59,6 +63,7 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseServices.Commands
         /// <param name="showCase"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IShowCase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteShowCase(DeleteShowCaseReqModel showCase)
         {
             return await _unitOfWork.BeginTransaction(async () =>

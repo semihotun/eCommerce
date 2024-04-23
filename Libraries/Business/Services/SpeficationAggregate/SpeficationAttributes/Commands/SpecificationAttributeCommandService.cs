@@ -1,5 +1,7 @@
 ﻿using Business.Constants;
+using Core.Const;
 using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -28,6 +30,7 @@ namespace Business.Services.SpeficationAggregate.SpeficationAttributes.Commands
         /// <param name="specificationAttribute"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ISpecificationAttribute", "ICategory")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteSpecificationAttribute(DeleteSpecificationAttributeReqModel specificationAttribute)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -45,6 +48,7 @@ namespace Business.Services.SpeficationAggregate.SpeficationAttributes.Commands
         /// <param name="specificationAttribute"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ISpecification", "ICategory")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<SpecificationAttribute>> InsertSpecificationAttribute(InsertSpecificationAttributeReqModel specificationAttribute)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -60,6 +64,7 @@ namespace Business.Services.SpeficationAggregate.SpeficationAttributes.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ISpecificationAttribute", "ICategory")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> UpdateSpecificationAttribute(UpdateSpecificationAttributeReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>

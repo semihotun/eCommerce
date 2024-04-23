@@ -1,4 +1,5 @@
 ﻿using Business.Constants;
+using Core.Const;
 using Core.Utilities.DataTable;
 using Core.Utilities.Identity;
 using Core.Utilities.PagedList;
@@ -9,8 +10,8 @@ namespace eCommerce.Areas.Admin.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
     [Route("[area]/[controller]/[action]")]
-    [AuthorizeControl("")]
     [Area("Admin")]
+    [AuthorizeMvc(RoleConst.Admin)]
     public class AdminBaseController : Controller
     {
         [NonAction]

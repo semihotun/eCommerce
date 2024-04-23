@@ -1,5 +1,4 @@
-﻿using Core.Utilities.PagedList;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 namespace Core.Utilities.Results
 {

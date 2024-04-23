@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.ShowcaseAggregate.ShowcaseServices
 {
@@ -12,7 +11,7 @@ namespace Entities.RequestModel.ShowcaseAggregate.ShowcaseServices
         public string ShowCaseText { get; set; }
         public UpdateShowcaseReqModel()
         {
-            
+
         }
         public UpdateShowcaseReqModel(Guid id, int showCaseOrder, string showCaseTitle, Guid showCaseType, string showCaseText)
         {

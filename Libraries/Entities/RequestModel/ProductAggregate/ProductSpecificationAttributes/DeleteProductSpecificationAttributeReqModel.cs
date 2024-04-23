@@ -6,7 +6,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
     {
         public DeleteProductSpecificationAttributeReqModel()
         {
-            
+
         }
         public DeleteProductSpecificationAttributeReqModel(Guid id)
         {

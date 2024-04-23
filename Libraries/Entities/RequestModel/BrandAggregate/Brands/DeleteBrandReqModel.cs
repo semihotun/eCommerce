@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.BrandAggregate.Brands
 {
@@ -8,7 +7,7 @@ namespace Entities.RequestModel.BrandAggregate.Brands
         public Guid Id { get; set; }
         public DeleteBrandReqModel()
         {
-                
+
         }
         public DeleteBrandReqModel(Guid id)
         {

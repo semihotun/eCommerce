@@ -67,7 +67,7 @@ namespace eCommerce.Areas.Admin.Controllers
         #endregion
         #region SpeficationAttributeOption
         public async Task<IActionResult> SpeficationAttributeOptionListJson(GetSpecificationAttributeOptionsBySpecificationAttributeReqModel model)
-            => ToDataTableJson(await _specificationAttributeOptionQueryService.GetSpecificationAttributeOptionsBySpecificationAttribute(model),model);
+            => ToDataTableJson(await _specificationAttributeOptionQueryService.GetSpecificationAttributeOptionsBySpecificationAttribute(model), model);
 
         public IActionResult SpeficationAttributeOptionCreate() => View();
         [HttpPost]

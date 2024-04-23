@@ -10,7 +10,7 @@ namespace Entities.RequestModel.ShowcaseAggregate.ShowcaseTypes
         }
         public GetAllShowCaseTypeSelectListItemReqModel()
         {
-            
+
         }
         public Guid? SelectedId { get; set; }
     }

@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.CommentsAggregate.Comments
 {
@@ -15,7 +14,7 @@ namespace Entities.RequestModel.CommentsAggregate.Comments
         public int Rating { get; set; }
         public AddCommentReqModel()
         {
-            
+
         }
         public AddCommentReqModel(string commentTitle, string commentText,
             Guid productid, Guid userId, bool isApproved, DateTime createdOnUtc, int rating)

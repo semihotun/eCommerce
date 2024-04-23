@@ -34,7 +34,7 @@ namespace eCommerce.Areas.Admin.Controllers
         private readonly IProductDtoQuery _productDtoQuery;
         private readonly IProductQueryService _productService;
         private readonly IProductCommandService _productCommandService;
-        private readonly IProductAttributeFormatterService _productAttributeFormatter;
+        private readonly IProductAttributeFormatter _productAttributeFormatter;
         private readonly IBrandQueryService _brandQueryService;
         private readonly ICategoryQueryService _categoryQueryService;
         private readonly IProductAttributeCombinationCommandService _productAttributeCombinationCommandService;
@@ -48,7 +48,7 @@ namespace eCommerce.Areas.Admin.Controllers
         public AdminProductController(IProductDtoQuery productDtoQuery,
             IProductQueryService productService,
             IProductCommandService productCommandService,
-            IProductAttributeFormatterService productAttributeFormatter,
+            IProductAttributeFormatter productAttributeFormatter,
             IBrandQueryService brandQueryService,
             ICategoryQueryService categoryQueryService,
             IProductAttributeCombinationCommandService productAttributeCombinationCommandService,

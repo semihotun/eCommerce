@@ -3,10 +3,10 @@ using Core.Utilities.Results;
 using DataAccess.Context;
 using Entities.Concrete;
 using Entities.Dtos.ShowcaseDALModels;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 namespace Business.Services.ShowcaseAggregate.ShowcaseServices.DtoQueries
 {
     public class ShowCaseDtoQueryService : IShowCaseDtoQueryService

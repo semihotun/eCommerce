@@ -6,7 +6,7 @@ namespace Entities.RequestModel.CategoriesAggregate.Categories
     {
         public RemoveRangeCategoryReqModel()
         {
-            
+
         }
         public RemoveRangeCategoryReqModel(Guid id)
         {

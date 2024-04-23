@@ -1,5 +1,4 @@
-﻿using Entities.ViewModels.WebViewModel.Account;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.Areas.Web.Controllers
 {

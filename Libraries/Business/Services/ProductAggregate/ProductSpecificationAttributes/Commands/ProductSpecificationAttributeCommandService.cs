@@ -1,5 +1,7 @@
 ﻿using Business.Constants;
+using Core.Const;
 using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -25,6 +27,7 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes.Comm
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductShipmentInfo")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteProductSpecificationAttribute(DeleteProductSpecificationAttributeReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -42,6 +45,7 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes.Comm
         /// <param name="productSpecificationAttribute"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductShipmentInfo")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<ProductSpecificationAttribute>> InsertProductSpecificationAttribute(InsertProductSpecificationAttributeReqModel productSpecificationAttribute)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -57,6 +61,7 @@ namespace Business.Services.ProductAggregate.ProductSpecificationAttributes.Comm
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductShipmentInfo")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> UpdateProductSpecificationAttribute(UpdateProductSpecificationAttributeReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>

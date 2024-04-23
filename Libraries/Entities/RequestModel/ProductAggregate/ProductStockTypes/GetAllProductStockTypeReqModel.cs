@@ -7,7 +7,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductStockTypes
         public Guid SelectedId { get; set; }
         public GetAllProductStockTypeReqModel()
         {
-            
+
         }
         public GetAllProductStockTypeReqModel(Guid selectedId)
         {

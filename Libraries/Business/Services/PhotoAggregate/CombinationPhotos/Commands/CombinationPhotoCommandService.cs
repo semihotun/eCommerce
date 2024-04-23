@@ -1,4 +1,6 @@
-﻿using Core.Utilities.Aspects.Autofac.Caching;
+﻿using Core.Const;
+using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -26,6 +28,7 @@ namespace Business.Services.PhotoAggregate.CombinationPhotos.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ICombination")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> InsertCombinationPhotos(InsertCombinationPhotosReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>

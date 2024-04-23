@@ -11,7 +11,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
         public string ManufacturerPartNumber { get; set; }
         public InsertProductAttributeCombinationReqModel()
         {
-            
+
         }
         public InsertProductAttributeCombinationReqModel(Guid productId, string attributesXml, string gtin, string sku, string manufacturerPartNumber)
         {

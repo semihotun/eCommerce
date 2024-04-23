@@ -1,5 +1,7 @@
 ﻿using Business.Constants;
+using Core.Const;
 using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -33,6 +35,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductAttributeValue")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteProductAttributeValue(DeleteProductAttributeValueReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -68,6 +71,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues.Commands
         /// <param name="productAttributeValue"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductAttributeValue")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<ProductAttributeValue>> InsertProductAttributeValue(InsertProductAttributeValueReqModel productAttributeValue)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -83,6 +87,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues.Commands
         /// <param name="productAttributeValue"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductAttributeValue")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<ProductAttributeValue>> InsertOrUpdateProductAttributeValue(InsertOrUpdateProductAttributeValueReqModel productAttributeValue)
         {
             if (productAttributeValue.Id == Guid.Empty)
@@ -102,6 +107,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeValues.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductAttributeValue")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<ProductAttributeValue>> UpdateProductAttributeValue(UpdateProductAttributeValueReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>

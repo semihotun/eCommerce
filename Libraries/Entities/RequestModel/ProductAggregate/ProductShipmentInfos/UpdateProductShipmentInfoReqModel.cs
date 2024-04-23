@@ -12,7 +12,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductShipmentInfos
         public Guid ProductId { get; set; }
         public UpdateProductShipmentInfoReqModel()
         {
-            
+
         }
         public UpdateProductShipmentInfoReqModel(Guid id, double? width, double? length, double? height, double? weight, Guid productId)
         {

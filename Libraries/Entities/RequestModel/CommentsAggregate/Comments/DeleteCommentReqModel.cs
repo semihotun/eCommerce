@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.CommentsAggregate.Comments
 {
@@ -8,7 +7,7 @@ namespace Entities.RequestModel.CommentsAggregate.Comments
         public Guid Id { get; set; }
         public DeleteCommentReqModel()
         {
-            
+
         }
         public DeleteCommentReqModel(Guid id)
         {

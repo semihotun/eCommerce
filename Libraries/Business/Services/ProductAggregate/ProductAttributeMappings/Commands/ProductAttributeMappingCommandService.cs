@@ -1,4 +1,6 @@
-﻿using Core.Utilities.Aspects.Autofac.Caching;
+﻿using Core.Const;
+using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -30,6 +32,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductAttributeMapping")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<ProductAttributeMapping>> InsertProductAttributeMapping(InsertProductAttributeMappingReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -45,6 +48,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductAttributeMapping")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> UpdateProductAttributeMapping(UpdateProductAttributeMappingReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -63,6 +67,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductAttributeMapping")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteProductAttributeMapping(DeleteProductAttributeMappingReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -73,7 +78,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeMappings.Commands
                 var productAttributeValues = await _productAttributeValueRepository.ToListAsync(x => x.ProductAttributeMappingId == request.Id);
                 foreach (var item in productAttributeValues)
                 {
-                    var productAttributeData = await _productAttributeValueRepository.GetByIdAsync( item.Id);
+                    var productAttributeData = await _productAttributeValueRepository.GetByIdAsync(item.Id);
                     if (productAttributeData != null)
                     {
                         _productAttributeValueRepository.Remove(productAttributeData);

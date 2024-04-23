@@ -12,7 +12,7 @@ namespace Entities.RequestModel.ProductAggregate.Products
         }
         public GetProductsBySpecificationAttributeIdReqModel()
         {
-            
+
         }
         public Guid SpecificationAttributeId { get; set; }
         public int PageIndex { get; set; }

@@ -10,7 +10,7 @@ namespace Entities.RequestModel.ShowcaseAggregate.ShowcaseServices
         }
         public DeleteShowCaseReqModel()
         {
-            
+
         }
         public Guid Id { get; set; }
     }

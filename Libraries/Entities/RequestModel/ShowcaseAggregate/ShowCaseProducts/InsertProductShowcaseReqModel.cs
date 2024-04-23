@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.ShowcaseAggregate.ShowCaseProducts
 {
@@ -10,7 +9,7 @@ namespace Entities.RequestModel.ShowcaseAggregate.ShowCaseProducts
         public Guid CombinationId { get; set; }
         public InsertProductShowcaseReqModel()
         {
-            
+
         }
         public InsertProductShowcaseReqModel(Guid showCaseId, Guid productId, Guid combinationId)
         {

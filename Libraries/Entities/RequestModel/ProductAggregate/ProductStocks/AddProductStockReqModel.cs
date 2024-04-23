@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.ProductAggregate.ProductStocks
 {
@@ -15,7 +14,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductStocks
         public Guid CombinationId { get; set; }
         public AddProductStockReqModel()
         {
-            
+
         }
         public AddProductStockReqModel(double? productPrice, double? productDiscount, int? productStockPiece, bool allowOutOfStockOrders,
             int notifyAdminForQuantityBelow, DateTime createTime, Guid productId, Guid combinationId)

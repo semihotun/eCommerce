@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.ProductAggregate.ProductAttributeValues
 {
@@ -11,7 +10,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductAttributeValues
         public int DisplayOrder { get; set; }
         public InsertOrUpdateProductAttributeValueReqModel()
         {
-            
+
         }
         public InsertOrUpdateProductAttributeValueReqModel(Guid id, Guid productAttributeMappingId, string name, int displayOrder)
         {

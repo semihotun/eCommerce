@@ -44,7 +44,9 @@
     <script src="~/Utilities/Helpers/responseToForm.js"></script>
     <script src="~/Utilities/Helpers/tryConvert.js"></script>
     <script src="~/Utilities/Helpers/serialize.js"></script>
-    <script src="~/utilities/helpers/imagehelper.js"></script>
+    <script src="~/Utilities/Helpers/imagehelper.js"></script>
+    <script src="~/Utilities/Helpers/path.js" ></script>
+    <script src="~/Utilities/Consts/environment.js"></script>
 </head>
 <body>
     @if (TempData["notification"] != null)
@@ -129,7 +131,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navigation">
                         <ul class="navbar-nav ml-auto">
-                            <li> <a href="~/AdminLogin/LogOut">Çıkış Yap</a></li>                         
+                            <li> <a  href="#" onclick="LogOut(event)">Çıkış Yap</a></li>
                             <li class="separator d-lg-none"></li>
                         </ul>
                     </div>
@@ -158,15 +160,8 @@
             </footer>
         </div>
     </div>
-    <!-- Chart JS -->
-    <script src="~/Content/Admin/js/plugins/chartjs.min.js"></script>
-    <!--  Notifications Plugin    -->
-    <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="~/Content/Admin/js/black-dashboard.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('body').addClass('white-content');
-        });</script>
+    <script src="~/Admin/Layouts/adminLayout.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

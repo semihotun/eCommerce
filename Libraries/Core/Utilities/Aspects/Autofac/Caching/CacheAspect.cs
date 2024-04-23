@@ -3,13 +3,8 @@ using Core.Utilities.Caching;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Identity.Core.Cache;
-using Newtonsoft.Json;
-using System;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 namespace Core.Utilities.Aspects.Autofac.Caching
 {
     public class CacheAspect : MethodInterception

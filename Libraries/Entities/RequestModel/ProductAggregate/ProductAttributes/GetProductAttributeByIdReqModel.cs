@@ -6,7 +6,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductAttributes
     {
         public GetProductAttributeByIdReqModel()
         {
-            
+
         }
         public GetProductAttributeByIdReqModel(Guid productAttributeId)
         {

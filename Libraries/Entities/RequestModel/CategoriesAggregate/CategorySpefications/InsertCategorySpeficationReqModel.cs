@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.CategoriesAggregate.CategorySpefications
 {
@@ -10,7 +9,7 @@ namespace Entities.RequestModel.CategoriesAggregate.CategorySpefications
         public Guid? SpeficationAttributeId { get; set; }
         public InsertCategorySpeficationReqModel()
         {
-            
+
         }
         public InsertCategorySpeficationReqModel(Guid? categoryId, Guid? speficationAttributeId)
         {

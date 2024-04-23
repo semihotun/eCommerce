@@ -49,8 +49,8 @@ namespace Business.Services.CategoriesAggregate.Categories.DtoQueries
         [CacheAspect]
         public async Task<Result<List<CategoryDTO>>> GetAllCategoryTreeList()
         {
-            var data= await (from c in _readContext.Query<Category>() select c).ToListAsync();
-            return await CategoriesForTreeList(new(data,Guid.Empty));
+            var data = await (from c in _readContext.Query<Category>() select c).ToListAsync();
+            return await CategoriesForTreeList(new(data, Guid.Empty));
         }
         /// <summary>
         /// GetCategorySpefication

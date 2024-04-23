@@ -12,7 +12,6 @@ using System.Threading;
 using System.Threading.Tasks;
 namespace eCommerce.Areas.Web.Controllers
 {
-    //[Authorize(Roles ="Admin")]
     public class HomeController : WebBaseController
     {
         #region Constructors
@@ -34,7 +33,7 @@ namespace eCommerce.Areas.Web.Controllers
         #region Method
         public async Task<PartialViewResult> Search(string searchKey, CancellationToken cancellationToken)
         {
-            var productList = await _productDtoQuery.GetMainSearchProduct(new(pageSize: 6, searchProductName: searchKey,cancellationToken));
+            var productList = await _productDtoQuery.GetMainSearchProduct(new(pageSize: 6, searchProductName: searchKey, cancellationToken));
 
             return PartialView("ResultView", new SearchVM
             {
@@ -85,10 +84,6 @@ namespace eCommerce.Areas.Web.Controllers
         public IActionResult LikeProduct()
         {
             return Json(null, new JsonSerializerSettings());
-        }
-        public IActionResult Error()
-        {
-            return View();
         }
         #endregion
     }

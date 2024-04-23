@@ -12,8 +12,8 @@ namespace Business.Services.ProductAggregate.ProductStocks.DtoQueries
     public class ProductStockDtoQueryService : IProductStockDtoQueryService
     {
         private readonly ECommerceReadContext _readContext;
-        private readonly IProductAttributeFormatterService _productAttributeFormatter;
-        public ProductStockDtoQueryService(ECommerceReadContext readContext, IProductAttributeFormatterService productAttributeFormatter)
+        private readonly IProductAttributeFormatter _productAttributeFormatter;
+        public ProductStockDtoQueryService(ECommerceReadContext readContext, IProductAttributeFormatter productAttributeFormatter)
         {
             _readContext = readContext;
             _productAttributeFormatter = productAttributeFormatter;

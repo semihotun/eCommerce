@@ -1,5 +1,7 @@
 ﻿using Business.Constants;
+using Core.Const;
 using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -26,6 +28,7 @@ namespace Business.Services.BrandAggregate.Brands.Commands
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [AuthAspect(RoleConst.Admin)]
         [CacheRemoveAspect("IBrand")]
         public async Task<Result<Brand>> AddBrand(AddBrandReqModel request)
         {
@@ -42,6 +45,7 @@ namespace Business.Services.BrandAggregate.Brands.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IBrand")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteBrand(DeleteBrandReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -61,6 +65,7 @@ namespace Business.Services.BrandAggregate.Brands.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IBrand")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> UpdateBrand(UpdateBrandReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>

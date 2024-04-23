@@ -6,7 +6,7 @@ namespace Entities.RequestModel.PhotoAggregate.CombinationPhotos
     {
         public GetAllCombinationPhotosReqModel()
         {
-            
+
         }
         public GetAllCombinationPhotosReqModel(Guid productId, Guid photoId)
         {

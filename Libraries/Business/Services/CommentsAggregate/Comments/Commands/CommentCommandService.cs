@@ -1,5 +1,7 @@
 ﻿using Business.Constants;
+using Core.Const;
 using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -25,6 +27,7 @@ namespace Business.Services.CommentsAggregate.Comments.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IComment")]
+        [AuthAspect(RoleConst.User)]
         public async Task<Result<Comment>> AddComment(AddCommentReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -40,6 +43,7 @@ namespace Business.Services.CommentsAggregate.Comments.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IComment")]
+        [AuthAspect(RoleConst.User)]
         public async Task<Result> DeleteComment(DeleteCommentReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -57,6 +61,7 @@ namespace Business.Services.CommentsAggregate.Comments.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IComment")]
+        [AuthAspect(RoleConst.User)]
         public async Task<Result> UpdateComment(UpdateCommentReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -74,6 +79,8 @@ namespace Business.Services.CommentsAggregate.Comments.Commands
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [AuthAspect(RoleConst.Admin)]
+        [CacheRemoveAspect("IComment")]
         public async Task<Result> CommentApprove(CommentApproveReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>

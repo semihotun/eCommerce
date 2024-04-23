@@ -7,7 +7,7 @@
         public string OrderByText { get; set; }
         public GetCommentListReqModel()
         {
-            
+
         }
         public GetCommentListReqModel(
             int pageIndex = 1,

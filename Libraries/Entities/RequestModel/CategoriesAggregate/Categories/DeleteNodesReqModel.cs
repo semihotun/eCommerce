@@ -4,7 +4,7 @@
     {
         public DeleteNodesReqModel()
         {
-            
+
         }
         public DeleteNodesReqModel(string idsString)
         {

@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.ProductAggregate.Products
 {
@@ -19,7 +18,7 @@ namespace Entities.RequestModel.ProductAggregate.Products
         public string ProductNameUpper { get; set; }
         public UpdateProductReqModel()
         {
-            
+
         }
         public UpdateProductReqModel(Guid id, string productName,
             Guid? brandId,

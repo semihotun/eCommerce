@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributes
 {
@@ -12,7 +11,7 @@ namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributes
         }
         public DeleteSpecificationAttributeReqModel()
         {
-            
+
         }
     }
 }

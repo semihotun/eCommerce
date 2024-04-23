@@ -33,7 +33,7 @@ namespace eCommerce.Areas.Admin.Controllers
         public IActionResult BrandList() => View();
         public async Task<IActionResult> BrandEdit(Guid id)
         {
-            var data = await _brandQueryService.GetBrand(new (id));
+            var data = await _brandQueryService.GetBrand(new(id));
             return View(data.Data);
         }
         [HttpPost]

@@ -5,7 +5,7 @@
         public string Email { get; set; }
         public GetByMailReqModel()
         {
-                
+
         }
         public GetByMailReqModel(string email)
         {

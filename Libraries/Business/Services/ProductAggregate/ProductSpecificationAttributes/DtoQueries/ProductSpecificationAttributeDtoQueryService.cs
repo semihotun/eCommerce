@@ -4,9 +4,9 @@ using DataAccess.Context;
 using Entities.Concrete;
 using Entities.Dtos.ProductSpecificationAttributeDALModels;
 using Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes;
-using System.Threading.Tasks;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 namespace Business.Services.ProductAggregate.ProductSpecificationAttributes.DtoQueries
 {
     public class ProductSpecificationAttributeDtoQueryService : IProductSpecificationAttributeDtoQueryService

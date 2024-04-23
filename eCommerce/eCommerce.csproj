@@ -42,12 +42,13 @@
 		<ProjectReference Include="..\Libraries\Business\Business.csproj" />
 		<ProjectReference Include="..\Libraries\DataAccess\DataAccess.csproj" />
 		<ProjectReference Include="..\Libraries\Entities\Entities.csproj" />
-		<ProjectReference Include="..\Plugins\Plugin.Api\Plugin.Api.csproj" />
 		<ProjectReference Include="..\Plugins\Plugin.Base\Plugin.Base.csproj" />
 		<ProjectReference Include="..\Plugins\Plugin.Iyzico\Plugin.Iyzico.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="wwwroot\Admin\Brand\" />
 	  <Folder Include="wwwroot\Admin\CategoryTree\" />
+	  <Folder Include="wwwroot\AdminAuth\" />
+	  <Folder Include="wwwroot\Admin\Layouts\" />
 	</ItemGroup>
 </Project>

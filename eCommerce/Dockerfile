@@ -12,7 +12,6 @@ COPY ["Libraries/Core/Core.csproj", "Libraries/Core/"]
 COPY ["Libraries/Business/Business.csproj", "Libraries/Business/"]
 COPY ["Libraries/DataAccess/DataAccess.csproj", "Libraries/DataAccess/"]
 COPY ["Libraries/Entities/Entities.csproj", "Libraries/Entities/"]
-COPY ["Plugins/Plugin.Api/Plugin.Api.csproj", "Plugins/Plugin.Api/"]
 COPY ["Plugins/Plugin.Base/Plugin.Base.csproj", "Plugins/Plugin.Base/"]
 COPY ["Plugins/Plugin.Iyzico/Plugin.Iyzico.csproj", "Plugins/Plugin.Iyzico/"]
 RUN dotnet restore "./eCommerce/./eCommerce.csproj"

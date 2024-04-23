@@ -1,12 +1,12 @@
 ﻿using Core.Utilities.Aspects.Autofac.Caching;
 using Core.Utilities.Results;
+using DataAccess.Repository.Read;
 using Entities.Concrete;
 using Entities.RequestModel.ProductAggregate.ProductAttributeValues;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using DataAccess.Repository.Read;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 namespace Business.Services.ProductAggregate.ProductAttributeValues.Queries
 {
     public class ProductAttributeValueQueryService : IProductAttributeValueQueryService

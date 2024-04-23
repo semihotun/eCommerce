@@ -1,0 +1,20 @@
+﻿@model Entities.RequestModel.AdminAggregate.AdminAuths.LoginReqModel
+@{
+    Layout = "~/Areas/AdminAuth/Views/Shared/_AdminLoginRegisterLayout.cshtml";
+}
+<form method="post" id="loginForm">
+    <div class="ml-auto mr-auto justify-content-center w-50">
+        <div class="form-group row ">
+            <span>Email</span>
+            @Html.TextBoxFor(x => x.Email, new { @class = "form-control " })
+        </div>
+        <div class="form-group row ">
+            <span>Password</span>
+            @Html.PasswordFor(x => x.Password, new { @class = "form-control " })
+        </div>
+        <div class="form-group row">
+            <input type="submit" value="Giriş Yap" class="customBtn" onclick="AdminLogin(event)" />
+        </div>
+    </div>
+</form>
+<script src="~/adminauth/login.js"></script>

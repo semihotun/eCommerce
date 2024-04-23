@@ -6,7 +6,7 @@ namespace Entities.RequestModel.CommentsAggregate.Comments
     {
         public GetCommentReqModel()
         {
-            
+
         }
         public GetCommentReqModel(Guid commentId)
         {

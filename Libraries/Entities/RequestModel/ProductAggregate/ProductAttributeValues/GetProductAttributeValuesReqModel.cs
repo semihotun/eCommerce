@@ -7,7 +7,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductAttributeValues
         public Guid ProductAttributeMappingId { get; set; }
         public GetProductAttributeValuesReqModel()
         {
-            
+
         }
         public GetProductAttributeValuesReqModel(Guid productAttributeMappingId)
         {

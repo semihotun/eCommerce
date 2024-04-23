@@ -7,7 +7,7 @@ namespace Entities.RequestModel.ProductAggregate.Products
         public Guid Id { get; set; }
         public GetProductReqModel()
         {
-            
+
         }
         public GetProductReqModel(Guid id)
         {

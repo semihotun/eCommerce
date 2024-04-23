@@ -21,14 +21,22 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Base", "Plugins\Plug
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Iyzico", "Plugins\Plugin.Iyzico\Plugin.Iyzico.csproj", "{B2ED26B6-D7D2-4BC3-861C-47920D0164AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Api", "Plugins\Plugin.Api\Plugin.Api.csproj", "{4115A101-09B8-4210-B7B3-5D62794FDCFD}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8DB0FE73-AD98-495D-8083-6EAA188432B2}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{DE96FFC3-EFA4-40B5-90C4-1DB9C7FF2DC5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eCommerceApi", "eCommerceApi\eCommerceApi.csproj", "{AD24A7FA-7351-4F93-A276-5BBE54087B75}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{83B82F08-D20E-4B32-9765-2B9B5807E24A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WorkerService", "WorkerService", "{1FBB061E-CC38-4F75-8521-BB3D5022317D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generators", "Generators", "{76F1B3F4-FB6D-48FA-BC5D-94533135362A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGenerator", "Generators\ApiGenerator\ApiGenerator.csproj", "{2489389C-20F3-403D-8FFB-D1C2A16EA60A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,14 +72,18 @@ Global
 		{B2ED26B6-D7D2-4BC3-861C-47920D0164AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2ED26B6-D7D2-4BC3-861C-47920D0164AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2ED26B6-D7D2-4BC3-861C-47920D0164AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4115A101-09B8-4210-B7B3-5D62794FDCFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4115A101-09B8-4210-B7B3-5D62794FDCFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4115A101-09B8-4210-B7B3-5D62794FDCFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4115A101-09B8-4210-B7B3-5D62794FDCFD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DE96FFC3-EFA4-40B5-90C4-1DB9C7FF2DC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DE96FFC3-EFA4-40B5-90C4-1DB9C7FF2DC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE96FFC3-EFA4-40B5-90C4-1DB9C7FF2DC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE96FFC3-EFA4-40B5-90C4-1DB9C7FF2DC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD24A7FA-7351-4F93-A276-5BBE54087B75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD24A7FA-7351-4F93-A276-5BBE54087B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD24A7FA-7351-4F93-A276-5BBE54087B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD24A7FA-7351-4F93-A276-5BBE54087B75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2489389C-20F3-403D-8FFB-D1C2A16EA60A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2489389C-20F3-403D-8FFB-D1C2A16EA60A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2489389C-20F3-403D-8FFB-D1C2A16EA60A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2489389C-20F3-403D-8FFB-D1C2A16EA60A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,7 +95,7 @@ Global
 		{129B540E-20F9-4429-9394-370A668A0641} = {5A9BF704-2BE1-411D-9731-546B80CAD846}
 		{662C9EE7-88AA-4AFB-9F2E-A289BAC27603} = {3E09EAB6-BB5E-4732-8670-E4C17E1ED2C0}
 		{B2ED26B6-D7D2-4BC3-861C-47920D0164AD} = {3E09EAB6-BB5E-4732-8670-E4C17E1ED2C0}
-		{4115A101-09B8-4210-B7B3-5D62794FDCFD} = {3E09EAB6-BB5E-4732-8670-E4C17E1ED2C0}
+		{2489389C-20F3-403D-8FFB-D1C2A16EA60A} = {76F1B3F4-FB6D-48FA-BC5D-94533135362A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E3ED5AA-8A2F-494E-B053-A03B44366D71}

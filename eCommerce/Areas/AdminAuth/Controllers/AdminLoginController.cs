@@ -1,13 +1,8 @@
-﻿using Business.Constants;
-using Business.Services.AuthAggregate.AdminAuths;
-using Core.Utilities.Caching;
-using Core.Utilities.Results;
-using eCommerce.Areas.Admin.Controllers;
+﻿using Business.Services.AuthAggregate.AdminAuths;
 using Entities.RequestModel.AdminAggregate.AdminAuths;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
 using System.Text;
 using System.Threading.Tasks;
 namespace eCommerce.Areas.AdminAuth.Controllers
@@ -15,61 +10,37 @@ namespace eCommerce.Areas.AdminAuth.Controllers
     [Route("[area]/[controller]/[action]")]
     [ApiExplorerSettings(IgnoreApi = true)]
     [Area("AdminAuth")]
-    public class AdminLoginController : AdminBaseController
+    public class AdminLoginController : Controller
     {
         private readonly IAdminAuthService _adminAuthService;
-        public AdminLoginController(IAdminAuthService adminAuthService, ICacheService cacheService)
+        public AdminLoginController(IAdminAuthService adminAuthService)
         {
             _adminAuthService = adminAuthService;
         }
-        public IActionResult Login() => View();
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginReqModel userForLoginDto)
+        public IActionResult LoginPage() => View();
+        public async Task<IActionResult> RegisterPage() => View();
+        public async Task<IActionResult> Login([FromBody] LoginReqModel userForLoginDto)
         {
-            //_cacheService.Set("AdminToken-" + userToCheck.Id, result.Token, DateTime.Now.AddDays(1).Second);
             var result = await _adminAuthService.Login(userForLoginDto);
             if (result.Success)
             {
-                HttpContext.Session.Set("AdminToken", Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(result)));
-                return Redirect("/Admin/AdminProduct/ProductList");
+                HttpContext.Session.Set("Token", Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(result.Data)));
             }
-            return View();
+            return Json(result);
         }
-        public async Task<IActionResult> Register()
+        public async Task<IActionResult> Register([FromBody] RegisterReqModel adminUser)
         {
-            if ((await _adminAuthService.GetAdminCount()).Data == 0)
+            var result = await _adminAuthService.Register(adminUser);
+            if (result.Success)
             {
-                return View();
+                HttpContext.Session.Set("Token", Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(result.Data)));
             }
-            else
-            {
-                Alert(Messages.OperationFailed, NotificationType.error);
-                return View();
-            }
+            return Json(result);
         }
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterReqModel adminUser)
+        public IActionResult LogOut()
         {
-            if ((await _adminAuthService.GetAdminCount()).Data == 0)
-            {
-                var result = await _adminAuthService.Register(adminUser);
-                if (result.Success && result.Data != null)
-                {
-                    HttpContext.Session.Set("AdminToken", Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(result)));
-                    Alert(Messages.OperationSuccessful, NotificationType.success);
-                    return Redirect("/Admin/AdminProduct/ProductList");
-                }
-            }
-            else
-            {
-                Alert(Messages.OperationFailed, NotificationType.error);
-            }
-            return View();
-        }
-        public IActionResult LogOut(Guid adminId)
-        {
-            HttpContext.Session.Remove("AdminToken");
-            return RedirectToAction("Index", "Home");
+            HttpContext.Session.Remove("Token");
+            return Json(true);
         }
     }
 }

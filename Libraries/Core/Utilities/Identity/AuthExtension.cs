@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 namespace Core.Utilities.Identity
 {
-
     public static class AuthExtension
     {
         public static void AddIdentitySettings(this IServiceCollection services, IConfiguration configuration)

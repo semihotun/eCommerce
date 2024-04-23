@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
 {
@@ -13,7 +12,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
         public int DisplayOrder { get; set; }
         public InsertProductSpecificationAttributeReqModel()
         {
-            
+
         }
         public InsertProductSpecificationAttributeReqModel(Guid productId, Guid attributeTypeId, Guid specificationAttributeOptionId,
             bool allowFiltering, bool showOnProductPage, int displayOrder)

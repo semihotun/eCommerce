@@ -7,7 +7,7 @@ namespace DataAccess.Context
 {
     public class ECommerceContext : DbContext
     {
-        public ECommerceContext(DbContextOptions<ECommerceContext> options):base(options)
+        public ECommerceContext(DbContextOptions<ECommerceContext> options) : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

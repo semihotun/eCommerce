@@ -13,7 +13,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
         public int DisplayOrder { get; set; }
         public UpdateProductSpecificationAttributeReqModel()
         {
-            
+
         }
 
         public UpdateProductSpecificationAttributeReqModel(Guid id, Guid productId, Guid attributeTypeId, Guid specificationAttributeOptionId, bool allowFiltering,

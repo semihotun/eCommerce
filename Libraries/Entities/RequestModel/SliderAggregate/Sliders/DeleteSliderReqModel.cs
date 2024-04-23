@@ -10,7 +10,7 @@ namespace Entities.RequestModel.SliderAggregate.Sliders
         }
         public DeleteSliderReqModel()
         {
-            
+
         }
         public Guid Id { get; set; }
     }

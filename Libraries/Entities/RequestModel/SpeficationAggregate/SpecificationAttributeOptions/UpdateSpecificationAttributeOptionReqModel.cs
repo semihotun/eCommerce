@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributeOptions
 {
@@ -18,7 +17,7 @@ namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributeOptio
         }
         public UpdateSpecificationAttributeOptionReqModel()
         {
-            
+
         }
     }
 }

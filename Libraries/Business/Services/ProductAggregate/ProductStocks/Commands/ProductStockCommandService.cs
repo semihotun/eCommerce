@@ -1,5 +1,7 @@
 ﻿using Business.Constants;
+using Core.Const;
 using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -27,6 +29,7 @@ namespace Business.Services.ProductAggregate.ProductStocks.Commands
         /// <param name="productStock"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductStock", "IShowcase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<ProductStock>> AddProductStock(AddProductStockReqModel productStock)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -42,6 +45,7 @@ namespace Business.Services.ProductAggregate.ProductStocks.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductStock", "IShowcase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteProductStock(DeleteProductStockReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>

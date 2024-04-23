@@ -1,5 +1,5 @@
-﻿using Business.Services.AuthAggregate.TokenService;
-using Core.Utilities.Caching;
+﻿using Business.Constants;
+using Business.Services.AuthAggregate.TokenService;
 using Core.Utilities.Generate;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
@@ -9,8 +9,6 @@ using DataAccess.UnitOfWork;
 using Entities.Concrete;
 using Entities.Extensions.AutoMapper;
 using Entities.RequestModel.AdminAggregate.AdminAuths;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 namespace Business.Services.AuthAggregate.AdminAuths
@@ -20,36 +18,41 @@ namespace Business.Services.AuthAggregate.AdminAuths
         private readonly ITokenService _tokenHelper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWriteDbRepository<AdminUser> _adminUserWriteRepository;
-        private readonly ICacheService _cacheService;
         public AdminAuthService(IUnitOfWork unitOfWork,
             ITokenService tokenHelper,
-            IWriteDbRepository<AdminUser> adminUserWriteRepository,
-            ICacheService cacheService)
+            IWriteDbRepository<AdminUser> adminUserWriteRepository)
         {
             _unitOfWork = unitOfWork;
             _tokenHelper = tokenHelper;
             _adminUserWriteRepository = adminUserWriteRepository;
-            _cacheService = cacheService;
         }
         [ApiGenerateAllowAnonymous]
         public async Task<Result<AccessToken>> Register(RegisterReqModel userForRegisterDto)
         {
             return await _unitOfWork.BeginTransaction(async () =>
             {
-                HashingHelper.CreatePasswordHash(userForRegisterDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
-                var user = new AdminUser
+                if (await _adminUserWriteRepository.GetCountAsync() == 0)
                 {
-                    Email = userForRegisterDto.Email,
-                    FirstName = userForRegisterDto.FirstName,
-                    LastName = userForRegisterDto.LastName,
-                    PasswordHash = passwordHash,
-                    PasswordSalt = passwordSalt,
-                    Status = true
-                };
-                await _adminUserWriteRepository.AddAsync(user);
-                var result = CreateAccessToken(user).Data;
-                result.Id = user.Id;
-                return Result.SuccessDataResult(result, "Kayıt oldu");
+                    HashingHelper.CreatePasswordHash(userForRegisterDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                    var user = new AdminUser
+                    {
+                        Email = userForRegisterDto.Email,
+                        FirstName = userForRegisterDto.FirstName,
+                        LastName = userForRegisterDto.LastName,
+                        PasswordHash = passwordHash,
+                        PasswordSalt = passwordSalt,
+                        Status = true,
+                        RoleId = Guid.Parse("5f223b2f-c3d4-42e7-80f7-fa051dde76a8")
+                    };
+                    await _adminUserWriteRepository.AddAsync(user);
+                    var result = CreateAccessToken(user).Data;
+                    result.Id = user.Id;
+                    return Result.SuccessDataResult(result);
+                }
+                else
+                {
+                    return Result.ErrorDataResult<AccessToken>(Messages.AdminAlReadyExists);
+                }
             });
         }
         [ApiGenerateAllowAnonymous]

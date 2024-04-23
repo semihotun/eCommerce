@@ -6,7 +6,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
     {
         public GetProductCombinationXmlReqModel()
         {
-            
+
         }
         public Guid ProductId { get; set; }
         public GetProductCombinationXmlReqModel(Guid productId)

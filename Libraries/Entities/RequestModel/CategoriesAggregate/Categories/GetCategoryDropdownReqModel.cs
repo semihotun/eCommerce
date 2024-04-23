@@ -6,7 +6,7 @@ namespace Entities.RequestModel.CategoriesAggregate.Categories
     {
         public GetCategoryDropdownReqModel()
         {
-            
+
         }
         public GetCategoryDropdownReqModel(Guid? selectedId)
         {

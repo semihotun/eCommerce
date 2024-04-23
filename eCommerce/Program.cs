@@ -10,7 +10,6 @@ namespace eCommerce
         {
             var app = CreateHostBuilder(args).Build();
             var task = app.RunAsync();
-            //app.AddCqrsWithKafkaConsumerAsync();
             await task;
         }
         public static IHostBuilder CreateHostBuilder(string[] args) =>

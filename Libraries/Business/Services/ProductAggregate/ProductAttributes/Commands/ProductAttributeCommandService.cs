@@ -1,5 +1,7 @@
 ﻿using Business.Constants;
+using Core.Const;
 using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -25,6 +27,7 @@ namespace Business.Services.ProductAggregate.ProductAttributes.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductAttribute")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteProductAttribute(DeleteProductAttributeReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -42,6 +45,7 @@ namespace Business.Services.ProductAggregate.ProductAttributes.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductAttribute")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<ProductAttribute>> InsertProductAttribute(InsertProductAttributeReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -57,6 +61,7 @@ namespace Business.Services.ProductAggregate.ProductAttributes.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductAttribute")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> UpdateProductAttribute(UpdateProductAttributeReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>

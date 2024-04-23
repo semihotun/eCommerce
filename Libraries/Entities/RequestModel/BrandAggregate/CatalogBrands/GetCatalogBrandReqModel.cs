@@ -7,7 +7,7 @@ namespace Entities.RequestModel.BrandAggregate.CatalogBrands
         public Guid CategoryId { get; set; }
         public GetCatalogBrandReqModel()
         {
-            
+
         }
         public GetCatalogBrandReqModel(Guid categoryId)
         {

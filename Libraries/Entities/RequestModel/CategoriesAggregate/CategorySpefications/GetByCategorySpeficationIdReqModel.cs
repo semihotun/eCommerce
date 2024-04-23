@@ -8,7 +8,7 @@ namespace Entities.RequestModel.CategoriesAggregate.CategorySpefications
         public Guid CategoryId { get; set; }
         public GetByCategorySpeficationIdReqModel()
         {
-            
+
         }
         public GetByCategorySpeficationIdReqModel(Guid speficationId, Guid categoryId)
         {

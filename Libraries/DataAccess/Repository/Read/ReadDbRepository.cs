@@ -1,5 +1,4 @@
-﻿using Core.Extension;
-using Core.SeedWork;
+﻿using Core.SeedWork;
 using DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using System;

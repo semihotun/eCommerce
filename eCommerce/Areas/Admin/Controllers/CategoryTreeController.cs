@@ -4,13 +4,11 @@ using Business.Services.CategoriesAggregate.Categories.Queries;
 using Business.Services.CategoriesAggregate.CategorySpefications.Commands;
 using Business.Services.CategoriesAggregate.CategorySpefications.Queries;
 using Business.Services.SpeficationAggregate.SpeficationAttributes.Queries;
-using Entities.Concrete;
 using Entities.Extensions.AutoMapper;
 using Entities.RequestModel.CategoriesAggregate.Categories;
 using Entities.RequestModel.CategoriesAggregate.CategorySpefications;
 using Entities.ViewModels.AdminViewModel.CategoryTree;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 namespace eCommerce.Areas.Admin.Controllers
@@ -51,21 +49,21 @@ namespace eCommerce.Areas.Admin.Controllers
         {
             return View(new CategoryEditVM
             {
-                CategorySpeficationDTO = (await _categoryDtoQueryService.GetCategorySpefication(new (id))).Data,
+                CategorySpeficationDTO = (await _categoryDtoQueryService.GetCategorySpefication(new(id))).Data,
                 SpeficationAttributeSelectList = (await _specificationAttributeQueryService.GetProductSpeficationAttributeDropdwon(
-                new ())).Data
+                new())).Data
             });
         }
         [HttpPost]
         public async Task<IActionResult> CategoryEdit(CategoryEditVM model)
         {
-            var data= model.CategorySpeficationDTO.Category.MapTo<UpdateCategoryReqModel>();
+            var data = model.CategorySpeficationDTO.Category.MapTo<UpdateCategoryReqModel>();
             ResponseAlert(await _categoryCommandService.UpdateCategory(data));
             return RedirectToAction(nameof(CategoryEdit), new { id = model.CategorySpeficationDTO.Category.Id });
         }
         public async Task<IActionResult> CategoryFilterDelete(Guid speficationId, Guid categoryId)
         {
-            var deletedData = await _categorySpeficationQueryService.GetByCategorySpeficationId(new (speficationId, categoryId));
+            var deletedData = await _categorySpeficationQueryService.GetByCategorySpeficationId(new(speficationId, categoryId));
             var data = deletedData.Data.MapTo<DeleteCategorySpeficationReqModel>();
             ResponseAlert(await _categorySpeficationCommandService.DeleteCategorySpefication(data));
             return RedirectToAction("CategoryEdit", "CategoryTree", new { id = deletedData?.Data?.CategoryId });

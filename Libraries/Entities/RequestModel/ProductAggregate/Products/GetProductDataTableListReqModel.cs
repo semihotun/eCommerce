@@ -4,7 +4,7 @@ using System;
 
 namespace Entities.RequestModel.ProductAggregate.Products
 {
-    public class GetProductDataTableListReqModel : DTParameters , IFilterable
+    public class GetProductDataTableListReqModel : DTParameters, IFilterable
     {
         [Filter(FilterOperators.Equals)]
         public Guid Id { get; set; }

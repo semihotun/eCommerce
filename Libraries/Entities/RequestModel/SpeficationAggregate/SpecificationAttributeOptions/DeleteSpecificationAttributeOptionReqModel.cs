@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributeOptions
 {
@@ -8,7 +7,7 @@ namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributeOptio
         public Guid Id { get; set; }
         public DeleteSpecificationAttributeOptionReqModel()
         {
-            
+
         }
         public DeleteSpecificationAttributeOptionReqModel(Guid id)
         {

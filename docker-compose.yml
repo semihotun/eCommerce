@@ -17,6 +17,22 @@ services:
     depends_on:
       - s_sqlserver
       - s_redis
+  ecommerceApi:
+    image: ${DOCKER_REGISTRY-}ecommerceapi
+    build:
+      context: .
+      dockerfile: eCommerceApi/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:9902
+    ports:
+      - 9902:9902
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - s_sqlserver
+      - s_redis
   s_sqlserver:
     container_name: c_sqlserver
     image: mcr.microsoft.com/mssql/server:2019-latest

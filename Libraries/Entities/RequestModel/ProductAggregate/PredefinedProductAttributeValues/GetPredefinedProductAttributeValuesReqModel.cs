@@ -10,7 +10,7 @@ namespace Entities.RequestModel.ProductAggregate.PredefinedProductAttributeValue
         }
         public GetPredefinedProductAttributeValuesReqModel()
         {
-            
+
         }
         public Guid ProductAttributeId { get; set; }
     }

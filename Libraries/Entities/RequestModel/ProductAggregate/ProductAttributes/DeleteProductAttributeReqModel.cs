@@ -7,7 +7,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductAttributes
         public Guid Id { get; set; }
         public DeleteProductAttributeReqModel()
         {
-            
+
         }
         public DeleteProductAttributeReqModel(Guid id)
         {

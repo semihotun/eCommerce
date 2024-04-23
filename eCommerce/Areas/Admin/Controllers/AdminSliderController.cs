@@ -35,7 +35,7 @@ namespace eCommerce.Areas.Admin.Controllers
         }
         public async Task<IActionResult> SliderEdit(Guid id)
         {
-            var slider = await _sliderQueryService.GetSlider(new (id));
+            var slider = await _sliderQueryService.GetSlider(new(id));
             var data = slider.Data.MapTo<UpdateSliderReqModel>();
             return View(data);
         }

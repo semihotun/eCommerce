@@ -2,15 +2,15 @@
 using Core.Utilities.Aspects.Autofac.Caching;
 using Core.Utilities.PagedList;
 using Core.Utilities.Results;
+using DataAccess.Repository.Read;
+using Entities.Concrete;
 using Entities.RequestModel.BrandAggregate.Brands;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
-using Entities.Concrete;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using DataAccess.Repository.Read;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Business.Services.BrandAggregate.Brands.Queries
 {

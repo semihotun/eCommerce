@@ -13,7 +13,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductSpecificationAttributes
         public int PageSize { get; set; }
         public GetProductSpecificationAttributesReqModel()
         {
-            
+
         }
         public GetProductSpecificationAttributesReqModel(Guid productId,
             string? specificationAttributeName,

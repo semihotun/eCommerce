@@ -71,5 +71,28 @@ namespace Business.Services.AuthAggregate.TokenService
             claims.AddRoles(new string[] { user.RoleId.ToString() });
             return claims;
         }
+        public bool ValidateToken(string token)
+        {
+            try
+            {
+                var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+                jwtSecurityTokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidIssuer = _tokenOptions.Issuer,
+                    ValidAudience = _tokenOptions.Audience,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey)
+                }, out var validateToken);
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
     }
 }

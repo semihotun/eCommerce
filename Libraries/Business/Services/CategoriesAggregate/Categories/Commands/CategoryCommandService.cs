@@ -1,5 +1,7 @@
 ﻿using Business.Constants;
+using Core.Const;
 using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -29,6 +31,7 @@ namespace Business.Services.CategoriesAggregate.Categories.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ICategory")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<Category>> InsertCategory(InsertCategoryReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -44,6 +47,7 @@ namespace Business.Services.CategoriesAggregate.Categories.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ICategory")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> UpdateCategory(UpdateCategoryReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -62,6 +66,7 @@ namespace Business.Services.CategoriesAggregate.Categories.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ICategory")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteCategory(DeleteCategoryReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -81,6 +86,7 @@ namespace Business.Services.CategoriesAggregate.Categories.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ICategory")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> RemoveRangeCategory(RemoveRangeCategoryReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -108,6 +114,7 @@ namespace Business.Services.CategoriesAggregate.Categories.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ICategory")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> ChangeNodePosition(ChangeNodePositionReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -124,6 +131,7 @@ namespace Business.Services.CategoriesAggregate.Categories.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ICategory")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteNodes(DeleteNodesReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -136,7 +144,7 @@ namespace Business.Services.CategoriesAggregate.Categories.Commands
                     {
                         foreach (var item in subDeletedData)
                         {
-                            var deletedCategory =await _categoryRepository.GetByIdAsync(item.Id);
+                            var deletedCategory = await _categoryRepository.GetByIdAsync(item.Id);
                             if (deletedCategory != null)
                             {
                                 _categoryRepository.Remove(deletedCategory);

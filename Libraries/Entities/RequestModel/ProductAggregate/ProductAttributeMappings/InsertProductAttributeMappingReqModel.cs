@@ -15,7 +15,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductAttributeMappings
         public string DefaultValue { get; set; }
         public InsertProductAttributeMappingReqModel()
         {
-            
+
         }
         public InsertProductAttributeMappingReqModel(Guid productId,
             Guid productAttributeId,

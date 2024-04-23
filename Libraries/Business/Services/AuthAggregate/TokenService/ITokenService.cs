@@ -6,5 +6,6 @@ namespace Business.Services.AuthAggregate.TokenService
     public interface ITokenService
     {
         AccessToken CreateToken(UserShared user);
+        bool ValidateToken(string token);
     }
 }

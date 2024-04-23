@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 /// <summary>
 /// Ardalis Result
 /// </summary>
@@ -23,7 +22,7 @@ namespace Core.Utilities.Results
         {
             Success = success;
         }
-        public Result(bool success ,string message)
+        public Result(bool success, string message)
         {
             Success = success;
             Message = message;

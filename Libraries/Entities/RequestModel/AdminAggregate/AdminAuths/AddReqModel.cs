@@ -13,7 +13,7 @@ namespace Entities.RequestModel.AdminAggregate.AdminAuths
         public bool Status { get; set; }
         public AddReqModel()
         {
-            
+
         }
         public AddReqModel(Guid id, string firstName, string lastName, string email, byte[] passwordSalt, byte[] passwordHash, bool status)
         {

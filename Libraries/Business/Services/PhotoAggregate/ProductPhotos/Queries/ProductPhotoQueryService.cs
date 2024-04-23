@@ -1,12 +1,12 @@
 ﻿using Core.Utilities.Aspects.Autofac.Caching;
 using Core.Utilities.PagedList;
 using Core.Utilities.Results;
+using DataAccess.Repository.Read;
 using Entities.Concrete;
 using Entities.RequestModel.PhotoAggregate.ProductPhotos;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
-using DataAccess.Repository.Read;
+using System.Threading.Tasks;
 namespace Business.Services.PhotoAggregate.ProductPhotos.Queries
 {
     public class ProductPhotoQueryService : IProductPhotoQueryService

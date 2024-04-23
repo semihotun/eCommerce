@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.PhotoAggregate.ProductPhotos
 {
@@ -9,7 +8,7 @@ namespace Entities.RequestModel.PhotoAggregate.ProductPhotos
         public Guid? ProductId { get; set; }
         public AddProductPhotoReqModel()
         {
-            
+
         }
         public AddProductPhotoReqModel(string productPhotoName, Guid? productId)
         {

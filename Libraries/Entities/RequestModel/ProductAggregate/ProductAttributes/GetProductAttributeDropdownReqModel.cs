@@ -6,7 +6,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductAttributes
     {
         public GetProductAttributeDropdownReqModel()
         {
-            
+
         }
         public GetProductAttributeDropdownReqModel(Guid? selectedId)
         {

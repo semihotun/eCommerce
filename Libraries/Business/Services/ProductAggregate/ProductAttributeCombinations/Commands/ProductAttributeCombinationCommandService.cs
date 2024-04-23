@@ -1,5 +1,9 @@
 ﻿using Business.Constants;
+using Business.Services.ProductAggregate.ProductAttributeMappings.Queries;
+using Business.Services.ProductAggregate.ProductAttributeValues.Queries;
+using Core.Const;
 using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Helper;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
@@ -9,11 +13,8 @@ using Entities.Extensions.AutoMapper;
 using Entities.RequestModel.ProductAggregate.ProductAttributeCombinations;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
-using Entities.RequestModel.ProductAggregate.ProductAttributeValues;
-using Business.Services.ProductAggregate.ProductAttributeMappings.Queries;
-using Business.Services.ProductAggregate.ProductAttributeValues.Queries;
+using System.Threading.Tasks;
 namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Commands
 {
     public class ProductAttributeCombinationCommandService : IProductAttributeCombinationCommandService
@@ -40,6 +41,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Comman
         /// <param name="combination"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductAttributeCombination", "ICombinationPhoto", "IShowcase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<ProductAttributeCombination>> InsertProductAttributeCombination(InsertProductAttributeCombinationReqModel combination)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -55,6 +57,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Comman
         /// <param name="combination"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductAttributeCombination", "ICombinationPhoto", "IShowcase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> UpdateProductAttributeCombination(UpdateProductAttributeCombinationReqModel combination)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -73,6 +76,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Comman
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductAttributeCombination", "ICombinationPhoto", "IShowcase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> InsertPermutationCombination(InsertPermutationCombinationReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () => await InsertPermutationCombinationsHelper(request));
@@ -83,17 +87,18 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Comman
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductAttributeCombination", "ICombinationPhoto", "IShowcase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> AllInsertPermutationCombination(AllInsertPermutationCombinationReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
             {
                 List<List<Guid>> data = new();
                 var mapping = await _productAttributeMappingQueryService.GetProductAttributeMappingsByProductId(
-                    new (request.ProductId));
+                    new(request.ProductId));
                 foreach (var item in mapping.Data)
                 {
                     var smallData = new List<Guid>();
-                    var attributes = await _productAttributeValueService.GetProductAttributeValues(new (item.Id));
+                    var attributes = await _productAttributeValueService.GetProductAttributeValues(new(item.Id));
                     if (attributes.Data.Any())
                     {
                         foreach (var smallItem in attributes.Data)
@@ -113,6 +118,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Comman
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductAttributeCombination", "ICombinationPhoto", "IShowcase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteProductAttributeCombination(DeleteProductAttributeCombinationReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -131,7 +137,7 @@ namespace Business.Services.ProductAggregate.ProductAttributeCombinations.Comman
                 var xml = "<Attributes>";
                 foreach (var smallItem in item)
                 {
-                    var mappingId = await _productAttributeValueService.GetProductAttributeValueById(new (smallItem));
+                    var mappingId = await _productAttributeValueService.GetProductAttributeValueById(new(smallItem));
                     xml += "<ProductAttribute ID = \"" + mappingId.Data.ProductAttributeMappingId + "\">";
                     xml += "<ProductAttributeValue>";
                     xml += "<Value>" + smallItem + "</Value>";

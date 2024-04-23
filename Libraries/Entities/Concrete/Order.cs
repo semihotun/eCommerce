@@ -1,5 +1,5 @@
-﻿using System;
-using Core.SeedWork;
+﻿using Core.SeedWork;
+using System;
 namespace Entities.Concrete
 {
     public class Order : BaseEntity, IEntity

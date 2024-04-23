@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.BrandAggregate.Brands
 {
@@ -10,7 +9,7 @@ namespace Entities.RequestModel.BrandAggregate.Brands
         public string BrandName { get; set; }
         public UpdateBrandReqModel()
         {
-            
+
         }
         public UpdateBrandReqModel(Guid id, string brandName)
         {

@@ -6,7 +6,7 @@ namespace Entities.RequestModel.PhotoAggregate.ProductPhotos
     {
         public DeleteProductPhotoReqModel()
         {
-            
+
         }
         public DeleteProductPhotoReqModel(Guid id)
         {

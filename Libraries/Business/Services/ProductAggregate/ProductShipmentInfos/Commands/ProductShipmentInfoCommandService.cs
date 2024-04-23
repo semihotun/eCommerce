@@ -1,13 +1,15 @@
-﻿using Core.Utilities.Aspects.Autofac.Caching;
+﻿using Business.Constants;
+using Core.Const;
+using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
-using Entities.Concrete;
-using Entities.RequestModel.ProductAggregate.ProductShipmentInfos;
-using System.Threading.Tasks;
-using System;
-using DataAccess.UnitOfWork;
 using DataAccess.Repository.Write;
-using Business.Constants;
+using DataAccess.UnitOfWork;
+using Entities.Concrete;
 using Entities.Extensions.AutoMapper;
+using Entities.RequestModel.ProductAggregate.ProductShipmentInfos;
+using System;
+using System.Threading.Tasks;
 
 namespace Business.Services.ProductAggregate.ProductShipmentInfos.Commands
 {
@@ -28,6 +30,7 @@ namespace Business.Services.ProductAggregate.ProductShipmentInfos.Commands
         /// <param name="productShipmentInfo"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductShipmentInfo")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<ProductShipmentInfo>> AddProductShipmentInfo(AddProductShipmentInfoReqModel productShipmentInfo)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -43,6 +46,7 @@ namespace Business.Services.ProductAggregate.ProductShipmentInfos.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductShipmentInfo")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<ProductShipmentInfo>> UpdateProductShipmentInfo(UpdateProductShipmentInfoReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -61,6 +65,7 @@ namespace Business.Services.ProductAggregate.ProductShipmentInfos.Commands
         /// <param name="productShipmentInfo"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProductShipmentInfo")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<ProductShipmentInfo>> AddOrUpdateProductShipmentInfo(AddOrUpdateProductShipmentInfoReqModel productShipmentInfo)
         {
             if (productShipmentInfo.Id == Guid.Empty)

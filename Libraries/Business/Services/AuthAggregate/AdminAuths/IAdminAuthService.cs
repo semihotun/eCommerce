@@ -2,7 +2,6 @@
 using Core.Utilities.Security.Jwt;
 using Entities.Concrete;
 using Entities.RequestModel.AdminAggregate.AdminAuths;
-using System;
 using System.Threading.Tasks;
 namespace Business.Services.AuthAggregate.AdminAuths
 {

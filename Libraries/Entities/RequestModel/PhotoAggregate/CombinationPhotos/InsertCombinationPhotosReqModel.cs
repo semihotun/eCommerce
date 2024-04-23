@@ -9,7 +9,7 @@ namespace Entities.RequestModel.PhotoAggregate.CombinationPhotos
         public string NotCombinations { get; set; }
         public InsertCombinationPhotosReqModel()
         {
-            
+
         }
         public InsertCombinationPhotosReqModel(Guid photoId, string combinations = "", string notCombinations = "")
         {

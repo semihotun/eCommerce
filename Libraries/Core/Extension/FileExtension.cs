@@ -12,7 +12,7 @@ namespace Core.Extension
             {
                 return null;
             }
-            return "data:image/jpeg;base64,"+ file.ToBase64();
+            return "data:image/jpeg;base64," + file.ToBase64();
         }
         private static string ToBase64(this IFormFile file)
         {

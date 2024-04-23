@@ -1,12 +1,12 @@
-﻿using Entities.ViewModels.WebViewModel.Home;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System;
-using System.Linq;
+﻿using Entities.Concrete;
 using Entities.Dtos.ProductDALModels;
 using Entities.RequestModel.ProductAggregate.Catalog;
-using Entities.Concrete;
+using Entities.ViewModels.WebViewModel.Home;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Business.Services.ProductAggregate.Products.DtoQueries.Expressions
 {

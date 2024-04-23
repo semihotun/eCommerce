@@ -9,7 +9,7 @@ namespace Entities.RequestModel.PhotoAggregate.ProductPhotos
         public Guid ProductId { get; set; }
         public AddRangeProductPhotoInsertReqModel()
         {
-            
+
         }
         public AddRangeProductPhotoInsertReqModel(IEnumerable<IFormFile> productPhotos, Guid productId)
         {

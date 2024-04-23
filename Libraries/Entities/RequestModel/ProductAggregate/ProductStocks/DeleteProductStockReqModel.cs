@@ -6,7 +6,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductStocks
     {
         public DeleteProductStockReqModel()
         {
-            
+
         }
         public DeleteProductStockReqModel(Guid id)
         {

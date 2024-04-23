@@ -1,7 +1,9 @@
-﻿using Core.Utilities.Migration;
+﻿using Core.Const;
+using Core.Utilities.Migration;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 using System.Collections.Generic;
 
 namespace DataAccess.FluentApi.AuthAggregate
@@ -16,8 +18,8 @@ namespace DataAccess.FluentApi.AuthAggregate
         {
             return new List<Role>()
             {
-                new(){ RoleName="Admin" },
-                new(){ RoleName="User" }
+                new(){ Id=Guid.Parse(RoleConst.Admin), RoleName="Admin" },
+                new(){ Id=Guid.Parse(RoleConst.User), RoleName="User" }
             };
         }
     }

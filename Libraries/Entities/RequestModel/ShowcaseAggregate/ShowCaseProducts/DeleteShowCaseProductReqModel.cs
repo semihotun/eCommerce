@@ -10,7 +10,7 @@ namespace Entities.RequestModel.ShowcaseAggregate.ShowCaseProducts
         }
         public DeleteShowCaseProductReqModel()
         {
-            
+
         }
         public Guid Id { get; set; }
     }

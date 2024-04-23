@@ -10,7 +10,7 @@ namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributeOptio
         }
         public GetNotExistingSpecificationAttributeOptionsReqModel()
         {
-            
+
         }
         public Guid[] AttributeOptionIds { get; set; }
     }

@@ -1,5 +1,7 @@
-﻿using Core.Extension;
+﻿using Core.Const;
+using Core.Extension;
 using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -27,6 +29,7 @@ namespace Business.Services.SliderAggregate.Sliders.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ISlider")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteSlider(DeleteSliderReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -44,6 +47,7 @@ namespace Business.Services.SliderAggregate.Sliders.Commands
         /// <param name="model"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ISlider")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<Slider>> InsertSlider(InsertSliderReqModel model)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -60,6 +64,7 @@ namespace Business.Services.SliderAggregate.Sliders.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("ISlider")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> UpdateSlider(UpdateSliderReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>

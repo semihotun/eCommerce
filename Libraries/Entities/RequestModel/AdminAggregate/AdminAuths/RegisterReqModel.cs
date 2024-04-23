@@ -8,7 +8,7 @@
         public string LastName { get; set; }
         public RegisterReqModel()
         {
-                
+
         }
         public RegisterReqModel(string email, string password, string firstName, string lastName)
         {

@@ -21,10 +21,10 @@ namespace Business.Services.ProductAggregate.Products.DtoQueries
 {
     public class ProductDtoQuery : IProductDtoQuery
     {
-        private readonly IProductAttributeFormatterService _productAttributeFormatter;
+        private readonly IProductAttributeFormatter _productAttributeFormatter;
         private readonly ECommerceReadContext _readContext;
 
-        public ProductDtoQuery(IProductAttributeFormatterService productAttributeFormatter, ECommerceReadContext readContext)
+        public ProductDtoQuery(IProductAttributeFormatter productAttributeFormatter, ECommerceReadContext readContext)
         {
             _productAttributeFormatter = productAttributeFormatter;
             _readContext = readContext;

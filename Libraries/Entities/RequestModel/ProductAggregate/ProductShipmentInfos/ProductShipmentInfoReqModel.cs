@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.ProductAggregate.ProductShipmentInfos
 {
@@ -13,7 +12,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductShipmentInfos
         public Guid ProductId { get; set; }
         public AddProductShipmentInfoReqModel()
         {
-            
+
         }
         public AddProductShipmentInfoReqModel(Guid id, double? width, double? length, double? height, double? weight, Guid productId)
         {

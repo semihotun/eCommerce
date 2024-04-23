@@ -1,5 +1,7 @@
 ﻿using Business.Constants;
+using Core.Const;
 using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
 using DataAccess.Repository.Write;
 using DataAccess.UnitOfWork;
@@ -26,6 +28,7 @@ namespace Business.Services.ShowcaseAggregate.ShowCaseProducts.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IShowCase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteShowCaseProduct(DeleteShowCaseProductReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -43,6 +46,7 @@ namespace Business.Services.ShowcaseAggregate.ShowCaseProducts.Commands
         /// <param name="showCaseProduct"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IShowCase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<ShowCaseProduct>> InsertProductShowcase(InsertProductShowcaseReqModel showCaseProduct)
         {
             return await _unitOfWork.BeginTransaction(async () =>

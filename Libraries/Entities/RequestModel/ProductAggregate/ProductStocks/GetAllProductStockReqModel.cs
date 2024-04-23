@@ -3,7 +3,7 @@ using Core.Utilities.Infrastructure.Filter;
 using System;
 namespace Entities.RequestModel.ProductAggregate.ProductStocks
 {
-    public class GetAllProductStockReqModel : DTParameters , IFilterable
+    public class GetAllProductStockReqModel : DTParameters, IFilterable
     {
         [Filter(FilterOperators.GreaterThan)]
         public double? ProductPrice { get; set; }

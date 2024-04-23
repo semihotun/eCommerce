@@ -1,6 +1,4 @@
-﻿using Entities.Concrete;
-
-namespace Entities.RequestModel.ProductAggregate.ProductAttributes
+﻿namespace Entities.RequestModel.ProductAggregate.ProductAttributes
 {
     public class InsertProductAttributeReqModel
     {
@@ -8,7 +6,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductAttributes
         public string Description { get; set; }
         public InsertProductAttributeReqModel()
         {
-            
+
         }
         public InsertProductAttributeReqModel(string name, string description)
         {

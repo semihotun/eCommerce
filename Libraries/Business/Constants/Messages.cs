@@ -17,5 +17,6 @@
         public static string DropdownFirstItem => "Seçiniz";
         public static string OperationSuccessful => "İşlem Başarılı";
         public static string OperationFailed => "İşlem Başarısız";
+        public static string AdminAlReadyExists => "Başlangıç için Admin zaten Yaratıldı";
     }
 }

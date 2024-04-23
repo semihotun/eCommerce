@@ -11,7 +11,7 @@ namespace Entities.RequestModel.SpeficationAggregate.SpecificationAttributes
         public Guid[] SpecificationAttributeIds { get; set; }
         public GetSpecificationAttributeByIdsReqModel()
         {
-            
+
         }
     }
 }

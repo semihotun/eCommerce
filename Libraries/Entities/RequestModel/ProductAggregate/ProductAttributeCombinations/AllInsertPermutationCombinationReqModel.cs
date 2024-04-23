@@ -6,7 +6,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
     {
         public AllInsertPermutationCombinationReqModel()
         {
-            
+
         }
         public AllInsertPermutationCombinationReqModel(Guid productId)
         {

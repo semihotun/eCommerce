@@ -14,7 +14,7 @@ namespace Entities.RequestModel.ProductAggregate.PredefinedProductAttributeValue
         public int DisplayOrder { get; set; }
         public UpdatePredefinedProductAttributeValueReqModel()
         {
-            
+
         }
         public UpdatePredefinedProductAttributeValueReqModel(Guid id, Guid productAttributeId,
             string name,

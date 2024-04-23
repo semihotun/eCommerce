@@ -10,9 +10,9 @@ namespace DataAccess.Context
         public ECommerceReadContext(DbContextOptions<ECommerceReadContext> options) : base(options)
         {
         }
-        public IQueryable<TEntity> Query <TEntity>() where TEntity : BaseEntity
+        public IQueryable<TEntity> Query<TEntity>() where TEntity : BaseEntity
         {
-            return Set<TEntity>().AsQueryable().Where(x=>!x.IsDeleted);
+            return Set<TEntity>().AsQueryable().Where(x => !x.IsDeleted);
         }
         #region DBSets
         public DbSet<AdminUser> AdminUser { get; set; }

@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
 {
@@ -13,7 +12,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
         public string ManufacturerPartNumber { get; set; }
         public UpdateProductAttributeCombinationReqModel()
         {
-            
+
         }
         public UpdateProductAttributeCombinationReqModel(Guid id, Guid productId, string attributesXml, string gtin, string sku, string manufacturerPartNumber)
         {

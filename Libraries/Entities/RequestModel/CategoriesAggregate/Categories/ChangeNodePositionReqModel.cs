@@ -6,7 +6,7 @@ namespace Entities.RequestModel.CategoriesAggregate.Categories
     {
         public ChangeNodePositionReqModel()
         {
-            
+
         }
         public ChangeNodePositionReqModel(Guid id, Guid? parentId)
         {

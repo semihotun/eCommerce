@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.CategoriesAggregate.Categories
 {
@@ -10,7 +9,7 @@ namespace Entities.RequestModel.CategoriesAggregate.Categories
         public Guid? ParentCategoryId { get; set; }
         public InsertCategoryReqModel()
         {
-            
+
         }
         public InsertCategoryReqModel(string categoryName, Guid? parentCategoryId)
         {

@@ -6,7 +6,7 @@ namespace Entities.RequestModel.CategoriesAggregate.CategorySpefications
     {
         public GetAllCategorySpeficationReqModel()
         {
-            
+
         }
         public GetAllCategorySpeficationReqModel(Guid categoryId)
         {

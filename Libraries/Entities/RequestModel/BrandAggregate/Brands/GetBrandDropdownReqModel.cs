@@ -7,7 +7,7 @@ namespace Entities.RequestModel.BrandAggregate.Brands
         public Guid? SelectedId { get; set; }
         public GetBrandDropdownReqModel()
         {
-            
+
         }
         public GetBrandDropdownReqModel(Guid? selectedId = null)
         {

@@ -1,13 +1,15 @@
-﻿using Core.Utilities.Aspects.Autofac.Caching;
+﻿using Business.Constants;
+using Core.Const;
+using Core.Utilities.Aspects.Autofac.Caching;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Results;
-using Entities.RequestModel.ProductAggregate.Products;
-using System.Threading.Tasks;
-using System;
-using DataAccess.UnitOfWork;
 using DataAccess.Repository.Write;
+using DataAccess.UnitOfWork;
 using Entities.Concrete;
-using Business.Constants;
 using Entities.Extensions.AutoMapper;
+using Entities.RequestModel.ProductAggregate.Products;
+using System;
+using System.Threading.Tasks;
 
 namespace Business.Services.ProductAggregate.Products.Commands
 {
@@ -26,6 +28,7 @@ namespace Business.Services.ProductAggregate.Products.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProduct", "IShowcase", "IShowcase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result> DeleteProduct(DeleteProductReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -43,6 +46,7 @@ namespace Business.Services.ProductAggregate.Products.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProduct", "IShowcase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<Product>> AddProduct(AddProductReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -60,6 +64,7 @@ namespace Business.Services.ProductAggregate.Products.Commands
         /// <param name="request"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProduct", "IShowcase", "IShowcase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<Product>> UpdateProduct(UpdateProductReqModel request)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -77,6 +82,7 @@ namespace Business.Services.ProductAggregate.Products.Commands
         /// <param name="product"></param>
         /// <returns></returns>
         [CacheRemoveAspect("IProduct", "IShowcase")]
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<Product>> CreateOrUpdateProduct(CreateOrUpdateProductReqModel product)
         {
             if (product.Id == Guid.Empty)

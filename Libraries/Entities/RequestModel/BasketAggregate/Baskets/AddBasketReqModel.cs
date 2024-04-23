@@ -1,5 +1,4 @@
-﻿using Entities.Concrete;
-using System;
+﻿using System;
 
 namespace Entities.RequestModel.BasketAggregate.Baskets
 {
@@ -13,7 +12,7 @@ namespace Entities.RequestModel.BasketAggregate.Baskets
         public bool IsDeleted { get; set; }
         public AddBasketReqModel()
         {
-                
+
         }
 
         public AddBasketReqModel(Guid id, Guid productId, Guid combinationId, Guid userId, int productPiece)

@@ -8,7 +8,7 @@
         public string OrderByText { get; set; }
         public GetBrandListReqModel()
         {
-            
+
         }
         public GetBrandListReqModel(string brandName, int pageIndex, int pageSize, string orderByText)
         {

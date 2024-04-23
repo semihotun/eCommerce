@@ -7,7 +7,7 @@ namespace Entities.RequestModel.CategoriesAggregate.Categories
         public Guid Id { get; set; }
         public RemoveGroupReqModel()
         {
-            
+
         }
         public RemoveGroupReqModel(Guid id)
         {

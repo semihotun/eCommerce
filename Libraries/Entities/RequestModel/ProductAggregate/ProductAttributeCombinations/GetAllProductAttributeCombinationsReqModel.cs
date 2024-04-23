@@ -10,7 +10,7 @@ namespace Entities.RequestModel.ProductAggregate.ProductAttributeCombinations
         public string Orderbytext { get; set; }
         public GetAllProductAttributeCombinationsReqModel()
         {
-            
+
         }
         public GetAllProductAttributeCombinationsReqModel(Guid productId, int pageIndex = 1, int pageSize = int.MaxValue, string orderbytext = null)
         {
