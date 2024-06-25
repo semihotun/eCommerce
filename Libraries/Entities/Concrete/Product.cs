@@ -11,7 +11,6 @@ namespace Entities.Concrete
         public bool? ProductShow { get; set; }
         public string Gtin { get; set; }
         public string Sku { get; set; }
-        public DateTime CreatedOnUtc { get; set; }
         public Guid ProductStockTypeId { get; set; }
         public string ProductNameUpper { get; set; }
     }

@@ -6,5 +6,6 @@ namespace Core.SeedWork
     {
         public Guid Id { get; set; } = Guid.Empty;
         public bool IsDeleted { get; set; } = false;
+        public DateTime CreatedOnUtc { get; set; }
     }
 }

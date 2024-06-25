@@ -8,6 +8,5 @@ namespace Entities.Concrete
         public Guid OrderId { get; set; }
         public Guid DownloadId { get; set; }
         public bool DisplayToCustomer { get; set; }
-        public DateTime CreatedOnUtc { get; set; }
     }
 }

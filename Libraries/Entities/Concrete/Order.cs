@@ -58,6 +58,5 @@ namespace Entities.Concrete
         public string ShippingRateComputationMethodSystemName { get; set; }
         public string CustomValuesXml { get; set; }
         public bool Deleted { get; set; }
-        public DateTime CreatedOnUtc { get; set; }
     }
 }

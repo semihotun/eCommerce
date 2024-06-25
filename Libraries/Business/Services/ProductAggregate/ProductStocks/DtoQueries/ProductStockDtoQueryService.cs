@@ -33,7 +33,7 @@ namespace Business.Services.ProductAggregate.ProductStocks.DtoQueries
                                     ProductStockPiece = ps.ProductStockPiece,
                                     AllowOutOfStockOrders = ps.AllowOutOfStockOrders,
                                     NotifyAdminForQuantityBelow = ps.NotifyAdminForQuantityBelow,
-                                    CreateTime = ps.CreateTime,
+                                    CreateTime = ps.CreatedOnUtc,
                                     ProductId = ps.ProductId,
                                     CombinationId = ps.CombinationId,
                                     ProductAttributeCombination = pacljg,

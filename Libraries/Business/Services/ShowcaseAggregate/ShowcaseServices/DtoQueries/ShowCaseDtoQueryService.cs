@@ -27,7 +27,7 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseServices.DtoQueries
                                           where scp.ShowCaseId == s.Id
                                           let ppg = (from pp in _readContext.Query<ProductPhoto>() where p.Id == pp.ProductId select pp).AsEnumerable()
                                           let productStockGroup = (from ps in _readContext.Query<ProductStock>()
-                                                                   orderby ps.CreateTime
+                                                                   orderby ps.CreatedOnUtc
                                                                    where ps.ProductId == scp.Id && ps.CombinationId == scp.CombinationId &&
                                                                          (!ps.AllowOutOfStockOrders
                                                                              ? ps.ProductStockPiece > 0
@@ -70,7 +70,7 @@ namespace Business.Services.ShowcaseAggregate.ShowcaseServices.DtoQueries
                                           from apacjg in apacj.DefaultIfEmpty()
                                           let ppg = (from pp in _readContext.Query<ProductPhoto>() where p.Id == pp.ProductId select pp).AsEnumerable()
                                           let productStockGroup = (from ps in _readContext.Query<ProductStock>()
-                                                                   orderby ps.CreateTime
+                                                                   orderby ps.CreatedOnUtc
                                                                    where ps.ProductId == scp.ProductId && ps.CombinationId == scp.CombinationId
                                                                          && (!ps.AllowOutOfStockOrders
                                                                              ? ps.ProductStockPiece > 0

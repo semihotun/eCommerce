@@ -409,3 +409,4 @@ FodyWeavers.xsd
 /.vs/eCommerce/v16/TestStore
 /eCommerce/obj
 /eCommerce/wwwroot/Files
+/.vs

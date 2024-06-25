@@ -18,6 +18,5 @@ namespace Entities.Concrete
         public string PhoneNumber { get; set; }
         public string FaxNumber { get; set; }
         public string CustomAttributes { get; set; }
-        public DateTime CreatedOnUtc { get; set; }
     }
 }

@@ -27,10 +27,15 @@ namespace DataAccess.Repository.Write
         }
         public async Task<TEntity> AddAsync(TEntity entity)
         {
+            entity.CreatedOnUtc = DateTime.Now;
             return (await _writeContext.AddAsync(entity)).Entity;
         }
         public async Task AddRangeAsync(IEnumerable<TEntity> entity)
         {
+            foreach(var data in entity)
+            {
+                data.CreatedOnUtc = DateTime.Now;
+            }
             await _writeContext.Set<TEntity>().AddRangeAsync(entity);
         }
         public TEntity Update(TEntity entity)

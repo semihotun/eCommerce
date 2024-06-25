@@ -39,7 +39,7 @@ namespace Business.Services.ProductAggregate.Products.DtoQueries
                         join pac in _readContext.Query<ProductAttributeCombination>() on p.Id equals pac.ProductId into paclj
                         from pacljf in paclj.DefaultIfEmpty()
                         let productStockGroup = (from ps in _readContext.Query<ProductStock>()
-                                                 orderby ps.CreateTime
+                                                 orderby ps.CreatedOnUtc
                                                  where ps.ProductId == p.Id && (p.ProductStockTypeId == ProductStockTypeConst.VariationProduct ? ps.CombinationId == pacljf.Id : ps.CombinationId == Guid.Empty)
                                                  select ps).AsEnumerable()
                         select new ProductDataTableJson
@@ -80,7 +80,7 @@ namespace Business.Services.ProductAggregate.Products.DtoQueries
                        let pacg = (from pac in _readContext.Query<ProductAttributeCombination>()
                                    where pac.ProductId == p.Id
                                    let pacpsg = (from pacps in _readContext.Query<ProductStock>()
-                                                 orderby pacps.CreateTime
+                                                 orderby pacps.CreatedOnUtc
                                                  where pac.Id == pacps.CombinationId
                                                  && (pacps.AllowOutOfStockOrders || pacps.ProductStockPiece > 0)
                                                  select pacps).First()
@@ -123,7 +123,7 @@ namespace Business.Services.ProductAggregate.Products.DtoQueries
                                    where request.CombinationId == Guid.Empty || ppcpljg.CombinationId == request.CombinationId
                                    select ppl).AsEnumerable()
                        let productStockGroup = (from ps in _readContext.Query<ProductStock>().DefaultIfEmpty()
-                                                orderby ps.CreateTime
+                                                orderby ps.CreatedOnUtc
                                                 where ps.ProductId == p.Id && (ps.AllowOutOfStockOrders || ps.ProductStockPiece > 0) &&
                                                 (p.ProductStockTypeId == ProductStockTypeConst.VariationProduct
                                                 ? pacg.Any() && request.CombinationId == Guid.Empty ? ps.CombinationId == pacg.First().Id : ps.CombinationId == request.CombinationId
@@ -157,7 +157,7 @@ namespace Business.Services.ProductAggregate.Products.DtoQueries
                                                   where ap.Id == app.ProductId
                                                   select app).AsEnumerable()
                                       let anotherProductStockGroup = (from aps in _readContext.Query<ProductStock>()
-                                                                      orderby aps.CreateTime
+                                                                      orderby aps.CreatedOnUtc
                                                                       where aps.ProductId == ap.Id &&
                                                                             (!aps.AllowOutOfStockOrders
                                                                                 ? aps.ProductStockPiece > 0
@@ -194,7 +194,7 @@ namespace Business.Services.ProductAggregate.Products.DtoQueries
                                         where pacljf == null || ppcpljg.CombinationId == pacljf.Id
                                         select ppl).AsEnumerable()
                             let productStockGroup = (from ps in _readContext.Query<ProductStock>()
-                                                     orderby ps.CreateTime
+                                                     orderby ps.CreatedOnUtc
                                                      where ps.ProductId == p.Id && ps.CombinationId == item.CombinationId &&
                                                            (!ps.AllowOutOfStockOrders
                                                                ? ps.ProductStockPiece > 0
@@ -332,7 +332,7 @@ namespace Business.Services.ProductAggregate.Products.DtoQueries
         }
         public async Task<Result<List<ProductSearch>>> GetMainSearchProduct(GetMainSearchProductReqModel request)
         {
-            var data = await (from p in _readContext.Product
+            var data = await (from p in _readContext.Query<Product>()
                               where string.IsNullOrEmpty(request.SearchProductName) || EF.Functions.Like(p.ProductNameUpper, request.SearchProductName.ToUpper() + "%")
                               select new ProductSearch
                               {
