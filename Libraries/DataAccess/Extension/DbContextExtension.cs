@@ -1,5 +1,6 @@
 ﻿using DataAccess.Context;
 using DataAccess.ContextSeed.eCommerceDbSeed;
+using DataAccess.EventSourcing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,8 +41,8 @@ namespace DataAccess.Extension
             using var ctx = new ECommerceContext(optionBuilder.Options);
             if (ctx.Database.EnsureCreated())
             {
-                //MssqlDbContextAddAllCdcTable.AddAllCdc(ctx);
-                //ctx.AddConnector().GetAwaiter().GetResult();
+                MssqlDbContextAddAllCdcTable.AddAllCdc(ctx);
+                ctx.AddConnector().GetAwaiter().GetResult();
                 EcommerceContextSeed.SeedAsync(ctx).GetAwaiter().GetResult();
             }
             else

@@ -17,6 +17,7 @@ services:
     depends_on:
       - s_sqlserver
       - s_redis
+      - ecommerceApi
     env_file:
       - ./.env
   ecommerceApi:
@@ -35,6 +36,20 @@ services:
     depends_on:
       - s_sqlserver
       - s_redis
+    env_file:
+      - ./.env
+  kafkaWorkerService:
+    image: ${DOCKER_REGISTRY-}kafkaworkerservice
+    build:
+      context: .
+      dockerfile: WorkerService/KafkaWorkerService/Dockerfile
+    ports:
+      - 9903:9903
+    depends_on:
+      - s_sqlserver
+      - s_redis
+      - ecommerce
+      - ecommerceApi
     env_file:
       - ./.env
   s_sqlserver:
