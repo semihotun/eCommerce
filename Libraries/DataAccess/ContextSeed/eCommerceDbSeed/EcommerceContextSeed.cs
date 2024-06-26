@@ -1,4 +1,5 @@
-﻿using DataAccess.Context;
+﻿using Core.SeedWork;
+using DataAccess.Context;
 using Polly;
 using Polly.Retry;
 using Serilog;
@@ -26,11 +27,24 @@ namespace DataAccess.ContextSeed.eCommerceDbSeed
                         var obj = Activator.CreateInstance(item);
                         var returnType = method.ReturnType;
                         var dataObjects = (IEnumerable<object>)method.Invoke(obj, null);
-                        context.AddRange(dataObjects);
+                        var data = AddCreatedOnUtc(dataObjects);
+                        context.AddRange(data);
                     }
                     await context.SaveChangesAsync();
                 }
             });
+        }
+        private static IEnumerable<object>  AddCreatedOnUtc(IEnumerable<object> dataObjects)
+        {
+            foreach (var data in dataObjects)
+            {
+                var createdOnUtcProperty = data.GetType().GetProperty("CreatedOnUtc");
+                if (createdOnUtcProperty != null && createdOnUtcProperty.PropertyType == typeof(DateTime))
+                {
+                    createdOnUtcProperty.SetValue(data, DateTime.Now);
+                }
+            }
+            return dataObjects;
         }
         private static AsyncRetryPolicy CreatePolicy(int retries)
         {
