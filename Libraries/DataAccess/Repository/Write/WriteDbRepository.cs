@@ -40,6 +40,7 @@ namespace DataAccess.Repository.Write
         }
         public TEntity Update(TEntity entity)
         {
+            entity.UpdatedOnUtc = DateTime.Now;
             _writeContext.Update(entity);
             return entity;
         }

@@ -9,7 +9,6 @@ namespace Entities.RequestModel.ProductAggregate.ProductStocks
         public int? ProductStockPiece { get; set; }
         public bool AllowOutOfStockOrders { get; set; }
         public int NotifyAdminForQuantityBelow { get; set; }
-        public DateTime CreateTime { get; set; }
         public Guid ProductId { get; set; }
         public Guid CombinationId { get; set; }
         public AddProductStockReqModel()
@@ -17,14 +16,13 @@ namespace Entities.RequestModel.ProductAggregate.ProductStocks
 
         }
         public AddProductStockReqModel(double? productPrice, double? productDiscount, int? productStockPiece, bool allowOutOfStockOrders,
-            int notifyAdminForQuantityBelow, DateTime createTime, Guid productId, Guid combinationId)
+            int notifyAdminForQuantityBelow, Guid productId, Guid combinationId)
         {
             ProductPrice = productPrice;
             ProductDiscount = productDiscount;
             ProductStockPiece = productStockPiece;
             AllowOutOfStockOrders = allowOutOfStockOrders;
             NotifyAdminForQuantityBelow = notifyAdminForQuantityBelow;
-            CreateTime = createTime;
             ProductId = productId;
             CombinationId = combinationId;
         }
