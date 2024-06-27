@@ -1,0 +1,95 @@
+<div class="header-top" *ngIf="!isMobil.value">
+  <div class="links">
+    <a href="#">Hakkımızda</a>
+    <a href="#">Yardım & Destek</a>
+    <a href="#">İndirimli Kuponlarım</a>
+    <a href="#">Destek Talebi Oluştur</a>
+  </div>
+</div>
+<div class="header-middle">
+  <div class="header-container">
+    <div class="header-back-button" *ngIf="isMobil.value">
+      <ion-icon name="chevron-back-outline" *ngIf="isMobil.value && isNavigationBackUrl != ''"></ion-icon>
+    </div>
+    <div class="header-left">
+      <div class="logo" *ngIf="!isMobil.value">Logos</div>
+      <div class="search-input-wrapper">
+        <input type="text" class="search-input">
+        <i class="fas fa-search"></i>
+      </div>
+    </div>
+    <div class="header-right" *ngIf="!isMobil.value">
+      <a href="#"><i class="fa-solid fa-cart-shopping" id="shoppingIcon"></i><span
+          *ngIf="!isMobil.value">Sepetim</span></a>
+      <a href="#"><i class="fa-regular fa-user" id="userIcon"></i><span *ngIf="!isMobil.value">Giriş Yap</span></a>
+    </div>
+    <div class="mobile-bars" (click)="showMobileBars()">
+      <i class="fa-solid fa-bars bar-icon"></i>
+    </div>
+
+
+  </div>
+
+</div>
+<div [ngClass]="'header-bottom ' + headerBottom.value" #headerRight>
+  <ul>
+    <li><a [routerLink]="['']" class="header-bottom-a">{{ "Home" }}</a></li>
+    <li><a [routerLink]="['likes']" class="header-bottom-a">Beğendiklerim</a></li>
+    <li>
+      <a id="show-sub-category" class="header-bottom-a" (click)="showSubNodeCategory($event.currentTarget!)">Kelime
+        Öğreniyorum
+        <i *ngIf="isMobil.value" class="fa-solid fa-chevron-down"></i></a>
+      <div class="sub-category-list sub-category-close">
+        <div class="sub-category"><a href="#1">A1</a></div>
+        <div class="sub-category"><a href="#1">A2</a></div>
+        <div class="sub-category"><a href="#1">B1</a></div>
+        <div class="sub-category"><a href="#1">B2</a></div>
+        <div class="sub-category"><a href="#1">A1</a></div>
+        <div class="sub-category"><a href="#1">A2</a></div>
+        <div class="sub-category"><a href="#1">B1</a></div>
+        <div class="sub-category"><a href="#1">B2</a></div>
+        <div class="sub-category"><a href="#1">A1</a></div>
+        <div class="sub-category"><a href="#1">A2</a></div>
+        <div class="sub-category"><a href="#1">B1</a></div>
+        <div class="sub-category"><a href="#1">B2</a></div>
+        <div class="sub-category"><a href="#1">A1</a></div>
+        <div class="sub-category"><a href="#1">A2</a></div>
+        <div class="sub-category"><a href="#1">B1</a></div>
+        <div class="sub-category"><a href="#1">B2</a></div>
+        <div class="sub-category"><a href="#1">A1</a></div>
+        <div class="sub-category"><a href="#1">A2</a></div>
+        <div class="sub-category"><a href="#1">B1</a></div>
+        <div class="sub-category"><a href="#1">B2</a></div>
+        <div class="sub-category"><a href="#1">A1</a></div>
+        <div class="sub-category"><a href="#1">A2</a></div>
+        <div class="sub-category"><a href="#1">B1</a></div>
+        <div class="sub-category"><a href="#1">B2</a></div>
+        <div class="sub-category"><a href="#1">A1</a></div>
+        <div class="sub-category"><a href="#1">A2</a></div>
+        <div class="sub-category"><a href="#1">B1</a></div>
+        <div class="sub-category"><a href="#1">B2</a></div>
+        <div class="sub-category"><a href="#1">A1</a></div>
+        <div class="sub-category"><a href="#1">A2</a></div>
+        <div class="sub-category"><a href="#1">B1</a></div>
+        <div class="sub-category"><a href="#1">B2</a></div>
+      </div>
+    </li>
+    <li>
+      <a id="show-sub-category" class="header-bottom-a" (click)="showSubNodeCategory($event.currentTarget!)">Tekrar Et
+        A1
+        <i *ngIf="isMobil.value" class="fa-solid fa-chevron-down"></i></a>
+      <div class="sub-category-list sub-category-close">
+        <div class="sub-category"><a href="#1">Sürekli hata yapılanlar</a></div>
+        <div class="sub-category"><a href="#2">Bütün Keliemeler</a></div>
+        <div class="sub-category"><a href="#3">İyi bilinenler</a></div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- <div class="header-bottom-mobile" *ngIf="isMobil.value">
+  <div class="mobile-search-input-wrapper" *ngIf="isMobil.value">
+    <input type="text" class="mobile-search-input">
+    <i class="fas fa-search"></i>
+  </div>
+</div> -->
