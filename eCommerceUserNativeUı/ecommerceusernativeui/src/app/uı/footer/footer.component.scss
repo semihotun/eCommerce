@@ -1,0 +1,48 @@
+ @import '../../../theme/styles.scss';
+
+ .col-md-4 {
+     width: (100% / 12)*4;
+
+ }
+
+ .footer {
+     margin-top: 50px;
+     padding-top: 40px;
+     padding-bottom: 40px;
+     background-color: #e2e2e2;
+     width: 100%;
+     display: flex;
+     justify-content: space-between;
+
+     .description {
+         display: flex;
+         flex-direction: column;
+
+         .social {
+             padding-top: 15px;
+
+             .fa-brands {
+                 font-size: 20px;
+                 padding-right: 7px;
+             }
+         }
+     }
+
+     .links {
+         display: flex;
+         flex-direction: column;
+
+         a {
+             color: black;
+             padding: 5px;
+             text-decoration: none;
+         }
+     }
+
+
+ }
+
+ .copyright {
+     padding-top: 5px;
+     text-align: center;
+ }

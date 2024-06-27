@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { Gesture, GestureController, GestureDetail } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
-import { IonIcon } from '@ionic/angular/standalone';
+import { IonIcon, IonHeader } from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
 import { GlobalService } from 'src/app/services/global.service';
 
@@ -19,7 +19,7 @@ import { GlobalService } from 'src/app/services/global.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [IonIcon, CommonModule, RouterModule],
+  imports: [IonIcon, CommonModule, RouterModule, IonHeader],
 })
 export class HeaderComponent implements OnInit {
   subCategoryLists!: NodeListOf<HTMLElement>;

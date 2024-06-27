@@ -1,7 +1,17 @@
+@import './variables.scss';
+
 .display-none {
     display: none !important;
 }
 
 .display-flex {
     display: flex;
+}
+
+.container {
+    padding: 0px 5%;
+
+    @media screen and (max-width: $tablet-size) {
+        padding: 0px 5%;
+    }
 }

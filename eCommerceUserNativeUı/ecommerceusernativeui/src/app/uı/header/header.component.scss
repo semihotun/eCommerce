@@ -64,12 +64,8 @@
         display: flex;
         vertical-align: middle;
         align-items: center;
-        margin: 0px 5%;
         width: 100%;
 
-        @media screen and (max-width: $tablet-size) {
-            margin: 0px 5%;
-        }
 
         .header-back-button {
             display: flex;
@@ -109,6 +105,7 @@
                 position: relative;
 
                 .search-input {
+                    background-color: white;
                     height: 100%;
                     position: absolute;
                     width: 100%;
