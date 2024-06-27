@@ -12,6 +12,7 @@ import { Gesture, GestureController, GestureDetail } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { IonIcon } from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-header',
@@ -21,26 +22,23 @@ import { Router, RouterModule } from '@angular/router';
   imports: [IonIcon, CommonModule, RouterModule],
 })
 export class HeaderComponent implements OnInit {
-  isShowMobilBars: BehaviorSubject<boolean | null> = new BehaviorSubject<
-    boolean | null
-  >(null);
   subCategoryLists!: NodeListOf<HTMLElement>;
   headerMobilWidth: number = 1000;
   headerBottom: BehaviorSubject<string> = new BehaviorSubject<string>('');
   isNavigationBackUrl: string = '';
-  isMobil: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   router = inject(Router);
   constructor(
     private elRef: ElementRef<HTMLElement>,
     private gestureCtrl: GestureController,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public glb: GlobalService
   ) {}
   ngOnInit(): void {
     this.initializeGesture();
     this.changeHeaderRightClasses();
     if (window.innerWidth < this.headerMobilWidth) {
-      this.isMobil.next(true);
+      this.glb.isMobil.next(true);
     }
   }
   @HostListener('document:click', ['$event'])
@@ -51,7 +49,7 @@ export class HeaderComponent implements OnInit {
       );
     if (clickedInside == false) {
       this.removeSubCategoryOpenClass();
-      this.isShowMobilBars.next(false);
+      this.glb.isShowMobilBars.next(false);
     }
   }
   removeSubCategoryOpenClass() {
@@ -64,16 +62,7 @@ export class HeaderComponent implements OnInit {
       );
     });
   }
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    if (window.innerWidth > this.headerMobilWidth) {
-      this.isMobil.next(false);
-      this.isShowMobilBars.next(false);
-    } else {
-      this.isShowMobilBars.next(null);
-      this.isMobil.next(true);
-    }
-  }
+
   @ViewChild('headerRight', { static: true })
   headerRight!: ElementRef<HTMLElement>;
 
@@ -105,7 +94,7 @@ export class HeaderComponent implements OnInit {
       );
   }
   showMobileBars() {
-    this.isShowMobilBars.next(!this.isShowMobilBars.value);
+    this.glb.isShowMobilBars.next(!this.glb.isShowMobilBars.value);
   }
   showSubNodeCategory(e: EventTarget) {
     const target = (e as HTMLElement).nextElementSibling as HTMLElement;
@@ -117,7 +106,7 @@ export class HeaderComponent implements OnInit {
   }
   changeHeaderRightClasses() {
     if (window.innerWidth < this.headerMobilWidth) {
-      this.isShowMobilBars.subscribe((isShowMobilBars) => {
+      this.glb.isShowMobilBars.subscribe((isShowMobilBars) => {
         if (isShowMobilBars == true) {
           this.headerBottom.next('active');
           return;
