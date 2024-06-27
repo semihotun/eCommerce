@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ecommerceusernativeui</string>
+    <string name="title_activity_main">ecommerceusernativeui</string>
+    <string name="package_name">ionic.ecommerceusernativeui</string>
+    <string name="custom_url_scheme">ionic.ecommerceusernativeui</string>
+</resources>

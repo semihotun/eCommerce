@@ -1,0 +1,7 @@
+{
+  "name": "ecommerceusernativeui",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

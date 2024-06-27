@@ -38,7 +38,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generators", "Generators", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGenerator", "Generators\ApiGenerator\ApiGenerator.csproj", "{2489389C-20F3-403D-8FFB-D1C2A16EA60A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafkaWorkerService", "WorkerService\KafkaWorkerService\KafkaWorkerService.csproj", "{88CF7577-308F-48D4-8E11-07180AED750A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KafkaWorkerService", "WorkerService\KafkaWorkerService\KafkaWorkerService.csproj", "{88CF7577-308F-48D4-8E11-07180AED750A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
