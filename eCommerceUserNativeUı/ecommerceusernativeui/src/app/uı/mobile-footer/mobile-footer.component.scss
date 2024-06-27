@@ -1,0 +1,17 @@
+@import '../../../theme/styles.scss';
+
+.fixTap {
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    height: $fix-tap-height;
+    text-align: center;
+    background-color: white;
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5% 10%;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 140px 7px rgba(0, 0, 0, 0.1);
+}

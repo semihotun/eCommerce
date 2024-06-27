@@ -50,6 +50,7 @@
 }
 
 .header-middle {
+    background-color: $header-bg-color;
     height: $header-middle-height;
     display: flex;
     vertical-align: middle;
@@ -57,6 +58,8 @@
 
     @media screen and (max-width: $tablet-size) {
         height: $header-mobile-middle-height;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 0px 140px 7px rgba(0, 0, 0, 0.1);
     }
 
     .header-container {
@@ -65,7 +68,7 @@
         vertical-align: middle;
         align-items: center;
         width: 100%;
-
+        background-color: $header-bg-color;
 
         .header-back-button {
             display: flex;
@@ -80,6 +83,7 @@
             vertical-align: middle;
             align-items: center;
             width: 65%;
+            background-color: $header-bg-color;
 
             @media screen and (max-width: $tablet-size) {
                 justify-content: space-around;
@@ -89,6 +93,7 @@
             .logo {
                 color: black;
                 height: 100%;
+                background-color: $header-bg-color;
                 display: flex;
                 align-items: center;
                 font-size: 2rem;
@@ -105,7 +110,7 @@
                 position: relative;
 
                 .search-input {
-                    background-color: white;
+                    background-color: $header-bg-color;
                     height: 100%;
                     position: absolute;
                     width: 100%;
@@ -130,6 +135,8 @@
         }
 
         .header-right {
+            background-color: $header-bg-color;
+
             i {
                 border: 1px solid $header-bottom-bg;
                 padding: 7px;
@@ -137,6 +144,11 @@
             }
 
             a {
+                span {
+                    background-color: $header-bg-color;
+                }
+
+                background-color: $header-bg-color;
                 font-size: 14px;
                 text-decoration: none;
                 color: $header-bottom-bg;
@@ -148,9 +160,11 @@
             display: flex;
             color: black;
 
+
             .bar-icon {
                 padding: 10px;
                 display: none;
+                background-color: $header-bg-color;
 
                 &:hover {
                     cursor: pointer;
@@ -177,6 +191,7 @@
     vertical-align: middle;
     justify-content: flex-start;
     height: 44px;
+
 
     @media screen and (max-width: $tablet-size) {
         background-color: $header-bottom-bg;
