@@ -1,3 +1,10 @@
-<p>
-  slider works!
-</p>
+<swiper-container #swiper [loop]="true" [pagination]="true" [zoom]="true" (swiperinit)="swiperInit()">
+  <swiper-slide *ngFor="let image of images">
+    <div class="swiper-zoom-container">
+      <img [src]="image" />
+    </div>
+  </swiper-slide>
+</swiper-container>
+<!-- 
+<button type="button" (click)="goNext()">Next</button>
+<button type="button" (click)="goPrev()">Prev</button> -->

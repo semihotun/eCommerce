@@ -2,4 +2,8 @@
 
 .home-page {
     min-height: 50%;
+
+    @media screen and (max-width:$tablet-size) {
+        min-height: 100%;
+    }
 }
