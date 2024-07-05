@@ -11,6 +11,7 @@ import { FooterComponent } from 'src/app/uı/footer/footer.component';
 import { HeaderComponent } from 'src/app/uı/header/header.component';
 import { MobileFooterComponent } from 'src/app/uı/mobile-footer/mobile-footer.component';
 import { SliderComponent } from './components/slider/slider.component';
+import { ShowcaseComponent } from './components/showcase/showcase.component';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +28,7 @@ import { SliderComponent } from './components/slider/slider.component';
     FooterComponent,
     MobileFooterComponent,
     SliderComponent,
+    ShowcaseComponent,
   ],
 })
 export class HomePage {

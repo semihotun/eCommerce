@@ -1,0 +1,23 @@
+<div class="show-cases">
+  <div class="show-case-title">
+    <h4>{{title}}</h4>
+    <div class="all-show-text"><a href="">Tümünü Gör</a></div>
+  </div>
+
+  <swiper-container #swiper [zoom]="true" [slidesPerView]="glb.isMobil.value ? 2.5 : 5">
+    <swiper-slide *ngFor="let image of images">
+      <div class="card">
+        <div class="image">
+          <img [src]="image" />
+        </div>
+        <div class="card-bottom">
+          <div class="title">Ballı Üzümlü Kek</div>
+          <div class="price">10 TL</div>
+
+        </div>
+        <div class="btn"><button type="button">Detaya Git</button></div>
+
+      </div>
+    </swiper-slide>
+  </swiper-container>
+</div>

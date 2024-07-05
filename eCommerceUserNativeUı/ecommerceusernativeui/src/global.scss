@@ -38,7 +38,15 @@
 
 
 * {
-    background-color: #f8f8f8;
     color: black;
     font-family: 'Poppins', sans-serif;
+}
+
+ion-content {
+    --background: #fffaf6;
+}
+
+a {
+    text-decoration: none;
+    color: black;
 }

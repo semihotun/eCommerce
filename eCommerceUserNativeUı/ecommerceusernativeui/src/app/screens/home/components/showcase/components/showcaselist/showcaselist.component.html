@@ -1,0 +1,18 @@
+<div class="showcase-list">
+  <div class="show-case-title">
+    <h4>{{title}}</h4>
+    <div class="all-show-text"><a href="">Tümünü Gör</a></div>
+  </div>
+  @for (image of images; track $index) {
+  <div class="card">
+    <div class="image">
+      <img [src]="image" />
+    </div>
+    <div class="card-bottom">
+      <div class="title">Ballı Üzümlü Kek</div>
+      <div class="price">10 TL</div>
+    </div>
+    <div class="btn"><button type="button">Detaya Git</button></div>
+  </div>
+  }
+</div>

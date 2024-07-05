@@ -1,0 +1,105 @@
+@import '../../../../../../../theme/styles.scss';
+
+$card-bg-color: white;
+
+
+
+.showcase-list {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: row;
+    border-radius: 15px;
+    background-color: $card-bg-color;
+    margin-top: 10px;
+    margin-left: 2%;
+    margin-right: 2%;
+    padding: 20px 30px;
+
+    .show-case-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        h4 {
+            background-color: $card-bg-color;
+            padding-bottom: 20px;
+        }
+
+        .all-show-text {
+            font-size: 12px;
+        }
+    }
+
+    @media screen and (max-width: $tablet-size) {
+        padding: 10px;
+        margin-left: 0%;
+        margin-right: 0%;
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 30px;
+        width: calc(calc(100% - 10px)/5);
+        padding: 5px;
+        margin-bottom: 20px;
+
+        @media screen and (max-width: $tablet-size) {
+            padding-bottom: 0px;
+            width: 50%;
+            margin-bottom: 10px;
+        }
+
+        :not(:first-child) {
+            margin-top: 10px;
+        }
+
+        .image {
+            img {
+                border-top-right-radius: 5px;
+                border-top-left-radius: 5px;
+            }
+        }
+
+        .card-bottom {
+            padding-left: 3%;
+            padding-right: 3%;
+
+            .title {
+                font-size: 16px;
+            }
+
+            .price {
+                font-size: 14px;
+            }
+
+
+        }
+
+        .btn {
+            width: 100%;
+            display: flex;
+            justify-content: end;
+
+            button {
+                border-radius: 4px;
+                width: 100%;
+                padding: 10px;
+                text-align: center;
+                color: $header-bg-color;
+                background-color: $header-bottom-bg;
+
+                @media screen and (max-width: $tablet-size) {
+                    width: 100%;
+                    font-size: 12px;
+                    padding: 6px;
+                }
+            }
+
+        }
+
+    }
+}
