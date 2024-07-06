@@ -8,6 +8,11 @@ import {
 import { HeaderComponent } from './uı/header/header.component';
 import { RouterModule } from '@angular/router';
 import { register } from 'swiper/element/bundle';
+import {
+  TranslateModule,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core';
 register();
 @Component({
   selector: 'app-root',
@@ -20,8 +25,11 @@ register();
     IonRouterOutlet,
     HeaderComponent,
     RouterModule,
+    TranslateModule,
   ],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private translate: TranslateService) {
+    this.translate.setDefaultLang('tr');
+  }
 }
