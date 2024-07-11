@@ -1,0 +1,53 @@
+@import '../../../theme/variables.scss';
+
+.bg-color-white {
+    background-color: white;
+    // box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    padding: 65px 2%;
+    border-radius: 15px;
+
+    @media screen and (max-width:$tablet-size) {
+        padding: 20px 4%;
+        border-radius: 0px;
+    }
+
+    .title {
+        text-align: center;
+        font-size: 16px;
+        margin-bottom: 10px;
+
+        @media screen and (max-width:$tablet-size) {
+            margin-bottom: 0px;
+        }
+    }
+
+    .form {
+        .checkbox-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-left: 1px;
+            margin-right: 1px;
+        }
+
+        @media screen and (max-width:$tablet-size) {
+            width: 100%;
+        }
+
+        .links {
+            flex-wrap: wrap;
+            font-size: 12px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            margin-left: 1px;
+            margin-right: 1px;
+        }
+
+        display: flex;
+        flex-direction: column;
+        width: 40%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

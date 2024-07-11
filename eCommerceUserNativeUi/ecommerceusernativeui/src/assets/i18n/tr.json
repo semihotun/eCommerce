@@ -13,5 +13,6 @@
 	"Username": "Kullanıcı Adı",
 	"UsernamePlaceholder": "Kullanıcı Adı giriniz",
 	"RememberMe":"Beni Hatırla",
-	"ForgetPassword":"Şifremi Unuttum"
+	"ForgetPassword":"Şifremi Unuttum",
+	"ShowPassword":"Şifreyi Göster"
 }

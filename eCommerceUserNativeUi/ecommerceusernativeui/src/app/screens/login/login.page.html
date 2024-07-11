@@ -1,0 +1,30 @@
+<ion-content fullscreen="true">
+    <app-header *ngIf="!this.glb.isMobil.value"></app-header>
+    <div id="page" class="bg-color-white">
+        <form class="form" [formGroup]="form">
+            <div class="title">
+                <h4>{{'Login' | translate}}</h4>
+            </div>
+            <app-input [label]="'Email' |translate" [placeholder]="'EmailPlaceHolder' | translate"
+                formControlName="email"></app-input>
+            <app-input [label]="'Password' |translate" [placeholder]="'PasswordPlaceholder'| translate"
+                formControlName="password" [type]="passwordType.value" [id]="'password'"></app-input>
+            <div class="checkbox-wrapper">
+                <app-checkbox [text]="'RememberMe'| translate" formControlName="rememberMe"></app-checkbox>
+                <app-checkbox [text]="'ShowPassword'| translate" (change)="changePasswordType()"></app-checkbox>
+            </div>
+
+            <app-btn-submit (click)="saveForm()" [text]="'Login' |translate"></app-btn-submit>
+            <div class="links">
+                <a routerLink="/register">{{'Register' | translate}}</a>
+                <a href="#">{{'ForgetPassword'| translate}}</a>
+            </div>
+        </form>
+    </div>
+    @if (!glb.isMobil.value) {
+    <app-footer></app-footer>
+    }
+    @else {
+    <app-mobile-footer></app-mobile-footer>
+    }
+</ion-content>
