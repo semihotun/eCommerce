@@ -1,0 +1,15 @@
+{
+	"Register": "Register",
+	"Name": "Name",
+	"NamePlaceHolder": "NamePlaceHolder",
+	"Surname": "Surname",
+	"SurnamePlaceHolder": "SurnamePlaceHolder",
+	"Email": "Email",
+	"EmailPlaceHolder": "EmailPlaceHolder",
+	"Password": "Password",
+	"PasswordPlaceholder": "Password",
+	"Login": "Login",
+	"Save": "Save",
+	"Username": "Username",
+	"UsernamePlaceholder": "UserName"
+}

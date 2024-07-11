@@ -36,6 +36,7 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 // @import '@ionic/angular/css/palettes/dark.system.css';
 
+@import './theme/variables.scss';
 
 * {
     color: black;
@@ -49,4 +50,12 @@ ion-content {
 a {
     text-decoration: none;
     color: black;
+}
+
+#page {
+    min-height: 50%;
+
+    @media screen and (max-width:$tablet-size) {
+        min-height: 100%;
+    }
 }

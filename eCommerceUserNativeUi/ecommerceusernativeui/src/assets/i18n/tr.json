@@ -1,0 +1,17 @@
+{
+	"Register": "Kayıt Ol",
+	"Name": "Ad",
+	"NamePlaceHolder": "Adınızı Giriniz",
+	"Surname": "Soyad",
+	"SurnamePlaceHolder": "Soyadınızı Giriniz",
+	"Email": "E-Mail",
+	"EmailPlaceHolder": "E-Mail Giriniz",
+	"Password": "Şifre",
+	"PasswordPlaceholder": "Şifre giriniz",
+	"Login": "Giriş Yap",
+	"Save": "Kaydet",
+	"Username": "Kullanıcı Adı",
+	"UsernamePlaceholder": "Kullanıcı Adı giriniz",
+	"RememberMe":"Beni Hatırla",
+	"ForgetPassword":"Şifremi Unuttum"
+}

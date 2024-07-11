@@ -7,7 +7,9 @@
  }
 
  .footer {
-     box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.05);
+
+     font-size: 14px;
+
      margin-top: 50px;
      padding-top: 40px;
      padding-bottom: 40px;
@@ -18,16 +20,16 @@
      justify-content: space-between;
 
      .description {
-         background-color: $footer-bg-color;
+         color: white;
          display: flex;
          flex-direction: column;
 
          .social {
+             color: white;
              padding-top: 15px;
-             background-color: $footer-bg-color;
 
              .fa-brands {
-                 background-color: $footer-bg-color;
+                 color: white;
                  font-size: 20px;
                  padding-right: 7px;
              }
@@ -35,12 +37,11 @@
      }
 
      .links {
-         background-color: $footer-bg-color;
          display: flex;
          flex-direction: column;
 
          a {
-             color: black;
+             color: white;
              padding: 5px;
              text-decoration: none;
          }
