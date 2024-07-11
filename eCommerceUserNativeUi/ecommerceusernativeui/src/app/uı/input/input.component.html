@@ -1,0 +1,5 @@
+<div class="input-wrapper" [class]="class">
+  <label class="label">{{label}}</label>
+  <input type="text" [placeholder]="placeholder" class="input" [value]="val" (input)="onInputChange($event)"
+    [disabled]="disabled" [type]="inputType" [id]="id" />
+</div>
