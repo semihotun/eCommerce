@@ -9,7 +9,7 @@ import {
   inject,
 } from '@angular/core';
 import { Gesture, GestureController, GestureDetail } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { IonIcon, IonHeader } from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
 import { GlobalService } from 'src/app/services/global.service';
@@ -26,8 +26,12 @@ export class HeaderComponent implements OnInit {
   headerMobilWidth: number = 1000;
   headerBottom: BehaviorSubject<string> = new BehaviorSubject<string>('');
   isNavigationBackUrl: string = '';
-
+  onDestroy = new Subject<void>();
   router = inject(Router);
+  ngOnDestroy(): void {
+    this.onDestroy.unsubscribe();
+    this.glb.isShowMobilBars.next(null);
+  }
   constructor(
     private elRef: ElementRef<HTMLElement>,
     private gestureCtrl: GestureController,
@@ -47,10 +51,10 @@ export class HeaderComponent implements OnInit {
       this.headerRight.nativeElement.parentNode?.parentNode?.contains(
         event.target as Node
       );
-    if (clickedInside == false) {
-      this.removeSubCategoryOpenClass();
-      this.glb.isShowMobilBars.next(false);
-    }
+    // if (clickedInside == false) {
+    //   this.removeSubCategoryOpenClass();
+    //   this.glb.isShowMobilBars.next(false);
+    // }
   }
   removeSubCategoryOpenClass() {
     const elements =
@@ -106,16 +110,18 @@ export class HeaderComponent implements OnInit {
   }
   changeHeaderRightClasses() {
     if (window.innerWidth < this.headerMobilWidth) {
-      this.glb.isShowMobilBars.subscribe((isShowMobilBars) => {
-        if (isShowMobilBars == true) {
-          this.headerBottom.next('active');
-          return;
-        } else if (isShowMobilBars == false) {
-          this.headerBottom.next('deactive');
-          return;
-        }
-        this.headerBottom.next('display-none');
-      });
+      this.glb.isShowMobilBars
+        .pipe(takeUntil(this.onDestroy))
+        .subscribe((isShowMobilBars) => {
+          if (isShowMobilBars == true) {
+            this.headerBottom.next('active');
+            return;
+          } else if (isShowMobilBars == false) {
+            this.headerBottom.next('deactive');
+            return;
+          }
+          this.headerBottom.next('display-none');
+        });
     }
   }
 }

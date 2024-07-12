@@ -1,6 +1,8 @@
 <div class="fixTap" *ngIf="glb.isMobil.value">
-  <div class="tap"><i class="fa-solid fa-house"></i></div>
+  <div class="tap"><a routerLink="/home"><i class="fa-solid fa-house"></i></a></div>
   <div class="tap"><i class="fa-solid fa-cart-shopping" id="shoppingIcon"></i></div>
   <div class="tap"><i class="fa-solid fa-heart"></i></div>
-  <div class="tap"><i class="fa-solid fa-user" id="shoppingIcon"></i></div>
+  <div class="tap">
+    <a routerLink="/login"><i class="fa-solid fa-user" id="shoppingIcon"></i></a>
+  </div>
 </div>
