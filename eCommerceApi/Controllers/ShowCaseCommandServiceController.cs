@@ -1,9 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Core.Utilities.PagedList;
+using Microsoft.AspNetCore.Mvc;
 using Business.Services.ShowcaseAggregate.ShowcaseServices.Commands;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Core.Utilities.Identity;
 using Entities.RequestModel.ShowcaseAggregate.ShowcaseServices;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace eCommerce.Areas.Api
 {

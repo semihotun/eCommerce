@@ -1,10 +1,15 @@
-using Business.Services.CategoriesAggregate.Categories.DtoQueries;
-using Core.Utilities.Identity;
-using Entities.Dtos.CategoryDALModels;
-using Entities.RequestModel.CategoriesAggregate.CategorySpefications;
-using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Core.Utilities.PagedList;
 using Microsoft.AspNetCore.Mvc;
+using Business.Services.CategoriesAggregate.Categories.DtoQueries;
+using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Core.Utilities.Identity;
+using Entities.RequestModel.CategoriesAggregate.CategorySpefications;
+using Entities.Dtos.CategoryDALModels;
 
 namespace eCommerce.Areas.Api
 {

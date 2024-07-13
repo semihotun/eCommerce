@@ -46,6 +46,7 @@ namespace eCommerceApi
         }
         public void Configure(IApplicationBuilder app)
         {
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "eCommerce v1"));
             app.UseCors("AllowOrigin");
@@ -54,7 +55,6 @@ namespace eCommerceApi
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
-            app.UseMiddleware<ExceptionMiddleware>();
             ServiceTool.ServiceProvider = app.ApplicationServices;
         }
     }

@@ -3,46 +3,48 @@ using System.Collections.Generic;
 using System.Text;
 using Core.Utilities.PagedList;
 using Microsoft.AspNetCore.Mvc;
-using Business.Services.ShowcaseAggregate.ShowcaseServices.Queries;
+using Business.Services.AuthAggregate.Customers;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Core.Utilities.Identity;
-using Entities.RequestModel.ShowcaseAggregate.ShowcaseServices;
+using Entities.RequestModel.AdminAggregate.AdminAuths;
 
 namespace eCommerce.Areas.Api
 {
     [AuthorizeControl]
     [Route("api/[controller]")]
     [ApiController]
-    public class ShowCaseQueryServiceController : ControllerBase
+    public class CustomerAuthServiceController : ControllerBase
     {
-        private readonly IShowCaseQueryService _showCaseQueryService;
-        public ShowCaseQueryServiceController(IShowCaseQueryService showCaseQueryService)
+        private readonly ICustomerAuthService _customerAuthService;
+        public CustomerAuthServiceController(ICustomerAuthService customerAuthService)
         {
-            _showCaseQueryService = showCaseQueryService;
+            _customerAuthService = customerAuthService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
-        [HttpGet("getallshowcase")]
+        [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public async Task<IActionResult> GetAllShowcase()
+        public async Task<IActionResult> Register([FromBody] RegisterReqModel userForRegisterDto)
         {
-            var result = await _showCaseQueryService.GetAllShowcase();
+            var result = await _customerAuthService.Register(userForRegisterDto);
             if (result.Success)
-                return Ok(result.Data);
+                return Ok(result);
             else
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
-        [HttpGet("getshowcase")]
+        [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public async Task<IActionResult> GetShowcase([FromQuery] GetShowcaseReqModel request)
+        public async Task<IActionResult> Login([FromBody] LoginReqModel userForLoginDto)
         {
-            var result = await _showCaseQueryService.GetShowcase(request);
+            var result = await _customerAuthService.Login(userForLoginDto);
             if (result.Success)
-                return Ok(result.Data);
+                return Ok(result);
             else
                 return BadRequest(result.Message);
         }
