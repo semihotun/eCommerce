@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("deleteproductattribute")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> DeleteProductAttribute([FromBody] DeleteProductAttributeReqModel request)
         {
             var result = await _productAttributeCommandService.DeleteProductAttribute(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("insertproductattribute")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductAttribute>))]
         public async Task<IActionResult> InsertProductAttribute([FromBody] InsertProductAttributeReqModel request)
         {
             var result = await _productAttributeCommandService.InsertProductAttribute(request);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("updateproductattribute")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> UpdateProductAttribute([FromBody] UpdateProductAttributeReqModel request)
         {
             var result = await _productAttributeCommandService.UpdateProductAttribute(request);

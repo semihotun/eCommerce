@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("addbasket")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> AddBasket([FromBody] AddBasketReqModel request)
         {
             var result = await _basketService.AddBasket(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("deletebasketproduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> DeleteBasketProduct([FromBody] DeleteBasketProductReqModel request)
         {
             var result = await _basketService.DeleteBasketProduct(request);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("updatebasketproductpiece")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> UpdateBasketProductPiece([FromBody] UpdateBasketProductPieceReqModel request)
         {
             var result = await _basketService.UpdateBasketProductPiece(request);
@@ -62,6 +65,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getbasket")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.List<Entities.Concrete.Basket>>))]
         public async Task<IActionResult> GetBasket()
         {
             var result = await _basketService.GetBasket();

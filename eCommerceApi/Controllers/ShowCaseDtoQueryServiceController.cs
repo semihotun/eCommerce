@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getshowcasedto")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Dtos.ShowcaseDALModels.ShowCaseDTO>))]
         public async Task<IActionResult> GetShowCaseDto([FromQuery] GetShowCaseDto request)
         {
             var result = await _showCaseDtoQueryService.GetShowCaseDto(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallshowcasedto")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.IList<Entities.Dtos.ShowcaseDALModels.ShowCaseDTO>>))]
         public async Task<IActionResult> GetAllShowCaseDto()
         {
             var result = await _showCaseDtoQueryService.GetAllShowCaseDto();

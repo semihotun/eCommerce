@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("insertcategory")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.Category>))]
         public async Task<IActionResult> InsertCategory([FromBody] InsertCategoryReqModel request)
         {
             var result = await _categoryCommandService.InsertCategory(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("updatecategory")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> UpdateCategory([FromBody] UpdateCategoryReqModel request)
         {
             var result = await _categoryCommandService.UpdateCategory(request);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("deletecategory")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> DeleteCategory([FromBody] DeleteCategoryReqModel request)
         {
             var result = await _categoryCommandService.DeleteCategory(request);
@@ -62,6 +65,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("removerangecategory")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> RemoveRangeCategory([FromBody] RemoveRangeCategoryReqModel request)
         {
             var result = await _categoryCommandService.RemoveRangeCategory(request);
@@ -74,6 +78,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("changenodeposition")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> ChangeNodePosition([FromBody] ChangeNodePositionReqModel request)
         {
             var result = await _categoryCommandService.ChangeNodePosition(request);
@@ -86,6 +91,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("deletenodes")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> DeleteNodes([FromBody] DeleteNodesReqModel request)
         {
             var result = await _categoryCommandService.DeleteNodes(request);

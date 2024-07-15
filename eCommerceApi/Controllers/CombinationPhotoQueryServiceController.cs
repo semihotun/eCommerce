@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallcombinationphotos")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.List<Entities.Concrete.CombinationPhoto>>))]
         public async Task<IActionResult> GetAllCombinationPhotos([FromQuery] GetAllCombinationPhotosReqModel request)
         {
             var result = await _combinationPhotoQueryService.GetAllCombinationPhotos(request);

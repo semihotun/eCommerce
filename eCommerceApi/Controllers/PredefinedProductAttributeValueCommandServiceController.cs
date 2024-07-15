@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("insertpredefinedproductattributevalue")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.PredefinedProductAttributeValue>))]
         public async Task<IActionResult> InsertPredefinedProductAttributeValue([FromBody] InsertPredefinedProductAttributeValueReqModel ppav)
         {
             var result = await _predefinedProductAttributeValueCommandService.InsertPredefinedProductAttributeValue(ppav);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("updatepredefinedproductattributevalue")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> UpdatePredefinedProductAttributeValue([FromBody] UpdatePredefinedProductAttributeValueReqModel ppav)
         {
             var result = await _predefinedProductAttributeValueCommandService.UpdatePredefinedProductAttributeValue(ppav);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("deletepredefinedproductattributevalue")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> DeletePredefinedProductAttributeValue([FromBody] DeletePredefinedProductAttributeValueReqModel ppav)
         {
             var result = await _predefinedProductAttributeValueCommandService.DeletePredefinedProductAttributeValue(ppav);

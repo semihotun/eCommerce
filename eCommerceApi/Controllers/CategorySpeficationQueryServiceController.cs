@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getbycategoryspeficationid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.CategorySpefication>))]
         public async Task<IActionResult> GetByCategorySpeficationId([FromQuery] GetByCategorySpeficationIdReqModel request)
         {
             var result = await _categorySpeficationQueryService.GetByCategorySpeficationId(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallcategoryspefication")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.List<Entities.Concrete.CategorySpefication>>))]
         public async Task<IActionResult> GetAllCategorySpefication([FromQuery] GetAllCategorySpeficationReqModel request)
         {
             var result = await _categorySpeficationQueryService.GetAllCategorySpefication(request);

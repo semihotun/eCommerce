@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("insertproductattributecombination")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductAttributeCombination>))]
         public async Task<IActionResult> InsertProductAttributeCombination([FromBody] InsertProductAttributeCombinationReqModel combination)
         {
             var result = await _productAttributeCombinationCommandService.InsertProductAttributeCombination(combination);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("updateproductattributecombination")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> UpdateProductAttributeCombination([FromBody] UpdateProductAttributeCombinationReqModel combination)
         {
             var result = await _productAttributeCombinationCommandService.UpdateProductAttributeCombination(combination);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("insertpermutationcombination")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> InsertPermutationCombination([FromBody] InsertPermutationCombinationReqModel request)
         {
             var result = await _productAttributeCombinationCommandService.InsertPermutationCombination(request);
@@ -62,6 +65,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("allinsertpermutationcombination")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> AllInsertPermutationCombination([FromBody] AllInsertPermutationCombinationReqModel request)
         {
             var result = await _productAttributeCombinationCommandService.AllInsertPermutationCombination(request);
@@ -74,6 +78,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("deleteproductattributecombination")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> DeleteProductAttributeCombination([FromBody] DeleteProductAttributeCombinationReqModel request)
         {
             var result = await _productAttributeCombinationCommandService.DeleteProductAttributeCombination(request);

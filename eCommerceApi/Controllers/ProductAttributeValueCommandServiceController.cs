@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("deleteproductattributevalue")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> DeleteProductAttributeValue([FromBody] DeleteProductAttributeValueReqModel request)
         {
             var result = await _productAttributeValueCommandService.DeleteProductAttributeValue(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("insertproductattributevalue")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductAttributeValue>))]
         public async Task<IActionResult> InsertProductAttributeValue([FromBody] InsertProductAttributeValueReqModel productAttributeValue)
         {
             var result = await _productAttributeValueCommandService.InsertProductAttributeValue(productAttributeValue);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("insertorupdateproductattributevalue")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductAttributeValue>))]
         public async Task<IActionResult> InsertOrUpdateProductAttributeValue([FromBody] InsertOrUpdateProductAttributeValueReqModel productAttributeValue)
         {
             var result = await _productAttributeValueCommandService.InsertOrUpdateProductAttributeValue(productAttributeValue);
@@ -62,6 +65,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("updateproductattributevalue")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductAttributeValue>))]
         public async Task<IActionResult> UpdateProductAttributeValue([FromBody] UpdateProductAttributeValueReqModel request)
         {
             var result = await _productAttributeValueCommandService.UpdateProductAttributeValue(request);

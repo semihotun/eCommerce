@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("deletecategoryspefication")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> DeleteCategorySpefication([FromBody] DeleteCategorySpeficationReqModel request)
         {
             var result = await _categorySpeficationCommandService.DeleteCategorySpefication(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("insertcategoryspefication")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.CategorySpefication>))]
         public async Task<IActionResult> InsertCategorySpefication([FromBody] InsertCategorySpeficationReqModel request)
         {
             var result = await _categorySpeficationCommandService.InsertCategorySpefication(request);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("updatecategoryspefication")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> UpdateCategorySpefication([FromBody] UpdateCategorySpeficationReqModel request)
         {
             var result = await _categorySpeficationCommandService.UpdateCategorySpefication(request);

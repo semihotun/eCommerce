@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("addproductshipmentinfo")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductShipmentInfo>))]
         public async Task<IActionResult> AddProductShipmentInfo([FromBody] AddProductShipmentInfoReqModel productShipmentInfo)
         {
             var result = await _productShipmentInfoCommandService.AddProductShipmentInfo(productShipmentInfo);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("updateproductshipmentinfo")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductShipmentInfo>))]
         public async Task<IActionResult> UpdateProductShipmentInfo([FromBody] UpdateProductShipmentInfoReqModel request)
         {
             var result = await _productShipmentInfoCommandService.UpdateProductShipmentInfo(request);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("addorupdateproductshipmentinfo")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductShipmentInfo>))]
         public async Task<IActionResult> AddOrUpdateProductShipmentInfo([FromBody] AddOrUpdateProductShipmentInfoReqModel productShipmentInfo)
         {
             var result = await _productShipmentInfoCommandService.AddOrUpdateProductShipmentInfo(productShipmentInfo);

@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("getcommentdatatable")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.PagedList.IPagedList<Entities.Concrete.Comment>>))]
         public async Task<IActionResult> GetCommentDataTable([FromBody] GetCommentDataTableReqModel request)
         {
             var result = await _commentDtoQueryService.GetCommentDataTable(request);

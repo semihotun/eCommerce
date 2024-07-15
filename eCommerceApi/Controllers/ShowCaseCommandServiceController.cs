@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("updateshowcase")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> UpdateShowcase([FromBody] UpdateShowcaseReqModel showCase)
         {
             var result = await _showCaseCommandService.UpdateShowcase(showCase);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("insertshowcase")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ShowCase>))]
         public async Task<IActionResult> InsertShowcase([FromBody] InsertShowcaseReqModel showCase)
         {
             var result = await _showCaseCommandService.InsertShowcase(showCase);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("deleteshowcase")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> DeleteShowCase([FromBody] DeleteShowCaseReqModel showCase)
         {
             var result = await _showCaseCommandService.DeleteShowCase(showCase);

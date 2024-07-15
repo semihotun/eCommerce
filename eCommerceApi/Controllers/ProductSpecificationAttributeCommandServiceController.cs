@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("deleteproductspecificationattribute")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> DeleteProductSpecificationAttribute([FromBody] DeleteProductSpecificationAttributeReqModel request)
         {
             var result = await _productSpecificationAttributeCommandService.DeleteProductSpecificationAttribute(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("insertproductspecificationattribute")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductSpecificationAttribute>))]
         public async Task<IActionResult> InsertProductSpecificationAttribute([FromBody] InsertProductSpecificationAttributeReqModel productSpecificationAttribute)
         {
             var result = await _productSpecificationAttributeCommandService.InsertProductSpecificationAttribute(productSpecificationAttribute);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("updateproductspecificationattribute")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> UpdateProductSpecificationAttribute([FromBody] UpdateProductSpecificationAttributeReqModel request)
         {
             var result = await _productSpecificationAttributeCommandService.UpdateProductSpecificationAttribute(request);

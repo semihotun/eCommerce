@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("deleteproduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> DeleteProduct([FromBody] DeleteProductReqModel request)
         {
             var result = await _productCommandService.DeleteProduct(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("addproduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.Product>))]
         public async Task<IActionResult> AddProduct([FromBody] AddProductReqModel request)
         {
             var result = await _productCommandService.AddProduct(request);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("updateproduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.Product>))]
         public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductReqModel request)
         {
             var result = await _productCommandService.UpdateProduct(request);
@@ -62,6 +65,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("createorupdateproduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.Product>))]
         public async Task<IActionResult> CreateOrUpdateProduct([FromBody] CreateOrUpdateProductReqModel product)
         {
             var result = await _productCommandService.CreateOrUpdateProduct(product);

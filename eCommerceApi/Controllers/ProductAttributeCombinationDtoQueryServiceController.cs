@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("productattributecombinationdropdown")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>>))]
         public async Task<IActionResult> ProductAttributeCombinationDropDown([FromBody] ProductAttributeCombinationDropDownReqModel request)
         {
             var result = await _productAttributeCombinationDtoQueryService.ProductAttributeCombinationDropDown(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("productattributecombinationdatatable")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.PagedList.IPagedList<Entities.ViewModels.AdminViewModel.AdminProduct.ProductAttributeCombinationVM>>))]
         public async Task<IActionResult> ProductAttributeCombinationDataTable([FromBody] ProductAttributeCombinationDataTableReqModel request)
         {
             var result = await _productAttributeCombinationDtoQueryService.ProductAttributeCombinationDataTable(request);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("productcombinationmappingattrxml")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.IList<Entities.ViewModels.AdminViewModel.AdminProduct.ProductAttributeCombinationVM>>))]
         public async Task<IActionResult> ProductCombinationMappingAttrXml([FromBody] ProductCombinationMappingAttrXmlReqModel request)
         {
             var result = await _productAttributeCombinationDtoQueryService.ProductCombinationMappingAttrXml(request);

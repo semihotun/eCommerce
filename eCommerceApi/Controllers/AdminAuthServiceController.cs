@@ -27,6 +27,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.Security.Jwt.AccessToken>))]
         public async Task<IActionResult> Register([FromBody] RegisterReqModel userForRegisterDto)
         {
             var result = await _adminAuthService.Register(userForRegisterDto);
@@ -40,6 +41,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.Security.Jwt.AccessToken>))]
         public async Task<IActionResult> Login([FromBody] LoginReqModel userForLoginDto)
         {
             var result = await _adminAuthService.Login(userForLoginDto);
@@ -52,6 +54,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("addadminuser")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.AdminUser>))]
         public async Task<IActionResult> AddAdminUser([FromBody] AddReqModel user)
         {
             var result = await _adminAuthService.AddAdminUser(user);
@@ -64,6 +67,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getbymail")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.AdminUser>))]
         public async Task<IActionResult> GetByMail([FromQuery] GetByMailReqModel request)
         {
             var result = await _adminAuthService.GetByMail(request);
@@ -76,6 +80,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getadmincount")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<int>))]
         public async Task<IActionResult> GetAdminCount()
         {
             var result = await _adminAuthService.GetAdminCount();

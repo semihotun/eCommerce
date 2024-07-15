@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductattributevaluebyid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductAttributeValue>))]
         public async Task<IActionResult> GetProductAttributeValueById([FromQuery] GetProductAttributeValueByIdReqModel request)
         {
             var result = await _productAttributeValueQueryService.GetProductAttributeValueById(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductattributevalues")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.List<Entities.Concrete.ProductAttributeValue>>))]
         public async Task<IActionResult> GetProductAttributeValues([FromQuery] GetProductAttributeValuesReqModel request)
         {
             var result = await _productAttributeValueQueryService.GetProductAttributeValues(request);

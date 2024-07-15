@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallproductattributes")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.PagedList.IPagedList<Entities.Concrete.ProductAttribute>>))]
         public async Task<IActionResult> GetAllProductAttributes([FromQuery] GetAllProductAttributesReqModel request)
         {
             var result = await _productAttributeQueryService.GetAllProductAttributes(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallproductattribute")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.List<Entities.Concrete.ProductAttribute>>))]
         public async Task<IActionResult> GetAllProductAttribute()
         {
             var result = await _productAttributeQueryService.GetAllProductAttribute();
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductattributebyid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductAttribute>))]
         public async Task<IActionResult> GetProductAttributeById([FromQuery] GetProductAttributeByIdReqModel request)
         {
             var result = await _productAttributeQueryService.GetProductAttributeById(request);
@@ -62,6 +65,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductattributedropdown")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>>))]
         public async Task<IActionResult> GetProductAttributeDropdown([FromQuery] GetProductAttributeDropdownReqModel request)
         {
             var result = await _productAttributeQueryService.GetProductAttributeDropdown(request);

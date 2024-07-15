@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallcategories")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.List<Entities.Concrete.Category>>))]
         public async Task<IActionResult> GetAllCategories()
         {
             var result = await _categoryQueryService.GetAllCategories();
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallcategoriesbyparentcategoryid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.List<Entities.Concrete.Category>>))]
         public async Task<IActionResult> GetAllCategoriesByParentCategoryId([FromQuery] GetAllCategoriesByParentCategoryIdReqModel request)
         {
             var result = await _categoryQueryService.GetAllCategoriesByParentCategoryId(request);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getcategorybyid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.Category>))]
         public async Task<IActionResult> GetCategoryById([FromQuery] GetCategoryByIdReqModel request)
         {
             var result = await _categoryQueryService.GetCategoryById(request);
@@ -62,6 +65,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getcategorydropdown")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>>))]
         public async Task<IActionResult> GetCategoryDropdown([FromQuery] GetCategoryDropdownReqModel request)
         {
             var result = await _categoryQueryService.GetCategoryDropdown(request);

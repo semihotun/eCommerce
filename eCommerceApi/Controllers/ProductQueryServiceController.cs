@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.Product>))]
         public async Task<IActionResult> GetProduct([FromQuery] GetProductReqModel request)
         {
             var result = await _productQueryService.GetProduct(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductsbyspecificationattributeid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.PagedList.IPagedList<Entities.Concrete.Product>>))]
         public async Task<IActionResult> GetProductsBySpecificationAttributeId([FromQuery] GetProductsBySpecificationAttributeIdReqModel request)
         {
             var result = await _productQueryService.GetProductsBySpecificationAttributeId(request);

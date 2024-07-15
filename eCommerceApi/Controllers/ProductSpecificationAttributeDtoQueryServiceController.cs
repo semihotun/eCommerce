@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductspecattrlist")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.PagedList.IPagedList<Entities.Dtos.ProductSpecificationAttributeDALModels.ProductSpecificationAttributeDTO>>))]
         public async Task<IActionResult> GetProductSpecAttrList([FromQuery] GetProductSpecAttrListReqModel request)
         {
             var result = await _productSpecificationAttributeDtoQueryService.GetProductSpecAttrList(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductspeficationattr")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Dtos.ProductSpecificationAttributeDALModels.ProductSpecificationAttributeDTO>))]
         public async Task<IActionResult> GetProductSpeficationAttr()
         {
             var result = await _productSpecificationAttributeDtoQueryService.GetProductSpeficationAttr();

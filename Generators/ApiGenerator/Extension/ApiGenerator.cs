@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 namespace ApiGenerator.Extension
 {
     public static class Generator
@@ -53,11 +54,13 @@ namespace ApiGenerator.Extension
         }
         private static string GenerateQueryControllerString(string parameterMethod, MethodInfo methodInfo, Type item, string pushParams, string isAllowAnonymous)
         {
+            var returnTypeText = GetReadableTypeName(methodInfo.ReturnType);
             parameterMethod = String.IsNullOrWhiteSpace(parameterMethod) ? parameterMethod : "[FromQuery]" + parameterMethod;
             return $@"{isAllowAnonymous}
                       [Produces(""application/json"", ""text/plain"")]
                       [HttpGet(""{methodInfo.Name.ToLowerInvariant()}"")]
                       [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+                      [ProducesResponseType(StatusCodes.Status200OK, Type = typeof({returnTypeText}))]
                       public async Task<IActionResult> {methodInfo.Name} ({parameterMethod}) {{
                            var result = await {"_" + item.Name.FirstCharToLowerCase()}.{methodInfo.Name}({pushParams});
                            if(result.Success)
@@ -68,11 +71,13 @@ namespace ApiGenerator.Extension
         }
         private static string GenerateCommandControllerString(string parameterMethod, MethodInfo methodInfo, Type item, string pushParams, string isAllowAnonymous)
         {
+            var returnTypeText = GetReadableTypeName(methodInfo.ReturnType);
             var modelBinding = methodInfo.GetCustomAttributes<GenerateApiFromFromAttribute>().Any() ? "[FromForm]" : "[FromBody]";
             return $@"{isAllowAnonymous}
                        [Produces(""application/json"", ""text/plain"")]
                        [HttpPost(""{methodInfo.Name.ToLowerInvariant()}"")]
                        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+                       [ProducesResponseType(StatusCodes.Status200OK, Type = typeof({returnTypeText}))]
                        public async Task<IActionResult> {methodInfo.Name} ({modelBinding}{parameterMethod}) {{
                             var result = await {"_" + item.Name.FirstCharToLowerCase()}.{methodInfo.Name}({pushParams});
                             if(result.Success)
@@ -115,6 +120,44 @@ namespace ApiGenerator.Extension
                                 {"_" + item.Name.FirstCharToLowerCase()}={item.Name.FirstCharToLowerCase()};
                              }}
                       ";
+        }
+        public static string GetReadableTypeName(Type type)
+        {
+            if (type.IsGenericType)
+            {
+                if (type.GetGenericTypeDefinition() == typeof(Task<>))
+                {
+                    return GetReadableTypeName(type.GetGenericArguments()[0]);
+                }
+                else
+                {
+                    string typeName = type.GetGenericTypeDefinition().FullName;
+                    string genericArguments = string.Join(", ", Array.ConvertAll(type.GetGenericArguments(), GetReadableTypeName));
+                    return $"{typeName.Substring(0, typeName.IndexOf('`'))}<{genericArguments}>";
+                }
+            }
+            else if (type.IsArray)
+            {
+                string elementTypeName = GetReadableTypeName(type.GetElementType());
+                return $"{elementTypeName}[]";
+            }
+            else
+            {
+                return type.Name switch
+                {
+                    "Int32" => "int",
+                    "Int64" => "long",
+                    "Int16" => "short",
+                    "UInt32" => "uint",
+                    "UInt64" => "ulong",
+                    "UInt16" => "ushort",
+                    "Boolean" => "bool",
+                    "String" => "string",
+                    "Object" => "object",
+                    "Void" => "void",
+                    _ => type.FullName
+                };
+            }
         }
     }
 }

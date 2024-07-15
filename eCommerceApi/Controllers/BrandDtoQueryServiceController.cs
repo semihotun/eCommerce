@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("getbranddatatable")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.PagedList.IPagedList<Entities.Concrete.Brand>>))]
         public async Task<IActionResult> GetBrandDataTable([FromBody] GetBrandDataTable request)
         {
             var result = await _brandDtoQueryService.GetBrandDataTable(request);

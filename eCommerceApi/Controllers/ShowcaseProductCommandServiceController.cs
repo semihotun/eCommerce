@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("deleteshowcaseproduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> DeleteShowCaseProduct([FromBody] DeleteShowCaseProductReqModel request)
         {
             var result = await _showcaseProductCommandService.DeleteShowCaseProduct(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("insertproductshowcase")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ShowCaseProduct>))]
         public async Task<IActionResult> InsertProductShowcase([FromBody] InsertProductShowcaseReqModel showCaseProduct)
         {
             var result = await _showcaseProductCommandService.InsertProductShowcase(showCaseProduct);

@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getcatalogbrand")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.List<Entities.Concrete.CatalogBrand>>))]
         public async Task<IActionResult> GetCatalogBrand([FromQuery] GetCatalogBrandReqModel request)
         {
             var result = await _catalogBrandQueryService.GetCatalogBrand(request);

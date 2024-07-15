@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getspecificationattributebyid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.SpecificationAttribute>))]
         public async Task<IActionResult> GetSpecificationAttributeById([FromQuery] GetSpecificationAttributeByIdReqModel request)
         {
             var result = await _specificationAttributeQueryService.GetSpecificationAttributeById(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getspecificationattributebyids")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.List<Entities.Concrete.SpecificationAttribute>>))]
         public async Task<IActionResult> GetSpecificationAttributeByIds([FromQuery] GetSpecificationAttributeByIdsReqModel request)
         {
             var result = await _specificationAttributeQueryService.GetSpecificationAttributeByIds(request);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getspecificationattributes")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.PagedList.IPagedList<Entities.Concrete.SpecificationAttribute>>))]
         public async Task<IActionResult> GetSpecificationAttributes([FromQuery] GetSpecificationAttributesReqModel request)
         {
             var result = await _specificationAttributeQueryService.GetSpecificationAttributes(request);
@@ -62,6 +65,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductspeficationattributedropdwon")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>>))]
         public async Task<IActionResult> GetProductSpeficationAttributeDropdwon([FromQuery] GetProductSpeficationAttributeDropdwonReqModel request)
         {
             var result = await _specificationAttributeQueryService.GetProductSpeficationAttributeDropdwon(request);

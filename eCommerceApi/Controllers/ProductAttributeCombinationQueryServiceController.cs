@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallproductattributecombinations")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.PagedList.IPagedList<Entities.Concrete.ProductAttributeCombination>>))]
         public async Task<IActionResult> GetAllProductAttributeCombinations([FromQuery] GetAllProductAttributeCombinationsReqModel request)
         {
             var result = await _productAttributeCombinationQueryService.GetAllProductAttributeCombinations(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductcombinationxml")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.List<string>>))]
         public async Task<IActionResult> GetProductCombinationXml([FromQuery] GetProductCombinationXmlReqModel request)
         {
             var result = await _productAttributeCombinationQueryService.GetProductCombinationXml(request);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductattributecombinationbyid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductAttributeCombination>))]
         public async Task<IActionResult> GetProductAttributeCombinationById([FromQuery] GetProductAttributeCombinationByIdReqModel request)
         {
             var result = await _productAttributeCombinationQueryService.GetProductAttributeCombinationById(request);
@@ -62,6 +65,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductattributecombinationbysku")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductAttributeCombination>))]
         public async Task<IActionResult> GetProductAttributeCombinationBySku([FromQuery] GetProductAttributeCombinationBySkuReqModel request)
         {
             var result = await _productAttributeCombinationQueryService.GetProductAttributeCombinationBySku(request);

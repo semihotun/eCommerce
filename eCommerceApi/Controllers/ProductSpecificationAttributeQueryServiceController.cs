@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductspecificationattributes")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.PagedList.IPagedList<Entities.Concrete.ProductSpecificationAttribute>>))]
         public async Task<IActionResult> GetProductSpecificationAttributes([FromQuery] GetProductSpecificationAttributesReqModel request)
         {
             var result = await _productSpecificationAttributeQueryService.GetProductSpecificationAttributes(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductspecificationattributebyid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductSpecificationAttribute>))]
         public async Task<IActionResult> GetProductSpecificationAttributeById([FromQuery] GetProductSpecificationAttributeByIdReqModel request)
         {
             var result = await _productSpecificationAttributeQueryService.GetProductSpecificationAttributeById(request);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductspecificationattributecount")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<int>))]
         public async Task<IActionResult> GetProductSpecificationAttributeCount([FromQuery] GetProductSpecificationAttributeCountReqModel request)
         {
             var result = await _productSpecificationAttributeQueryService.GetProductSpecificationAttributeCount(request);

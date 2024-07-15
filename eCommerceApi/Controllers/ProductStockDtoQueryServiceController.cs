@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallproductstockdto")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.PagedList.IPagedList<Entities.Dtos.ProductStockDALModels.ProductStockDto>>))]
         public async Task<IActionResult> GetAllProductStockDto([FromQuery] GetAllProductStockReqModel request)
         {
             var result = await _productStockDtoQueryService.GetAllProductStockDto(request);

@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("addrangeproductphotoinsert")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> AddRangeProductPhotoInsert([FromForm] AddRangeProductPhotoInsertReqModel request)
         {
             var result = await _productPhotoCommandService.AddRangeProductPhotoInsert(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("deleteproductphoto")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> DeleteProductPhoto([FromBody] DeleteProductPhotoReqModel request)
         {
             var result = await _productPhotoCommandService.DeleteProductPhoto(request);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("addproductphoto")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductPhoto>))]
         public async Task<IActionResult> AddProductPhoto([FromBody] AddProductPhotoReqModel product)
         {
             var result = await _productPhotoCommandService.AddProductPhoto(product);

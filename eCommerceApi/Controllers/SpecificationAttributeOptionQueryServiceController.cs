@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getspecificationattributeoptionbyid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.SpecificationAttributeOption>))]
         public async Task<IActionResult> GetSpecificationAttributeOptionById([FromQuery] GetSpecificationAttributeOptionByIdReqModel request)
         {
             var result = await _specificationAttributeOptionQueryService.GetSpecificationAttributeOptionById(request);
@@ -38,6 +39,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getspecificationattributeoptionsbyids")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.List<Entities.Concrete.SpecificationAttributeOption>>))]
         public async Task<IActionResult> GetSpecificationAttributeOptionsByIds([FromQuery] GetSpecificationAttributeOptionsByIdsReqModel request)
         {
             var result = await _specificationAttributeOptionQueryService.GetSpecificationAttributeOptionsByIds(request);
@@ -50,6 +52,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getspecificationattributeoptionsbyspecificationattribute")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.PagedList.IPagedList<Entities.Concrete.SpecificationAttributeOption>>))]
         public async Task<IActionResult> GetSpecificationAttributeOptionsBySpecificationAttribute([FromQuery] GetSpecificationAttributeOptionsBySpecificationAttributeReqModel request)
         {
             var result = await _specificationAttributeOptionQueryService.GetSpecificationAttributeOptionsBySpecificationAttribute(request);
@@ -62,6 +65,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getnotexistingspecificationattributeoptions")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Guid[]>))]
         public async Task<IActionResult> GetNotExistingSpecificationAttributeOptions([FromQuery] GetNotExistingSpecificationAttributeOptionsReqModel request)
         {
             var result = await _specificationAttributeOptionQueryService.GetNotExistingSpecificationAttributeOptions(request);

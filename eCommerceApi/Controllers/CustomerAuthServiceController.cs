@@ -27,6 +27,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.Security.Jwt.AccessToken>))]
         public async Task<IActionResult> Register([FromBody] RegisterReqModel userForRegisterDto)
         {
             var result = await _customerAuthService.Register(userForRegisterDto);
@@ -40,6 +41,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.Security.Jwt.AccessToken>))]
         public async Task<IActionResult> Login([FromBody] LoginReqModel userForLoginDto)
         {
             var result = await _customerAuthService.Login(userForLoginDto);

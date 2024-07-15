@@ -26,6 +26,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpPost("insertcombinationphotos")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result))]
         public async Task<IActionResult> InsertCombinationPhotos([FromBody] InsertCombinationPhotosReqModel request)
         {
             var result = await _combinationPhotoCommandService.InsertCombinationPhotos(request);
