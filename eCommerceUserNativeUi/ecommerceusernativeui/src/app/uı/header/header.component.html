@@ -13,7 +13,7 @@
         <ion-icon name="chevron-back-outline" *ngIf="glb.isMobil.value && isNavigationBackUrl != ''"></ion-icon>
       </div>
       <div class="header-left">
-        <div class="logo" *ngIf="!glb.isMobil.value">Logos</div>
+        <div class="logo" *ngIf="!glb.isMobil.value">SCommerce</div>
         <div class="search-input-wrapper">
           <input type="text" class="search-input">
           <i class="fas fa-search"></i>
@@ -22,8 +22,18 @@
       <div class="header-right" *ngIf="!glb.isMobil.value">
         <a href="#"><i class="fa-solid fa-cart-shopping" id="shoppingIcon"></i><span
             *ngIf="!glb.isMobil.value">Sepetim</span></a>
-        <a routerLink="/login"><i class="fa-regular fa-user" id="userIcon"></i><span *ngIf="!glb.isMobil.value">Giriş
-            Yap</span></a>
+
+        @if(!userService.isLogin()){
+        <a routerLink="/login"><i class="fa-regular fa-user" id="userIcon"></i><span *ngIf="!glb.isMobil.value">
+            {{'Login' |translate}}
+          </span></a>
+        }
+        @else {
+        <a routerLink="/user-management"><i class="fa-regular fa-user" id="userIcon"></i><span
+            *ngIf="!glb.isMobil.value">
+            {{'User' |translate}}
+          </span></a>
+        }
       </div>
       <div class="mobile-bars" (click)="showMobileBars()">
         <i class="fa-solid fa-bars bar-icon"></i>
@@ -35,8 +45,8 @@
   </div>
   <div [ngClass]="'header-bottom ' + headerBottom.value" #headerRight>
     <ul>
-      <li><a [routerLink]="['']" class="header-bottom-a">{{ "Home" }}</a></li>
-      <li><a [routerLink]="['likes']" class="header-bottom-a">Beğendiklerim</a></li>
+      <li><a [routerLink]="['']" class="header-bottom-a">{{ "Home" |translate }}</a></li>
+      <!-- <li><a [routerLink]="['likes']" class="header-bottom-a">Beğendiklerim</a></li>
       <li>
         <a id="show-sub-category" class="header-bottom-a" (click)="showSubNodeCategory($event.currentTarget!)">Kelime
           Öğreniyorum
@@ -85,7 +95,7 @@
           <div class="sub-category"><a href="#2">Bütün Keliemeler</a></div>
           <div class="sub-category"><a href="#3">İyi bilinenler</a></div>
         </div>
-      </li>
+      </li> -->
     </ul>
   </div>
 </div>

@@ -7,8 +7,13 @@
             </div>
             <app-input [label]="'Email' |translate" [placeholder]="'EmailPlaceHolder' | translate"
                 formControlName="email"></app-input>
+            <div class="label-error" *ngIf="hasError('email','required')">{{'Required' |translate}}</div>
+
             <app-input [label]="'Password' |translate" [placeholder]="'PasswordPlaceholder'| translate"
                 formControlName="password" [type]="passwordType.value" [id]="'password'"></app-input>
+            <div class="label-error" *ngIf="hasError('password','required')">{{'Required' |translate}}</div>
+
+
             <div class="checkbox-wrapper">
                 <app-checkbox [text]="'RememberMe'| translate" formControlName="rememberMe"></app-checkbox>
                 <app-checkbox [text]="'ShowPassword'| translate" (change)="changePasswordType()"></app-checkbox>

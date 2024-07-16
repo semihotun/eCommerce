@@ -12,7 +12,5 @@ export class BtnSubmitComponent implements OnInit {
   @Input() text: string = '';
   @Output() click: EventEmitter<any> = new EventEmitter<any>();
   ngOnInit() {}
-  btnClick() {
-    this.click.emit();
-  }
+  btnClick() {}
 }

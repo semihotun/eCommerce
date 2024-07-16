@@ -15,5 +15,9 @@
 	"RememberMe":"Beni Hatırla",
 	"ForgetPassword":"Şifremi Unuttum",
 	"ShowPassword":"Şifreyi Göster",
-	"TermsOfUse":"Kullanım koşullarını okudum anladım onaylıyorum"
+	"TermsOfUse":"Kullanım koşullarını okudum anladım onaylıyorum",
+	"Required":"Bu alanı doldurmanız gerekli",
+	"NotSelected":"Bu alanı seçmeniz gerekli",
+	"User":"Kullanıcım",
+	"Home":"Anasayfa"
 }

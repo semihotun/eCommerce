@@ -13,13 +13,15 @@ import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { IonIcon, IonHeader } from '@ionic/angular/standalone';
 import { Router, RouterModule } from '@angular/router';
 import { GlobalService } from 'src/app/services/global.service';
+import { UserService } from 'src/app/services/user.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [IonIcon, CommonModule, RouterModule, IonHeader],
+  imports: [IonIcon, CommonModule, RouterModule, IonHeader, TranslateModule],
 })
 export class HeaderComponent implements OnInit {
   subCategoryLists!: NodeListOf<HTMLElement>;
@@ -36,7 +38,8 @@ export class HeaderComponent implements OnInit {
     private elRef: ElementRef<HTMLElement>,
     private gestureCtrl: GestureController,
     private cdr: ChangeDetectorRef,
-    public glb: GlobalService
+    public glb: GlobalService,
+    public userService: UserService
   ) {}
   ngOnInit(): void {
     this.initializeGesture();

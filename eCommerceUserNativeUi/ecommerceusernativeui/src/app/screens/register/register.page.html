@@ -5,15 +5,28 @@
             <div class="title">
                 <h4>{{'Register' | translate}}</h4>
             </div>
+
             <app-input [label]="'Name' |translate" [placeholder]="'NamePlaceHolder' | translate"
                 formControlName="name"></app-input>
+            <div class="label-error" *ngIf="hasError('name','required')">{{'Required' |translate}}</div>
+
             <app-input [label]="'Surname' |translate" [placeholder]="'SurnamePlaceHolder' | translate"
                 formControlName="surname"></app-input>
+            <div class="label-error" *ngIf="hasError('surname','required')">{{'Required' |translate}}</div>
+
             <app-input [label]="'Email' |translate" [placeholder]="'EmailPlaceHolder' | translate"
-                formControlName="email"></app-input>
+                formControlName="email" [type]="'email'"></app-input>
+            <div class="label-error" *ngIf="hasError('email','required')">{{'Required' |translate}}</div>
+
             <app-input [label]="'Password' |translate" [placeholder]="'PasswordPlaceholder'| translate"
-                formControlName="password"></app-input>
-            <app-checkbox [text]="'TermsOfUse' | translate"></app-checkbox>
+                formControlName="password" [type]="'password'"></app-input>
+            <div class="label-error" *ngIf="hasError('password','required')">{{'Required' |translate}}</div>
+
+            <app-checkbox [text]="'TermsOfUse' | translate" formControlName="termsOfUse"></app-checkbox>
+            <div class="label-error" *ngIf="hasError('termsOfUse','termOfUseFalse')">{{'NotSelected'
+                |translate}}
+            </div>
+
             <app-btn-submit (click)="saveForm()" [text]="'Register' |translate"></app-btn-submit>
             <div class="links">
                 <a routerLink="/login">{{'Login' | translate}}</a>

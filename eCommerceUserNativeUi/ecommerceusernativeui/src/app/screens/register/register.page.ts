@@ -1,10 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import {
@@ -22,6 +25,7 @@ import { BtnSubmitComponent } from 'src/app/uı/btn-submit/btn-submit.component'
 import { GlobalService } from 'src/app/services/global.service';
 import { CheckboxComponent } from '../../u\u0131/checkbox/checkbox.component';
 import { RouterModule } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -48,22 +52,36 @@ import { RouterModule } from '@angular/router';
 })
 export class RegisterPage implements OnInit {
   form!: FormGroup;
-
   glb = inject(GlobalService);
+  userService = inject(UserService);
+  submitted: boolean = false;
   constructor(private formBuilder: FormBuilder) {
     this.initForm();
   }
   ngOnInit() {}
   initForm() {
     this.form = this.formBuilder.group({
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
+      name: ['', [Validators.required]],
+      surname: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: [''.trim(), [Validators.required]],
+      termsOfUse: [false, this.trueValidator()],
     });
   }
+
+  trueValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      return control.value === true ? null : { termOfUseFalse: true };
+    };
+  }
   saveForm() {
-    console.log(this.form.value);
-    console.log(this.form.valid);
+    this.submitted = true;
+    if (this.form.valid) {
+      this.userService.register(this.form.value);
+    }
+  }
+  hasError(controlName: string, errorName: string) {
+    const control = this.form.get(controlName);
+    return this.submitted && control?.hasError(errorName);
   }
 }

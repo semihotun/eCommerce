@@ -51,4 +51,14 @@ export const routes: Routes = [
       import('./screens/register/register.page').then((m) => m.RegisterPage),
     pathMatch: 'full',
   },
+  {
+    path: 'user-management;',
+    loadComponent: () =>
+      import('./screens/register/register.page').then((m) => m.RegisterPage),
+    pathMatch: 'full',
+  },
+  {
+    path: 'user-management',
+    loadComponent: () => import('./screens/user-management/user-management.page').then( m => m.UserManagementPage)
+  },
 ];

@@ -29,6 +29,7 @@ import { BtnSubmitComponent } from 'src/app/uı/btn-submit/btn-submit.component'
 import { CheckboxComponent } from 'src/app/uı/checkbox/checkbox.component';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { RouterModule } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -55,12 +56,16 @@ import { RouterModule } from '@angular/router';
 })
 export class LoginPage implements OnInit {
   form!: FormGroup;
+  submitted: boolean = false;
   passwordTypeCheck: boolean = false;
   passwordType: BehaviorSubject<'text' | 'password'> = new BehaviorSubject<
     'text' | 'password'
   >('password');
   glb = inject(GlobalService);
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService
+  ) {
     this.initForm();
   }
   initForm() {
@@ -71,8 +76,7 @@ export class LoginPage implements OnInit {
     });
   }
   saveForm() {
-    console.log(this.form.value);
-    console.log(this.form.valid);
+    this.userService.login(this.form.value);
   }
   ngOnInit() {}
   changePasswordType() {
@@ -80,5 +84,9 @@ export class LoginPage implements OnInit {
     this.passwordType.next(this.passwordTypeCheck ? 'text' : 'password');
     let passwordDom = document.getElementById('password') as HTMLInputElement;
     passwordDom.type = this.passwordType.value;
+  }
+  hasError(controlName: string, errorName: string) {
+    const control = this.form.get(controlName);
+    return this.submitted && control?.hasError(errorName);
   }
 }
