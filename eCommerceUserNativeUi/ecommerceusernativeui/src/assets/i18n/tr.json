@@ -19,5 +19,8 @@
 	"Required":"Bu alanı doldurmanız gerekli",
 	"NotSelected":"Bu alanı seçmeniz gerekli",
 	"User":"Kullanıcım",
-	"Home":"Anasayfa"
+	"Home":"Anasayfa",
+	"User Management":"Kullanıcı Yönetimi",
+	"User Info":"Kullanıcı Bilgilerim",
+	"Logout":"Çıkış Yap"
 }

@@ -52,12 +52,19 @@ a {
     color: black;
 }
 
-#page {
-    min-height: 50%;
+#not-header-page {
+    background-color: white;
+    padding: 65px 2%;
+    border-radius: 15px;
+    min-height: 70%;
 
     @media screen and (max-width:$tablet-size) {
+        padding: 65px 2%;
+        background-color: rgba(255, 255, 255, 0.918);
+        padding: 0px 0px;
+        margin: 0px;
+        border-radius: 0px;
         min-height: 100%;
-        margin-top: 9%;
     }
 }
 

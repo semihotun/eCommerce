@@ -1,0 +1,20 @@
+<ion-content fullscreen="true">
+    <app-header *ngIf="!this.glb.isMobil.value"></app-header>
+    <div id="not-header-page">
+        <app-sub-header [previousUrl]="['home']" [title]="'User Management' |translate"></app-sub-header>
+        <div class="row-list">
+            <div class="row">
+                <a routerLink="/user-info">{{'User Info'| translate}}</a>
+            </div>
+            <div class="row">
+                <a (click)="logout()">{{'Logout'| translate}}</a>
+            </div>
+        </div>
+    </div>
+    @if (!glb.isMobil.value) {
+    <app-footer></app-footer>
+    }
+    @else {
+    <app-mobile-footer></app-mobile-footer>
+    }
+</ion-content>

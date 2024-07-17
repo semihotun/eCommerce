@@ -30,6 +30,7 @@ import { CheckboxComponent } from 'src/app/uı/checkbox/checkbox.component';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { RouterModule } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { SubHeaderComponent } from 'src/app/uı/sub-header/sub-header.component';
 
 @Component({
   selector: 'app-login',
@@ -52,6 +53,7 @@ import { UserService } from 'src/app/services/user.service';
     BtnSubmitComponent,
     CheckboxComponent,
     RouterModule,
+    SubHeaderComponent,
   ],
 })
 export class LoginPage implements OnInit {

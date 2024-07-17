@@ -1,0 +1,39 @@
+ @import '../../../theme/variables.scss';
+
+ .sub-header {
+     position: relative;
+     padding: 0% 3%;
+     background-color: white;
+
+
+     @media screen and (max-width:$tablet-size) {
+         padding: 4% 5%;
+         border-bottom: 1px solid #ccc;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+     }
+
+     .title {
+         text-align: center;
+         font-size: 18px;
+
+         @media screen and (max-width:$tablet-size) {
+             margin-bottom: 0px;
+         }
+     }
+
+     .previousbtn {
+         //  top: 0px;
+         position: absolute;
+         color: white;
+         border: none;
+         cursor: pointer;
+         background-color: transparent;
+
+         &::before {
+             content: '<';
+             color: #333;
+             margin-right: 5px;
+             font-size: 30px;
+         }
+     }
+ }

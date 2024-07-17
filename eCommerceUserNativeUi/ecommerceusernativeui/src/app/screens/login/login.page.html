@@ -1,10 +1,8 @@
 <ion-content fullscreen="true">
     <app-header *ngIf="!this.glb.isMobil.value"></app-header>
-    <div id="page" class="bg-color-white">
+    <div id="not-header-page">
+        <app-sub-header [previousUrl]="['home']" [title]="'Login' |translate"></app-sub-header>
         <form class="form" [formGroup]="form">
-            <div class="title">
-                <h4>{{'Login' | translate}}</h4>
-            </div>
             <app-input [label]="'Email' |translate" [placeholder]="'EmailPlaceHolder' | translate"
                 formControlName="email"></app-input>
             <div class="label-error" *ngIf="hasError('email','required')">{{'Required' |translate}}</div>

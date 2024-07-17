@@ -26,6 +26,7 @@ import { GlobalService } from 'src/app/services/global.service';
 import { CheckboxComponent } from '../../u\u0131/checkbox/checkbox.component';
 import { RouterModule } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { SubHeaderComponent } from 'src/app/uı/sub-header/sub-header.component';
 
 @Component({
   selector: 'app-register',
@@ -48,6 +49,7 @@ import { UserService } from 'src/app/services/user.service';
     BtnSubmitComponent,
     CheckboxComponent,
     RouterModule,
+    SubHeaderComponent,
   ],
 })
 export class RegisterPage implements OnInit {

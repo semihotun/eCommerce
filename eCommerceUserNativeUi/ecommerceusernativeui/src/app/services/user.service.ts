@@ -50,4 +50,9 @@ export class UserService extends Destroyable {
   isLogin(): boolean {
     return localStorage.getItem('token') == null ? false : true;
   }
+  logOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('claims');
+    this.router.navigate(['/home']);
+  }
 }

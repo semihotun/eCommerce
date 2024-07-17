@@ -59,6 +59,9 @@ export const routes: Routes = [
   },
   {
     path: 'user-management',
-    loadComponent: () => import('./screens/user-management/user-management.page').then( m => m.UserManagementPage)
+    loadComponent: () =>
+      import('./screens/user-management/user-management.page').then(
+        (m) => m.UserManagementPage
+      ),
   },
 ];

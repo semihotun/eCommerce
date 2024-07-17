@@ -1,0 +1,35 @@
+@import '../../../theme/variables.scss';
+
+
+
+.row-list {
+    @media screen and (max-width:$tablet-size) {
+        margin: 10% 2% 0% 2%;
+    }
+
+    .row {
+        margin-top: 10px;
+        border-radius: 4px;
+        background-color: lighten($color: $header-bottom-bg, $amount: 16);
+        width: 70%;
+        height: 40px;
+        align-items: center;
+        vertical-align: middle;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-left: auto;
+        margin-right: auto;
+
+        @media screen and (max-width:$tablet-size) {
+            width: 98%;
+            height: 34px;
+        }
+
+        a {
+            color: white;
+            font-size: 14px;
+        }
+    }
+}
