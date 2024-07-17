@@ -23,6 +23,7 @@ namespace eCommerce.Areas.Api
             _productAttributeCombinationQueryService = productAttributeCombinationQueryService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getallproductattributecombinations")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -36,6 +37,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductcombinationxml")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -49,6 +51,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductattributecombinationbyid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -62,6 +65,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductattributecombinationbysku")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

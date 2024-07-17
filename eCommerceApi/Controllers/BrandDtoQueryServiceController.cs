@@ -23,6 +23,7 @@ namespace eCommerce.Areas.Api
             _brandDtoQueryService = brandDtoQueryService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpPost("getbranddatatable")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

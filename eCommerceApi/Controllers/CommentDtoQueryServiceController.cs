@@ -23,6 +23,7 @@ namespace eCommerce.Areas.Api
             _commentDtoQueryService = commentDtoQueryService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpPost("getcommentdatatable")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

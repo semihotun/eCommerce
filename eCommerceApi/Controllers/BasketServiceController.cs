@@ -23,6 +23,7 @@ namespace eCommerce.Areas.Api
             _basketService = basketService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpPost("addbasket")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -36,6 +37,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpPost("deletebasketproduct")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -49,6 +51,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpPost("updatebasketproductpiece")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -62,6 +65,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getbasket")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

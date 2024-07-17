@@ -23,6 +23,7 @@ namespace eCommerce.Areas.Api
             _specificationAttributeQueryService = specificationAttributeQueryService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getspecificationattributebyid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -36,6 +37,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getspecificationattributebyids")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -49,6 +51,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getspecificationattributes")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -62,6 +65,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductspeficationattributedropdwon")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

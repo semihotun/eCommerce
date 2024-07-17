@@ -23,6 +23,7 @@ namespace eCommerce.Areas.Api
             _predefinedProductAttributeValueQueryService = predefinedProductAttributeValueQueryService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getpredefinedproductattributevalues")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -36,6 +37,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getpredefinedproductattributevaluebyid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

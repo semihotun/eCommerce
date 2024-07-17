@@ -23,6 +23,7 @@ namespace eCommerce.Areas.Api
             _catalogBrandQueryService = catalogBrandQueryService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getcatalogbrand")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

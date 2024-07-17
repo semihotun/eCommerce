@@ -23,6 +23,7 @@ namespace eCommerce.Areas.Api
             _categorySpeficationQueryService = categorySpeficationQueryService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getbycategoryspeficationid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -36,6 +37,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getallcategoryspefication")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

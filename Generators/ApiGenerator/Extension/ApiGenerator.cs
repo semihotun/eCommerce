@@ -1,9 +1,11 @@
 ﻿using Core.Extension;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Generate;
 using Core.Utilities.Helper;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -23,7 +25,9 @@ namespace ApiGenerator.Extension
                     {
                         foreach (var methodInfo in methods)
                         {
-                            var isAllowAnonymous = methodInfo.GetCustomAttributes<ApiGenerateAllowAnonymous>().Any() ? "[AllowAnonymous]" : "";
+                            Console.WriteLine(methodInfo.Name);
+                            var isAllowAnonymous = methodInfo.GetCustomAttributes<ApiGenerateAllowAnonymous>().Any() ||
+                                !methodInfo.CustomAttributes.Where(x => x.AttributeType.Name == "AuthAspect").Any() ? "[AllowAnonymous]" : "";
                             parameterReferenceList.AddRange((methodInfo.GetParameters().ToList()).Select(x => x.ParameterType.Namespace));
                             var parameterList = methodInfo.GetParameters().ToList();
                             var parameterMethod = String.Join(",", parameterList.Select(x => x.ParameterType.Name + " " + x.Name));

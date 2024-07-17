@@ -23,6 +23,7 @@ namespace eCommerce.Areas.Api
             _combinationPhotoDtoQueryService = combinationPhotoDtoQueryService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getallcombinationphotosdto")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

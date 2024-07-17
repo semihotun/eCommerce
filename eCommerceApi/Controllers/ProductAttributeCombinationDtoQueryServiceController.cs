@@ -23,6 +23,7 @@ namespace eCommerce.Areas.Api
             _productAttributeCombinationDtoQueryService = productAttributeCombinationDtoQueryService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpPost("productattributecombinationdropdown")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -36,6 +37,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpPost("productattributecombinationdatatable")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -49,6 +51,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpPost("productcombinationmappingattrxml")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

@@ -23,6 +23,7 @@ namespace eCommerce.Areas.Api
             _sliderQueryService = sliderQueryService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getallslider")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -36,6 +37,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getslider")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

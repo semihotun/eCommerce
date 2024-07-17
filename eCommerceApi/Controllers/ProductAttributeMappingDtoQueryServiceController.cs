@@ -23,6 +23,7 @@ namespace eCommerce.Areas.Api
             _productAttributeMappingDtoQueryService = productAttributeMappingDtoQueryService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductdetailmappingjson")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -36,6 +37,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getmappingproductattributelist")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

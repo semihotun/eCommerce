@@ -23,6 +23,7 @@ namespace eCommerce.Areas.Api
             _productPhotoQueryService = productPhotoQueryService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductphotobyid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -36,6 +37,7 @@ namespace eCommerce.Areas.Api
                 return BadRequest(result.Message);
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductphoto")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

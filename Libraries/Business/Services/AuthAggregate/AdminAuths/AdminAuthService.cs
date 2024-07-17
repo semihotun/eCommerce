@@ -1,5 +1,7 @@
 ﻿using Business.Constants;
 using Business.Services.AuthAggregate.TokenService;
+using Core.Const;
+using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Generate;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
@@ -9,6 +11,7 @@ using DataAccess.UnitOfWork;
 using Entities.Concrete;
 using Entities.Extensions.AutoMapper;
 using Entities.RequestModel.AdminAggregate.AdminAuths;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Threading.Tasks;
 namespace Business.Services.AuthAggregate.AdminAuths
@@ -75,6 +78,7 @@ namespace Business.Services.AuthAggregate.AdminAuths
         {
             return Result.SuccessDataResult(_tokenHelper.CreateToken(user), "Token oluşturuldu");
         }
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<AdminUser>> AddAdminUser(AddReqModel user)
         {
             return await _unitOfWork.BeginTransaction(async () =>
@@ -84,11 +88,13 @@ namespace Business.Services.AuthAggregate.AdminAuths
                 return Result.SuccessDataResult(data);
             });
         }
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<AdminUser>> GetByMail(GetByMailReqModel request)
         {
             var data = await _adminUserWriteRepository.GetAsync(u => u.Email == request.Email);
             return Result.SuccessDataResult(data);
         }
+        [AuthAspect(RoleConst.Admin)]
         public async Task<Result<int>> GetAdminCount()
         {
             var data = await _adminUserWriteRepository.GetCountAsync();

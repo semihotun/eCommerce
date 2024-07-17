@@ -23,6 +23,7 @@ namespace eCommerce.Areas.Api
             _productStockDtoQueryService = productStockDtoQueryService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getallproductstockdto")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]

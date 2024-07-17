@@ -23,6 +23,7 @@ namespace eCommerce.Areas.Api
             _productShipmentInfoQueryService = productShipmentInfoQueryService;
         }
 
+        [AllowAnonymous]
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductshipmentinfo")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
