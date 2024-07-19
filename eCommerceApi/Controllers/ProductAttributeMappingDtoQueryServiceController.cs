@@ -27,7 +27,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductdetailmappingjson")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.IList<Entities.Dtos.ProductAttributeMappingDALModels.ProductDetailMappingDTO>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(System.Collections.Generic.IList<Entities.Dtos.ProductAttributeMappingDALModels.ProductDetailMappingDTO>))]
         public async Task<IActionResult> GetProductDetailMappingJson([FromQuery] GetProductDetailMappingJsonReqModel request)
         {
             var result = await _productAttributeMappingDtoQueryService.GetProductDetailMappingJson(request);
@@ -41,7 +41,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getmappingproductattributelist")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Dtos.ProductAttributeMappingDALModels.MappingProductAttribute>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Entities.Dtos.ProductAttributeMappingDALModels.MappingProductAttribute))]
         public async Task<IActionResult> GetMappingProductAttributeList([FromQuery] GetMappingProductAttributeListReqModel request)
         {
             var result = await _productAttributeMappingDtoQueryService.GetMappingProductAttributeList(request);

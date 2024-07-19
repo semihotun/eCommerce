@@ -9,10 +9,10 @@ namespace eCommerce.Areas.Web.Controllers
     {
         #region Fields
 
-        private readonly IProductDtoQuery _productDtoQuery;
+        private readonly IProductDtoQueryService _productDtoQuery;
         #endregion
         #region Constructors
-        public ProductDetailController(IProductDtoQuery productDtoQuery)
+        public ProductDetailController(IProductDtoQueryService productDtoQuery)
         {
             _productDtoQuery = productDtoQuery;
         }

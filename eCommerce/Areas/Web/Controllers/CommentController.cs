@@ -10,9 +10,9 @@ namespace eCommerce.Areas.Web.Controllers
 {
     public class CommentController : WebBaseController
     {
-        private readonly IProductDtoQuery _productDtoQuery;
+        private readonly IProductDtoQueryService _productDtoQuery;
         private readonly ICommentCommandService _commentCommandService;
-        public CommentController(IProductDtoQuery productDtoQuery)
+        public CommentController(IProductDtoQueryService productDtoQuery)
         {
             _productDtoQuery = productDtoQuery;
         }

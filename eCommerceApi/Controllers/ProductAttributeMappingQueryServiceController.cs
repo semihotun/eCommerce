@@ -27,7 +27,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallproductattributemapping")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.PagedList.IPagedList<Entities.Concrete.ProductAttributeMapping>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.PagedList.IPagedList<Entities.Concrete.ProductAttributeMapping>))]
         public async Task<IActionResult> GetAllProductAttributeMapping([FromQuery] GetAllProductAttributeMappingReqModel request)
         {
             var result = await _productAttributeMappingQueryService.GetAllProductAttributeMapping(request);
@@ -41,7 +41,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductattributemappingsbyproductid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.List<Entities.Concrete.ProductAttributeMapping>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(System.Collections.Generic.List<Entities.Concrete.ProductAttributeMapping>))]
         public async Task<IActionResult> GetProductAttributeMappingsByProductId([FromQuery] GetProductAttributeMappingsByProductIdReqModel request)
         {
             var result = await _productAttributeMappingQueryService.GetProductAttributeMappingsByProductId(request);
@@ -55,7 +55,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductattributemappingbyid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductAttributeMapping>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Entities.Concrete.ProductAttributeMapping))]
         public async Task<IActionResult> GetProductAttributeMappingById([FromQuery] GetProductAttributeMappingByIdReqModel request)
         {
             var result = await _productAttributeMappingQueryService.GetProductAttributeMappingById(request);

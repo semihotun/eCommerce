@@ -27,7 +27,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallshowcasetype")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.IList<Entities.Concrete.ShowCaseType>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(System.Collections.Generic.IList<Entities.Concrete.ShowCaseType>))]
         public async Task<IActionResult> GetAllShowCaseType()
         {
             var result = await _showcaseTypeQueryService.GetAllShowCaseType();
@@ -41,7 +41,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallshowcasetypeselectlistitem")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(System.Collections.Generic.IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>))]
         public async Task<IActionResult> GetAllShowCaseTypeSelectListItem([FromQuery] GetAllShowCaseTypeSelectListItemReqModel request)
         {
             var result = await _showcaseTypeQueryService.GetAllShowCaseTypeSelectListItem(request);

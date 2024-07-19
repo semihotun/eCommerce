@@ -27,7 +27,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallcombinationphotosdto")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.List<Entities.Dtos.CommentDALModels.CombinationPhotoDTO>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(System.Collections.Generic.List<Entities.Dtos.CommentDALModels.CombinationPhotoDTO>))]
         public async Task<IActionResult> GetAllCombinationPhotosDTO([FromQuery] GetAllCombinationPhotosDTO request)
         {
             var result = await _combinationPhotoDtoQueryService.GetAllCombinationPhotosDTO(request);

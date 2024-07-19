@@ -37,7 +37,7 @@
                                     <td></td>
                                     <td>
                                         <a href="SliderEdit?id=@item.Id"><i class='fa fa-edit datatableduzenle' style='font-size:20px;'></i></a>
-                                        <a href="#" onclick="DeleteFunction(@item.Id)" id="@item.Id"> <i class="fa fa-trash-o datatablesil" style="font-size:20px;"></i></a>
+                                        <a href="SliderDelete?id=@item.Id"> <i class="fa fa-trash-o datatablesil" style="font-size:20px;"></i></a>
                                     </td>
                                 </tr>
                             }
@@ -48,19 +48,3 @@
         </div>
     </div>
 </div>
-<script>
-                            function DeleteFunction(id) {
-                                console.log(id);
-                                $.ajax({
-                                    type: "post",
-                                    url: "SliderDelete?id=" + id,
-                                    success: function (result) {
-                                        $("#" + id).parent().parent().remove();
-                                        pushalert("Kayıt Silindi","success");
-                                    },
-                                    error: function (result) {
-                                        pushalert("Kayıt Silinemedi","Danger");
-                                    }
-                                });
-                            }
-</script>

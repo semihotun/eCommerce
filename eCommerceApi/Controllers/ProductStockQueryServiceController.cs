@@ -27,7 +27,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallproductstock")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.PagedList.IPagedList<Entities.Concrete.ProductStock>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.PagedList.IPagedList<Entities.Concrete.ProductStock>))]
         public async Task<IActionResult> GetAllProductStock([FromQuery] GetAllProductStockReqModel request)
         {
             var result = await _productStockQueryService.GetAllProductStock(request);

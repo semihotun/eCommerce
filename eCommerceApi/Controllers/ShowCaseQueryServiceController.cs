@@ -27,7 +27,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallshowcase")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.IList<Entities.Concrete.ShowCase>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(System.Collections.Generic.IList<Entities.Concrete.ShowCase>))]
         public async Task<IActionResult> GetAllShowcase()
         {
             var result = await _showCaseQueryService.GetAllShowcase();
@@ -41,7 +41,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getshowcase")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ShowCase>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Entities.Concrete.ShowCase))]
         public async Task<IActionResult> GetShowcase([FromQuery] GetShowcaseReqModel request)
         {
             var result = await _showCaseQueryService.GetShowcase(request);

@@ -27,7 +27,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductphotobyid")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductPhoto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Entities.Concrete.ProductPhoto))]
         public async Task<IActionResult> GetProductPhotoById([FromQuery] GetProductPhotoByIdReqModel request)
         {
             var result = await _productPhotoQueryService.GetProductPhotoById(request);
@@ -41,7 +41,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductphoto")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Core.Utilities.PagedList.IPagedList<Entities.Concrete.ProductPhoto>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.PagedList.IPagedList<Entities.Concrete.ProductPhoto>))]
         public async Task<IActionResult> GetProductPhoto([FromQuery] GetProductPhotoReqModel request)
         {
             var result = await _productPhotoQueryService.GetProductPhoto(request);

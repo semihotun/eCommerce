@@ -58,7 +58,7 @@ namespace eCommerce.Areas.Admin.Controllers
         public async Task<IActionResult> SliderDelete(Guid id)
         {
             ResponseAlert(await _sliderCommandService.DeleteSlider(new DeleteSliderReqModel(id)));
-            return Json(true, new JsonSerializerSettings());
+            return RedirectToAction(nameof(SliderIndex));
         }
         #endregion
     }

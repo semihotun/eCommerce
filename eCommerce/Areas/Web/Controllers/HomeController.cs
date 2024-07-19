@@ -18,11 +18,11 @@ namespace eCommerce.Areas.Web.Controllers
         private readonly ISliderQueryService _sliderQueryService;
         private readonly IShowCaseDtoQueryService _showCaseQueryService;
         private readonly IBasketService _basketService;
-        private readonly IProductDtoQuery _productDtoQuery;
+        private readonly IProductDtoQueryService _productDtoQuery;
         public HomeController(ISliderQueryService sliderQueryService,
             IShowCaseDtoQueryService showCaseQueryService,
             IBasketService basketService,
-            IProductDtoQuery productDtoQuery)
+            IProductDtoQueryService productDtoQuery)
         {
             _sliderQueryService = sliderQueryService;
             _showCaseQueryService = showCaseQueryService;

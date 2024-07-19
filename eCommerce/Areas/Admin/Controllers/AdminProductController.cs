@@ -31,7 +31,7 @@ namespace eCommerce.Areas.Admin.Controllers
     public class AdminProductController : AdminBaseController
     {
         #region Ctor      
-        private readonly IProductDtoQuery _productDtoQuery;
+        private readonly IProductDtoQueryService _productDtoQuery;
         private readonly IProductQueryService _productService;
         private readonly IProductCommandService _productCommandService;
         private readonly IProductAttributeFormatter _productAttributeFormatter;
@@ -45,7 +45,7 @@ namespace eCommerce.Areas.Admin.Controllers
         private readonly IProductStockTypeQueryService _productStockTypeQueryService;
         private readonly IProductAttributeMappingQueryService _productAttributeMappingQueryService;
 
-        public AdminProductController(IProductDtoQuery productDtoQuery,
+        public AdminProductController(IProductDtoQueryService productDtoQuery,
             IProductQueryService productService,
             IProductCommandService productCommandService,
             IProductAttributeFormatter productAttributeFormatter,

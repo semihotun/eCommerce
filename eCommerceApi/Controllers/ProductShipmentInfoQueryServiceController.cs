@@ -27,7 +27,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getproductshipmentinfo")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.ProductShipmentInfo>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Entities.Concrete.ProductShipmentInfo))]
         public async Task<IActionResult> GetProductShipmentInfo([FromQuery] GetProductShipmentInfoReqModel request)
         {
             var result = await _productShipmentInfoQueryService.GetProductShipmentInfo(request);

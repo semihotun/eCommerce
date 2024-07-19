@@ -67,7 +67,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getbymail")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Concrete.AdminUser>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Entities.Concrete.AdminUser))]
         public async Task<IActionResult> GetByMail([FromQuery] GetByMailReqModel request)
         {
             var result = await _adminAuthService.GetByMail(request);
@@ -80,7 +80,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getadmincount")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<int>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
         public async Task<IActionResult> GetAdminCount()
         {
             var result = await _adminAuthService.GetAdminCount();

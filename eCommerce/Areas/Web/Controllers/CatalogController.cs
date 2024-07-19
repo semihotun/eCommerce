@@ -12,9 +12,9 @@ namespace eCommerce.Areas.Web.Controllers
     {
         #region Ctor
         private readonly ICategoryDtoQueryService _categoryDtoQueryService;
-        private readonly IProductDtoQuery _productDtoQuery;
+        private readonly IProductDtoQueryService _productDtoQuery;
         public CatalogController(ICategoryDtoQueryService categoryDtoQueryService,
-            IProductDtoQuery productDtoQuery)
+            IProductDtoQueryService productDtoQuery)
         {
             _categoryDtoQueryService = categoryDtoQueryService;
             _productDtoQuery = productDtoQuery;

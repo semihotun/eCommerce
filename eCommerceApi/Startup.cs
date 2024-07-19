@@ -37,7 +37,11 @@ namespace eCommerceApi
             services.AddIdentitySettings(Configuration);
             services.AddRazorPages().AddNewtonsoftJson();
             services.AddMvc().AddFluentValidation().ConfigureApiBehaviorOptions(x => x.SuppressModelStateInvalidFilter = true);
-            services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            });
             services.AddDependencyResolvers(new ICoreModule[] { new CoreModule() });
         }
         public void ConfigureContainer(ContainerBuilder builder)

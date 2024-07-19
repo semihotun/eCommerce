@@ -28,7 +28,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getallcategorytreelist")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.List<Entities.Dtos.CategoryDALModels.CategoryDTO>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(System.Collections.Generic.List<Entities.Dtos.CategoryDALModels.CategoryDTO>))]
         public async Task<IActionResult> GetAllCategoryTreeList()
         {
             var result = await _categoryDtoQueryService.GetAllCategoryTreeList();
@@ -42,7 +42,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getcategoryspefication")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Dtos.CategoryDALModels.CategorySpeficationDTO>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Entities.Dtos.CategoryDALModels.CategorySpeficationDTO))]
         public async Task<IActionResult> GetCategorySpefication([FromQuery] GetCategorySpeficationReqModel request)
         {
             var result = await _categoryDtoQueryService.GetCategorySpefication(request);
@@ -56,7 +56,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("getcategoryspeficationoptiondto")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<Entities.Dtos.CategoryDALModels.CategorySpeficationOptionDTO>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Entities.Dtos.CategoryDALModels.CategorySpeficationOptionDTO))]
         public async Task<IActionResult> GetCategorySpeficationOptionDTO([FromQuery] GetCategorySpeficationOptionDTO request)
         {
             var result = await _categoryDtoQueryService.GetCategorySpeficationOptionDTO(request);
@@ -70,7 +70,7 @@ namespace eCommerce.Areas.Api
         [Produces("application/json", "text/plain")]
         [HttpGet("gethierarchy")]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Core.Utilities.Results.Result<System.Collections.Generic.List<Entities.ViewModels.AdminViewModel.CategoryTree.HierarchyViewModel>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(System.Collections.Generic.List<Entities.ViewModels.AdminViewModel.CategoryTree.HierarchyViewModel>))]
         public async Task<IActionResult> GetHierarchy()
         {
             var result = await _categoryDtoQueryService.GetHierarchy();

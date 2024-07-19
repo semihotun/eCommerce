@@ -2,6 +2,7 @@
 using Core.Utilities.Aspects.Autofac.Secure;
 using Core.Utilities.Generate;
 using Core.Utilities.Helper;
+using Core.Utilities.Results;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace ApiGenerator.Extension
                     {
                         foreach (var methodInfo in methods)
                         {
-                            Console.WriteLine(methodInfo.Name);
+                            //Console.WriteLine(methodInfo.Name);
                             var isAllowAnonymous = methodInfo.GetCustomAttributes<ApiGenerateAllowAnonymous>().Any() ||
                                 !methodInfo.CustomAttributes.Where(x => x.AttributeType.Name == "AuthAspect").Any() ? "[AllowAnonymous]" : "";
                             parameterReferenceList.AddRange((methodInfo.GetParameters().ToList()).Select(x => x.ParameterType.Namespace));
@@ -58,7 +59,7 @@ namespace ApiGenerator.Extension
         }
         private static string GenerateQueryControllerString(string parameterMethod, MethodInfo methodInfo, Type item, string pushParams, string isAllowAnonymous)
         {
-            var returnTypeText = GetReadableTypeName(methodInfo.ReturnType);
+            var returnTypeText = GetReadableTypeName(methodInfo.ReturnType,true);
             parameterMethod = String.IsNullOrWhiteSpace(parameterMethod) ? parameterMethod : "[FromQuery]" + parameterMethod;
             return $@"{isAllowAnonymous}
                       [Produces(""application/json"", ""text/plain"")]
@@ -125,43 +126,46 @@ namespace ApiGenerator.Extension
                              }}
                       ";
         }
-        public static string GetReadableTypeName(Type type)
+        public static string GetReadableTypeName(Type type, bool isNotRead = false)
         {
-            if (type.IsGenericType)
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Task<>))
             {
-                if (type.GetGenericTypeDefinition() == typeof(Task<>))
-                {
-                    return GetReadableTypeName(type.GetGenericArguments()[0]);
-                }
-                else
-                {
-                    string typeName = type.GetGenericTypeDefinition().FullName;
-                    string genericArguments = string.Join(", ", Array.ConvertAll(type.GetGenericArguments(), GetReadableTypeName));
-                    return $"{typeName.Substring(0, typeName.IndexOf('`'))}<{genericArguments}>";
-                }
+                return GetReadableTypeName(type.GetGenericArguments()[0], isNotRead).Replace("+", ".");
             }
-            else if (type.IsArray)
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Result<>) && isNotRead)
             {
-                string elementTypeName = GetReadableTypeName(type.GetElementType());
+                return GetReadableTypeName(type.GetGenericArguments()[0], isNotRead).Replace("+", ".");
+            }
+            if (type.IsArray)
+            {
+                string elementTypeName = GetReadableTypeName(type.GetElementType(), isNotRead).Replace("+", ".");
                 return $"{elementTypeName}[]";
             }
-            else
+            if (type.IsGenericType)
             {
-                return type.Name switch
+                string typeName = type.GetGenericTypeDefinition().FullName;
+                if (type.GetGenericTypeDefinition() == typeof(Result<>) && isNotRead)
                 {
-                    "Int32" => "int",
-                    "Int64" => "long",
-                    "Int16" => "short",
-                    "UInt32" => "uint",
-                    "UInt64" => "ulong",
-                    "UInt16" => "ushort",
-                    "Boolean" => "bool",
-                    "String" => "string",
-                    "Object" => "object",
-                    "Void" => "void",
-                    _ => type.FullName
-                };
+                    return $"{string.Join(", ", Array.ConvertAll(type.GetGenericArguments(), t => GetReadableTypeName(t, isNotRead))).Replace("+", ".")}";
+                }
+                string genericArguments = string.Join(", ", Array.ConvertAll(type.GetGenericArguments(), t => GetReadableTypeName(t, isNotRead))).Replace("+", ".");
+                return $"{typeName.Substring(0, typeName.IndexOf('`'))}<{genericArguments}>";
             }
+            return type.Name switch
+            {
+                "Int32" => "int",
+                "Int64" => "long",
+                "Int16" => "short",
+                "UInt32" => "uint",
+                "UInt64" => "ulong",
+                "UInt16" => "ushort",
+                "Boolean" => "bool",
+                "String" => "string",
+                "Object" => "object",
+                "Void" => "void",
+                _ => type.FullName
+            };
         }
+
     }
 }
