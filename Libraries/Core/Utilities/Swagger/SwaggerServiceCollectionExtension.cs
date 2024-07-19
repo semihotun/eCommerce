@@ -8,7 +8,8 @@ namespace Core.Utilities.Swagger
         {
             services.AddSwaggerGen(c =>
             {
-                c.CustomSchemaIds(type => type.ToString());
+                c.CustomSchemaIds(type => type.FullName.Replace("+", "."));
+                //c.CustomSchemaIds(type => type.ToString());
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
