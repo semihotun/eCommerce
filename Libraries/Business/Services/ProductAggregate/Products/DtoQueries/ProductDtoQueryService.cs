@@ -19,12 +19,12 @@ using System.Linq;
 using System.Threading.Tasks;
 namespace Business.Services.ProductAggregate.Products.DtoQueries
 {
-    public class ProductDtoQuery : IProductDtoQuery
+    public class ProductDtoQueryService : IProductDtoQueryService
     {
         private readonly IProductAttributeFormatter _productAttributeFormatter;
         private readonly ECommerceReadContext _readContext;
 
-        public ProductDtoQuery(IProductAttributeFormatter productAttributeFormatter, ECommerceReadContext readContext)
+        public ProductDtoQueryService(IProductAttributeFormatter productAttributeFormatter, ECommerceReadContext readContext)
         {
             _productAttributeFormatter = productAttributeFormatter;
             _readContext = readContext;

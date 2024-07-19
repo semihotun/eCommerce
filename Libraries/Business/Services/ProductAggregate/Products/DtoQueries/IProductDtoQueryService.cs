@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace Business.Services.ProductAggregate.Products.DtoQueries
 {
-    public interface IProductDtoQuery
+    public interface IProductDtoQueryService
     {
         Task<Result<ProductDetailDTO>> GetHomeProductDetail(GetHomeProductDetailReqModel request);
         Task<Result<IPagedList<ProductDataTableJson>>> GetProductDataTableList(
