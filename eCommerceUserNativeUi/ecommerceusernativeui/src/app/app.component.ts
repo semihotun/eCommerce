@@ -13,6 +13,7 @@ import {
   TranslatePipe,
   TranslateService,
 } from '@ngx-translate/core';
+import { SpinnerComponent } from './u\u0131/spinner/spinner.component';
 register();
 @Component({
   selector: 'app-root',
@@ -26,6 +27,7 @@ register();
     HeaderComponent,
     RouterModule,
     TranslateModule,
+    SpinnerComponent,
   ],
 })
 export class AppComponent {

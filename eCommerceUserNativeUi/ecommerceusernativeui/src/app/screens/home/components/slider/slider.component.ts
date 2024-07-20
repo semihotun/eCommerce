@@ -6,38 +6,36 @@ import {
   ElementRef,
   OnInit,
   ViewChild,
+  inject,
 } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { HomeService } from 'src/app/services/home.service';
+import { HomeStore } from 'src/app/stores/home.store';
 import { Swiper } from 'swiper/types';
-
+import { LazyImgDirective } from './../../../../directives/lazy-img.directive';
 @Component({
   selector: 'app-slider',
   templateUrl: './slider.component.html',
   standalone: true,
   styleUrls: ['./slider.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule, LazyImgDirective],
 })
-export class SliderComponent implements AfterViewInit {
-  @ViewChild('swiper')
-  swiperRef: ElementRef | undefined;
+export class SliderComponent implements AfterViewInit, OnInit {
+  @ViewChild('swiper') swiperRef: ElementRef | undefined;
   swiper?: Swiper;
-
-  images = [
-    'https://images.unsplash.com/photo-1580927752452-89d86da3fa0a',
-    'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
-    'https://images.unsplash.com/photo-1461749280684-dccba630e2f6',
-    'https://images.unsplash.com/photo-1488229297570-58520851e868',
-  ];
+  homeService = inject(HomeService);
+  homeStore = inject(HomeStore);
+  ngOnInit(): void {
+    this.homeService.getAllSlider();
+  }
   goNext() {
     this.swiper?.slideNext();
   }
   goPrev() {
     this.swiper?.slidePrev();
   }
-  ngAfterViewInit(): void {
-    this.swiper = this.swiperRef?.nativeElement.swiper;
-    this.swiper?.autoplay.start();
-  }
+  ngAfterViewInit(): void {}
   swiperInit() {
     this.swiper = this.swiperRef?.nativeElement.swiper;
     this.swiper?.autoplay.start();

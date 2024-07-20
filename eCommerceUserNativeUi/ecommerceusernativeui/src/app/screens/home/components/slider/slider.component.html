@@ -1,10 +1,12 @@
 <swiper-container #swiper [loop]="true" [pagination]="true" [zoom]="true" (swiperinit)="swiperInit()">
-  <swiper-slide *ngFor="let image of images">
+  <swiper-slide *ngFor="let slider of homeStore.sliders$()">
     <div class="swiper-zoom-container">
-      <img [src]="image" />
+      <img [src]="slider.sliderImage" />
+      <div class="slider-info">
+        <div class="header">{{slider.sliderHeading}}</div>
+        <div class="text">{{slider.sliderText}}</div>
+        <div class="btn"><a href="{{slider.sliderLink}}">{{ 'Go Page'|translate}}</a></div>
+      </div>
     </div>
   </swiper-slide>
 </swiper-container>
-<!-- 
-<button type="button" (click)="goNext()">Next</button>
-<button type="button" (click)="goPrev()">Prev</button> -->

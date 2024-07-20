@@ -1,18 +1,61 @@
 @import '../../../../../theme/variables.scss';
 
 swiper-container {
-    width: 100%;
+    --swiper-pagination-bullet-inactive-color: #{rgba(255, 102, 0, 0.5)};
+    --swiper-pagination-color:#{$theme-color-orange};
+}
+
+img {
     height: 500px;
+    width: 100%;
+    position: relative;
 
     @media screen and (max-width:$tablet-size) {
         height: 200px;
     }
 }
 
+.slider-info {
+    position: absolute;
 
-swiper-slider {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+
+    .header {
+        font-size: 24px;
+        color: $theme-color-orange;
+        margin-bottom: 20px;
+
+        @media screen and (max-width:$tablet-size) {
+            font-size: 16px;
+        }
+    }
+
+    .text {
+        font-size: 20px;
+        color: white;
+        margin-bottom: 20px;
+
+        @media screen and (max-width:$tablet-size) {
+            font-size: 14px;
+        }
+    }
+
+    .btn {
+        padding: 10px 15px;
+        background-color: $theme-color-orange;
+
+        @media screen and (max-width:$tablet-size) {
+            padding: 4px 4px;
+            font-size: 12px;
+        }
+
+        a {
+            color: white;
+            font-size: 16px;
+
+            @media screen and (max-width:$tablet-size) {
+                padding: 4px 4px;
+                font-size: 12px;
+            }
+        }
+    }
 }
