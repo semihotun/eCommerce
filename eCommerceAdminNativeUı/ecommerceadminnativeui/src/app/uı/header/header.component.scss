@@ -1,0 +1,46 @@
+ ion-toolbar {
+     padding: 0px 4%;
+
+     ion-title {
+         text-align: center;
+         font-size: 14px;
+     }
+ }
+
+
+ .previousbtn {
+     cursor: pointer;
+     background-color: transparent;
+
+     &::before {
+         content: '<';
+         color: #333;
+         margin-right: 5px;
+         font-size: 30px;
+     }
+ }
+
+
+ ion-menu {
+     ion-header {}
+
+
+     .ion-padding {
+         .right-menu {
+             display: flex;
+             flex-direction: column;
+
+             a {
+                 padding: 3px;
+                 width: 100%;
+
+                 &:hover {}
+
+                 &:active {}
+
+                 &:focus {}
+             }
+         }
+     }
+
+ }

@@ -1,0 +1,11 @@
+@import '../../../theme/variables.scss';
+
+input {
+    width: 100%;
+    margin-top: 10px;
+    background-color: $header-bottom-bg;
+    height: 38px;
+    font-size: 14px;
+    color: white;
+    border-radius: 6px;
+}

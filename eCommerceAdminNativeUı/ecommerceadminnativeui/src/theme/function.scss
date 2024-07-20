@@ -1,0 +1,11 @@
+@function Percent($value, $total) {
+    @return percentage($value / $total);
+}
+
+@function PxToRem($pxValue, $baseFontSize: 16) {
+    @return ($pxValue / $baseFontSize) * 1rem;
+}
+
+@function Opacity($color, $opacity) {
+    @return rgba($color, $opacity);
+}

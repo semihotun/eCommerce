@@ -1,0 +1,26 @@
+<ion-menu side="end" contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{title | translate}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <div class="right-menu">
+      <a routerLink="/home">{{'Home' | translate}}</a>
+      <a routerLink="/brand">{{'Brand' | translate}}</a>
+    </div>
+  </ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{title | translate}}</ion-title>
+      <ion-buttons slot="end">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-buttons slot="start" *ngIf="this.backButton">
+        <button class="previousbtn" (click)="routerNavigate()"></button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+</div>
