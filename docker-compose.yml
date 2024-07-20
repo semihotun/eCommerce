@@ -1,25 +1,25 @@
 version: '3.4'
 
 services:
-  # ecommerce:
-  #   image: ${DOCKER_REGISTRY-}ecommerce
-  #   build:
-  #     context: .
-  #     dockerfile: eCommerce/Dockerfile
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Production
-  #     - ASPNETCORE_URLS=http://+:9901
-  #   ports:
-  #     - 9901:9901
-  #   volumes:
-  #     - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-  #     - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-  #   depends_on:
-  #     - s_sqlserver
-  #     - s_redis
-  #     - ecommerceApi
-  #   env_file:
-  #     - ./.env
+  ecommerce:
+    image: ${DOCKER_REGISTRY-}ecommerce
+    build:
+      context: .
+      dockerfile: eCommerce/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:9901
+    ports:
+      - 9901:9901
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - s_sqlserver
+      - s_redis
+      - ecommerceApi
+    env_file:
+      - ./.env
   ecommerceApi:
     image: ${DOCKER_REGISTRY-}ecommerceapi
     build:
