@@ -1,2 +1,11 @@
-<app-showcase-swiper></app-showcase-swiper>
-<app-showcaselist><app-showcaselist>
+@for (showcase of homeStore.showcases$(); track $index) {
+@if (showcase.showCaseType==showcaseType.ProductSlider) {
+<app-showcase-swiper [data]="showcase"></app-showcase-swiper>
+}
+@else if (showcase.showCaseType==showcaseType.EightProduct) {
+<app-showcaselist [data]="showcase"></app-showcaselist>
+}
+@else {
+<app-showcase-text [data]="showcase"></app-showcase-text>
+}
+}

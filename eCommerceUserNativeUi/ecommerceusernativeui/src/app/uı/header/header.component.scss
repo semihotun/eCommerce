@@ -67,6 +67,7 @@
 
         @media screen and (max-width: $tablet-size) {
             height: $header-mobile-middle-height;
+            padding: 1% 0px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0px 0px 140px 7px rgba(0, 0, 0, 0.1);
         }
@@ -201,6 +202,9 @@
         justify-content: flex-start;
         height: 44px;
 
+        #home {
+            background-color: $theme-color-orange;
+        }
 
         @media screen and (max-width: $tablet-size) {
             background-color: $header-bottom-bg;

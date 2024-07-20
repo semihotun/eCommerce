@@ -45,7 +45,7 @@
   </div>
   <div [ngClass]="'header-bottom ' + headerBottom.value" #headerRight>
     <ul>
-      <li><a [routerLink]="['']" class="header-bottom-a">{{ "Home" |translate }}</a></li>
+      <li id="home"><a [routerLink]="['']" class="header-bottom-a">{{ "Home" |translate }}</a></li>
       <!-- <li><a [routerLink]="['likes']" class="header-bottom-a">Beğendiklerim</a></li>
       <li>
         <a id="show-sub-category" class="header-bottom-a" (click)="showSubNodeCategory($event.currentTarget!)">Kelime

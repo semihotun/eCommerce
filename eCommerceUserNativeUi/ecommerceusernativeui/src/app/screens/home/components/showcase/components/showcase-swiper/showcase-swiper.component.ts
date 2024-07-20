@@ -9,6 +9,9 @@ import {
   ViewChild,
   input,
 } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { LazyImgDirective } from 'src/app/directives/lazy-img.directive';
+import { Showcase } from 'src/app/models/responseModel/Showcase';
 import { GlobalService } from 'src/app/services/global.service';
 import { Swiper } from 'swiper/types';
 @Component({
@@ -17,24 +20,13 @@ import { Swiper } from 'swiper/types';
   styleUrls: ['./showcase-swiper.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule],
+  imports: [CommonModule, LazyImgDirective, TranslateModule],
 })
 export class ShowcaseSwiperComponent implements AfterViewInit {
-  @ViewChild('swiper')
-  swiperRef: ElementRef | undefined;
+  @ViewChild('swiper') swiperRef: ElementRef | undefined;
   swiper?: Swiper;
-  @Input() title: string = 'Başlık Yok';
+  @Input() data!: Showcase;
   constructor(public glb: GlobalService) {}
-  images = [
-    'https://images.unsplash.com/photo-1580927752452-89d86da3fa0a',
-    'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
-    'https://images.unsplash.com/photo-1461749280684-dccba630e2f6',
-    'https://images.unsplash.com/photo-1488229297570-58520851e868',
-    'https://images.unsplash.com/photo-1580927752452-89d86da3fa0a',
-    'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
-    'https://images.unsplash.com/photo-1461749280684-dccba630e2f6',
-    'https://images.unsplash.com/photo-1488229297570-58520851e868',
-  ];
   goNext() {
     this.swiper?.slideNext();
   }

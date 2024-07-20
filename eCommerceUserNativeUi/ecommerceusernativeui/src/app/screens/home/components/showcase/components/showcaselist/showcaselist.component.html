@@ -1,12 +1,12 @@
 <div class="showcase-list">
   <div class="show-case-title">
-    <h4>{{title}}</h4>
+    <h4>{{data.showCaseTitle}}</h4>
     <div class="all-show-text"><a href="">Tümünü Gör</a></div>
   </div>
-  @for (image of images; track $index) {
+  @for (product of data.showCaseProductList; track $index) {
   <div class="card">
     <div class="image">
-      <img [src]="image" />
+      <img [src]="product" />
     </div>
     <div class="card-bottom">
       <div class="title">Ballı Üzümlü Kek</div>
